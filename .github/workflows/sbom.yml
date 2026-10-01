@@ -1,0 +1,19 @@
+name: sbom
+on: [push, pull_request]
+jobs:
+  sbom:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python scripts/sbom.py > SBOM.json
+      - run: AIOPS_SBOM_KEY=ci python scripts/sign_sbom.py SBOM.json SBOM.sig
+      - run: AIOPS_SBOM_KEY=ci python scripts/verify_sbom.py SBOM.json SBOM.sig
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: |
+            SBOM.json
+            SBOM.sig

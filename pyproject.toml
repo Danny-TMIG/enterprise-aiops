@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dcs"
+version = "1.0.0"
+description = "Standards & Conformance toolchain"
+requires-python = ">=3.11"
+
+[project.scripts]
+dcs = "dcs.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["dcs*", "app*"]
+exclude = ["tests*", ".venv*", ".lanes*"]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--cov=app --cov-report=term-missing --cov-fail-under=0 -v"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+omit = ["app/generated/*", "app/dispatchpatch/*"]
+branch = true
+source = ["app"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if __debug__:",
+    "if 0:",
+    "if __name__ == '__main__':",
+]

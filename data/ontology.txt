@@ -1,0 +1,1057 @@
+[Ontological] Existence
+[Ontological] Nothing
+[Ontological] Being
+[Ontological] Becoming
+[Ontological] Identity
+[Ontological] Difference
+[Ontological] Relation
+[Ontological] Structure
+[Ontological] Process
+[Ontological] Event
+[Ontological] State
+[Ontological] Change
+[Ontological] Space
+[Ontological] Time
+[Ontological] Causality
+[Ontological] Modality
+[Ontological] Necessity
+[Ontological] Possibility
+[Ontological] Contingency
+[Ontological] Universality
+[Ontological] Particularity
+[Ontological] Totality
+[Ontological] Infinity
+[Ontological] Finitude
+[Ontological] Continuity
+[Ontological] Discreteness
+[Ontological] Symmetry
+[Ontological] Asymmetry
+[Ontological] Invariance
+[Ontological] Covariance
+[Ontological] Duality
+[Ontological] Recursion
+[Ontological] Self-reference
+[Ontological] Emergence
+[Ontological] Complexity
+[Ontological] Chaos
+[Ontological] Order
+[Ontological] Information
+[Ontological] Entropy
+[Ontological] Negentropy
+[Ontological] Computation
+[Ontological] Observation
+[Ontological] Measurement
+[Ontological] Interaction
+[Ontological] Entanglement
+[Ontological] Superposition
+[Ontological] Collapse
+[Ontological] Decoherence
+[Ontological] Coherence
+[Ontological] Correlation
+[Ontological] Causation
+[Ontological] Reduction
+[Ontological] Holism
+[Ontological] Mereology
+[Ontological] Topology
+[Ontological] Geometry
+[Ontological] Algebra
+[Ontological] Analysis
+[Ontological] Arithmetic
+[Ontological] Logic
+[Ontological] Set
+[Ontological] Class
+[Ontological] Type
+[Ontological] Category
+[Ontological] Functor
+[Ontological] Natural Transformation
+[Ontological] Adjunction
+[Ontological] Monad
+[Ontological] Comonad
+[Ontological] Limit
+[Ontological] Colimit
+[Ontological] Universal
+[Ontological] Existential
+[Ontological] Quantifier
+[Ontological] Predicate
+[Ontological] Proposition
+[Ontological] Proof
+[Ontological] Model
+[Ontological] Theory
+[Ontological] Semantics
+[Ontological] Syntax
+[Ontological] Pragmatics
+[Ontological] Sign
+[Ontological] Symbol
+[Ontological] Reference
+[Ontological] Meaning
+[Ontological] Truth
+[Ontological] Validity
+[Ontological] Soundness
+[Ontological] Completeness
+[Ontological] Consistency
+[Ontological] Decidability
+[Ontological] Computability
+[Ontological] Tractability
+[Ontological] Intractability
+[Ontological] Undecidability
+[Ontological] Halting
+[Ontological] Diagonalization
+[Ontological] Gödel
+[Ontological] Turing
+[Ontological] Church
+[Ontological] Curry
+[Ontological] Howard
+[Ontological] Lambek
+[Ontological] Lawvere
+[Ontological] Grothendieck
+[Ontological] Voevodsky
+[Ontological] Registry
+[Mathematical] Set Theory
+[Mathematical] ZFC
+[Mathematical] NBG
+[Mathematical] MK
+[Mathematical] NF
+[Mathematical] CZF
+[Mathematical] IZF
+[Mathematical] HoTT
+[Mathematical] Univalent Foundations
+[Mathematical] ETCS
+[Mathematical] SEAR
+[Mathematical] Structural Set Theory
+[Mathematical] Category Theory
+[Mathematical] Small Category
+[Mathematical] Large Category
+[Mathematical] Locally Small Category
+[Mathematical] Enriched Category
+[Mathematical] Internal Category
+[Mathematical] Fibered Category
+[Mathematical] Indexed Category
+[Mathematical] Monoidal Category
+[Mathematical] Symmetric Monoidal Category
+[Mathematical] Braided Monoidal Category
+[Mathematical] Ribbon Category
+[Mathematical] Spherical Category
+[Mathematical] Pivotal Category
+[Mathematical] Fusion Category
+[Mathematical] Modular Tensor Category
+[Mathematical] Higher Category
+[Mathematical] Bicategory
+[Mathematical] Tricategory
+[Mathematical] ∞-Category
+[Mathematical] (∞,1)-Category
+[Mathematical] Quasicategory
+[Mathematical] Simplicial Set
+[Mathematical] Kan Complex
+[Mathematical] Model Category
+[Mathematical] Derivator
+[Mathematical] Homotopy Theory
+[Mathematical] Homotopy Type Theory
+[Mathematical] Elementary Topos
+[Mathematical] Grothendieck Topos
+[Mathematical] ∞-Topos
+[Mathematical] Sheaf
+[Mathematical] Presheaf
+[Mathematical] Stack
+[Mathematical] ∞-Stack
+[Mathematical] Site
+[Mathematical] Grothendieck Topology
+[Mathematical] Coverage
+[Mathematical] Descent
+[Mathematical] Yoneda
+[Mathematical] Representable
+[Mathematical] Universal Property
+[Mathematical] Limit
+[Mathematical] Colimit
+[Mathematical] Kan Extension
+[Mathematical] Adjunction
+[Mathematical] Monad
+[Mathematical] Comonad
+[Mathematical] Algebra
+[Mathematical] Coalgebra
+[Mathematical] Operad
+[Mathematical] PROP
+[Mathematical] Lawvere Theory
+[Mathematical] Algebraic Theory
+[Mathematical] Sketch
+[Mathematical] Doctrine
+[Mathematical] Fibration
+[Mathematical] Cofibration
+[Mathematical] Model Structure
+[Mathematical] Quillen Equivalence
+[Mathematical] Derived Category
+[Mathematical] Triangulated Category
+[Mathematical] Stable ∞-Category
+[Mathematical] Spectral Category
+[Mathematical] Motivic Homotopy
+[Mathematical] Algebraic K-Theory
+[Mathematical] Topological K-Theory
+[Mathematical] Cobordism
+[Mathematical] TQFT
+[Mathematical] Extended TQFT
+[Mathematical] Cobordism Hypothesis
+[Mathematical] Factorization Homology
+[Mathematical] Chiral Homology
+[Mathematical] Vertex Operator Algebra
+[Mathematical] Conformal Field Theory
+[Mathematical] Topological Order
+[Mathematical] Anyon
+[Mathematical] Fusion Rules
+[Mathematical] Braiding
+[Mathematical] Modular Data
+[Mathematical] Drinfeld Center
+[Mathematical] Quantum Double
+[Mathematical] Chern-Simons Theory
+[Mathematical] WZW Model
+[Mathematical] String Theory
+[Mathematical] M-Theory
+[Mathematical] F-Theory
+[Mathematical] Supergravity
+[Mathematical] Supersymmetry
+[Mathematical] Supergeometry
+[Mathematical] Graded Geometry
+[Mathematical] Derived Algebraic Geometry
+[Mathematical] Spectral Algebraic Geometry
+[Mathematical] Condensed Mathematics
+[Mathematical] Analytic Geometry
+[Mathematical] Rigid Analytic Geometry
+[Mathematical] Berkovich Spaces
+[Mathematical] Adic Spaces
+[Mathematical] Perfectoid Spaces
+[Mathematical] Prismatic Cohomology
+[Mathematical] Condensed Abelian Groups
+[Mathematical] Solid Modules
+[Mathematical] Liquid Modules
+[Mathematical] ∞-Operads
+[Mathematical] Goodwillie Calculus
+[Mathematical] Orthogonal Calculus
+[Mathematical] Factorization Systems
+[Mathematical] Model Independent Homotopy Theory
+[Mathematical] Simplicial Homotopy
+[Mathematical] Cubical Homotopy
+[Mathematical] Globular Homotopy
+[Mathematical] Operadic Homotopy
+[Mathematical] Higher Algebra
+[Mathematical] Higher Topos
+[Mathematical] Higher Stacks
+[Mathematical] Higher Descent
+[Mathematical] Higher Yoneda
+[Mathematical] Higher Universal Properties
+[Mathematical] Higher Limits
+[Mathematical] Higher Colimits
+[Mathematical] Higher Kan Extensions
+[Mathematical] Higher Adjunctions
+[Mathematical] Higher Monads
+[Mathematical] Higher Comonads
+[Mathematical] Higher Algebras
+[Mathematical] Higher Coalgebras
+[Mathematical] Higher Operads
+[Mathematical] Higher PROPs
+[Mathematical] Higher Lawvere Theories
+[Mathematical] Higher Algebraic Theories
+[Mathematical] Higher Sketches
+[Mathematical] Higher Doctrines
+[Mathematical] Higher Fibrations
+[Mathematical] Higher Cofibrations
+[Mathematical] Higher Model Structures
+[Mathematical] Higher Quillen Equivalences
+[Mathematical] Higher Derived Categories
+[Mathematical] Higher Triangulated Categories
+[Mathematical] Higher Stable ∞-Categories
+[Mathematical] Higher Spectral Categories
+[Mathematical] Higher Motivic Homotopy
+[Mathematical] Higher Algebraic K-Theory
+[Mathematical] Higher Topological K-Theory
+[Mathematical] Higher Cobordism
+[Mathematical] Higher TQFT
+[Mathematical] Higher Extended TQFT
+[Mathematical] Higher Cobordism Hypothesis
+[Mathematical] Higher Factorization Homology
+[Mathematical] Higher Chiral Homology
+[Mathematical] Higher Vertex Operator Algebras
+[Mathematical] Higher Conformal Field Theories
+[Mathematical] Higher Modular Tensor Categories
+[Mathematical] Higher Topological Order
+[Mathematical] Higher Anyons
+[Mathematical] Higher Fusion Rules
+[Mathematical] Higher Braiding
+[Mathematical] Higher Modular Data
+[Mathematical] Higher Drinfeld Centers
+[Mathematical] Higher Quantum Doubles
+[Mathematical] Higher Chern-Simons Theories
+[Mathematical] Higher WZW Models
+[Mathematical] Higher String Theories
+[Mathematical] Higher M-Theories
+[Mathematical] Higher F-Theories
+[Mathematical] Higher Supergravities
+[Mathematical] Higher Supersymmetries
+[Mathematical] Higher Supergeometries
+[Mathematical] Higher Graded Geometries
+[Mathematical] Higher Derived Algebraic Geometries
+[Mathematical] Higher Spectral Algebraic Geometries
+[Mathematical] Higher Condensed Mathematics
+[Mathematical] Higher Analytic Geometries
+[Mathematical] Higher Rigid Analytic Geometries
+[Mathematical] Higher Berkovich Spaces
+[Mathematical] Higher Adic Spaces
+[Mathematical] Higher Perfectoid Spaces
+[Mathematical] Higher Prismatic Cohomology
+[Mathematical] Higher Condensed Abelian Groups
+[Mathematical] Higher Solid Modules
+[Mathematical] Higher Liquid Modules
+[Mathematical] Higher ∞-Operads
+[Mathematical] Higher Goodwillie Calculus
+[Mathematical] Higher Orthogonal Calculus
+[Mathematical] Higher Factorization Systems
+[Mathematical] Higher Model Independent Homotopy Theories
+[Mathematical] Higher Simplicial Homotopy
+[Mathematical] Higher Cubical Homotopy
+[Mathematical] Higher Globular Homotopy
+[Mathematical] Higher Operadic Homotopy
+[Mathematical] Higher Higher Algebra
+[Logical] Propositional Logic
+[Logical] Predicate Logic
+[Logical] First-Order Logic
+[Logical] Second-Order Logic
+[Logical] Higher-Order Logic
+[Logical] Modal Logic
+[Logical] Temporal Logic
+[Logical] Dynamic Logic
+[Logical] Epistemic Logic
+[Logical] Doxastic Logic
+[Logical] Deontic Logic
+[Logical] Intuitionistic Logic
+[Logical] Classical Logic
+[Logical] Linear Logic
+[Logical] Affine Logic
+[Logical] Relevant Logic
+[Logical] Paraconsistent Logic
+[Logical] Fuzzy Logic
+[Logical] Many-Valued Logic
+[Logical] Quantum Logic
+[Logical] Categorical Logic
+[Logical] Type Theory
+[Logical] Simple Type Theory
+[Logical] Dependent Type Theory
+[Logical] Polymorphic Type Theory
+[Logical] Recursive Type Theory
+[Logical] Existential Type Theory
+[Logical] Universal Type Theory
+[Logical] Sum Type
+[Logical] Product Type
+[Logical] Function Type
+[Logical] Dependent Pair
+[Logical] Dependent Function
+[Logical] Identity Type
+[Logical] Higher Inductive Type
+[Logical] Quotient Type
+[Logical] Coinductive Type
+[Logical] Inductive Type
+[Logical] Inductive Family
+[Logical] W-Type
+[Logical] M-Type
+[Logical] Polynomial Functor
+[Logical] Container
+[Logical] Shapely Functor
+[Logical] Analytic Functor
+[Logical] Species
+[Logical] Combinatorial Species
+[Logical] Operad
+[Logical] PRO
+[Logical] PROP
+[Logical] Lawvere Theory
+[Logical] Algebraic Theory
+[Logical] Monad
+[Logical] Comonad
+[Logical] Adjunction
+[Logical] Kan Extension
+[Logical] Limit
+[Logical] Colimit
+[Logical] Ends
+[Logical] Coends
+[Logical] Enriched Category
+[Logical] Fibered Category
+[Logical] Indexed Category
+[Logical] Internal Category
+[Logical] Double Category
+[Logical] Bicategory
+[Logical] Tricategory
+[Logical] Tetracategory
+[Logical] Globular Operad
+[Logical] Batanin Operad
+[Logical] Grothendieck Opfibration
+[Logical] Street Fibration
+[Logical] Anafunctor
+[Logical] Profunctor
+[Logical] Distributor
+[Logical] Bimodule
+[Logical] Enriched Profunctor
+[Logical] Weighted Limit
+[Logical] Homotopy Limit
+[Logical] Homotopy Colimit
+[Logical] Derived Limit
+[Logical] Derived Colimit
+[Logical] Spectral Sequence
+[Logical] Exact Couple
+[Logical] Adams Spectral Sequence
+[Logical] Atiyah-Hirzebruch
+[Logical] Serre
+[Logical] Eilenberg-Moore
+[Logical] Bousfield-Kan
+[Logical] Goodwillie
+[Logical] Weiss
+[Logical] Orthogonal Calculus
+[Logical] Factorization Homology
+[Logical] Topological Chiral Homology
+[Logical] Blob Complex
+[Logical] Disk Algebra
+[Logical] Little Disks Operad
+[Logical] Framed Little Disks
+[Logical] Cactus Operad
+[Logical] Gravity Operad
+[Logical] Hypercommutative Operad
+[Logical] Moduli Space
+[Logical] Deligne-Mumford
+[Logical] Stable Curve
+[Logical] Gromov-Witten
+[Logical] Quantum Cohomology
+[Logical] Frobenius Manifold
+[Logical] Mirror Symmetry
+[Logical] Homological Mirror Symmetry
+[Logical] SYZ
+[Logical] Derived Category
+[Logical] Fukaya Category
+[Logical] A∞-Category
+[Logical] DG-Category
+[Logical] Stable ∞-Category
+[Logical] Triangulated Category
+[Logical] T-Structure
+[Logical] Heart
+[Logical] Weight Structure
+[Logical] Motivic T-Structure
+[Logical] Perverse Sheaf
+[Logical] Intersection Cohomology
+[Logical] D-Module
+[Logical] Holonomic D-Module
+[Logical] Regular Holonomic
+[Logical] Riemann-Hilbert
+[Logical] Stokes Phenomenon
+[Logical] Isomonodromy
+[Logical] Painlevé
+[Logical] Integrable System
+[Logical] Soliton
+[Logical] KdV
+[Logical] Nonlinear Schrödinger
+[Logical] Sine-Gordon
+[Logical] Toda
+[Logical] Calogero-Moser
+[Logical] Ruijsenaars
+[Logical] Quantum Inverse Scattering
+[Logical] Yang-Baxter
+[Logical] Bethe Ansatz
+[Logical] Algebraic Bethe Ansatz
+[Logical] Thermodynamic Bethe Ansatz
+[Logical] Form Factor
+[Logical] Correlation Function
+[Logical] Conformal Bootstrap
+[Logical] Modular Bootstrap
+[Logical] Crossing Symmetry
+[Logical] Unitarity
+[Logical] Causality
+[Logical] Locality
+[Logical] Spin-Statistics
+[Logical] CPT
+[Logical] Crossing
+[Logical] Analyticity
+[Logical] S-Matrix
+[Logical] Bootstrap
+[Logical] Amplituhedron
+[Logical] Positive Geometry
+[Logical] Grassmannian
+[Logical] Cluster Algebra
+[Logical] Tropical Geometry
+[Logical] Berkovich
+[Logical] Adic
+[Logical] Perfectoid
+[Logical] Prismatic
+[Logical] Condensed
+[Logical] Solid
+[Logical] Liquid
+[Logical] Analytic
+[Logical] Rigid
+[Logical] Formal
+[Logical] Algebraic
+[Logical] Arithmetic
+[Logical] Geometric
+[Logical] Topological
+[Logical] Differential
+[Logical] Symplectic
+[Logical] Poisson
+[Logical] Contact
+[Logical] Riemannian
+[Logical] Lorentzian
+[Logical] Pseudo-Riemannian
+[Logical] Kähler
+[Logical] Hyperkähler
+[Logical] Quaternionic Kähler
+[Logical] Calabi-Yau
+[Logical] G2
+[Logical] Spin(7)
+[Logical] Exceptional Holonomy
+[Logical] String Compactification
+[Logical] Flux Compactification
+[Logical] Moduli Stabilization
+[Logical] Swampland
+[Logical] Landscape
+[Logical] Multiverse
+[Logical] Anthropic
+[Logical] Boltzmann Brain
+[Logical] Simulation
+[Logical] Simulation Hypothesis
+[Logical] Computational Universe
+[Logical] Digital Physics
+[Logical] Pancomputationalism
+[Logical] It from Bit
+[Logical] Quantum Information
+[Logical] Holographic Principle
+[Logical] AdS/CFT
+[Logical] dS/CFT
+[Logical] Celestial Holography
+[Logical] Soft Hair
+[Logical] Black Hole Information Paradox
+[Logical] Firewalls
+[Logical] Complementarity
+[Logical] ER=EPR
+[Logical] Wormholes
+[Logical] Traversable Wormholes
+[Logical] Time Travel
+[Logical] Chronology Protection
+[Logical] Causality Violation
+[Logical] Closed Timelike Curves
+[Logical] Gödel Universe
+[Logical] Tipler Cylinder
+[Logical] Alcubierre Warp
+[Logical] Krasnikov Tube
+[Logical] Negative Energy
+[Logical] Casimir
+[Logical] Squeezed Light
+[Logical] Quantum Vacuum
+[Logical] Zero-Point Energy
+[Logical] Vacuum Energy
+[Logical] Cosmological Constant
+[Logical] Dark Energy
+[Logical] Quintessence
+[Logical] Phantom Energy
+[Logical] Dark Matter
+[Logical] MOND
+[Logical] TeVeS
+[Logical] Modified Gravity
+[Logical] f(R)
+[Logical] Gauss-Bonnet
+[Logical] Lovelock
+[Logical] Horndeski
+[Logical] Scalar-Tensor
+[Logical] Brans-Dicke
+[Logical] Einstein-Cartan
+[Logical] Teleparallel
+[Logical] Symmetric Teleparallel
+[Logical] Conformal Gravity
+[Logical] Weyl Gravity
+[Logical] Shape Dynamics
+[Logical] Causal Sets
+[Logical] Spin Networks
+[Logical] Spin Foams
+[Logical] Loop Quantum Gravity
+[Logical] String Net
+[Logical] Acoustic Black Holes
+[Logical] Optical Black Holes
+[Logical] Bose-Einstein Condensate
+[Logical] Superfluidity
+[Logical] Superconductivity
+[Logical] Fermionic Condensate
+[Logical] Quark-Gluon Plasma
+[Logical] Neutron Star
+[Logical] White Dwarf
+[Logical] Black Hole
+[Logical] Event Horizon
+[Logical] Singularity
+[Logical] Cosmic Censorship
+[Logical] Penrose Process
+[Logical] Hawking Radiation
+[Logical] Unruh Effect
+[Logical] Dynamical Casimir
+[Logical] Schwinger Effect
+[Logical] Pair Production
+[Logical] Vacuum Polarization
+[Logical] Lamb Shift
+[Logical] Anomalous Magnetic Moment
+[Logical] g-2
+[Logical] Muon g-2
+[Logical] Electron g-2
+[Logical] Fine Structure Constant
+[Logical] Running Coupling
+[Logical] Renormalization
+[Logical] Effective Field Theory
+[Logical] Wilsonian
+[Logical] Exact Renormalization Group
+[Logical] Functional Renormalization Group
+[Logical] Asymptotic Safety
+[Logical] Nonperturbative
+[Logical] Lattice Gauge Theory
+[Logical] Lattice QCD
+[Logical] Chiral Perturbation Theory
+[Logical] Heavy Quark Effective Theory
+[Logical] Nonrelativistic QCD
+[Logical] Soft-Collinear Effective Theory
+[Logical] Factorization
+[Logical] Resummation
+[Logical] Parton Shower
+[Logical] Monte Carlo Event Generator
+[Logical] Detector Simulation
+[Logical] Geant4
+[Logical] ROOT
+[Logical] Data Analysis
+[Logical] Machine Learning
+[Logical] Neural Network
+[Logical] Deep Learning
+[Logical] Transformer
+[Logical] Attention
+[Logical] Diffusion
+[Logical] Generative
+[Logical] Reinforcement
+[Logical] Self-Supervised
+[Logical] Contrastive
+[Logical] Transfer
+[Logical] Meta
+[Logical] Few-Shot
+[Logical] Zero-Shot
+[Logical] Multimodal
+[Logical] Embodied
+[Logical] Active
+[Logical] Causal
+[Logical] Bayesian
+[Logical] Probabilistic Programming
+[Logical] Graphical Model
+[Logical] Variational Inference
+[Logical] MCMC
+[Logical] Hamiltonian Monte Carlo
+[Logical] NUTS
+[Logical] Sequential Monte Carlo
+[Logical] Particle Filter
+[Logical] Kalman
+[Logical] EKF
+[Logical] UKF
+[Logical] Information Filter
+[Logical] Belief Propagation
+[Logical] Sum-Product
+[Logical] Max-Product
+[Logical] Junction Tree
+[Logical] Variable Elimination
+[Logical] Bucket Elimination
+[Logical] Tree Decomposition
+[Logical] Clique Tree
+[Logical] Factor Graph
+[Logical] Bayesian Network
+[Logical] Markov Network
+[Logical] Conditional Random Field
+[Logical] Hidden Markov Model
+[Logical] SLAM
+[Logical] Structure from Motion
+[Logical] Bundle Adjustment
+[Logical] Pose Graph
+[Logical] g2o
+[Logical] GTSAM
+[Logical] Ceres
+[Logical] Optimization
+[Logical] Convex
+[Logical] Nonconvex
+[Logical] LP
+[Logical] QP
+[Logical] SOCP
+[Logical] SDP
+[Logical] MILP
+[Logical] MINLP
+[Logical] Global Optimization
+[Logical] Branch and Bound
+[Logical] Cutting Plane
+[Logical] Column Generation
+[Logical] Benders
+[Logical] Dantzig-Wolfe
+[Logical] Lagrangian Relaxation
+[Logical] Subgradient
+[Logical] Proximal
+[Logical] ADMM
+[Logical] Operator Splitting
+[Logical] Douglas-Rachford
+[Logical] Forward-Backward
+[Logical] Primal-Dual
+[Logical] Chambolle-Pock
+[Logical] Alternating Minimization
+[Logical] EM
+[Logical] MM
+[Logical] Majorization-Minimization
+[Logical] Coordinate Descent
+[Logical] Stochastic Gradient
+[Logical] Variance Reduction
+[Logical] SVRG
+[Logical] SAGA
+[Logical] SAG
+[Logical] Adam
+[Logical] AdaGrad
+[Logical] RMSProp
+[Logical] Momentum
+[Logical] Nesterov
+[Logical] Heavy Ball
+[Logical] Conjugate Gradient
+[Logical] Quasi-Newton
+[Logical] BFGS
+[Logical] L-BFGS
+[Logical] Trust Region
+[Logical] Line Search
+[Logical] Simplex
+[Logical] Interior Point
+[Logical] Active Set
+[Logical] KKT
+[Logical] Duality
+[Logical] Lagrange
+[Logical] Fenchel
+[Logical] Convex Conjugate
+[Logical] Bregman
+[Logical] Mirror Descent
+[Logical] Natural Gradient
+[Logical] Fisher Information
+[Logical] Information Geometry
+[Logical] Wasserstein
+[Logical] Optimal Transport
+[Logical] Sinkhorn
+[Logical] Entropic Regularization
+[Logical] Gromov-Wasserstein
+[Logical] Schrödinger Bridge
+[Logical] Diffusion Map
+[Logical] Spectral Clustering
+[Logical] Laplacian Eigenmaps
+[Logical] PCA
+[Logical] Kernel PCA
+[Logical] ICA
+[Logical] NMF
+[Logical] LDA
+[Logical] Topic Model
+[Logical] HMM
+[Logical] CRF
+[Logical] MRF
+[Logical] Ising
+[Logical] Potts
+[Logical] Spin Glass
+[Logical] Replica
+[Logical] Cavity
+[Logical] Survey Propagation
+[Logical] Message Passing
+[Logical] Graph Neural Network
+[Logical] GCN
+[Logical] GAT
+[Logical] GraphSAGE
+[Logical] GIN
+[Logical] MPNN
+[Logical] Self-Attention
+[Logical] Cross-Attention
+[Logical] Multi-Head
+[Logical] Positional Encoding
+[Logical] Layer Norm
+[Logical] Residual
+[Logical] Skip Connection
+[Logical] Batch Norm
+[Logical] Dropout
+[Logical] Weight Decay
+[Logical] Initialization
+[Logical] Xavier
+[Logical] He
+[Logical] Glorot
+[Logical] Orthogonal
+[Logical] LSTM
+[Logical] GRU
+[Logical] RNN
+[Logical] Seq2Seq
+[Logical] Encoder-Decoder
+[Logical] Autoencoder
+[Logical] VAE
+[Logical] GAN
+[Logical] WGAN
+[Logical] StyleGAN
+[Logical] DDPM
+[Logical] DDIM
+[Logical] Score Matching
+[Logical] Langevin
+[Logical] SDE
+[Logical] ODE
+[Logical] Neural ODE
+[Logical] Continuous Normalizing Flow
+[Logical] CNF
+[Logical] FFJORD
+[Logical] Flow Matching
+[Logical] Rectified Flow
+[Logical] Consistency Model
+[Logical] Distillation
+[Logical] Quantization
+[Logical] Pruning
+[Logical] Sparsity
+[Logical] Lottery Ticket
+[Logical] NAS
+[Logical] Meta-Learning
+[Logical] MAML
+[Logical] Reptile
+[Logical] Prototypical
+[Logical] Matching
+[Logical] Siamese
+[Logical] Triplet
+[Logical] SimCLR
+[Logical] MoCo
+[Logical] BYOL
+[Logical] DINO
+[Logical] CLIP
+[Logical] ALIGN
+[Logical] Flamingo
+[Logical] GPT
+[Logical] BERT
+[Logical] T5
+[Logical] LLM
+[Logical] RLHF
+[Logical] DPO
+[Logical] PPO
+[Logical] A3C
+[Logical] A2C
+[Logical] TRPO
+[Logical] SAC
+[Logical] TD3
+[Logical] DDPG
+[Logical] DQN
+[Logical] Rainbow
+[Logical] IMPALA
+[Logical] AlphaZero
+[Logical] MuZero
+[Logical] MCTS
+[Logical] UCT
+[Logical] Bandit
+[Logical] Thompson Sampling
+[Logical] UCB
+[Logical] Exploration
+[Logical] Exploitation
+[Logical] Curiosity
+[Logical] Intrinsic Motivation
+[Logical] Empowerment
+[Logical] Free Energy Principle
+[Logical] Active Inference
+[Logical] Predictive Coding
+[Logical] Bayesian Brain
+[Logical] Global Workspace
+[Logical] Integrated Information
+[Logical] Attention Schema
+[Logical] Higher-Order Thought
+[Logical] Recurrent Processing
+[Logical] Neurosymbolic
+[Logical] Symbolic AI
+[Logical] Logic Programming
+[Logical] Prolog
+[Logical] Datalog
+[Logical] ASP
+[Logical] SAT
+[Logical] SMT
+[Logical] Constraint Programming
+[Logical] CP
+[Logical] OR-Tools
+[Logical] Gecode
+[Logical] MiniZinc
+[Logical] Choco
+[Logical] Z3
+[Logical] CVC5
+[Logical] Yices
+[Logical] MathSAT
+[Logical] Boolector
+[Logical] Bitwuzla
+[Logical] STP
+[Logical] Model Checking
+[Logical] SPIN
+[Logical] NuSMV
+[Logical] PRISM
+[Logical] Storm
+[Logical] UPPAAL
+[Logical] TLA+
+[Logical] Alloy
+[Logical] Coq
+[Logical] Lean
+[Logical] Isabelle
+[Logical] Agda
+[Logical] Idris
+[Logical] F*
+[Logical] HOL
+[Logical] HOL Light
+[Logical] HOL4
+[Logical] Mizar
+[Logical] Metamath
+[Logical] Proof Assistant
+[Logical] Dependent Type
+[Logical] Homotopy Type
+[Logical] Cubical Type
+[Logical] Univalent Foundations
+[Logical] Category Theory
+[Logical] Topos
+[Logical] Elementary Topos
+[Logical] Grothendieck Topos
+[Logical] ∞-Topos
+[Logical] Sheaf
+[Logical] Presheaf
+[Logical] Stack
+[Logical] ∞-Stack
+[Logical] Site
+[Logical] Coverage
+[Logical] Descent
+[Logical] Yoneda
+[Logical] Representable
+[Logical] Universal Property
+[Logical] Limit
+[Logical] Colimit
+[Logical] Kan Extension
+[Logical] Adjunction
+[Logical] Monad
+[Logical] Comonad
+[Logical] Algebra
+[Logical] Coalgebra
+[Logical] Operad
+[Logical] PROP
+[Logical] Lawvere Theory
+[Logical] Algebraic Theory
+[Logical] Sketch
+[Logical] Doctrine
+[Logical] Fibration
+[Logical] Cofibration
+[Logical] Model Structure
+[Logical] Quillen Equivalence
+[Logical] Derived Category
+[Logical] Triangulated Category
+[Logical] Stable ∞-Category
+[Logical] Spectral Category
+[Logical] Motivic Homotopy
+[Logical] Algebraic K-Theory
+[Logical] Topological K-Theory
+[Logical] Cobordism
+[Logical] TQFT
+[Logical] Extended TQFT
+[Logical] Cobordism Hypothesis
+[Logical] Factorization Homology
+[Logical] Chiral Homology
+[Logical] Vertex Operator Algebra
+[Logical] Conformal Field Theory
+[Logical] Modular Tensor Category
+[Logical] Topological Order
+[Logical] Anyon
+[Logical] Fusion Rules
+[Logical] Braiding
+[Logical] Modular Data
+[Logical] Drinfeld Center
+[Logical] Quantum Double
+[Logical] Chern-Simons Theory
+[Logical] WZW Model
+[Logical] String Theory
+[Logical] M-Theory
+[Logical] F-Theory
+[Logical] Supergravity
+[Logical] Supersymmetry
+[Logical] Supergeometry
+[Logical] Graded Geometry
+[Logical] Derived Algebraic Geometry
+[Logical] Spectral Algebraic Geometry
+[Logical] Condensed Mathematics
+[Logical] Analytic Geometry
+[Logical] Rigid Analytic Geometry
+[Logical] Berkovich Spaces
+[Logical] Adic Spaces
+[Logical] Perfectoid Spaces
+[Logical] Prismatic Cohomology
+[Logical] Condensed Abelian Groups
+[Logical] Solid Modules
+[Logical] Liquid Modules
+[Logical] ∞-Operads
+[Logical] Goodwillie Calculus
+[Logical] Orthogonal Calculus
+[Logical] Factorization Systems
+[Logical] Model Independent Homotopy Theory
+[Logical] Simplicial Homotopy
+[Logical] Cubical Homotopy
+[Logical] Globular Homotopy
+[Logical] Operadic Homotopy
+[Logical] Higher Algebra
+[Logical] Higher Topos
+[Logical] Higher Stacks
+[Logical] Higher Descent
+[Logical] Higher Yoneda
+[Logical] Higher Universal Properties
+[Logical] Higher Limits
+[Logical] Higher Colimits
+[Logical] Higher Kan Extensions
+[Logical] Higher Adjunctions
+[Logical] Higher Monads
+[Logical] Higher Comonads
+[Logical] Higher Algebras
+[Logical] Higher Coalgebras
+[Logical] Higher Operads
+[Logical] Higher PROPs
+[Logical] Higher Lawvere Theories
+[Logical] Higher Algebraic Theories
+[Logical] Higher Sketches
+[Logical] Higher Doctrines
+[Logical] Higher Fibrations
+[Logical] Higher Cofibrations
+[Logical] Higher Model Structures
+[Logical] Higher Quillen Equivalences
+[Logical] Higher Derived Categories
+[Logical] Higher Triangulated Categories
+[Logical] Higher Stable ∞-Categories
+[Logical] Higher Spectral Categories
+[Logical] Higher Motivic Homotopy
+[Logical] Higher Algebraic K-Theory
+[Logical] Higher Topological K-Theory
+[Logical] Higher Cobordism
+[Logical] Higher TQFT
+[Logical] Higher Extended TQFT
+[Logical] Higher Cobordism Hypothesis
+[Logical] Higher Factorization Homology
+[Logical] Higher Chiral Homology
+[Logical] Higher Vertex Operator Algebras
+[Logical] Higher Conformal Field Theories
+[Logical] Higher Modular Tensor Categories
+[Logical] Higher Topological Order
+[Logical] Higher Anyons
+[Logical] Higher Fusion Rules
+[Logical] Higher Braiding
+[Logical] Higher Modular Data
+[Logical] Higher Drinfeld Centers
+[Logical] Higher Quantum Doubles
+[Logical] Higher Chern-Simons Theories
+[Logical] Higher WZW Models
+[Logical] Higher String Theories
+[Logical] Higher M-Theories
+[Logical] Higher F-Theories
+[Logical] Higher Supergravities
+[Logical] Higher Supersymmetries
+[Logical] Higher Supergeometries
+[Logical] Higher Graded Geometries
+[Logical] Higher Derived Algebraic Geometries
+[Logical] Higher Spectral Algebraic Geometries
+[Logical] Higher Condensed Mathematics
+[Logical] Higher Analytic Geometries
+[Logical] Higher Rigid Analytic Geometries
+[Logical] Higher Berkovich Spaces
+[Logical] Higher Adic Spaces
+[Logical] Higher Perfectoid Spaces
+[Logical] Higher Prismatic Cohomology
+[Logical] Higher Condensed Abelian Groups
+[Logical] Higher Solid Modules
+[Logical] Higher Liquid Modules
+[Logical] Higher ∞-Operads
+[Logical] Higher Goodwillie Calculus
+[Logical] Higher Orthogonal Calculus
+[Logical] Higher Factorization Systems
+[Logical] Higher Model Independent Homotopy Theories
+[Logical] Higher Simplicial Homotopy
+[Logical] Higher Cubical Homotopy
+[Logical] Higher Globular Homotopy
+[Logical] Higher Operadic Homotopy
+[Logical] Higher Higher Algebra

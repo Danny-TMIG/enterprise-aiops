@@ -1,0 +1,150 @@
+%% Parallel Dendritic Decision Trees — Root Words
+flowchart LR
+
+  subgraph T0["λόγος · word, reason"]
+    direction TB
+      n293a091d(("λόγος — word, reason"))
+        n6b37ee1b["turn left"]
+          n47267aa5["still left"]
+            n2f1f28a0(["→ keep left"])
+            n3b60c3db(["→ keep right"])
+          n4dc04067["still right"]
+            nd947e352(["→ keep left"])
+            nc2b0cffb(["→ keep right"])
+        n2cc9b029["turn right"]
+          ncab783a1["still left"]
+            n3db91627(["→ keep left"])
+            n898279e4(["→ keep right"])
+          n59f0e964["still right"]
+            ne6cd6280(["→ keep left"])
+            nbe980c7d(["→ keep right"])
+      n293a091d --> n6b37ee1b
+        n6b37ee1b --> n47267aa5
+          n47267aa5 --> n2f1f28a0
+          n47267aa5 --> n3b60c3db
+        n6b37ee1b --> n4dc04067
+          n4dc04067 --> nd947e352
+          n4dc04067 --> nc2b0cffb
+      n293a091d --> n2cc9b029
+        n2cc9b029 --> ncab783a1
+          ncab783a1 --> n3db91627
+          ncab783a1 --> n898279e4
+        n2cc9b029 --> n59f0e964
+          n59f0e964 --> ne6cd6280
+          n59f0e964 --> nbe980c7d
+  end
+
+  subgraph T1["ψυχή · soul, breath"]
+    direction TB
+      nb435a5b6(("ψυχή — soul, breath"))
+        nccbb2c40["turn left"]
+          n3e2911c0["still left"]
+            nbde6f352(["→ keep left"])
+            n98aa637c(["→ keep right"])
+          n9c16ad4f["still right"]
+            nb8a52034(["→ keep left"])
+            n0d501d43(["→ keep right"])
+        nea84cb47["turn right"]
+          n4d5ecb6c["still left"]
+            n5a93b724(["→ keep left"])
+            n794a2906(["→ keep right"])
+          nb1e8b719["still right"]
+            n3c0ae160(["→ keep left"])
+            n8c744284(["→ keep right"])
+      nb435a5b6 --> nccbb2c40
+        nccbb2c40 --> n3e2911c0
+          n3e2911c0 --> nbde6f352
+          n3e2911c0 --> n98aa637c
+        nccbb2c40 --> n9c16ad4f
+          n9c16ad4f --> nb8a52034
+          n9c16ad4f --> n0d501d43
+      nb435a5b6 --> nea84cb47
+        nea84cb47 --> n4d5ecb6c
+          n4d5ecb6c --> n5a93b724
+          n4d5ecb6c --> n794a2906
+        nea84cb47 --> nb1e8b719
+          nb1e8b719 --> n3c0ae160
+          nb1e8b719 --> n8c744284
+  end
+
+  subgraph T2["κρίσις · decision, judgment"]
+    direction TB
+      na69c5838(("κρίσις — decision, judgment"))
+        n6068c680["turn left"]
+          n3ff02b15["still left"]
+            nc86d83be(["→ keep left"])
+            n74d5ba00(["→ keep right"])
+          n5c3104b6["still right"]
+            ndbacfa6d(["→ keep left"])
+            n1717af8c(["→ keep right"])
+        n1d51cfab["turn right"]
+          n57e4e82d["still left"]
+            n086988ba(["→ keep left"])
+            nff1e6d92(["→ keep right"])
+          nb81c3a72["still right"]
+            n83201fce(["→ keep left"])
+            nf3e0b97b(["→ keep right"])
+      na69c5838 --> n6068c680
+        n6068c680 --> n3ff02b15
+          n3ff02b15 --> nc86d83be
+          n3ff02b15 --> n74d5ba00
+        n6068c680 --> n5c3104b6
+          n5c3104b6 --> ndbacfa6d
+          n5c3104b6 --> n1717af8c
+      na69c5838 --> n1d51cfab
+        n1d51cfab --> n57e4e82d
+          n57e4e82d --> n086988ba
+          n57e4e82d --> nff1e6d92
+        n1d51cfab --> nb81c3a72
+          nb81c3a72 --> n83201fce
+          nb81c3a72 --> nf3e0b97b
+  end
+
+  subgraph T3["αἵρεσις · choice, taking"]
+    direction TB
+      n5294cc96(("αἵρεσις — choice, taking"))
+        n885ec3de["turn left"]
+          n6f78075b["still left"]
+            n4d9c8c14(["→ keep left"])
+            n7f92e042(["→ keep right"])
+          nabad610b["still right"]
+            n99cca38d(["→ keep left"])
+            n8c333169(["→ keep right"])
+        nd22d5b24["turn right"]
+          nef021219["still left"]
+            n4efcf423(["→ keep left"])
+            n6e291c0d(["→ keep right"])
+          n7ca008bf["still right"]
+            n89e0f9cc(["→ keep left"])
+            n806d733e(["→ keep right"])
+      n5294cc96 --> n885ec3de
+        n885ec3de --> n6f78075b
+          n6f78075b --> n4d9c8c14
+          n6f78075b --> n7f92e042
+        n885ec3de --> nabad610b
+          nabad610b --> n99cca38d
+          nabad610b --> n8c333169
+      n5294cc96 --> nd22d5b24
+        nd22d5b24 --> nef021219
+          nef021219 --> n4efcf423
+          nef021219 --> n6e291c0d
+        nd22d5b24 --> n7ca008bf
+          n7ca008bf --> n89e0f9cc
+          n7ca008bf --> n806d733e
+  end
+
+  classDef root   fill:#0b3d91,stroke:#ffffff,color:#ffffff,stroke-width:2px
+  classDef branch fill:#1f6feb,stroke:#ffffff,color:#ffffff
+  classDef spine  fill:#2ea043,stroke:#ffffff,color:#ffffff
+  class n293a091d root
+  class n6b37ee1b,n47267aa5,n4dc04067,n2cc9b029,ncab783a1,n59f0e964 branch
+  class n2f1f28a0,n3b60c3db,nd947e352,nc2b0cffb,n3db91627,n898279e4,ne6cd6280,nbe980c7d spine
+  class nb435a5b6 root
+  class nccbb2c40,n3e2911c0,n9c16ad4f,nea84cb47,n4d5ecb6c,nb1e8b719 branch
+  class nbde6f352,n98aa637c,nb8a52034,n0d501d43,n5a93b724,n794a2906,n3c0ae160,n8c744284 spine
+  class na69c5838 root
+  class n6068c680,n3ff02b15,n5c3104b6,n1d51cfab,n57e4e82d,nb81c3a72 branch
+  class nc86d83be,n74d5ba00,ndbacfa6d,n1717af8c,n086988ba,nff1e6d92,n83201fce,nf3e0b97b spine
+  class n5294cc96 root
+  class n885ec3de,n6f78075b,nabad610b,nd22d5b24,nef021219,n7ca008bf branch
+  class n4d9c8c14,n7f92e042,n99cca38d,n8c333169,n4efcf423,n6e291c0d,n89e0f9cc,n806d733e spine

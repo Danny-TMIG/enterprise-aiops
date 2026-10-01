@@ -1,0 +1,269 @@
+#!/usr/bin/env bash
+# ═══════════════════════════════════════════════════════════════════════════
+# aiops — single-entry tool for the enterprise_aiops workspace
+# ═══════════════════════════════════════════════════════════════════════════
+set -uo pipefail
+
+SELF="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(cd "$SELF/.." && pwd)"
+cd "$ROOT" || exit 1
+
+# Deterministic environment: PYTHONPATH is exactly $ROOT, no inheritance.
+export PYTHONPATH="$ROOT"
+export PYTHONDONTWRITEBYTECODE=1
+
+# ── styling ────────────────────────────────────────────────────────────────
+if [ -t 1 ]; then
+  C_DIM=$'\033[2m'; C_RED=$'\033[31m'; C_GRN=$'\033[32m'
+  C_YEL=$'\033[33m'; C_BLU=$'\033[34m'; C_BLD=$'\033[1m'; C_RST=$'\033[0m'
+else
+  C_DIM=; C_RED=; C_GRN=; C_YEL=; C_BLU=; C_BLD=; C_RST=
+fi
+
+log()  { printf '%s[%s]%s %s\n' "$C_BLU" "$(date +%H:%M:%S)" "$C_RST" "$*"; }
+ok()   { printf '%s  ✓%s %s\n'  "$C_GRN" "$C_RST" "$*"; }
+warn() { printf '%s  !%s %s\n'  "$C_YEL" "$C_RST" "$*" >&2; }
+err()  { printf '%s  ✗%s %s\n'  "$C_RED" "$C_RST" "$*" >&2; }
+hdr()  { printf '\n%s── %s ──%s\n' "$C_BLD" "$*" "$C_RST"; }
+
+run() {
+  local label="$1"; shift
+  log "$label"
+  if "$@"; then ok "$label"; return 0
+  else local rc=$?; err "$label (rc=$rc)"; return $rc; fi
+}
+
+py() { python3 "$@"; }
+
+latest_log() { ls -1t "$ROOT"/aiops_run.*.log 2>/dev/null | head -n1; }
+
+# ═══════════════════════════════════════════════════════════════════════════
+# COMMANDS
+# ═══════════════════════════════════════════════════════════════════════════
+
+cmd_help() {
+  cat <<HELP
+${C_BLD}aiops${C_RST} — enterprise_aiops single-entry tool
+
+${C_BLD}Testing${C_RST}
+  test [args...]         pytest on tests/ (or given targets)
+  green                  tests + CLI → GREEN on success
+  quick                  pipeline + rubik tests only
+  coverage               pytest with --cov=app
+
+${C_BLD}Training${C_RST}
+  train [args...]        run app.train.cli
+  regen                  regenerate app/train/ from /tmp/parallel_train.py
+  cycle                  regen → train
+
+${C_BLD}Maintenance${C_RST}
+  prune [days]           delete aiops_run.*.log older than N days (default 7)
+  clean                  remove __pycache__, .pytest_cache, *.pyc
+  reset                  clean + prune
+
+${C_BLD}Diagnostics${C_RST}
+  status                 repo summary
+  doctor                 syntax + import smoke test
+  logs [n]               list last N run logs (default 5)
+  tail [log]             tail latest (or named) run log
+
+${C_BLD}Misc${C_RST}
+  v                      version + environment
+  where                  print ROOT and PYTHONPATH
+  shell                  subshell with the environment preloaded
+  sync                   canonical → app/train (write files, verify)
+  watchdog               check invariants; auto-heal on failure
+  bake                   bake canonical into /tmp/parallel_train.py
+  help                   this text
+HELP
+}
+
+cmd_test() {
+  local targets=("$@")
+  [ ${#targets[@]} -eq 0 ] && targets=(tests/)
+  run "pytest ${targets[*]}" \
+    python3 -m pytest "${targets[@]}" -q --no-header -o addopts=""
+}
+
+cmd_green() {
+  hdr "green"
+  python3 -m pytest tests/ -q --no-header -o addopts="" || { err "tests failed"; return 1; }
+  local log="/tmp/aiops_cli.log"
+  if ! python3 -m app.train.cli >"$log" 2>&1; then
+    err "CLI failed — tail of $log:"
+    tail -30 "$log" >&2
+    return 1
+  fi
+  printf '%s%sGREEN%s\n' "$C_BLD" "$C_GRN" "$C_RST"
+}
+
+cmd_quick() {
+  run "quick tests" python3 -m pytest \
+    tests/test_pipeline.py tests/test_rubik.py \
+    -q --no-header -o addopts=""
+}
+
+cmd_coverage() {
+  run "coverage" python3 -m pytest tests/ -q --no-header -o addopts="" \
+    --cov=app --cov-report=term-missing "$@"
+}
+
+
+cmd_sync()     { bash "$ROOT/tools/hooks/sync.sh"; }
+cmd_watchdog() { bash "$ROOT/tools/hooks/watchdog.sh"; }
+cmd_bake()     { python3 "$ROOT/tools/hooks/patch_generator.py"; }
+
+cmd_train() { run "app.train.cli" python3 -m app.train.cli "$@"; }
+
+cmd_regen() {
+  if [ ! -f /tmp/parallel_train.py ]; then
+    err "/tmp/parallel_train.py not found"; return 1
+  fi
+  bash "$ROOT/tools/hooks/pre_regen.sh"
+  python3 "$ROOT/tools/hooks/patch_generator.py" >/dev/null 2>&1 || true
+  python3 /tmp/parallel_train.py "$@" >/dev/null
+  bash "$ROOT/tools/hooks/post_regen.sh"
+}
+
+cmd_cycle() { cmd_regen && cmd_train; }
+
+cmd_prune() {
+  local days="${1:-7}" n
+  n=$(find "$ROOT" -maxdepth 1 -name 'aiops_run.*.log' -mtime +"$days" 2>/dev/null | wc -l | tr -d ' ')
+  find "$ROOT" -maxdepth 1 -name 'aiops_run.*.log' -mtime +"$days" -delete 2>/dev/null || true
+  ok "pruned $n log(s) older than ${days}d"
+}
+
+cmd_clean() {
+  log "removing caches"
+  find "$ROOT" -type d -name __pycache__ -prune -exec rm -rf {} + 2>/dev/null || true
+  find "$ROOT" -type d -name .pytest_cache -prune -exec rm -rf {} + 2>/dev/null || true
+  find "$ROOT" -type f -name '*.pyc' -delete 2>/dev/null || true
+  ok "caches removed"
+}
+
+cmd_reset() { cmd_clean; cmd_prune "${1:-7}"; }
+
+cmd_status() {
+  hdr "status"
+  printf '  root         %s\n' "$ROOT"
+  printf '  python       %s\n' "$(python3 --version 2>&1)"
+  printf '  venv         %s\n' "${VIRTUAL_ENV:-none}"
+  local n_sh n_py n_tests n_logs
+  n_sh=$(find "$ROOT" -name '*.sh' 2>/dev/null | wc -l | tr -d ' ')
+  n_py=$(find "$ROOT" -name '*.py' -not -path '*/.venv/*' 2>/dev/null | wc -l | tr -d ' ')
+  n_tests=$(find "$ROOT/tests" -name 'test_*.py' 2>/dev/null | wc -l | tr -d ' ')
+  n_logs=$(find "$ROOT" -maxdepth 1 -name 'aiops_run.*.log' 2>/dev/null | wc -l | tr -d ' ')
+  printf '  .sh files    %s\n' "$n_sh"
+  printf '  .py files    %s\n' "$n_py"
+  printf '  test files   %s\n' "$n_tests"
+  printf '  run logs     %s\n' "$n_logs"
+  if [ -d "$ROOT/.git" ]; then
+    printf '  git branch   %s\n' "$(git -C "$ROOT" rev-parse --abbrev-ref HEAD 2>/dev/null)"
+    printf '  git dirty    %s\n' "$(git -C "$ROOT" status --porcelain 2>/dev/null | wc -l | tr -d ' ')"
+  fi
+}
+
+cmd_doctor() {
+  hdr "doctor"
+  local fail=0
+  log "python syntax check every module"
+  while IFS= read -r f; do
+    python3 -c "import ast,sys; ast.parse(open(sys.argv[1]).read())" "$f" 2>/dev/null \
+      || { err "syntax: $f"; fail=$((fail+1)); }
+  done < <(find "$ROOT/app" -name '*.py' 2>/dev/null)
+  if [ "$fail" -eq 0 ]; then ok "all modules parse"; else err "$fail module(s) failed"; fi
+
+  log "import smoke test"
+  python3 - <<'PY' || fail=$((fail+1))
+mods = [
+    "app.agency.primitives", "app.agency.registry", "app.agency.gate",
+    "app.atlas.algorithms", "app.atlas.moats",
+    "app.autonomy.decisions", "app.autonomy.healer",
+    "app.autonomy.runtime", "app.autonomy.watchdog",
+    "app.botnetmastery.c2", "app.botnetmastery.models",
+    "app.botnetmastery.simulation", "app.botnetmastery.server",
+    "app.puzzles.rubik", "app.train.core", "app.train.mesh",
+]
+import importlib
+bad = 0
+for m in mods:
+    try:
+        importlib.import_module(m)
+    except Exception as e:
+        print(f"  ✗ {m}: {type(e).__name__}: {e}")
+        bad += 1
+if bad:
+    raise SystemExit(1)
+print(f"  ✓ {len(mods)} modules imported")
+PY
+  [ "$fail" -eq 0 ] && ok "doctor clean" || err "doctor found $fail issue(s)"
+  return $fail
+}
+
+cmd_logs() {
+  local n="${1:-5}" f
+  while IFS= read -r f; do printf '%s\n' "$f"; done \
+    < <(ls -1t "$ROOT"/aiops_run.*.log 2>/dev/null | head -n"$n")
+}
+
+cmd_tail() {
+  local f="${1:-}"
+  [ -z "$f" ] && f="$(latest_log)"
+  if [ -z "$f" ] || [ ! -f "$f" ]; then err "no log to tail"; return 1; fi
+  printf '%s  %s%s\n' "$C_DIM" "$f" "$C_RST"
+  tail -n 40 "$f"
+}
+
+cmd_v() {
+  hdr "version"
+  printf '  aiops        %s\n' "2026.09.30"
+  printf '  root         %s\n' "$ROOT"
+  printf '  python       %s\n' "$(python3 --version 2>&1)"
+  printf '  PYTHONPATH   %s\n' "$PYTHONPATH"
+  printf '  platform     %s\n' "$(uname -sm)"
+}
+
+cmd_where() {
+  printf 'ROOT=%s\n' "$ROOT"
+  printf 'PYTHONPATH=%s\n' "$PYTHONPATH"
+}
+
+cmd_shell() {
+  log "subshell with PYTHONPATH set (type 'exit' to return)"
+  bash --norc
+}
+
+# ═══════════════════════════════════════════════════════════════════════════
+# DISPATCH
+# ═══════════════════════════════════════════════════════════════════════════
+
+main() {
+  local cmd="${1:-help}"; shift || true
+  case "$cmd" in
+    test)      cmd_test "$@" ;;
+    green)     cmd_green ;;
+    quick)     cmd_quick ;;
+    coverage)  cmd_coverage "$@" ;;
+    train)     cmd_train "$@" ;;
+    regen)     cmd_regen "$@" ;;
+    cycle)     cmd_cycle ;;
+    sync)      cmd_sync ;;
+    watchdog)  cmd_watchdog ;;
+    bake)      cmd_bake ;;
+    prune)     cmd_prune "$@" ;;
+    clean)     cmd_clean ;;
+    reset)     cmd_reset "$@" ;;
+    status)    cmd_status ;;
+    doctor)    cmd_doctor ;;
+    logs)      cmd_logs "$@" ;;
+    tail)      cmd_tail "$@" ;;
+    v|version) cmd_v ;;
+    where)     cmd_where ;;
+    shell)     cmd_shell ;;
+    help|-h|--help) cmd_help ;;
+    *) err "unknown command: $cmd"; printf '\n'; cmd_help; return 2 ;;
+  esac
+}
+
+main "$@"

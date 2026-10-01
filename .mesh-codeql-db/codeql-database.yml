@@ -1,0 +1,12 @@
+---
+sourceLocationPrefix: /Users/metadusa/enterprise_aiops
+baselineLinesOfCode: 18674
+unicodeNewlines: false
+columnKind: utf32
+primaryLanguage: python
+creationMetadata:
+  cliVersion: 2.27.1
+  creationTime: 2026-09-30T17:21:20.899911Z
+overlayBaseDatabase: false
+overlayDatabase: false
+finalised: true

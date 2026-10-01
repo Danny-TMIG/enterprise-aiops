@@ -1,0 +1,11 @@
+{
+  "fail_on_severity": "error",
+  "max_findings": 500,
+  "allow_rules": [
+    "py/empty-except"
+  ],
+  "deny_rules": [
+    "py/clear-text-logging-sensitive-data",
+    "py/clear-text-storage-sensitive-data"
+  ]
+}

@@ -1,0 +1,16 @@
+cpu amd64
+bits 64
+global verify_corpus_fast
+section .text
+verify_corpus_fast:
+    xor rax, rax
+.loop:
+    test rsi, rsi
+    jz .done
+    mov r8b, [rdi]
+    xor al, r8b
+    inc rdi
+    dec rsi
+    jmp .loop
+.done:
+    ret

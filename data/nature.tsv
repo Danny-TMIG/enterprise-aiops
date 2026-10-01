@@ -1,0 +1,88 @@
+levy_flight	foraging	heavy-tailed jumps, alpha-stable
+brownian_search	foraging	diffusive, no memory
+correlated_walk	walk	momentum persists, angle auto-correlated
+area_restricted	foraging	long legs + tight local turns
+albatross_forage	foraging	levy + olfactory gradient
+bee_waggle	consensus	dancer encodes vector, hive averages
+ant_quorum	consensus	recruit until threshold, then commit
+termite_mound	stigmergy	deposit + follow + evaporate
+ant_colony	stigmergy	pheromone deposit + decay
+slime_mold	stigmergy	flow reinforces tube, unused fades
+boids	flocking	separation + alignment + cohesion
+starling_murmuration	flocking	7 neighbours, topological not metric
+murmuration_critical	flocking	order parameter peaks at critical density
+fish_school	flocking	edge-follow, predator evade
+locust_swarm	flocking	cannibalism avoidance -> aligned band
+firefly_sync	oscillator	pulse-coupled, phase advances
+cricket_chorus	oscillator	leader emerges through coupling
+cardiac_sa_node	oscillator	FitzHugh-Nagumo relaxation
+circadian_clock	oscillator	delayed negative feedback loop
+kuramoto	oscillator	mean-field phase coupling
+peskin_mirollo	oscillator	integrate-and-fire sync
+fitzhugh_nagumo	oscillator	fast-slow excitable spike
+hodgkin_huxley	oscillator	ion channel dynamics
+turing_pattern	morpho	activator-inhibitor, short+long range
+gray_scott	morpho	two-species reaction diffusion
+belousov_zhabotinsky	morpho	oscillating chemical spiral
+dla	morpho	diffusion-limited aggregation
+eden_growth	morpho	random attachment, compact cluster
+lichen_edge	morpho	slow boundary expansion
+tree_branching	morpho	apical dominance, L-system
+elephant_walk	walk	memory of entire history
+self_avoiding_walk	walk	no revisits, polymer-like
+persistent_walk	walk	straight with gaussian turning
+levy_walk_2d	walk	2D heavy-tail search
+quorum_sensing	threshold	density gate for collective action
+all_or_none	threshold	sigmoid input-output
+neuron_threshold	threshold	integrate-and-fire
+gene_switch	threshold	bistable toggle
+phase_transition	threshold	order parameter, critical point
+habituation	adaptation	repeated stimulus -> weaker response
+sensitization	adaptation	prior noxious -> stronger response
+hebbian	adaptation	fire together, wire together
+stdp	adaptation	spike-timing dependent plasticity
+homeostasis	adaptation	negative feedback to setpoint
+allostasis	adaptation	predictive adjustment to demand
+immune_affinity	adaptation	clonal selection, mutation
+bacterial_chemotaxis	adaptation	run-and-tumble, gradient sensing
+lotka_volterra	population	predator-prey cycles
+logistic	population	carrying capacity
+gompertz	population	sigmoid with decaying rate
+allee	population	threshold below which extinction
+sir	population	epidemic compartments
+sirs	population	waning immunity
+host_parasite	population	red queen dynamics
+predator_prey_spatial	population	Turing-Holling on grid
+fick	flow	flux ~ -gradient
+darcy	flow	porous flow
+poiseuille	flow	viscous pipe
+kirchhoff	flow	current/water conservation
+fourier	flow	heat conduction
+nernst	flow	membrane electrodiffusion
+chemostat	flow	steady-state reactor
+osmosis	flow	solvent across membrane
+diffusion_limited	flow	reaction at boundary
+humpback_route	foraging	straight legs + area-restricted turns
+albatross_forage	foraging	levy + olfactory plume
+bee_return	foraging	path integration + landmark
+salmon_homing	foraging	magnetic map + olfactory imprint
+monarch_migration	foraging	sun compass + magnetic clock
+murmuration_critical	flocking	order peaks at critical density
+fish_school	flocking	edge-follow, predator evade
+locust_swarm	flocking	cannibalism avoidance band
+cricket_chorus	oscillator	leader emerges by coupling
+cardiac_sa_node	oscillator	FitzHugh-Nagumo relaxation
+circadian_clock	oscillator	delayed negative feedback
+peskin_mirollo	oscillator	integrate-and-fire sync
+hodgkin_huxley	oscillator	ion channel dynamics
+gray_scott	morpho	two-species reaction diffusion
+belousov_zhabotinsky	morpho	oscillating chemical spiral
+dla	morpho	diffusion-limited aggregation
+eden_growth	morpho	random attachment cluster
+tree_branching	morpho	apical dominance, L-system
+persistent_walk	walk	straight with gaussian turning
+levy_walk_2d	walk	2D heavy-tail search
+all_or_none	threshold	sigmoid input-output
+gene_switch	threshold	bistable toggle
+phase_transition	threshold	order parameter critical point
+habituation	adaptation	repeated stimulus weakens response

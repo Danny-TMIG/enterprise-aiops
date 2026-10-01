@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# dcs — thin wrapper; runs the toolchain from the repo with PYTHONPATH set.
+cd "${AIOPS_ROOT:-$HOME/enterprise_aiops}" || exit 1
+case ":$PYTHONPATH:" in
+  *":$PWD:"*) ;;
+  *) export PYTHONPATH="$PWD${PYTHONPATH:+:$PYTHONPATH}" ;;
+esac
+exec python3 -m dcs "$@"

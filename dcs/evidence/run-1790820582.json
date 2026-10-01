@@ -1,0 +1,2463 @@
+{
+  "standard_ref": "dcs.aiops@1.0.0",
+  "reference": {
+    "name": "enterprise_aiops",
+    "version": "0.0.0",
+    "digest": "sha256:582faff68cd8f94e"
+  },
+  "started": 1790820577.639511,
+  "completed": 1790820582.7278342,
+  "results": [
+    {
+      "id": "DCS-AU-001",
+      "criticality": "MUST",
+      "duration_ms": 0.3989999968325719,
+      "detail": "dcs.hats.au.test returned cleanly",
+      "evidence": "sha256:90448ee93d137fca10c46a6b2676dad6376651d6ff284eeb06664cdde67929bf",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-AUT-001",
+      "criticality": "MUST",
+      "duration_ms": 0.24120800662785769,
+      "detail": "dcs.hats.aut.test returned cleanly",
+      "evidence": "sha256:1a74875bafcc89ac48b6a364c51ed87d8448d4648513d49fe9dd9469a832167a",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-BE-001",
+      "criticality": "MUST",
+      "duration_ms": 0.5918329989071935,
+      "detail": "dcs.hats.be.test returned cleanly",
+      "evidence": "sha256:a01c7219ff693839bedbef09a7aeb16209043c89bb8b4afbb1c81e28eb1ec283",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CAD-001",
+      "criticality": "MUST",
+      "duration_ms": 0.21558300068136305,
+      "detail": "dcs.hats.cad.test returned cleanly",
+      "evidence": "sha256:1ce7b9b00430d2dde25dc34ed827d098f824aca84627f66699be4f8e8d0ccd7d",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CL-001",
+      "criticality": "MUST",
+      "duration_ms": 0.33062500006053597,
+      "detail": "dcs.hats.cl.test returned cleanly",
+      "evidence": "sha256:cb15d877912ffb08a885f1e6b191903804c8ebbc2f6a8a3f0b89b7e4f3b355b4",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CMP-001",
+      "criticality": "MUST",
+      "duration_ms": 0.27150000096298754,
+      "detail": "dcs.hats.cmp.test returned cleanly",
+      "evidence": "sha256:92b8b2c402f61caad74d673bf5215770d3733971a7bed6ea62bc0b9227ac85d2",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CMP2-001",
+      "criticality": "MUST",
+      "duration_ms": 0.974374997895211,
+      "detail": "dcs.hats.cmp2.test returned cleanly",
+      "evidence": "sha256:ef535bf14f71959cc8aaca1ca4176a5ab37d09f1faf4149af444be34914b2a7c",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CO-001",
+      "criticality": "MUST",
+      "duration_ms": 1.0352919925935566,
+      "detail": "dcs.tests.equivalence.every_coalesce_registered returned cleanly",
+      "evidence": "sha256:48f43a1f5d2949d4048257569e75dc653288f352a8dd7b02eb36001bcaad073a",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CO-002",
+      "criticality": "MUST",
+      "duration_ms": 39.78783299680799,
+      "detail": "dcs.tests.equivalence.mesh_coalescence_laws returned cleanly",
+      "evidence": "sha256:b8c39ceb307cd563de16a058216aedaa5d1c7a08c58edd244b49a88815da52b5",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CO-003",
+      "criticality": "MUST",
+      "duration_ms": 3.2092920009745285,
+      "detail": "dcs.tests.equivalence.run_merge_rejects returned cleanly",
+      "evidence": "sha256:c19eccabab7294038e6ece19c378facb538231d8dfdbc2dc85d3e7b6e67faa0e",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CO-004",
+      "criticality": "MUST",
+      "duration_ms": 0.01245799649041146,
+      "detail": "dcs.tests.equivalence.requirement_stricter returned cleanly",
+      "evidence": "sha256:5c290fdf0a2d153cbdf3cfedb1d1544456c23f0b14d343eb0a2056a19da1ef4f",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CO-005",
+      "criticality": "MUST",
+      "duration_ms": 0.05808299465570599,
+      "detail": "dcs.tests.equivalence.bundle_pessimistic returned cleanly",
+      "evidence": "sha256:e5586bfa9f1f939098297195d7f75b7d2f1e391ce81e05dae0bb6d9b98f62b78",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-COH-001",
+      "criticality": "MUST",
+      "duration_ms": 1.3286659959703684,
+      "detail": "Traceback (most recent call last):\n  File \"/Users/metadusa/enterprise_aiops/dcs/conform.py\", line 51, in _run_inner\n    fn()\n  File \"/Users/metadusa/enterprise_aiops/dcs/tests/conformance.py\", line 34, in coherence_standard_evidence\n    from dcs.coherence import assess\nImportError: cannot import name 'assess' from 'dcs.coherence' (/Users/metadusa/enterprise_aiops/dcs/coherence/__init__.py)\n",
+      "evidence": "sha256:0ae69b36fe21f55930f32322718d3e134fdf11f2a3031962f849dc06c05accb2",
+      "error": "ImportError: cannot import name 'assess' from 'dcs.coherence' (/Users/metadusa/enterprise_aiops/dcs/coherence/__init__.py)",
+      "pass": false
+    },
+    {
+      "id": "DCS-COH-002",
+      "criticality": "MUST",
+      "duration_ms": 0.018125007045455277,
+      "detail": "dcs.tests.conformance.coherence_registries returned cleanly",
+      "evidence": "sha256:b924d6210697ef6b248ed816fa0f75f644cd742ca8bd8f719ae80e61fdad3e48",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-COH-003",
+      "criticality": "MUST",
+      "duration_ms": 0.30612500268034637,
+      "detail": "Traceback (most recent call last):\n  File \"/Users/metadusa/enterprise_aiops/dcs/conform.py\", line 51, in _run_inner\n    fn()\n  File \"/Users/metadusa/enterprise_aiops/dcs/tests/conformance.py\", line 51, in coherence_roster\n    from dcs.team.roster import ROSTER\nModuleNotFoundError: No module named 'dcs.team.roster'\n",
+      "evidence": "sha256:d419f6321f6fc559e27808b22c92a9c92696d551b0a959f92a34cc582da9e023",
+      "error": "ModuleNotFoundError: No module named 'dcs.team.roster'",
+      "pass": false
+    },
+    {
+      "id": "DCS-CONF-001",
+      "criticality": "MUST",
+      "duration_ms": 0.668499997118488,
+      "detail": "Traceback (most recent call last):\n  File \"/Users/metadusa/enterprise_aiops/dcs/conform.py\", line 51, in _run_inner\n    fn()\n  File \"/Users/metadusa/enterprise_aiops/dcs/tests/conformance.py\", line 15, in declared_matches_actual\n    summary = bundle.summary()\n              ^^^^^^^^^^^^^^\nAttributeError: 'dict' object has no attribute 'summary'\n",
+      "evidence": "sha256:284b392c2bc39c06fafda17b2ca15dbc2583471d69fef25892c4f8396ffc959c",
+      "error": "AttributeError: 'dict' object has no attribute 'summary'",
+      "pass": false
+    },
+    {
+      "id": "DCS-CONF-002",
+      "criticality": "MUST",
+      "duration_ms": 1.6857500013429672,
+      "detail": "Traceback (most recent call last):\n  File \"/Users/metadusa/enterprise_aiops/dcs/conform.py\", line 51, in _run_inner\n    fn()\n  File \"/Users/metadusa/enterprise_aiops/dcs/tests/conformance.py\", line 27, in verdict_is_conformant\n    rep = assess(ROOT / \"dcs/standards/aiops.json\", ROOT)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/metadusa/enterprise_aiops/dcs/conformance/__init__.py\", line 37, in assess\n    summary = bundle.summary()\n              ^^^^^^^^^^^^^^\nAttributeError: 'dict' object has no attribute 'summary'\n",
+      "evidence": "sha256:de4de472bf812373b8fee582ca08b4086799a738925ab12f8cb9971492a51ddb",
+      "error": "AttributeError: 'dict' object has no attribute 'summary'",
+      "pass": false
+    },
+    {
+      "id": "DCS-CRD-001",
+      "criticality": "MUST",
+      "duration_ms": 1.12583399459254,
+      "detail": "dcs.tests.conformance.quorum_strict returned cleanly",
+      "evidence": "sha256:f67429b7bbbba387bcdddac707c53d553f6f74340227e5532c0c1e4408602cc3",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CRD-002",
+      "criticality": "MUST",
+      "duration_ms": 0.247582996962592,
+      "detail": "Traceback (most recent call last):\n  File \"/Users/metadusa/enterprise_aiops/dcs/conform.py\", line 51, in _run_inner\n    fn()\n  File \"/Users/metadusa/enterprise_aiops/dcs/tests/conformance.py\", line 78, in epoch_monotonic\n    assert e.is_monotonic()\n           ^^^^^^^^^^^^^^\nAttributeError: 'Epoch' object has no attribute 'is_monotonic'\n",
+      "evidence": "sha256:5653e95f0d1f123f276a4c928acd8b9b58df8134210edd94353630575bbc338a",
+      "error": "AttributeError: 'Epoch' object has no attribute 'is_monotonic'",
+      "pass": false
+    },
+    {
+      "id": "DCS-CRD-003",
+      "criticality": "MUST",
+      "duration_ms": 0.06024999311193824,
+      "detail": "Traceback (most recent call last):\n  File \"/Users/metadusa/enterprise_aiops/dcs/conform.py\", line 51, in _run_inner\n    fn()\n  File \"/Users/metadusa/enterprise_aiops/dcs/tests/conformance.py\", line 84, in reconcile_commutative\n    from dcs.team.coord import reconcile_commutative\nImportError: cannot import name 'reconcile_commutative' from 'dcs.team.coord' (/Users/metadusa/enterprise_aiops/dcs/team/coord.py)\n",
+      "evidence": "sha256:6d99d4ead89876c63ef0639b5fd4138a76f0002171c7d9df7ad671adc533d02a",
+      "error": "ImportError: cannot import name 'reconcile_commutative' from 'dcs.team.coord' (/Users/metadusa/enterprise_aiops/dcs/team/coord.py)",
+      "pass": false
+    },
+    {
+      "id": "DCS-CRD-004",
+      "criticality": "MUST",
+      "duration_ms": 0.04587500006891787,
+      "detail": "Traceback (most recent call last):\n  File \"/Users/metadusa/enterprise_aiops/dcs/conform.py\", line 51, in _run_inner\n    fn()\n  File \"/Users/metadusa/enterprise_aiops/dcs/tests/conformance.py\", line 92, in reconcile_associative\n    from dcs.team.coord import reconcile_associative\nImportError: cannot import name 'reconcile_associative' from 'dcs.team.coord' (/Users/metadusa/enterprise_aiops/dcs/team/coord.py)\n",
+      "evidence": "sha256:b4767257b08f8057abae5f97c50e9506610832bfe5831d50d50185ceaf4a3cfb",
+      "error": "ImportError: cannot import name 'reconcile_associative' from 'dcs.team.coord' (/Users/metadusa/enterprise_aiops/dcs/team/coord.py)",
+      "pass": false
+    },
+    {
+      "id": "DCS-CRD-005",
+      "criticality": "MUST",
+      "duration_ms": 0.04616600926965475,
+      "detail": "Traceback (most recent call last):\n  File \"/Users/metadusa/enterprise_aiops/dcs/conform.py\", line 51, in _run_inner\n    fn()\n  File \"/Users/metadusa/enterprise_aiops/dcs/tests/conformance.py\", line 100, in reconcile_idempotent\n    from dcs.team.coord import reconcile_idempotent\nImportError: cannot import name 'reconcile_idempotent' from 'dcs.team.coord' (/Users/metadusa/enterprise_aiops/dcs/team/coord.py)\n",
+      "evidence": "sha256:73a8c31eb5a0e07a53bb074ca06ee8661ef4b5683fc3cd40853bd29e06e67362",
+      "error": "ImportError: cannot import name 'reconcile_idempotent' from 'dcs.team.coord' (/Users/metadusa/enterprise_aiops/dcs/team/coord.py)",
+      "pass": false
+    },
+    {
+      "id": "DCS-CRY-001",
+      "criticality": "MUST",
+      "duration_ms": 0.43812500371132046,
+      "detail": "dcs.hats.cry.test returned cleanly",
+      "evidence": "sha256:b88459f30989f58c16b0459d7a3ab728477556ea561bf589d3d444bae8b440da",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-DA-001",
+      "criticality": "MUST",
+      "duration_ms": 0.2442920085741207,
+      "detail": "dcs.hats.da.test returned cleanly",
+      "evidence": "sha256:46cd49f4de729e7187d343df2347d4f572b638ca655d176591c83c72500f95b5",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-DB-001",
+      "criticality": "MUST",
+      "duration_ms": 2.1936249977443367,
+      "detail": "dcs.hats.db.test returned cleanly",
+      "evidence": "sha256:7efc1da9e5eee04b1879fa23e8ad95573fb911faf6464beb7e09084b604e1917",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-DBA-001",
+      "criticality": "MUST",
+      "duration_ms": 0.450624997029081,
+      "detail": "dcs.hats.dba.test returned cleanly",
+      "evidence": "sha256:26ed766cf33e1fed99c643c3db7ce2866c5899e7093788ac98d2d2e8ab81b135",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-DE-001",
+      "criticality": "MUST",
+      "duration_ms": 0.33670899574644864,
+      "detail": "dcs.hats.de.test returned cleanly",
+      "evidence": "sha256:15c44ff20aa2b2981145b708f1c44b77542985eacf9816436c1110b1657ad2e4",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-DIS-001",
+      "criticality": "MUST",
+      "duration_ms": 0.30170800164341927,
+      "detail": "dcs.hats.dis.test returned cleanly",
+      "evidence": "sha256:80bae952e53c6ed3c731157dce411870d1d7432b8d946a60d453813fc59293c8",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-DO-001",
+      "criticality": "MUST",
+      "duration_ms": 0.27016700187232345,
+      "detail": "dcs.hats.do.test returned cleanly",
+      "evidence": "sha256:7f6fd299464928c758f95d702e15a8f9bf1687543431ec1bc7f5448c005d547a",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-DS-001",
+      "criticality": "MUST",
+      "duration_ms": 0.2795000036712736,
+      "detail": "dcs.hats.ds.test returned cleanly",
+      "evidence": "sha256:8b40568ccffa80a8810c62f60a23c2605a95dd4c143b1813a7d6f6f0d9a72ed5",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-EMB-001",
+      "criticality": "MUST",
+      "duration_ms": 0.25674999051261693,
+      "detail": "dcs.hats.emb.test returned cleanly",
+      "evidence": "sha256:d0f24f038d840741368305c0cee8e04d743f4e252bafc294f1eb57cfbf9e76f1",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-EQ-001",
+      "criticality": "MUST",
+      "duration_ms": 0.010624993592500687,
+      "detail": "dcs.tests.equivalence.every_kind_registered returned cleanly",
+      "evidence": "sha256:712cf674dd04ca562c33c04c223ab0da0f38bbc8feeb341f8acfa68e7e76f77e",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-EQ-002",
+      "criticality": "MUST",
+      "duration_ms": 8.460625002044253,
+      "detail": "dcs.tests.equivalence.exact_implies_semantic returned cleanly",
+      "evidence": "sha256:e1500c19542ad4a6f81b07c89cedc6c49e6c143c8a8bc65c117804ac8a1a5919",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-EQ-003",
+      "criticality": "MUST",
+      "duration_ms": 10.451500013004988,
+      "detail": "dcs.tests.equivalence.equivalence_is_relation returned cleanly",
+      "evidence": "sha256:9304fe0e3e0dee259f1fdabec9452bb367f33ff5e76fe635356be9f1a06d9a25",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-FE-001",
+      "criticality": "MUST",
+      "duration_ms": 2.1524159965338185,
+      "detail": "dcs.hats.fe.test returned cleanly",
+      "evidence": "sha256:e89567556076eace01886e30d46eaa60950652752c8f55875b733f6283ae42dc",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-FM-001",
+      "criticality": "MUST",
+      "duration_ms": 0.27779099764302373,
+      "detail": "dcs.hats.fmtl.test returned cleanly",
+      "evidence": "sha256:3032945fff24362f7bc30670842747dfa1eb518a738a38abafdf81f0c8e03c5c",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-FS-001",
+      "criticality": "MUST",
+      "duration_ms": 0.25266699958592653,
+      "detail": "dcs.hats.fs.test returned cleanly",
+      "evidence": "sha256:87a52eb9f6e0d11eaa7869f434f6d8751b0e0d9d17954e24d5741a5fa35448c0",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-FW-001",
+      "criticality": "MUST",
+      "duration_ms": 0.2505839947843924,
+      "detail": "dcs.hats.fw.test returned cleanly",
+      "evidence": "sha256:0d6fa91cfdb2ddf19840bcf94c7de9fcdfffd78b7d67c27facc7d0b501b2d4cf",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-GAME-001",
+      "criticality": "MUST",
+      "duration_ms": 384.03995799308177,
+      "detail": "dcs.hats.game.test returned cleanly",
+      "evidence": "sha256:f6f2b05c26ddb98cc7b43f4e56f21143f4846916602749b151734eb6472200ad",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-GFX-001",
+      "criticality": "MUST",
+      "duration_ms": 0.4876249877270311,
+      "detail": "dcs.hats.gfx.test returned cleanly",
+      "evidence": "sha256:938dd1ad968a29dbbdad159dfdaa9c22f7be2ce668e7877b6543fc9de5d9fab4",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-HPC-001",
+      "criticality": "MUST",
+      "duration_ms": 1.3567499991040677,
+      "detail": "dcs.hats.hpc.test returned cleanly",
+      "evidence": "sha256:4b2769ae46ebbe74af82813b7257cdceafe6c28bfdd79ccc781a67fa7a8a2911",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-HW-001",
+      "criticality": "MUST",
+      "duration_ms": 0.35937500069849193,
+      "detail": "dcs.hats.hw.test returned cleanly",
+      "evidence": "sha256:cc2912967b8cbe892a5ba29d9345c8400b7ba275befad9b9fdec89a91a9ffbdc",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-KRN-001",
+      "criticality": "MUST",
+      "duration_ms": 0.8285420044558123,
+      "detail": "dcs.hats.krn.test returned cleanly",
+      "evidence": "sha256:2c8a4f8b0c653e6efe8e1e880ef3bb77230e09ea80ea6fefd6a46575f2280f0e",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-MESH-001",
+      "criticality": "MUST",
+      "duration_ms": 0.3178329934598878,
+      "detail": "dcs.tests.mesh.mesh_add_run returned cleanly",
+      "evidence": "sha256:0dcf0f7bbc40b410ade67351709f29085f75016ddcce1d1f7e6858e3f9bce05c",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-MESH-002",
+      "criticality": "MUST",
+      "duration_ms": 0.003665991243906319,
+      "detail": "dcs.tests.mesh.weave_accepts_list returned cleanly",
+      "evidence": "sha256:a8be67bc5e02b5a28c5747e474af3ada99a343026573a24c9490b790f6caccaf",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-MESH-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0028340000426396728,
+      "detail": "dcs.tests.mesh.mesh_exports returned cleanly",
+      "evidence": "sha256:2130a7afadc1e232a4e9721be1deeb036dd9b10ccb6a71425723dac3aabf6c5b",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-MLE-001",
+      "criticality": "MUST",
+      "duration_ms": 0.26149999757763,
+      "detail": "dcs.hats.mle.test returned cleanly",
+      "evidence": "sha256:1463401851c13e495fede7dcb2db6cc9047b91102622235658062448f3f380da",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-MO-001",
+      "criticality": "MUST",
+      "duration_ms": 0.3057910071220249,
+      "detail": "dcs.hats.mo.test returned cleanly",
+      "evidence": "sha256:1877718456de931e9e6cbbdc7179285545356d373d520136523cb4907ead1dca",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-ADP-001",
+      "criticality": "MUST",
+      "duration_ms": 1.3194589992053807,
+      "detail": "dcs.nature.adaptation.test_habituation returned cleanly",
+      "evidence": "sha256:6dcf3d1d61b4bce54bb58a7bb8d845831f26f1498c852002836a3120cbd74ea2",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-ADP-002",
+      "criticality": "MUST",
+      "duration_ms": 0.006707996362820268,
+      "detail": "dcs.nature.adaptation.test_sensitization returned cleanly",
+      "evidence": "sha256:b042de7e3311d64a3c7168a650cb601a3e40e8a8991c6a5c1566bc284340d36b",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-ADP-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0033329997677356005,
+      "detail": "dcs.nature.adaptation.test_hebbian returned cleanly",
+      "evidence": "sha256:9d9cbb48598b273281272e2103e93a3fa72b2398c8bc9b9cea1526e48239a225",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-ADP-004",
+      "criticality": "MUST",
+      "duration_ms": 0.0027909991331398487,
+      "detail": "dcs.nature.adaptation.test_stdp returned cleanly",
+      "evidence": "sha256:9f18400c1c3c9be2d536722de137526e5e3d7921d5009b1f2a3448d32143ab44",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-ADP-005",
+      "criticality": "MUST",
+      "duration_ms": 0.007374997949227691,
+      "detail": "dcs.nature.adaptation.test_homeostasis returned cleanly",
+      "evidence": "sha256:951db0a9169e9a20c609380d3fbae318aedf37c797816ed2d6a5d9a2bb7e2a57",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-ADP-006",
+      "criticality": "MUST",
+      "duration_ms": 0.001124994014389813,
+      "detail": "dcs.nature.adaptation.test_allostasis returned cleanly",
+      "evidence": "sha256:cfc55d6c790e2bf3b84b373095068f57fd2b02b9f418014f7134993697dc61c0",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-ADP-007",
+      "criticality": "SHOULD",
+      "duration_ms": 0.005166992195881903,
+      "detail": "dcs.nature.adaptation.test_immune returned cleanly",
+      "evidence": "sha256:fcbc9a579d775f77f6594c826a437ca96b156144acf238174bc7a4c43d6faf6e",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-ADP-008",
+      "criticality": "SHOULD",
+      "duration_ms": 0.09312501060776412,
+      "detail": "dcs.nature.adaptation.test_chemotaxis returned cleanly",
+      "evidence": "sha256:bf293577d2779314f026b8800de5b896b125fade30fb0c22c4b245892116c1c9",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-CON-001",
+      "criticality": "MUST",
+      "duration_ms": 0.3503749903757125,
+      "detail": "dcs.nature.consensus.test_bee_average returned cleanly",
+      "evidence": "sha256:c8b811751f3627113f8a6d4718c9c23cd04e94f79450563bc40c1b02a48763a6",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-CON-002",
+      "criticality": "MUST",
+      "duration_ms": 0.011374999303370714,
+      "detail": "dcs.nature.consensus.test_quorum returned cleanly",
+      "evidence": "sha256:6418d7634075d51aebe6606c16697c274d483c373da089232ea4d3ab7c42dce7",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-FLK-001",
+      "criticality": "SHOULD",
+      "duration_ms": 12.180874997284263,
+      "detail": "Traceback (most recent call last):\n  File \"/Users/metadusa/enterprise_aiops/dcs/conform.py\", line 51, in _run_inner\n    fn()\n  File \"/Users/metadusa/enterprise_aiops/dcs/nature/flocking.py\", line 105, in test_boids_polarised\n    assert _polarization(r[\"vel\"]) > 0.3\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "evidence": "sha256:d75fe162c004af27d215703e8de05bb4c4b6b48d93713a1ac19fa31812aa501b",
+      "error": "AssertionError: ",
+      "pass": false
+    },
+    {
+      "id": "DCS-NAT-FLK-002",
+      "criticality": "MUST",
+      "duration_ms": 42.7000420022523,
+      "detail": "dcs.nature.flocking.test_murmuration_k returned cleanly",
+      "evidence": "sha256:6c12ab5f18ebd5becef31d8f9ae5e4cc9201aeb7a420a8f704b0572866ef02a8",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-FLK-003",
+      "criticality": "SHOULD",
+      "duration_ms": 0.17712499538902193,
+      "detail": "Traceback (most recent call last):\n  File \"/Users/metadusa/enterprise_aiops/dcs/conform.py\", line 51, in _run_inner\n    fn()\n  File \"/Users/metadusa/enterprise_aiops/dcs/nature/flocking.py\", line 120, in test_critical_peak\n    assert vals.index(max(vals)) not in (0, len(vals)-1)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "evidence": "sha256:6029b35bce366c842fab60975ffc4a0af18792c2aecf3558e7e75789e533070a",
+      "error": "AssertionError: ",
+      "pass": false
+    },
+    {
+      "id": "DCS-NAT-FLK-004",
+      "criticality": "SHOULD",
+      "duration_ms": 0.2986670006066561,
+      "detail": "dcs.nature.flocking.test_fish_edge returned cleanly",
+      "evidence": "sha256:6381f40d31eed81eecca93d75a67c4a00fa096bd7dabac69ff64a9ff2126b8be",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-FLK-005",
+      "criticality": "SHOULD",
+      "duration_ms": 6.770416992367245,
+      "detail": "dcs.nature.flocking.test_locust_align returned cleanly",
+      "evidence": "sha256:4884f2ad1236106b26f572825177fd927dd9b9c73a6c85b567955adcb1ae5148",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-FLOW-001",
+      "criticality": "MUST",
+      "duration_ms": 0.7024590013315901,
+      "detail": "dcs.nature.flow.test_fick returned cleanly",
+      "evidence": "sha256:21274f155791fca1e24b2eba4ca9ccb0fb0ba41a839d68576ec2a55e63f8aaca",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-FLOW-002",
+      "criticality": "MUST",
+      "duration_ms": 0.0018330028979107738,
+      "detail": "dcs.nature.flow.test_darcy returned cleanly",
+      "evidence": "sha256:dc220dc89d4eb6024f563ac0921502f5c8a2f982feb7e6ad690d96649c739276",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-FLOW-003",
+      "criticality": "MUST",
+      "duration_ms": 0.001958003849722445,
+      "detail": "dcs.nature.flow.test_poiseuille returned cleanly",
+      "evidence": "sha256:36570ce23d4ed30a28a448e73714c82bb86b6be34f5f3d123f40dc927c23a8df",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-FLOW-004",
+      "criticality": "MUST",
+      "duration_ms": 0.0020000006770715117,
+      "detail": "dcs.nature.flow.test_kirchhoff returned cleanly",
+      "evidence": "sha256:14c86f9765e24876ce034cbfdd51c1b30c1bd730b5454a8de146ec8be69a055d",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-FLOW-005",
+      "criticality": "MUST",
+      "duration_ms": 0.0009580107871443033,
+      "detail": "dcs.nature.flow.test_fourier returned cleanly",
+      "evidence": "sha256:0b6212ed568919933268727ddf8b8ebb5a3a3c742815b069436379f198e83ad2",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-FLOW-006",
+      "criticality": "MUST",
+      "duration_ms": 0.0012079981388524175,
+      "detail": "dcs.nature.flow.test_nernst returned cleanly",
+      "evidence": "sha256:32f434157809f819ea093d5678a01213dc54542a19be87621a5937d2d164320e",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-FLOW-007",
+      "criticality": "MUST",
+      "duration_ms": 0.4081660008523613,
+      "detail": "dcs.nature.flow.test_chemostat returned cleanly",
+      "evidence": "sha256:9da11707334028c4e46e4d913f981ca83de78381e485f80439f3f233e217cf1a",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-FLOW-008",
+      "criticality": "MUST",
+      "duration_ms": 0.0015830009942874312,
+      "detail": "dcs.nature.flow.test_osmosis returned cleanly",
+      "evidence": "sha256:138ff07b3e80617c74adb20169f78e61064e2fa1ead91e03b5495d3d20d59bf7",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-FLOW-009",
+      "criticality": "MUST",
+      "duration_ms": 0.0015420082490891218,
+      "detail": "dcs.nature.flow.test_diffusion_limited returned cleanly",
+      "evidence": "sha256:be2ea2dd70a519a3be3372f98afe4a9f3c02ecdc91806ab3764eccc372bc05de",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-FRG-001",
+      "criticality": "SHOULD",
+      "duration_ms": 1.2972080003237352,
+      "detail": "Traceback (most recent call last):\n  File \"/Users/metadusa/enterprise_aiops/dcs/conform.py\", line 51, in _run_inner\n    fn()\n  File \"/Users/metadusa/enterprise_aiops/dcs/nature/foraging.py\", line 63, in test_levy_more_efficient\n    assert L >= B, (L, B)\n           ^^^^^^\nAssertionError: (200, 218)\n",
+      "evidence": "sha256:d0a87317e8fc92f1bad056689c6fd7a9631825ff2c76326297aeb644db3f23ac",
+      "error": "AssertionError: (200, 218)",
+      "pass": false
+    },
+    {
+      "id": "DCS-NAT-FRG-002",
+      "criticality": "MUST",
+      "duration_ms": 17.189583013532683,
+      "detail": "dcs.nature.foraging.test_brownian_diffusive returned cleanly",
+      "evidence": "sha256:6f6b192de22d714e9c8fb11bf091303dc7b1e04db0b3148acf14abfcab11858a",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-FRG-003",
+      "criticality": "MUST",
+      "duration_ms": 0.7166669965954497,
+      "detail": "dcs.nature.foraging.test_ar_bounded returned cleanly",
+      "evidence": "sha256:efd5750df510f0e62293c68fa8ba836207c27419d07fc1b5eab0146c2db2daa3",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-FRG-004",
+      "criticality": "SHOULD",
+      "duration_ms": 0.7800000021234155,
+      "detail": "Traceback (most recent call last):\n  File \"/Users/metadusa/enterprise_aiops/dcs/conform.py\", line 51, in _run_inner\n    fn()\n  File \"/Users/metadusa/enterprise_aiops/dcs/nature/foraging.py\", line 92, in test_albatross_gradient\n    assert math.hypot(10-x, 10-y) < 5, (x, y)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: (9.69137744968838, -47.44965158622973)\n",
+      "evidence": "sha256:a9e981d7368c9307dc2d46c2ea948b5fcce27017599762c5bcb76d26921b7c1c",
+      "error": "AssertionError: (9.69137744968838, -47.44965158622973)",
+      "pass": false
+    },
+    {
+      "id": "DCS-NAT-MOR-001",
+      "criticality": "MUST",
+      "duration_ms": 1582.5319580035284,
+      "detail": "Traceback (most recent call last):\n  File \"/Users/metadusa/enterprise_aiops/dcs/conform.py\", line 51, in _run_inner\n    fn()\n  File \"/Users/metadusa/enterprise_aiops/dcs/nature/morpho.py\", line 124, in test_turing\n    assert r[\"variance\"] > 0.001, r[\"variance\"]\n           ^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0.0\n",
+      "evidence": "sha256:cfa3cd8715d92097969b916c84f9229d939c1750ce77fce0ef3e414536ac893e",
+      "error": "AssertionError: 0.0",
+      "pass": false
+    },
+    {
+      "id": "DCS-NAT-MOR-002",
+      "criticality": "MUST",
+      "duration_ms": 1583.5347499960335,
+      "detail": "dcs.nature.morpho.test_gs returned cleanly",
+      "evidence": "sha256:c3b5b0543e5fe9a4d6aafd9e862bfc2e6539457a6354678da4167a61434e9b61",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-MOR-003",
+      "criticality": "SHOULD",
+      "duration_ms": 414.45820800436195,
+      "detail": "Traceback (most recent call last):\n  File \"/Users/metadusa/enterprise_aiops/dcs/conform.py\", line 51, in _run_inner\n    fn()\n  File \"/Users/metadusa/enterprise_aiops/dcs/nature/morpho.py\", line 137, in test_bz\n    assert any(v > 0.3 for row in r[\"v\"] for v in row)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "evidence": "sha256:6966ea13e4bb6f6f7429923af46e2d1da563bbd1d28e0480e87268534c5ea560",
+      "error": "AssertionError: ",
+      "pass": false
+    },
+    {
+      "id": "DCS-NAT-MOR-004",
+      "criticality": "SHOULD",
+      "duration_ms": 463.3075000019744,
+      "detail": "Traceback (most recent call last):\n  File \"/Users/metadusa/enterprise_aiops/dcs/conform.py\", line 51, in _run_inner\n    fn()\n  File \"/Users/metadusa/enterprise_aiops/dcs/nature/morpho.py\", line 144, in test_dla\n    assert r[\"size\"] >= 40\n           ^^^^^^^^^^^^^^^\nAssertionError\n",
+      "evidence": "sha256:aa586ba0dd46e05ad015398cad4d3d1d8cf1b35a06807553cf3e53fcc24e6b8f",
+      "error": "AssertionError: ",
+      "pass": false
+    },
+    {
+      "id": "DCS-NAT-MOR-005",
+      "criticality": "SHOULD",
+      "duration_ms": 0.3027079947059974,
+      "detail": "dcs.nature.morpho.test_eden_compact returned cleanly",
+      "evidence": "sha256:6aae2f1965f4822840c96b8515ef340482dd66a5db247ff8632e8e9065ac9743",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-MOR-006",
+      "criticality": "MUST",
+      "duration_ms": 0.0043339969124644995,
+      "detail": "dcs.nature.morpho.test_lichen returned cleanly",
+      "evidence": "sha256:719fad5f9d6b9fd671dd211bc29aee38df703154bcb6b5dd0b1ecd7a3a01ee8d",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-MOR-007",
+      "criticality": "MAY",
+      "duration_ms": 0.008125003660097718,
+      "detail": "dcs.nature.morpho.test_tree returned cleanly",
+      "evidence": "sha256:5a308cc7c448689537b2a2d6f08addff9ab3650a5ddd00093172afde9bbf0506",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-OSC-001",
+      "criticality": "MUST",
+      "duration_ms": 7.405583004583605,
+      "detail": "dcs.nature.oscillator.test_kuramoto_sync returned cleanly",
+      "evidence": "sha256:a268a5a487b74e00c272f66eb9315cac671d16d4d81b49e9243b9d5e85fb2c9f",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-OSC-002",
+      "criticality": "SHOULD",
+      "duration_ms": 20.482624997384846,
+      "detail": "dcs.nature.oscillator.test_firefly_lock returned cleanly",
+      "evidence": "sha256:34bd27d45cdf8ac792b39e53432820822e6cdf43e7cdd0ab3d04b378aa3cd1d4",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-OSC-003",
+      "criticality": "MAY",
+      "duration_ms": 27.93716700398363,
+      "detail": "Traceback (most recent call last):\n  File \"/Users/metadusa/enterprise_aiops/dcs/conform.py\", line 51, in _run_inner\n    fn()\n  File \"/Users/metadusa/enterprise_aiops/dcs/nature/oscillator.py\", line 124, in test_cricket\n    assert len(a) == len(b)\n           ^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "evidence": "sha256:a0c63b6afa6169174884cbc0abcf79b91cb232cdee13757acca4dc3c6ef9a218",
+      "error": "AssertionError: ",
+      "pass": false
+    },
+    {
+      "id": "DCS-NAT-OSC-004",
+      "criticality": "MUST",
+      "duration_ms": 0.06733299233019352,
+      "detail": "dcs.nature.oscillator.test_cardiac returned cleanly",
+      "evidence": "sha256:638a6206c440124e1188b6fb097380e4124855e4e54b8127be0781c7a5474438",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-OSC-005",
+      "criticality": "MUST",
+      "duration_ms": 0.13387500075623393,
+      "detail": "dcs.nature.oscillator.test_circadian returned cleanly",
+      "evidence": "sha256:e236af34d28a0525bc54e954956d0a5682dcf2b4789483073408b77a81538284",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-OSC-006",
+      "criticality": "SHOULD",
+      "duration_ms": 16.017832997022197,
+      "detail": "dcs.nature.oscillator.test_peskin returned cleanly",
+      "evidence": "sha256:b708db0123820072b01ffbf6eec03842701b3f8697d6b00ff30b29558b9481c0",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-OSC-007",
+      "criticality": "MUST",
+      "duration_ms": 0.057792000006884336,
+      "detail": "dcs.nature.oscillator.test_fhn returned cleanly",
+      "evidence": "sha256:062a96e40212235c18c0144f3f42a2fde6598948ddbe5f87adc6ed3016811a4a",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-OSC-008",
+      "criticality": "MUST",
+      "duration_ms": 0.30329200671985745,
+      "detail": "dcs.nature.oscillator.test_hh returned cleanly",
+      "evidence": "sha256:83d2b70c7a6dd050433ecb64c7a09a9f6b7eaab89330e1000165e907af9e1d04",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-POP-001",
+      "criticality": "MUST",
+      "duration_ms": 1.3091250002617016,
+      "detail": "dcs.nature.population.test_logistic returned cleanly",
+      "evidence": "sha256:cb2ac5ae31d1a5ccb28988fd8f5503bbe6941e668e43ada29292babf3a12037d",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-POP-002",
+      "criticality": "MUST",
+      "duration_ms": 0.1517080090707168,
+      "detail": "dcs.nature.population.test_gompertz returned cleanly",
+      "evidence": "sha256:506548dbfb0afbdfab7f118b74e5e16d98190d20ab49bfdfbc4461d821ce995d",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-POP-003",
+      "criticality": "SHOULD",
+      "duration_ms": 0.7654999935766682,
+      "detail": "dcs.nature.population.test_allee returned cleanly",
+      "evidence": "sha256:ba0af5ce75eadddf78461531ffcd2acf040505d22062644e57197599f6fef71d",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-POP-004",
+      "criticality": "SHOULD",
+      "duration_ms": 0.5488329916261137,
+      "detail": "dcs.nature.population.test_lv returned cleanly",
+      "evidence": "sha256:359c14f36db67cd9561a8d3d00f07a14d3e4a2c2827ca2f9427e8cb8b49abacf",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-POP-005",
+      "criticality": "MUST",
+      "duration_ms": 0.07704200106672943,
+      "detail": "dcs.nature.population.test_sir returned cleanly",
+      "evidence": "sha256:045f5938d3af64357fff55e440014e586565566648a512af625e206367e082eb",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-POP-006",
+      "criticality": "SHOULD",
+      "duration_ms": 0.14150000060908496,
+      "detail": "dcs.nature.population.test_sirs returned cleanly",
+      "evidence": "sha256:c4fb3e19c3efa86eba2f277298f96c3dc0dc728faef755e1bc735f3486fe072b",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-POP-007",
+      "criticality": "SHOULD",
+      "duration_ms": 0.25245800497941673,
+      "detail": "dcs.nature.population.test_hp returned cleanly",
+      "evidence": "sha256:3e4f8bcef0cd2bf45d5bae383239629f699bc0cf1ab23d3f39f4e4ed44f0f25a",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-POP-008",
+      "criticality": "SHOULD",
+      "duration_ms": 21.00675000110641,
+      "detail": "dcs.nature.population.test_spatial returned cleanly",
+      "evidence": "sha256:81c24ba5885499d1b38c5b30378cfe285b3a0e096ba5af0d2c31bd29d0c20cd5",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-STG-001",
+      "criticality": "SHOULD",
+      "duration_ms": 2.786915996694006,
+      "detail": "Traceback (most recent call last):\n  File \"/Users/metadusa/enterprise_aiops/dcs/conform.py\", line 51, in _run_inner\n    fn()\n  File \"/Users/metadusa/enterprise_aiops/dcs/nature/stigmergy.py\", line 64, in test_colony\n    assert r[\"food_collected\"] > 0\n           ^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "evidence": "sha256:9ce79ada1f624ab1a356ad3a1802581ab3b8aec115c71349829ade20e7ccb94a",
+      "error": "AssertionError: ",
+      "pass": false
+    },
+    {
+      "id": "DCS-NAT-STG-002",
+      "criticality": "MUST",
+      "duration_ms": 0.17433299217373133,
+      "detail": "dcs.nature.stigmergy.test_termite_evap returned cleanly",
+      "evidence": "sha256:e84a60a03556250e7c6992716d3f5eb290df4d90c9e92f60438c233716c4772c",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-STG-003",
+      "criticality": "SHOULD",
+      "duration_ms": 0.09033300739247352,
+      "detail": "dcs.nature.stigmergy.test_slime_pruning returned cleanly",
+      "evidence": "sha256:ac0a0c9ff5752cc74aa947392d82f14a2d6b718ec2b2dacc68b5870359ab2d09",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-THR-001",
+      "criticality": "MUST",
+      "duration_ms": 0.46712500625289977,
+      "detail": "dcs.nature.threshold.test_quorum returned cleanly",
+      "evidence": "sha256:ecb1d47eb9fdf98cfb45e9352b21dfab1d20d7b4c0068bea7185caced0254d40",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-THR-002",
+      "criticality": "MUST",
+      "duration_ms": 0.002540997229516506,
+      "detail": "dcs.nature.threshold.test_sigmoid returned cleanly",
+      "evidence": "sha256:180f67024eaeaed54fd9bac48a86128796b6cf545732b8dd07464db2c240586a",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-THR-003",
+      "criticality": "MUST",
+      "duration_ms": 0.001791995600797236,
+      "detail": "dcs.nature.threshold.test_lif returned cleanly",
+      "evidence": "sha256:22bb4572788d71abfb27a014b0d4a7f7794f26f2c6d9b2b3f015d5b2a09a0cce",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-THR-004",
+      "criticality": "SHOULD",
+      "duration_ms": 0.005541995051316917,
+      "detail": "dcs.nature.threshold.test_toggle returned cleanly",
+      "evidence": "sha256:454ede81f42d620bd682fa7b52c8bc9370f31ed1656731cf4903495e4f85b8bc",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-THR-005",
+      "criticality": "MUST",
+      "duration_ms": 0.0011250085663050413,
+      "detail": "dcs.nature.threshold.test_percolation returned cleanly",
+      "evidence": "sha256:54466f006683e816793a1b407cf8b90fe140d2d82987a2ce069e0fbf1465ba4a",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-WALK-001",
+      "criticality": "MUST",
+      "duration_ms": 0.86433399701491,
+      "detail": "dcs.nature.walk.test_correlated_ballistic returned cleanly",
+      "evidence": "sha256:e28954219bca451e3a229c0192b36acb6a1264f9bdd7fa4c5f00e555d60fa00f",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-WALK-002",
+      "criticality": "MUST",
+      "duration_ms": 0.08295899897348136,
+      "detail": "dcs.nature.walk.test_elephant_memory returned cleanly",
+      "evidence": "sha256:f8a4985c174735916df6d8a0d0e151757c1d512424298f281db723e123f7c7bc",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-WALK-003",
+      "criticality": "MUST",
+      "duration_ms": 0.10850001126527786,
+      "detail": "dcs.nature.walk.test_saw_no_revisit returned cleanly",
+      "evidence": "sha256:fa778c69c428d95e1725dfefa6abb4058087a7fd3021f2da8b5567fe5a6d2982",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NAT-WALK-004",
+      "criticality": "SHOULD",
+      "duration_ms": 0.18308399012312293,
+      "detail": "Traceback (most recent call last):\n  File \"/Users/metadusa/enterprise_aiops/dcs/conform.py\", line 51, in _run_inner\n    fn()\n  File \"/Users/metadusa/enterprise_aiops/dcs/nature/walk.py\", line 89, in test_persistent_far\n    assert math.hypot(x, y) > 300\n           ^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "evidence": "sha256:2fb61292cce8cad30b2a6d9f9f43a3948ce685006e911e173051f134aacd72e5",
+      "error": "AssertionError: ",
+      "pass": false
+    },
+    {
+      "id": "DCS-NAT-WALK-005",
+      "criticality": "SHOULD",
+      "duration_ms": 3.2034169998951256,
+      "detail": "dcs.nature.walk.test_levy_2d_heavy_tail returned cleanly",
+      "evidence": "sha256:a04e39eb0892a1742ae96084eafe5ce5b45d90fa331ee98667e327225b12fae1",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NET-001",
+      "criticality": "MUST",
+      "duration_ms": 5.144749986357056,
+      "detail": "dcs.hats.net.test returned cleanly",
+      "evidence": "sha256:05e1421513def42d16f39851d2a06b39a79abe40c79ed92e989c8af3d3c2cf5b",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NWE-001",
+      "criticality": "MUST",
+      "duration_ms": 0.2822090027621016,
+      "detail": "dcs.hats.nwe.test returned cleanly",
+      "evidence": "sha256:31013049bef14d970a8092af6ba3c38d80330962f40720682e182c180c20ed48",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-PL-001",
+      "criticality": "MUST",
+      "duration_ms": 0.2533329970901832,
+      "detail": "dcs.hats.pl.test returned cleanly",
+      "evidence": "sha256:706fdc3619295812e99f77921ef08afed18a8ba10b2d1d591ea72c0c8bc5253d",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-PLT-001",
+      "criticality": "MUST",
+      "duration_ms": 0.2075420052278787,
+      "detail": "dcs.hats.plt.test returned cleanly",
+      "evidence": "sha256:d6cb443b93a62cd5e66b7c47972210ef3b504ff2db4a55363d780372b4a75e33",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-PUZ-001",
+      "criticality": "MUST",
+      "duration_ms": 0.37475000135600567,
+      "detail": "dcs.tests.puzzles.scramble_safe returned cleanly",
+      "evidence": "sha256:ab4ff5f092c7066418fc6523510aa4b423b1248a70cae7529fc8763ded674560",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-PUZ-002",
+      "criticality": "MUST",
+      "duration_ms": 18.471707997377962,
+      "detail": "dcs.tests.puzzles.solve_round_trip returned cleanly",
+      "evidence": "sha256:de0542508ab6154dd895884cd33f8d7d77df2351cba979e28a7bda40ffcb2150",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-QA-001",
+      "criticality": "MUST",
+      "duration_ms": 0.24720800865907222,
+      "detail": "dcs.hats.qa.test returned cleanly",
+      "evidence": "sha256:3a4d770f3985ae39b2fea48ec8957c60ac9f64ab7e8b98d57f41990187815725",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-QT-001",
+      "criticality": "MUST",
+      "duration_ms": 4.530500009423122,
+      "detail": "dcs.hats.qt.test returned cleanly",
+      "evidence": "sha256:861046b6d32015a377656a5513417e677cfe8cf3686cbefb5366550ad6562f59",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-RE-001",
+      "criticality": "MUST",
+      "duration_ms": 0.2919589896919206,
+      "detail": "dcs.hats.re.test returned cleanly",
+      "evidence": "sha256:66f00faf7ba37b39f12955470bf419fd5590b095d6655f625544bd11a9bebe11",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-REL-001",
+      "criticality": "MUST",
+      "duration_ms": 0.3245410043746233,
+      "detail": "dcs.hats.rel.test returned cleanly",
+      "evidence": "sha256:d6c2dbeacb14184afd86d0051f612c0f4ec84bd268a45ff5119e50f99092d7df",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-RES-001",
+      "criticality": "MUST",
+      "duration_ms": 0.20912500622216612,
+      "detail": "dcs.hats.res.test returned cleanly",
+      "evidence": "sha256:d60d9e58442c8e9d04c93bbbf4f4508fbb5ea033873574941e88b89c73be83fd",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-ROB-001",
+      "criticality": "MUST",
+      "duration_ms": 0.22000000171829015,
+      "detail": "dcs.hats.rob.test returned cleanly",
+      "evidence": "sha256:52e85c3a32c9d825680c897a147e5f3930368c20472856415bbb97d27b046b84",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-SA-001",
+      "criticality": "MUST",
+      "duration_ms": 0.3301249962532893,
+      "detail": "dcs.hats.sa.test returned cleanly",
+      "evidence": "sha256:244c889d15b4eecaad152c93e2b1360b81b9527b067b7fbed056db1d5cdb8792",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-SCI-001",
+      "criticality": "MUST",
+      "duration_ms": 0.5167500057723373,
+      "detail": "dcs.hats.sci.test returned cleanly",
+      "evidence": "sha256:9d303a17de7da54e02e2ce83db3add733cc6f231a93039d98fc8ef4b8086843e",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-SD-001",
+      "criticality": "MUST",
+      "duration_ms": 0.265499998931773,
+      "detail": "dcs.hats.sd.test returned cleanly",
+      "evidence": "sha256:d7dab34252c6410e0e59d49b0b89a49e6d53f942b3fec5ffa7880fdebe602409",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-SHD-001",
+      "criticality": "MUST",
+      "duration_ms": 0.2032919874181971,
+      "detail": "dcs.hats.shd.test returned cleanly",
+      "evidence": "sha256:88b0ef91d5fd94b86bc07799ca61455ec7d966e87262bee9814bf98cf363c8cf",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-SIM-001",
+      "criticality": "MUST",
+      "duration_ms": 0.21420900884550065,
+      "detail": "dcs.hats.sim.test returned cleanly",
+      "evidence": "sha256:8868cd0684f368a9a7ede2604f4296f95a4bd9b428446e0a1ea2dff8d5a827d7",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-SO-001",
+      "criticality": "MUST",
+      "duration_ms": 0.442666991148144,
+      "detail": "dcs.hats.so.test returned cleanly",
+      "evidence": "sha256:d4f76ccad9e6152f6411c4ab6501b75ca5ab278f8465a5de82435aea780b044b",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-SRE-001",
+      "criticality": "MUST",
+      "duration_ms": 0.2186659985454753,
+      "detail": "dcs.hats.sre.test returned cleanly",
+      "evidence": "sha256:00f20e8d88efda3e4854451e50ee3929db1131ed544f79ceb21c1906a2b88215",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-STE-001",
+      "criticality": "MUST",
+      "duration_ms": 0.2596660051494837,
+      "detail": "dcs.hats.ste.test returned cleanly",
+      "evidence": "sha256:bd0bbdb3baa2454e42765f2359c54e6aa7399096af6edc5730951f31852b810c",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-SYS-001",
+      "criticality": "MUST",
+      "duration_ms": 0.2698339958442375,
+      "detail": "dcs.hats.sys.test returned cleanly",
+      "evidence": "sha256:42d159932c5b807f38f8ec05ec40dc439e5a942a76dfd0c9295e1cfe3a75df21",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-TRAIN-001",
+      "criticality": "MUST",
+      "duration_ms": 1.326541998423636,
+      "detail": "dcs.tests.train.run_has_parent_id returned cleanly",
+      "evidence": "sha256:f207ff75256dec5629a091c5762164ca7c1b112de342eae8748f31b9b7cb0307",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-TRAIN-002",
+      "criticality": "MUST",
+      "duration_ms": 0.04070800787303597,
+      "detail": "dcs.tests.train.trainer_has_step returned cleanly",
+      "evidence": "sha256:86b033539c9cdc2f9f0855d5b839217756a4cab311a49e01ceffeae1e24213ce",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-TRAIN-003",
+      "criticality": "MUST",
+      "duration_ms": 17.80091600085143,
+      "detail": "dcs.tests.train.trans_produces_chain returned cleanly",
+      "evidence": "sha256:13c551f1f419f63d7e4c5a79e81eafd5b54036584352e6d091f79f85421ccb52",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-TRAIN-004",
+      "criticality": "MUST",
+      "duration_ms": 57.14758299291134,
+      "detail": "dcs.tests.train.pollinate_reports_change returned cleanly",
+      "evidence": "sha256:ca67d59d7b2cc5295e8156fc11c5b7c55441d6a2e076161b51192a272cde2003",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-TRAIN-005",
+      "criticality": "MUST",
+      "duration_ms": 179.62750000879169,
+      "detail": "dcs.tests.train.cli_runs returned cleanly",
+      "evidence": "sha256:3668304e0ff0d8ae744b9dfbc85feca2db4e660935c35d2fbc9e86f32c7a1a14",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-TW-001",
+      "criticality": "MUST",
+      "duration_ms": 0.5765840032836422,
+      "detail": "dcs.hats.tw.test returned cleanly",
+      "evidence": "sha256:ec7b07908ae5eead3dd7b37fd4ea3f961b26f6689589e66fe3e9d0ea8c85104d",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-VID-001",
+      "criticality": "MUST",
+      "duration_ms": 0.2662920014699921,
+      "detail": "dcs.hats.vid.test returned cleanly",
+      "evidence": "sha256:c116b0206269bcc7c5b3678d152621f960f72671767b08f6546b5a7168753c8c",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-A11Y-001",
+      "criticality": "MUST",
+      "duration_ms": 0.5900830001337454,
+      "detail": "dcs.crosscut.a11y.test returned cleanly",
+      "evidence": "sha256:c967be96794bbbb10b6e3084e23c274c6671a6bafddb6bd92e8d2f3115d230be",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-BACKUP-001",
+      "criticality": "MUST",
+      "duration_ms": 0.30433300707954913,
+      "detail": "dcs.crosscut.backup.test returned cleanly",
+      "evidence": "sha256:aeaa4b8e90d317f887bbb3e5afce7a74e5acf9e708240568f509dc1492a7a6f8",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-CDC-001",
+      "criticality": "MUST",
+      "duration_ms": 0.31633400067221373,
+      "detail": "dcs.crosscut.cdc.test returned cleanly",
+      "evidence": "sha256:df0389fa59f9ac86d06a8616d3397abf1b9567d4bd5ef8f861d6af666fbfcc1a",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-CHAOS-001",
+      "criticality": "MUST",
+      "duration_ms": 2.4454169906675816,
+      "detail": "dcs.crosscut.chaos.test returned cleanly",
+      "evidence": "sha256:d64b7d5e04592b27fd9115cef6a989ba8b03a927e30643d4d1ec2f8528ca2ae2",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-CIRCUIT-001",
+      "criticality": "MUST",
+      "duration_ms": 0.35779099562205374,
+      "detail": "dcs.crosscut.circuit.test returned cleanly",
+      "evidence": "sha256:a41e124845d5b486ed2d78f8903200499db318067c1701c4a8134625ad793f06",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-CLOCK-001",
+      "criticality": "MUST",
+      "duration_ms": 0.2938329998869449,
+      "detail": "dcs.crosscut.clock.test returned cleanly",
+      "evidence": "sha256:cce363f5af03fc2a121a26b632bbccca3152d52ce1639cd04db56050ded169bc",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-CONC-001",
+      "criticality": "MUST",
+      "duration_ms": 22.042042008251883,
+      "detail": "dcs.crosscut.concurrency.test returned cleanly",
+      "evidence": "sha256:f16c8cafa6ff88f258cfb41be399a3c889810538438386f3d64f7ee99a83c998",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-DEPLOY-001",
+      "criticality": "MUST",
+      "duration_ms": 0.4044579982291907,
+      "detail": "dcs.crosscut.deploy.test returned cleanly",
+      "evidence": "sha256:66b02c2dcd2c8c7fdfbd70ad5cbf981538ddab9edfac3b1d3a897c571c5aa703",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-FLAG-001",
+      "criticality": "MUST",
+      "duration_ms": 0.8229579980252311,
+      "detail": "dcs.crosscut.flag.test returned cleanly",
+      "evidence": "sha256:40552aa3fecb859fa49b69cc6b87875b79941a6a689c73fbbab0d98eaa2bed98",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-I18N-001",
+      "criticality": "MUST",
+      "duration_ms": 0.2717909956118092,
+      "detail": "dcs.crosscut.i18n.test returned cleanly",
+      "evidence": "sha256:6afd8a4c76e7839d5739a54779f2ccec69a7137f414aae35350cc9265e60ca37",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-OBS-001",
+      "criticality": "MUST",
+      "duration_ms": 0.36370899761095643,
+      "detail": "dcs.crosscut.observability.test returned cleanly",
+      "evidence": "sha256:4ec7d7f420c080e3570ffe10381b9ce695cb84a33e0266ee7bc55f25c02ef4ee",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-PRIV-001",
+      "criticality": "MUST",
+      "duration_ms": 0.390583008993417,
+      "detail": "dcs.crosscut.privacy.test returned cleanly",
+      "evidence": "sha256:9bf8d346174809a38d23d2de81e06427c27780115b14417584b502505ce94269",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-RATE-001",
+      "criticality": "MUST",
+      "duration_ms": 0.33725000685080886,
+      "detail": "dcs.crosscut.ratelimit.test returned cleanly",
+      "evidence": "sha256:ed1b58f504752d502cc1cc798e4b724c613905aaec4366a8d2fff5e27efa06cf",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-SAGA-001",
+      "criticality": "MUST",
+      "duration_ms": 0.39204201311804354,
+      "detail": "dcs.crosscut.saga.test returned cleanly",
+      "evidence": "sha256:1e5a3d6b1b205ac1d8c1dd4385e20d3662b33ec69017434ffeb69930b0dba783",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-SEMVER-001",
+      "criticality": "MUST",
+      "duration_ms": 0.28979200578760356,
+      "detail": "dcs.crosscut.semver.test returned cleanly",
+      "evidence": "sha256:ff7693bd27b659f49d89a6d4eaa7a3578a3d429010b0a0759eeef6f404f852b9",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-TIME-001",
+      "criticality": "MUST",
+      "duration_ms": 1.4518340030917898,
+      "detail": "dcs.crosscut.time.test returned cleanly",
+      "evidence": "sha256:bd6e8b8f0e32fbcda4ec38eef4fe55e95a52d73cb9acbc81a024872820fda786",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-AU-002",
+      "criticality": "MUST",
+      "duration_ms": 1.7317500023636967,
+      "detail": "dcs.equilibrium.ui.au_rate returned cleanly",
+      "evidence": "sha256:4fa157a5856574e20854b812c0558f7f798beeefb17049322040a37d9d0214b3",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-AU-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0032090028980746865,
+      "detail": "dcs.equilibrium.ui.au_pcm returned cleanly",
+      "evidence": "sha256:b07f03bfe3a1c4fa797f8551fa22338b02ca16659c4b92afa92731a32be31a58",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-AU-004",
+      "criticality": "MUST",
+      "duration_ms": 0.0010410003596916795,
+      "detail": "dcs.equilibrium.ui.au_channels returned cleanly",
+      "evidence": "sha256:eab3995980bf77a0733be3eb1bf38861759ea4528bc582767af4c6944629f51e",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-AUT-002",
+      "criticality": "MUST",
+      "duration_ms": 1.318749986239709,
+      "detail": "dcs.equilibrium.meta.aut_exit returned cleanly",
+      "evidence": "sha256:9fe11bd6675a450913e209de855091a21f5657500ac055e7eaa95ae89f0b7e69",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-AUT-003",
+      "criticality": "MUST",
+      "duration_ms": 0.002291999408043921,
+      "detail": "dcs.equilibrium.meta.aut_cron returned cleanly",
+      "evidence": "sha256:1ed165078aca661adbdb280625bbc8dc30628a38368fae680c1396947205967c",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-BE-002",
+      "criticality": "MUST",
+      "duration_ms": 1.3245409936644137,
+      "detail": "dcs.equilibrium.systems.be_trace returned cleanly",
+      "evidence": "sha256:a4186b82c85481244a7e7ace37887b394edec2b63fcd3e214e741fc59d54d730",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-BE-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0027089990908280015,
+      "detail": "dcs.equilibrium.systems.be_err_status returned cleanly",
+      "evidence": "sha256:9cb81ecc59daf3b014fc1847157e3e388ae03261f8796801d477b1b7730750df",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-BE-004",
+      "criticality": "MUST",
+      "duration_ms": 0.0019169965526089072,
+      "detail": "dcs.equilibrium.systems.be_page_limit returned cleanly",
+      "evidence": "sha256:1a1b82f20cecf6a022ca67ce82d309aac29f2a70303929bd265b5da45e2b0bc0",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-BE-005",
+      "criticality": "MUST",
+      "duration_ms": 0.0015420082490891218,
+      "detail": "dcs.equilibrium.systems.be_negotiate returned cleanly",
+      "evidence": "sha256:b755878cdd1cd4c79cb24f60213b9edd6eb4fab7a118f1bdadcd2b2b7b9376b7",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-BE-006",
+      "criticality": "MUST",
+      "duration_ms": 0.0008330098353326321,
+      "detail": "dcs.equilibrium.systems.be_idem returned cleanly",
+      "evidence": "sha256:814814917c1b221cb41a4e01e3fd7cef33cf21379e1fd1764ef24602f281bc38",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-BE-007",
+      "criticality": "MUST",
+      "duration_ms": 0.0013750104699283838,
+      "detail": "dcs.equilibrium.systems.be_utf8 returned cleanly",
+      "evidence": "sha256:58335633cefb3e9074ac9d3df93aa68bc3ea05204a060fb0bdd212bacb886283",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-CAD-002",
+      "criticality": "MUST",
+      "duration_ms": 0.0013329990906640887,
+      "detail": "dcs.equilibrium.ui.cad_dims returned cleanly",
+      "evidence": "sha256:98c54f6414f3e43bfcbc6ff704c7094e73abde48bbcb62d7a67b342901705201",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-CAD-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0009999930625781417,
+      "detail": "dcs.equilibrium.ui.cad_euler returned cleanly",
+      "evidence": "sha256:63c4d401384fcf371e162784600d12ce2df4b83e32a41aef6c967bf6806b466e",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-CL-002",
+      "criticality": "MUST",
+      "duration_ms": 0.00145800004247576,
+      "detail": "dcs.equilibrium.systems.cl_region returned cleanly",
+      "evidence": "sha256:7b23817f106d952fc6ed1028ea6af1fa29f44eefee58bc8ebdb57de6d2138b15",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-CL-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0016250123735517263,
+      "detail": "dcs.equilibrium.systems.cl_bucket returned cleanly",
+      "evidence": "sha256:d0db955ae22722960b1feb6aa11fa2faee3020820e83c733aaed354514d9db48",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-CL-004",
+      "criticality": "MUST",
+      "duration_ms": 0.0008330098353326321,
+      "detail": "dcs.equilibrium.systems.cl_iam returned cleanly",
+      "evidence": "sha256:4f51604a11e0886df420733ede0a399a8c65676add5ee758cb11b2fbeeb3cbe9",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-CMP-002",
+      "criticality": "MUST",
+      "duration_ms": 0.019208004232496023,
+      "detail": "dcs.equilibrium.meta.cmp_fold returned cleanly",
+      "evidence": "sha256:b019806b93de267c04c611851f1bbb14ae919288e998383de7f58dcbfe747369",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-CMP-003",
+      "criticality": "SHOULD",
+      "duration_ms": 0.014083008863963187,
+      "detail": "dcs.equilibrium.meta.cmp_dce returned cleanly",
+      "evidence": "sha256:72ce4df1f9a16e06217a17ba68fcfa3b03bf8745dae7f3da9dee823f3fe883c0",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-CMP-004",
+      "criticality": "SHOULD",
+      "duration_ms": 0.01633400097489357,
+      "detail": "dcs.equilibrium.meta.cmp_ssa returned cleanly",
+      "evidence": "sha256:95d9889736d95661b41300560358e9f1dd7ddc212ddfe42be324d4f8ce6abb5c",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-CMP2-002",
+      "criticality": "MUST",
+      "duration_ms": 0.8300829940708354,
+      "detail": "dcs.equilibrium.security.cmp2_ids returned cleanly",
+      "evidence": "sha256:aefaecca0a23f7aeeaf0a318a0c7a877cadc952b5625d2eee83b7f5320fd07af",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-CMP2-003",
+      "criticality": "MUST",
+      "duration_ms": 0.002582994056865573,
+      "detail": "dcs.equilibrium.security.cmp2_digest returned cleanly",
+      "evidence": "sha256:a6af92add67f875ca2dea384cebc61b72f460058de588ae1855a442caa835e35",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-CRY-002",
+      "criticality": "MUST",
+      "duration_ms": 0.0010410003596916795,
+      "detail": "dcs.equilibrium.security.cry_tag_len returned cleanly",
+      "evidence": "sha256:e300ac1054771d9807d4cec311617aba026cfdb4ef3e431633e94241fa00a4ca",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-CRY-003",
+      "criticality": "MUST",
+      "duration_ms": 0.007665992598049343,
+      "detail": "dcs.equilibrium.security.cry_nonce returned cleanly",
+      "evidence": "sha256:459a4a56f08dffcb25ee5606450625a2a9704189eeccf1cd32288912254f44d5",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-CRY-004",
+      "criticality": "MUST",
+      "duration_ms": 0.21666700195055455,
+      "detail": "dcs.equilibrium.security.cry_kdf returned cleanly",
+      "evidence": "sha256:f36121d74e008a7dbc117884507322613d184c30195ed05ac4bb7e48c78df3da",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-DA-002",
+      "criticality": "MUST",
+      "duration_ms": 0.0015420082490891218,
+      "detail": "dcs.equilibrium.ui.da_output returned cleanly",
+      "evidence": "sha256:28633fe0d711818fa0ab515765013d483ac166dfb5e8c955564ec857fbedf324",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-DA-003",
+      "criticality": "MUST",
+      "duration_ms": 0.000833999365568161,
+      "detail": "dcs.equilibrium.ui.da_quickstart returned cleanly",
+      "evidence": "sha256:fa2a8c03573fb95b3948201051a605c86dc489e145f9bf4bf437b3d8356da9ad",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-DB-002",
+      "criticality": "MUST",
+      "duration_ms": 0.1534589973744005,
+      "detail": "dcs.equilibrium.systems.db_rollback returned cleanly",
+      "evidence": "sha256:07179b9b4052885f476c64e2efa02411e6834970242fd9c11d476080ac57553b",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-DB-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0694579939590767,
+      "detail": "dcs.equilibrium.systems.db_unique returned cleanly",
+      "evidence": "sha256:6ae0b814b4962464e19d8ba6da0e4b8eaaf080e1d23c5b62a09474b3ac761a48",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-DB-004",
+      "criticality": "MUST",
+      "duration_ms": 0.09162499918602407,
+      "detail": "dcs.equilibrium.systems.db_fk returned cleanly",
+      "evidence": "sha256:6102523081c2e8543574165bf1166f1b86bace4dec8ebddc92863b68decac52f",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-DBA-002",
+      "criticality": "MUST",
+      "duration_ms": 0.07045900565572083,
+      "detail": "dcs.equilibrium.systems.dba_covering returned cleanly",
+      "evidence": "sha256:175600f00b79d6d375c96adc93cae3a3ee98e51baf593ba130cc3c9c5302d98a",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-DBA-003",
+      "criticality": "SHOULD",
+      "duration_ms": 0.13249999028630555,
+      "detail": "dcs.equilibrium.systems.dba_analyze returned cleanly",
+      "evidence": "sha256:beafba42bcd6cc6e045ddef177bc63fa33bd9d67932b536f2d4364260c1c6e3e",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-DE-002",
+      "criticality": "MUST",
+      "duration_ms": 0.0012079981388524175,
+      "detail": "dcs.equilibrium.systems.de_manifest returned cleanly",
+      "evidence": "sha256:da477485f91dfda1aa61fc407b09ffd72615525fe4e45f0e5a09e4c6fe68d7cb",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-DE-003",
+      "criticality": "MUST",
+      "duration_ms": 0.003416993422433734,
+      "detail": "dcs.equilibrium.systems.de_cycle returned cleanly",
+      "evidence": "sha256:f2b337909bcb17d6f240b2fc927ed0924455bd225ccbb78ab6d928f780818f8a",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-DE-004",
+      "criticality": "MUST",
+      "duration_ms": 0.0014590041246265173,
+      "detail": "dcs.equilibrium.systems.de_backfill returned cleanly",
+      "evidence": "sha256:862e9d1be39c0e8762ed24f5f88594e057a5a7de8683bac83314b7b07b63e72b",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-DIS-002",
+      "criticality": "MUST",
+      "duration_ms": 0.0015830009942874312,
+      "detail": "dcs.equilibrium.meta.dis_converge returned cleanly",
+      "evidence": "sha256:5de3485d36b21340fcaced08803dc2d46da542a07d2222ae88d0db1cd4d13cb9",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-DIS-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0009999930625781417,
+      "detail": "dcs.equilibrium.meta.dis_quorum returned cleanly",
+      "evidence": "sha256:2558c3baab1712ad7cdf1fd753702d2ba00c0933ba0200e5dde84e623b4fbca3",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-DIS-004",
+      "criticality": "MUST",
+      "duration_ms": 0.002916989615187049,
+      "detail": "dcs.equilibrium.meta.dis_vclock returned cleanly",
+      "evidence": "sha256:5303a70fdce2d141fd43850e5b2a0eb07a42d6c4e14fe43f49da93dc925d6303",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-DO-002",
+      "criticality": "MUST",
+      "duration_ms": 0.0010420044418424368,
+      "detail": "dcs.equilibrium.systems.do_rollback returned cleanly",
+      "evidence": "sha256:b431450b6adf108e91a20c89d8598138ce455e44b9c0275c3bbd930be5b1aefa",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-DO-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0010410003596916795,
+      "detail": "dcs.equilibrium.systems.do_versioned returned cleanly",
+      "evidence": "sha256:1420d51f44aa1d843b7ab6ea3850f9ad8e5ecec91f7288c0046cc1e79171913f",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-DS-002",
+      "criticality": "MUST",
+      "duration_ms": 2.804292002110742,
+      "detail": "dcs.equilibrium.systems.ds_median returned cleanly",
+      "evidence": "sha256:930ea0d1910322caefbb2481ed15f35eeaf6eea36bd2f74e421d1ce20ed82f66",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-DS-003",
+      "criticality": "MUST",
+      "duration_ms": 0.031791991204954684,
+      "detail": "dcs.equilibrium.systems.ds_std returned cleanly",
+      "evidence": "sha256:2270254e1a038af0b172c5171021d8927fac24d32c606ec8bd7a1361bb59ba92",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-DS-004",
+      "criticality": "MUST",
+      "duration_ms": 0.004832996637560427,
+      "detail": "dcs.equilibrium.systems.ds_corr returned cleanly",
+      "evidence": "sha256:26477d3dd66c0c6bb5a9fcec80f010cf8c6f0a7b2bf4f496be7e0464978e556c",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-EMB-002",
+      "criticality": "MUST",
+      "duration_ms": 0.0013749959180131555,
+      "detail": "dcs.equilibrium.systems.emb_bitwidth returned cleanly",
+      "evidence": "sha256:b213ad8b1a6c7ef1ddb2644a54702f8f0df79a89b7004a474182a65a71852a9d",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-EMB-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0006250047590583563,
+      "detail": "dcs.equilibrium.systems.emb_aligned returned cleanly",
+      "evidence": "sha256:037f68bab68afedc190dca652763ec52108771ca7136653c1cb89e69d8b44713",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-FE-002",
+      "criticality": "MUST",
+      "duration_ms": 0.045541004510596395,
+      "detail": "dcs.equilibrium.ui.fe_ids_unique returned cleanly",
+      "evidence": "sha256:153bab75a68d00920e83c34d0bd7d0201863846bcac9586dc308c298ec17b605",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-FE-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0017080019460991025,
+      "detail": "dcs.equilibrium.ui.fe_css_balanced returned cleanly",
+      "evidence": "sha256:8c3fa16ebbd1585c84d8e29a4841b5018cb516a841be17d75025ef0fc44f8ecd",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-FE-004",
+      "criticality": "MUST",
+      "duration_ms": 0.0019169965526089072,
+      "detail": "dcs.equilibrium.ui.fe_link_target returned cleanly",
+      "evidence": "sha256:c4ae56c64e00725b08c13ea63eb7f73a5ad53803fbeb3863dfd87af0fab32557",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-FE-005",
+      "criticality": "MUST",
+      "duration_ms": 0.0008329952834174037,
+      "detail": "dcs.equilibrium.ui.fe_aria returned cleanly",
+      "evidence": "sha256:b3a4eae71aac3512c0da60dae41331376376cc71f41d816f9ca3200bff30d851",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-FM-002",
+      "criticality": "MUST",
+      "duration_ms": 0.0028340000426396728,
+      "detail": "dcs.equilibrium.meta.fm_finite returned cleanly",
+      "evidence": "sha256:00cd8f8e6684cd2ead1ffeb1d7545481b0716c8ed49d5d33e9b5a0a3434c715c",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-FM-003",
+      "criticality": "MUST",
+      "duration_ms": 0.007374997949227691,
+      "detail": "dcs.equilibrium.meta.fm_induction returned cleanly",
+      "evidence": "sha256:5470e786973affa4942a81f3da71597a7eff9b962d681085283225f4b69a84cd",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-FS-002",
+      "criticality": "MUST",
+      "duration_ms": 0.006707996362820268,
+      "detail": "dcs.equilibrium.ui.fs_hydration returned cleanly",
+      "evidence": "sha256:0366013189c53e4f8d3b23a990dabbc79490752ba5e540bd3368fd738d9d51fc",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-FS-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0010419898899272084,
+      "detail": "dcs.equilibrium.ui.fs_ssr returned cleanly",
+      "evidence": "sha256:ce960f28f21099533b1d085a89e55648c8d0eded8c99a3792bc7d3101908fac5",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-FW-002",
+      "criticality": "MUST",
+      "duration_ms": 0.0010840012691915035,
+      "detail": "dcs.equilibrium.systems.fw_prefix returned cleanly",
+      "evidence": "sha256:d81994018c009fa3580e52fdff79989546cba5cf27cfc2d128103440415a5953",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-FW-003",
+      "criticality": "MUST",
+      "duration_ms": 0.005333000444807112,
+      "detail": "dcs.equilibrium.systems.fw_crc returned cleanly",
+      "evidence": "sha256:7292cc20f035d14a579567a4b7c0e6f10c76ee1326f7f65b1c1f35de04d6c481",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-GAME-002",
+      "criticality": "MUST",
+      "duration_ms": 0.0020000006770715117,
+      "detail": "dcs.equilibrium.ui.game_turns returned cleanly",
+      "evidence": "sha256:4c4ac7a2741ae131446e1e448996dd0840165f83100ac96d8b6041fa5e464f99",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-GAME-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0009159994078800082,
+      "detail": "dcs.equilibrium.ui.game_bounds returned cleanly",
+      "evidence": "sha256:74ed323d9593686477544efa3e5de6266c44b1c9899bce22d6f1246bc73e7c94",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-GAME-004",
+      "criticality": "MUST",
+      "duration_ms": 0.001291991793550551,
+      "detail": "dcs.equilibrium.ui.game_terminal returned cleanly",
+      "evidence": "sha256:d903b383a55a8e3e9af50315a5c8736fb002d88432f3525f00bb7f2a8946f2f7",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-GFX-002",
+      "criticality": "MUST",
+      "duration_ms": 0.000667001586407423,
+      "detail": "dcs.equilibrium.ui.gfx_viewbox returned cleanly",
+      "evidence": "sha256:b8d9aaa2b79aca7d732b2753a87f62a64ce3f6b863de1a8264451318c6b90e56",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-GFX-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0009999930625781417,
+      "detail": "dcs.equilibrium.ui.gfx_polygon returned cleanly",
+      "evidence": "sha256:04ef6499d36a6edfcf374178cee3de51037a71ed3a97ecb2c1d9cf23eae4e91f",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-GFX-004",
+      "criticality": "MUST",
+      "duration_ms": 0.001500011421740055,
+      "detail": "dcs.equilibrium.ui.gfx_gradient returned cleanly",
+      "evidence": "sha256:bebc15cc3cbd1e594643c8396207987eddd411e2c9d131f82369170d9b27d768",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-HPC-002",
+      "criticality": "MUST",
+      "duration_ms": 0.016874997527338564,
+      "detail": "dcs.equilibrium.systems.hpc_pool returned cleanly",
+      "evidence": "sha256:465de0bc8de6952858f09d92fc0c97b02ad71f0df22aae222c76945bc1418330",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-HPC-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0027500063879415393,
+      "detail": "dcs.equilibrium.systems.hpc_chunks returned cleanly",
+      "evidence": "sha256:38daacf68515a65c23d481ec400f3dee6cd5704697ee52277469a0307cdb0375",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-HW-002",
+      "criticality": "MUST",
+      "duration_ms": 0.0010829971870407462,
+      "detail": "dcs.equilibrium.systems.hw_mem returned cleanly",
+      "evidence": "sha256:2cdc24f045e3361c2bc9cf2d4fef8c2ff8ef3eb6ce1590734477722b7ad8c4d5",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-HW-003",
+      "criticality": "MAY",
+      "duration_ms": 0.000667001586407423,
+      "detail": "dcs.equilibrium.systems.hw_cores returned cleanly",
+      "evidence": "sha256:460b49117b220b275bfc8b7976c88321b00bb296fb237f248dc1e31d1af63870",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-KRN-002",
+      "criticality": "SHOULD",
+      "duration_ms": 0.002916989615187049,
+      "detail": "dcs.equilibrium.systems.krn_sigint returned cleanly",
+      "evidence": "sha256:1fddf38f28a8c25e391d643e5cd2756b4809ce65a6dc7bddc85ca355be63f941",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-KRN-003",
+      "criticality": "MAY",
+      "duration_ms": 0.002125001628883183,
+      "detail": "dcs.equilibrium.systems.krn_umask returned cleanly",
+      "evidence": "sha256:0a3e5b86b6af239f5a58fa88c163bca8d8f6728148aec6e682b4f8d141024352",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-MLE-002",
+      "criticality": "MUST",
+      "duration_ms": 0.001791006070561707,
+      "detail": "dcs.equilibrium.meta.mle_cv returned cleanly",
+      "evidence": "sha256:0c18c776db4aa9953de406f65a6860688b549fb21682cda22f53dc25b5a888fa",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-MLE-003",
+      "criticality": "MUST",
+      "duration_ms": 0.001791006070561707,
+      "detail": "dcs.equilibrium.meta.mle_digest returned cleanly",
+      "evidence": "sha256:33a9456fe7b4876f68223ad4b2802283787480b21381742319b0302b19e5bee5",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-MLE-004",
+      "criticality": "MUST",
+      "duration_ms": 0.0008749921107664704,
+      "detail": "dcs.equilibrium.meta.mle_batch returned cleanly",
+      "evidence": "sha256:5922a1c63b0b24dbd639d39d50e6ba6b128d6a700d30abf6d844302cf8ec8dad",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-MO-002",
+      "criticality": "MUST",
+      "duration_ms": 0.0007080088835209608,
+      "detail": "dcs.equilibrium.ui.mo_viewport returned cleanly",
+      "evidence": "sha256:c3730d1a7ef01cd9e85698645dc0ae5c8de3e08b93c99a993ad4721629e0eeda",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-MO-003",
+      "criticality": "MUST",
+      "duration_ms": 0.002207991201430559,
+      "detail": "dcs.equilibrium.ui.mo_icon_sizes returned cleanly",
+      "evidence": "sha256:3cd2379718ce0fff70fd465536c1ab3656779c741e74375b16e40fe6986a4c15",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-MO-004",
+      "criticality": "SHOULD",
+      "duration_ms": 0.0007089984137564898,
+      "detail": "dcs.equilibrium.ui.mo_sw returned cleanly",
+      "evidence": "sha256:b58ebc492d958cd1ae675e93624d9c95b345ce17136c32e78503ae07ae6dd8c2",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-NET-002",
+      "criticality": "MUST",
+      "duration_ms": 0.0008750066626816988,
+      "detail": "dcs.equilibrium.security.net_length returned cleanly",
+      "evidence": "sha256:deb5e47275891cc6b73508a7ff4b23703f23eb97418fead0333f734ffea23e8b",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-NET-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0016660051187500358,
+      "detail": "dcs.equilibrium.security.net_checksum returned cleanly",
+      "evidence": "sha256:8c49e8319ae74bb90ed874fbfb86ccccf36227af8c4e3c997d3b3e3a7a12c5d6",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-NWE-002",
+      "criticality": "MUST",
+      "duration_ms": 0.002374988980591297,
+      "detail": "dcs.equilibrium.security.nwe_acl returned cleanly",
+      "evidence": "sha256:21711c4c705a9df2df6b096bd1134f33149a3c69f21e4f74fb98698ce92dd2eb",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-NWE-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0007500057108700275,
+      "detail": "dcs.equilibrium.security.nwe_limit returned cleanly",
+      "evidence": "sha256:08bb7557da7680116131f1eda61c41d59d5a5f2e4d191854de284c59a49ee856",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-PL-002",
+      "criticality": "MUST",
+      "duration_ms": 0.0008750066626816988,
+      "detail": "dcs.equilibrium.meta.pl_prec returned cleanly",
+      "evidence": "sha256:2c091106dd86d406cecf87eb9516486c7aa3d1066e20ee8b898fdfbd32b91e9e",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-PL-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0006659975042566657,
+      "detail": "dcs.equilibrium.meta.pl_left returned cleanly",
+      "evidence": "sha256:2b9614e9b51d0c833e98fea6d723cbe125dd558ec4962febbbf3d96fbeb1cbb1",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-PLT-002",
+      "criticality": "MUST",
+      "duration_ms": 0.003583001671358943,
+      "detail": "dcs.equilibrium.systems.plt_paths returned cleanly",
+      "evidence": "sha256:b7b6e844f51a12f78730cbe481d74f0662b490d1e4d680d474118033031eaba7",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-PLT-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0010419898899272084,
+      "detail": "dcs.equilibrium.systems.plt_exec returned cleanly",
+      "evidence": "sha256:81d8019d0ebecd3bba989554758d6152351db71b6efc5ddd02725b091353ea6e",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-QA-002",
+      "criticality": "MUST",
+      "duration_ms": 0.0015409896150231361,
+      "detail": "dcs.equilibrium.security.qa_msg returned cleanly",
+      "evidence": "sha256:48ca8823941637dabec81c201d5d6ffb9df681c0cceba8a7616e3717b9dff850",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-QA-003",
+      "criticality": "MUST",
+      "duration_ms": 32.214292004937306,
+      "detail": "dcs.equilibrium.security.qa_raises returned cleanly",
+      "evidence": "sha256:859058e785d838d2428ba7cf6c31e3d8516cb7f88a5fbb7b56110c50c73c9b0d",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-QT-002",
+      "criticality": "SHOULD",
+      "duration_ms": 0.00825000461190939,
+      "detail": "dcs.equilibrium.meta.qt_bs returned cleanly",
+      "evidence": "sha256:7e6ae914516a6871f0456dd20d3c8d21cc49784cd580c5a017cb476b0a891ce9",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-QT-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0027909991331398487,
+      "detail": "dcs.equilibrium.meta.qt_var returned cleanly",
+      "evidence": "sha256:040a1be33c9d32fb8f8926115c486be3bbefa19b5fd28ba703c1c92c24445147",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-RE-002",
+      "criticality": "SHOULD",
+      "duration_ms": 0.031082992791198194,
+      "detail": "dcs.equilibrium.security.re_strings returned cleanly",
+      "evidence": "sha256:fda38890e60ffd267d451418280030382f87ad0fce4fdaabd6c28c57e5ecabe6",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-RE-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0038750004023313522,
+      "detail": "dcs.equilibrium.security.re_hexdump returned cleanly",
+      "evidence": "sha256:3bbb5ece7a99dbd362854fd8cf0a5e54c92ad4cd1835960a579ffe2d10ff8d3b",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-REL-002",
+      "criticality": "MUST",
+      "duration_ms": 0.002415996277704835,
+      "detail": "dcs.equilibrium.meta.rel_changelog returned cleanly",
+      "evidence": "sha256:52dfa3bdd5495853c73fc8cdf70861e0fab51618cbc7064f5386342bc99dbcf3",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-REL-003",
+      "criticality": "MUST",
+      "duration_ms": 0.00100000761449337,
+      "detail": "dcs.equilibrium.meta.rel_tag returned cleanly",
+      "evidence": "sha256:e47273c95033e2072811bf65f816af4c1bb2be186b9823300565f53303982bd5",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-REL-004",
+      "criticality": "SHOULD",
+      "duration_ms": 0.00100000761449337,
+      "detail": "dcs.equilibrium.meta.rel_prerelease returned cleanly",
+      "evidence": "sha256:a283d373c3a51e8e159a3e1183235d85ad512fb9011486c4c6b4018041114daf",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-RES-002",
+      "criticality": "MUST",
+      "duration_ms": 0.01479100319556892,
+      "detail": "dcs.equilibrium.meta.res_replication returned cleanly",
+      "evidence": "sha256:01ed268da6b6bb2661e4b760a42ef6e1bd36bdce67f0d5618b2a6c222c9e3bda",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-RES-003",
+      "criticality": "MUST",
+      "duration_ms": 0.000957996235229075,
+      "detail": "dcs.equilibrium.meta.res_pval returned cleanly",
+      "evidence": "sha256:d213499171fdc575c8721127b9b619d92c7476a9a9f8c5ddd5fe09b145dbb4d9",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-ROB-002",
+      "criticality": "MUST",
+      "duration_ms": 0.0016250123735517263,
+      "detail": "dcs.equilibrium.meta.rob_dh returned cleanly",
+      "evidence": "sha256:a460d57fb84a5e92e60171d3fa06eb0d87c5be66a9e3627620c90cbed29c680b",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-ROB-003",
+      "criticality": "SHOULD",
+      "duration_ms": 0.001667009200900793,
+      "detail": "dcs.equilibrium.meta.rob_ik returned cleanly",
+      "evidence": "sha256:bd54be93f0479d002395538eb4c0537ed169aa1e1f3702f680022d1ad231df15",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-SA-002",
+      "criticality": "MUST",
+      "duration_ms": 0.0014159886632114649,
+      "detail": "dcs.equilibrium.meta.sa_layers returned cleanly",
+      "evidence": "sha256:74a8ddc4452a6ad1929b03b423b69690e2c3e9c34b36650e42515c8742071188",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-SA-003",
+      "criticality": "MUST",
+      "duration_ms": 0.005207999492995441,
+      "detail": "dcs.equilibrium.meta.sa_acyclic returned cleanly",
+      "evidence": "sha256:516464e62871bce818360cee2cb306eb87ac8a8600cb2bf0f0f2d8651ee0ede6",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-SD-002",
+      "criticality": "MUST",
+      "duration_ms": 0.10016700252890587,
+      "detail": "dcs.equilibrium.security.sd_sqli returned cleanly",
+      "evidence": "sha256:1896ce623ca5f230526aadf253a101ce345c50f044dee687550aec239f87bc0e",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-SD-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0014590041246265173,
+      "detail": "dcs.equilibrium.security.sd_traversal returned cleanly",
+      "evidence": "sha256:70426a2b5328e8de9d40ef741f9bee2440610d4039d47a15e85d2193a5b71cfa",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-SD-004",
+      "criticality": "MUST",
+      "duration_ms": 0.0023750035325065255,
+      "detail": "dcs.equilibrium.security.sd_escape returned cleanly",
+      "evidence": "sha256:bdfd7b5a3fb04ab603187f7ad8bea95b0ccd93cf8971293d43ea5492b8449ac9",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-SHD-002",
+      "criticality": "MUST",
+      "duration_ms": 0.000957996235229075,
+      "detail": "dcs.equilibrium.ui.shd_vertex returned cleanly",
+      "evidence": "sha256:f08eaa5b213c7f0e8e7563d9abe1d9fb5bda1b75f1a8385f42fda135bb5ebbd3",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-SHD-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0013329990906640887,
+      "detail": "dcs.equilibrium.ui.shd_uniform returned cleanly",
+      "evidence": "sha256:6e5f9a86c3cedb0da22c367e46e198ff70d8dd7f6410abb4157c46316de70c3f",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-SIM-002",
+      "criticality": "SHOULD",
+      "duration_ms": 0.002458997187204659,
+      "detail": "dcs.equilibrium.meta.sim_symplectic returned cleanly",
+      "evidence": "sha256:18792d4d6a54a6aeed38bc8b4b741bdd62117ae2ec87697075bd973ea35715d6",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-SIM-003",
+      "criticality": "MUST",
+      "duration_ms": 0.01316699490416795,
+      "detail": "dcs.equilibrium.meta.sim_rng returned cleanly",
+      "evidence": "sha256:d48360a735e70bdef558b58a0924ada8dceca793080fa0691f72404ff6653eb4",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-SO-002",
+      "criticality": "MUST",
+      "duration_ms": 0.00245800765696913,
+      "detail": "dcs.equilibrium.security.so_fuzz returned cleanly",
+      "evidence": "sha256:f2bc8af8c84023cf3e6039778888963349956d45d7c475ee972f2ffaa4485e29",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-SO-003",
+      "criticality": "MUST",
+      "duration_ms": 2.3807910038158298,
+      "detail": "dcs.equilibrium.security.so_timeout returned cleanly",
+      "evidence": "sha256:73890284ebe238b395d78f8535b28a69ca02c21cb1f21d9aa32d3ed8c7950bea",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-SRE-002",
+      "criticality": "MUST",
+      "duration_ms": 0.002916989615187049,
+      "detail": "dcs.equilibrium.security.sre_slo returned cleanly",
+      "evidence": "sha256:eac3cdeea62d7f19d8c4ae952460e4921467486fb98eb758c822db416211ec95",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-SRE-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0012499949662014842,
+      "detail": "dcs.equilibrium.security.sre_burn returned cleanly",
+      "evidence": "sha256:4c896860dba443b0346e8f7939bcdba39713009bd6331b988714a5d1e6f40613",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-STE-002",
+      "criticality": "MUST",
+      "duration_ms": 0.001124994014389813,
+      "detail": "dcs.equilibrium.meta.ste_atomic returned cleanly",
+      "evidence": "sha256:d73cdd11584305e0c606c56cd59e16d4451e1606c8fc37d978cdd3ebb962209f",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-STE-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0013329990906640887,
+      "detail": "dcs.equilibrium.meta.ste_compact returned cleanly",
+      "evidence": "sha256:7a2a8ca5b1205f93a8be6b6ace379288323fb15e32f5b4cbbf19505b511bc79b",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-SYS-002",
+      "criticality": "MUST",
+      "duration_ms": 20.866167003987357,
+      "detail": "dcs.equilibrium.systems.sys_exitcode returned cleanly",
+      "evidence": "sha256:4ec42501b86ac40996184bab3bc1a64c7284c5aeab3655e394c8fe8a2a6fdfda",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-SYS-003",
+      "criticality": "MAY",
+      "duration_ms": 0.01637499372009188,
+      "detail": "dcs.equilibrium.systems.sys_raise returned cleanly",
+      "evidence": "sha256:3c66e6d89dc49392b8ea5fbe8d40afcc5e00980d0e5f21f88462ef0bb6dcefab",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-TW-002",
+      "criticality": "MUST",
+      "duration_ms": 0.008916002116166055,
+      "detail": "dcs.equilibrium.ui.tw_headings returned cleanly",
+      "evidence": "sha256:98d3a6cb55e41b41f9ec0397a5fd78fc094a0a5ca5ded828d4c6fcc0565a3520",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-TW-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0038750004023313522,
+      "detail": "dcs.equilibrium.ui.tw_code_lang returned cleanly",
+      "evidence": "sha256:dca053e07c4186a010808943747d9846f49506dafa7b10f936d1461105ec9abe",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-TW-004",
+      "criticality": "SHOULD",
+      "duration_ms": 0.003374996595084667,
+      "detail": "dcs.equilibrium.ui.tw_links returned cleanly",
+      "evidence": "sha256:014e18c8b9b9bd7f9d37e02f0caaa3ca9bfb214579f4f7e90120e61384b51cd3",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-VID-002",
+      "criticality": "MUST",
+      "duration_ms": 0.004917004844173789,
+      "detail": "dcs.equilibrium.ui.vid_monotonic returned cleanly",
+      "evidence": "sha256:cf270b8bf0cf7df1ebfd93181c695c04fea182a3c56c7b534f5f669ff3445c50",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "EQ-VID-003",
+      "criticality": "MUST",
+      "duration_ms": 0.0024579931050539017,
+      "detail": "dcs.equilibrium.ui.vid_codec returned cleanly",
+      "evidence": "sha256:7e11d3bcd1b9396ade1868ad8adf451bb8a32d8328458ccfa332f951ab398ce4",
+      "error": null,
+      "pass": true
+    }
+  ],
+  "summary": {
+    "MUST_pass": 223,
+    "MUST_fail": 9,
+    "SHOULD_pass": 26,
+    "SHOULD_fail": 8,
+    "MAY_pass": 4,
+    "MAY_fail": 1
+  },
+  "verdict": "NON_CONFORMANT",
+  "digest": "sha256:cf491bf0b49d207fd9d97e37e612f00d8153ab99b95f45313bba9c67c9ecd029",
+  "signature": "7ebfbd48bc1c714d874e1b768be5dbf09e2fd7bf11f86adfee547e44013682d0881d0ff02ede60c1bcc93b6c726ea2035c4fb6954c0aafc49dbf85f4373b5f03",
+  "public_key": "0168a776773480ffb05a76744dc768fde6425cc907998b0ed9c3acdc6cf4bf9e"
+}
