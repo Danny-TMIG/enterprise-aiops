@@ -1,58 +1,74 @@
-# Enterprise AIOps / Mesh Seed
+# dcs-conformance
 
-The binding layer between existing orchestrators, existing prover
-tooling, and existing deploy targets — with the verification gate
-that makes the whole thing auditable.
+Belnap-folded conformance for the modern compliance stack.
+
+Binary tools answer pass/fail. When two of them disagree — GitHub says
+yes, AWS says no, an auditor says "partial" — they have no state for it.
+`dcs` does.
 
 ## Install
 
-    python -m pip install -e ".[dev]"
+    pip install dcs-conformance
 
-## Run
+Optional extras:
 
-    make serve           # or: python -m app
-    make test            # all tests
-    make codeql          # security scan
-    make sbom sign verify
+    pip install 'dcs-conformance[aws]'      # boto3 connector
+    pip install 'dcs-conformance[oscap]'    # OpenSCAP ARF parsing
+    pip install 'dcs-conformance[crypto]'   # Ed25519 signing
 
-## Layers
+## Quickstart
 
-| layer            | package                | what it does                                  |
-| ---------------- | ---------------------- | --------------------------------------------- |
-| mesh             | `app.mesh`             | AST + CodeQL → engineering graph, router      |
-| disintermediation| `app.dis`              | model / protocol / orchestration adapters     |
-| autonomy         | `app.autonomy`         | rules → remedies → watchdog                   |
-| botnetmastery    | `app.botnetmastery`    | defensive C2 simulation (kill switch)         |
-| seed             | `app.seed`             | intent → spec → artifact → proof object       |
-| topos            | `app.topos`            | Forward ⊣ Inverse ⊣ Relational unified        |
+    dcs keygen          # generate dcs/key.hex (Ed25519, gitignored)
+    dcs self            # fold local tests x external sources
 
-## The product: Mesh Seed
+Every run writes three files:
 
-One intent. Two human gates. One composite proof object.
+- self-<ts>.json         primary signed bundle
+- self-<ts>.oscal.json   OSCAL 1.1.2 Assessment Results
+- self-<ts>.intoto.json  in-toto v1 Statement in a DSSE envelope
 
-    intent → spec → artifact → scan → proof → kernel → proof_object
-              ↑ gate 1                        ↑ gate 2
+## Verify
 
-Money model: **CPVO** — cost per verified outcome.
+    dcs verify-intoto dcs/evidence/self-<ts>.intoto.json
+    # OK: 1 valid signature(s)
 
-## Endpoints
+Or against an externally supplied public key:
 
-| path                     | purpose                                  |
-| ------------------------ | ---------------------------------------- |
-| `GET  /health`           | liveness                                 |
-| `GET  /mesh/status`      | engineering graph stats                  |
-| `POST /mesh/route`       | intent → mesh nodes                      |
-| `GET  /dis/status`       | providers / provers / scanners           |
-| `POST /dis/complete`     | vendor-agnostic model call               |
-| `POST /dis/prove`        | run a prover                             |
-| `POST /dis/verify`       | orchestrator backend verdict             |
-| `POST /dis/mcp`          | MCP JSON-RPC                             |
-| `POST /dis/a2a`          | A2A JSON-RPC                             |
-| `GET  /autonomy/status`  | rules + remedies                         |
-| `POST /seed/intent`      | start a Mesh Seed run                    |
-| `POST /seed/{id}/run`    | run pipeline → proof object              |
-| `GET  /topos/status`     | the unified topos                        |
+    dcs verify-intoto envelope.json --pubkey $(cat dcs/key.pub.hex)
+
+## The Belnap fold
+
+Each requirement gets attestations from multiple sources. They fold
+via meet over Belnap FOUR:
+
+| sources              | folded |
+|----------------------|--------|
+| local=T, github=T    | T      |
+| local=T, aws=F       | B      |
+| local=T, github=U    | T      |
+| all=F                | F      |
+
+CONFLICT is a first-class state. A binary tool would have printed one
+of the inputs and dropped the disagreement.
+
+## Connectors
+
+Sovereign plugins. Missing tool or missing env var yields U; the
+verdict narrows but never breaks.
+
+- github      README, workflows, default branch
+- aws         S3 encryption, CloudTrail multi-region, IAM password policy
+- oscap       OpenSCAP ARF XML
+- kube_bench  CIS Kubernetes Benchmark
+- kyverno     Kyverno PolicyReport CRDs
+- prowler     Prowler OCSF findings
+
+## Interoperability
+
+- OSCAL       consumed by compliance-trestle, trestle-cli, FedRAMP tooling
+- in-toto     consumed by cosign, Rekor, policy-controller
+- Ed25519     verifiable with only key.pub.hex
 
 ## License
 
-MIT
+Apache-2.0
