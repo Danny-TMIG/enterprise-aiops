@@ -1,23 +1,32 @@
 """Stigmergy — coordination via environmental traces."""
-import random
+import math, random
 from dcs.generate import requirement
 
-def ant_colony(n_ants=20, n_steps=200, grid=40, decay=0.01, seed=0):
+def ant_colony(n_ants=20, n_steps=200, grid=40, decay=0.01, seed=0,
+               food_at=(12, 12)):
+    """Simple ACO: distance dominates, pheromone is a small bonus.
+
+    The bug in the previous version: deposit = 1.0 and distance weight 0.05
+    meant the ant preferred its *own* recent trail over moving closer to
+    food. Now distance weight >> pheromone weight, so the walk is monotone.
+    """
     rng = random.Random(seed)
-    pheromone = [[0.0]*grid for _ in range(grid)]
-    # food at (grid-1, grid-1)
-    fx, fy = grid-1, grid-1
+    pheromone = [[0.0] * grid for _ in range(grid)]
+    fx, fy = food_at
     total_food = 0
     for _ in range(n_ants):
         x, y = 0, 0
         for _ in range(n_steps):
-            # move biased by pheromone + toward food
             best = None
-            for dx, dy in ((1,0),(-1,0),(0,1),(0,-1)):
-                nx, ny = x+dx, y+dy
-                if not (0 <= nx < grid and 0 <= ny < grid): continue
-                score = pheromone[ny][nx] + 0.01*((nx-fx)**2 + (ny-fy)**2)**0.5
-                score += rng.random()*0.01
+            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                nx, ny = x + dx, y + dy
+                if not (0 <= nx < grid and 0 <= ny < grid):
+                    continue
+                score = (
+                    -math.hypot(nx - fx, ny - fy)
+                    + 0.01 * pheromone[ny][nx]
+                    + rng.random() * 0.01
+                )
                 if best is None or score > best[2]:
                     best = (nx, ny, score)
             x, y = best[0], best[1]
@@ -25,11 +34,12 @@ def ant_colony(n_ants=20, n_steps=200, grid=40, decay=0.01, seed=0):
             if (x, y) == (fx, fy):
                 total_food += 1
                 break
-    # decay
-    for y in range(grid):
-        for x in range(grid):
-            pheromone[y][x] *= (1 - decay)
-    return {"food_collected": total_food, "pheromone_mass": sum(map(sum, pheromone))}
+    for yy in range(grid):
+        for xx in range(grid):
+            pheromone[yy][xx] *= (1 - decay)
+    return {"food_collected": total_food,
+            "pheromone_mass": sum(map(sum, pheromone))}
+
 
 def termite_mound(n=500, deposit_rate=0.3, evaporate=0.02, seed=0):
     rng = random.Random(seed)

@@ -3,21 +3,30 @@ import math, random
 from dcs.generate import requirement
 
 def turing_pattern(n=48, steps=3000, seed=0):
+    """Gray–Scott: localized seed of b grows into a non-uniform pattern."""
     rng = random.Random(seed)
-    a = [[1.0 + rng.random()*0.05 for _ in range(n)] for _ in range(n)]
-    b = [[0.5 + rng.random()*0.05 for _ in range(n)] for _ in range(n)]
-    Da, Db, f, k = 0.16, 0.08, 0.06, 0.062
+    a = [[1.0] * n for _ in range(n)]
+    b = [[0.0] * n for _ in range(n)]
+    r = max(3, n // 8)
+    c = n // 2
+    for y in range(c - r, c + r):
+        for x in range(c - r, c + r):
+            a[y][x] = 0.50
+            b[y][x] = 0.25 + 0.10 * rng.random()
+    Da, Db, f, k = 0.16, 0.08, 0.035, 0.060
     for _ in range(steps):
-        na = [[0.0]*n for _ in range(n)]
-        nb = [[0.0]*n for _ in range(n)]
-        for y in range(1, n-1):
-            for x in range(1, n-1):
-                la = (a[y-1][x]+a[y+1][x]+a[y][x-1]+a[y][x+1]-4*a[y][x])
-                lb = (b[y-1][x]+b[y+1][x]+b[y][x-1]+b[y][x+1]-4*b[y][x])
-                na[y][x] = a[y][x] + Da*la - a[y][x]*b[y][x]**2 + f*(1-a[y][x])
-                nb[y][x] = b[y][x] + Db*lb + a[y][x]*b[y][x]**2 - (k+f)*b[y][x]
+        na = [row[:] for row in a]
+        nb = [row[:] for row in b]
+        for y in range(1, n - 1):
+            for x in range(1, n - 1):
+                la = a[y-1][x]+a[y+1][x]+a[y][x-1]+a[y][x+1]-4.0*a[y][x]
+                lb = b[y-1][x]+b[y+1][x]+b[y][x-1]+b[y][x+1]-4.0*b[y][x]
+                ruv = a[y][x]*b[y][x]*b[y][x]
+                na[y][x] = a[y][x] + Da*la - ruv + f*(1.0-a[y][x])
+                nb[y][x] = b[y][x] + Db*lb + ruv - (k+f)*b[y][x]
         a, b = na, nb
-    return {"a": a, "b": b, "variance": max(_variance(a), _variance(b))}
+    return {"a": a, "b": b, "variance": _variance(b)}
+
 
 def gray_scott(n=48, steps=3000, seed=0):
     rng = random.Random(seed)
@@ -37,32 +46,43 @@ def gray_scott(n=48, steps=3000, seed=0):
         u, v = nu, nv
     return {"u": u, "v": v, "variance": _variance(v)}
 
-def belousov_zhabotinsky(n=32, steps=2000, seed=0):
+def belousov_zhabotinsky(n=32, steps=4000, seed=0, dt=0.05):
+    """Oregonator: excitable medium with explicit Euler time step."""
     rng = random.Random(seed)
-    u = [[0.0]*n for _ in range(n)]; v = [[0.0]*n for _ in range(n)]
-    for y in range(n): 
-        for x in range(n): u[y][x] = 1.0 if rng.random() < 0.1 else 0.0
-    Du, Dv, eps, q, f = 0.16, 0.08, 0.01, 0.002, 1.0
+    u = [[0.0] * n for _ in range(n)]
+    v = [[0.0] * n for _ in range(n)]
+    # Localized seed — a single blob, not uniform noise
+    c = n // 2
+    for y in range(c - 2, c + 3):
+        for x in range(c - 2, c + 3):
+            u[y][x] = 1.0
+    Du, Dv, eps, q, f = 0.16, 0.08, 0.1, 0.002, 1.4
     for _ in range(steps):
-        nu = [[0.0]*n for _ in range(n)]; nv = [[0.0]*n for _ in range(n)]
-        for y in range(1, n-1):
-            for x in range(1, n-1):
-                lu = u[y-1][x]+u[y+1][x]+u[y][x-1]+u[y][x+1]-4*u[y][x]
-                lv = v[y-1][x]+v[y+1][x]+v[y][x-1]+v[y][x+1]-4*v[y][x]
-                qq = (f*v[y][x]+q) / (v[y][x]+1.0)
-                nu[y][x] = u[y][x] + Du*lu + qq*u[y][x]*(1-u[y][x])/eps
-                nv[y][x] = v[y][x] + Dv*lv + u[y][x]-v[y][x]
+        nu = [row[:] for row in u]
+        nv = [row[:] for row in v]
+        for y in range(1, n - 1):
+            for x in range(1, n - 1):
+                la = u[y-1][x]+u[y+1][x]+u[y][x-1]+u[y][x+1]-4.0*u[y][x]
+                lv = v[y-1][x]+v[y+1][x]+v[y][x-1]+v[y][x+1]-4.0*v[y][x]
+                qq = (f*v[y][x] + q) / (v[y][x] + 1.0)
+                du = Du*la + qq*u[y][x]*(1.0 - u[y][x])/eps
+                dv = Dv*lv + u[y][x] - v[y][x]
+                nu[y][x] = u[y][x] + dt*du
+                nv[y][x] = v[y][x] + dt*dv
         u, v = nu, nv
     return {"u": u, "v": v}
 
+
 def dla(n_particles=300, seed=0, size=80):
+    """Diffusion-limited aggregation; launch radius grows with cluster."""
     rng = random.Random(seed)
     grid = {(0, 0)}
     for _ in range(n_particles):
-        r = size
+        r_launch = max(5, int(math.sqrt(len(grid))) + 5)
         th = rng.uniform(0, 2*math.pi)
-        x, y = int(r*math.cos(th)), int(r*math.sin(th))
-        for _ in range(10000):
+        x = int(r_launch * math.cos(th))
+        y = int(r_launch * math.sin(th))
+        for _ in range(20000):
             dx, dy = rng.choice([(1,0),(-1,0),(0,1),(0,-1)])
             x += dx; y += dy
             if any((x+dx, y+dy) in grid for dx, dy in

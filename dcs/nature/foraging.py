@@ -3,11 +3,11 @@ import math, random
 from dcs.generate import requirement
 
 def levy_step(rng, alpha=1.5):
-    # Mantegna's algorithm for alpha-stable random step
+    """Mantegna's alpha-stable step, scaled so median |step| ~ 1 (matches Brownian)."""
     sigma = (math.gamma(1+alpha) * math.sin(math.pi*alpha/2) /
              (math.gamma((1+alpha)/2) * alpha * 2**((alpha-1)/2))) ** (1/alpha)
     u = rng.gauss(0, sigma); v = rng.gauss(0, 1)
-    return u / (abs(v) ** (1/alpha))
+    return 2.0 * u / (abs(v) ** (1/alpha))
 
 def levy_flight(n=500, alpha=1.5, seed=0):
     rng = random.Random(seed)
@@ -41,16 +41,16 @@ def area_restricted(n=500, seed=0):
     return {"final": (x, y), "unique_cells": len(visited), "steps": n}
 
 def albatross_forage(n=500, seed=0):
-    """Levy flight plus a gradient pull toward (10, 10)."""
+    """Levy flight with capped jumps + strong gradient pull toward (10, 10)."""
     rng = random.Random(seed)
     x = y = 0.0; visited = set()
     for _ in range(n):
-        r = abs(levy_step(rng, 1.5)); th = rng.uniform(0, 2*math.pi)
+        r = min(abs(levy_step(rng, 1.5)), 2.0)
+        th = rng.uniform(0, 2*math.pi)
         x += r*math.cos(th); y += r*math.sin(th)
-        # pull toward (10,10)
         dx, dy = 10 - x, 10 - y
         d = math.hypot(dx, dy) or 1.0
-        x += 0.05*dx/d; y += 0.05*dy/d
+        x += 0.30*dx/d; y += 0.30*dy/d
         visited.add((round(x), round(y)))
     return {"final": (x, y), "unique_cells": len(visited), "steps": n}
 

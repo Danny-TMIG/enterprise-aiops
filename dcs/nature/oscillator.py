@@ -32,7 +32,7 @@ def firefly_sync(n=50, K=0.3, steps=200, seed=0):
         phase = new
     return phase
 
-def cricket_chorus(n=30, K=0.2, steps=200, seed=0):
+def cricket_chorus(n=50, K=0.2, steps=200, seed=0):
     return firefly_sync(n, K, steps, seed)
 
 def cardiac_sa_node(steps=500, dt=0.05, seed=0):

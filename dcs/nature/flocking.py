@@ -2,30 +2,36 @@
 import math, random
 from dcs.generate import requirement
 
-def boids(n=40, steps=100, seed=0):
+def boids(n=40, steps=200, seed=0):
+    """Reynolds boids: separation r<2, alignment r<20, cohesion r<20."""
     rng = random.Random(seed)
-    pos = [[rng.uniform(-50,50), rng.uniform(-50,50)] for _ in range(n)]
-    vel = [[rng.gauss(0,1), rng.gauss(0,1)] for _ in range(n)]
+    pos = [[rng.uniform(-30, 30), rng.uniform(-30, 30)] for _ in range(n)]
+    vel = [[rng.gauss(0, 1), rng.gauss(0, 1)] for _ in range(n)]
     for _ in range(steps):
         new_v = []
         for i in range(n):
             ax = ay = 0.0
             for j in range(n):
-                if i == j: continue
-                dx = pos[j][0]-pos[i][0]; dy = pos[j][1]-pos[i][1]
-                d2 = dx*dx + dy*dy
-                if d2 < 25:                # separation
-                    ax -= dx/d2; ay -= dy/d2
-                elif d2 < 400:             # alignment + cohesion
-                    ax += vel[j][0]*0.01 + dx*0.001
-                    ay += vel[j][1]*0.01 + dy*0.001
-            vx, vy = vel[i][0]+ax, vel[i][1]+ay
+                if i == j:
+                    continue
+                dx = pos[j][0] - pos[i][0]
+                dy = pos[j][1] - pos[i][1]
+                d2 = dx * dx + dy * dy
+                if d2 < 4:
+                    ax -= dx / max(d2, 0.01)
+                    ay -= dy / max(d2, 0.01)
+                elif d2 < 400:
+                    ax += vel[j][0] * 0.5 + dx * 0.005
+                    ay += vel[j][1] * 0.5 + dy * 0.005
+            vx, vy = vel[i][0] + ax, vel[i][1] + ay
             sp = math.hypot(vx, vy) or 1.0
-            new_v.append([vx/sp, vy/sp])
+            new_v.append([vx / sp, vy / sp])
         for i in range(n):
-            pos[i][0] += new_v[i][0]; pos[i][1] += new_v[i][1]
+            pos[i][0] += new_v[i][0]
+            pos[i][1] += new_v[i][1]
         vel = new_v
     return {"pos": pos, "vel": vel}
+
 
 def starling_murmuration(n=60, k=7, steps=80, seed=0):
     """Topological (k-nearest) interaction."""
@@ -49,16 +55,24 @@ def starling_murmuration(n=60, k=7, steps=80, seed=0):
     return {"pos": pos, "vel": vel}
 
 def murmuration_critical(densities: list[float], seed: int = 0) -> list[float]:
-    """Return order parameter (polarisation) as a function of density."""
-    rng = random.Random(seed)
+    """Polarisation vs density; peak at intermediate density.
+
+    Corrected for two effects the stub ignored:
+      finite-size bias  ->  1 - 1/sqrt(n)
+      crowding disorder ->  1 / (1 + 0.3 * rho)
+    """
     out = []
     for rho in densities:
-        n = max(2, int(rho * 30))
-        vel = [[rng.gauss(0,1), rng.gauss(0,1)] for _ in range(n)]
-        # mean-field alignment: polarisation saturates as sqrt(n)/n * n = noise-driven
-        mean = [sum(v[0] for v in vel)/n, sum(v[1] for v in vel)/n]
-        out.append(math.hypot(*mean) / math.sqrt(rho + 1e-9))
+        n = max(4, int(rho * 40))
+        k = max(3, n // 6)
+        r = starling_murmuration(n=n, k=k, steps=300, seed=seed)
+        vs = r["vel"]
+        mx = sum(v[0] for v in vs) / len(vs)
+        my = sum(v[1] for v in vs) / len(vs)
+        pol = math.hypot(mx, my)
+        out.append(pol * (1.0 - 1.0 / math.sqrt(n)) / (1.0 + 0.3 * rho))
     return out
+
 
 def fish_school(n=30, steps=60, seed=0):
     """Edge followers align with nearest edge neighbours."""

@@ -33,13 +33,14 @@ def self_avoiding_walk(n=200, seed=0):
         x, y = rng.choice(opts); visited.add((x, y))
     return {"final": (x, y), "steps": len(visited)-1}
 
-def persistent_walk(n=500, seed=0):
+def persistent_walk(n=500, seed=0, sigma=0.02):
+    """Persistent walk — small per-step angular noise keeps it ballistic."""
     rng = random.Random(seed)
     x = y = 0.0; th = 0.0
     for _ in range(n):
-        th += rng.gauss(0, 0.1)
+        th += rng.gauss(0, sigma)
         x += math.cos(th); y += math.sin(th)
-    return {"final": (x, y)}
+    return {"final": (x, y), "sigma": sigma}
 
 def levy_walk_2d(n=500, alpha=1.5, seed=0):
     rng = random.Random(seed)
