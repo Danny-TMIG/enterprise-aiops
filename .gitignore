@@ -43,3 +43,5 @@ data/*.db-wal
 dcs/key.hex
 dcs/key.pub.hex
 dcs/evidence/run-*.json
+dcs/key.hex
+dcs/key.pub.hex

@@ -1962,6 +1962,27 @@
           "evidence": {
             "test": "dcs.hats.nwe.test"
           }
+        },
+        {
+          "req_id": "DCS-NWE-001",
+          "state": "U",
+          "source": "aws",
+          "reason": "describe_trails: ClientError: An error occurred (UnrecognizedClientException) when calling the DescribeTrails operation: The security token included in the request is invalid.",
+          "evidence": {}
+        },
+        {
+          "req_id": "DCS-NWE-001",
+          "state": "U",
+          "source": "kube-bench",
+          "reason": "DCS_KUBE_BENCH_JSON not set",
+          "evidence": {}
+        },
+        {
+          "req_id": "DCS-NWE-001",
+          "state": "U",
+          "source": "prowler",
+          "reason": "DCS_PROWLER_JSON not set",
+          "evidence": {}
         }
       ]
     },
@@ -2183,6 +2204,13 @@
           "evidence": {
             "test": "dcs.hats.sd.test"
           }
+        },
+        {
+          "req_id": "DCS-SD-001",
+          "state": "U",
+          "source": "kyverno",
+          "reason": "DCS_KYVERNO_JSON not set",
+          "evidence": {}
         }
       ]
     },
@@ -2285,6 +2313,13 @@
           "evidence": {
             "test": "dcs.hats.sys.test"
           }
+        },
+        {
+          "req_id": "DCS-SYS-001",
+          "state": "U",
+          "source": "oscap",
+          "reason": "DCS_OSCAP_ARF not set",
+          "evidence": {}
         }
       ]
     },
@@ -2438,6 +2473,20 @@
           "evidence": {
             "test": "dcs.crosscut.backup.test"
           }
+        },
+        {
+          "req_id": "DCS-XC-BACKUP-001",
+          "state": "U",
+          "source": "aws",
+          "reason": "list_buckets: ClientError: An error occurred (InvalidAccessKeyId) when calling the ListBuckets operation: The AWS Access Key Id you provided does not exist in our records.",
+          "evidence": {}
+        },
+        {
+          "req_id": "DCS-XC-BACKUP-001",
+          "state": "U",
+          "source": "prowler",
+          "reason": "DCS_PROWLER_JSON not set",
+          "evidence": {}
         }
       ]
     },
@@ -2608,6 +2657,20 @@
           "evidence": {
             "test": "dcs.crosscut.privacy.test"
           }
+        },
+        {
+          "req_id": "DCS-XC-PRIV-001",
+          "state": "U",
+          "source": "aws",
+          "reason": "get_account_password_policy: ClientError: An error occurred (InvalidClientTokenId) when calling the GetAccountPasswordPolicy operation: The security token included in the request is invalid.",
+          "evidence": {}
+        },
+        {
+          "req_id": "DCS-XC-PRIV-001",
+          "state": "U",
+          "source": "prowler",
+          "reason": "DCS_PROWLER_JSON not set",
+          "evidence": {}
         }
       ]
     },

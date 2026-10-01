@@ -1,9 +1,8 @@
 """AWS source — attestations from AWS APIs via boto3.
 
 boto3 is optional. If it isn't installed, or credentials aren't
-configured, every source returns U (unknown). The engine folds U as
-identity, so a missing AWS connector does not flip the verdict — it
-just narrows the evidence base.
+configured, every source returns U (unknown). U is identity in the
+Belnap meet, so the verdict narrows but does not break.
 """
 from __future__ import annotations
 
@@ -25,10 +24,8 @@ def _client(service: str):
 
 
 def _unavailable(req_id: str) -> Attestation:
-    return Attestation(
-        req_id, B.U, "aws",
-        "boto3 not installed or AWS credentials not configured",
-    )
+    return Attestation(req_id, B.U, "aws",
+                       "boto3 not installed or AWS credentials not configured")
 
 
 @source("DCS-XC-BACKUP-001")
@@ -43,8 +40,7 @@ def s3_encryption_at_rest() -> Attestation:
         return Attestation("DCS-XC-BACKUP-001", B.U, "aws",
                            f"list_buckets: {type(e).__name__}: {e}")
     if not buckets:
-        return Attestation("DCS-XC-BACKUP-001", B.U, "aws",
-                           "no buckets in account")
+        return Attestation("DCS-XC-BACKUP-001", B.U, "aws", "no buckets")
 
     states: list[B] = []
     unencrypted: list[str] = []
@@ -77,10 +73,9 @@ def s3_encryption_at_rest() -> Attestation:
     if unknown:
         reason += f"; unchecked: {unknown[:3]}"
 
-    return Attestation(
-        "DCS-XC-BACKUP-001", folded, "aws", reason,
-        {"total": len(buckets), "unencrypted": unencrypted, "unknown": unknown},
-    )
+    return Attestation("DCS-XC-BACKUP-001", folded, "aws", reason,
+                       {"total": len(buckets), "unencrypted": unencrypted,
+                        "unknown": unknown})
 
 
 @source("DCS-NWE-001")
@@ -98,40 +93,31 @@ def cloudtrail_multi_region() -> Attestation:
     multi = [t for t in trails if t.get("IsMultiRegionTrail")]
     if not multi:
         return Attestation("DCS-NWE-001", B.F, "aws",
-                           "no multi-region trail configured",
-                           {"trails": [t.get("Name") for t in trails]})
+                           "no multi-region trail configured")
 
     name = multi[0]["Name"]
     try:
         status = c.get_trail_status(Name=name)
     except Exception as e:
         return Attestation("DCS-NWE-001", B.U, "aws",
-                           f"get_trail_status({name}): {type(e).__name__}: {e}")
+                           f"get_trail_status: {type(e).__name__}: {e}")
 
     logging_on = bool(status.get("IsLogging"))
-    state = B.T if logging_on else B.F
-    return Attestation(
-        "DCS-NWE-001", state, "aws",
-        f"trail {name}: multi-region=True, logging={logging_on}",
-        {"trail": name, "logging": logging_on},
-    )
+    return Attestation("DCS-NWE-001", B.T if logging_on else B.F, "aws",
+                       f"trail {name}: multi-region=True, logging={logging_on}",
+                       {"trail": name, "logging": logging_on})
 
 
 @source("DCS-XC-PRIV-001")
 def iam_password_policy() -> Attestation:
-    """Account password policy must meet six baseline checks.
-
-    Partial compliance folds to B (CONFLICT), not F: some checks
-    pass, some fail, and that is a two-source disagreement.
-    """
+    """Account password policy must meet six baseline checks."""
     c = _client("iam")
     if c is None:
         return _unavailable("DCS-XC-PRIV-001")
     try:
         p = c.get_account_password_policy()["PasswordPolicy"]
     except c.exceptions.NoSuchEntityException:
-        return Attestation("DCS-XC-PRIV-001", B.F, "aws",
-                           "no account password policy")
+        return Attestation("DCS-XC-PRIV-001", B.F, "aws", "no policy")
     except Exception as e:
         return Attestation("DCS-XC-PRIV-001", B.U, "aws",
                            f"get_account_password_policy: {type(e).__name__}: {e}")
@@ -146,15 +132,7 @@ def iam_password_policy() -> Attestation:
     }
     passed = sum(checks.values())
     total = len(checks)
-    if passed == total:
-        state = B.T
-    elif passed == 0:
-        state = B.F
-    else:
-        state = B.B
-
-    return Attestation(
-        "DCS-XC-PRIV-001", state, "aws",
-        f"{passed}/{total} password-policy checks pass",
-        {"checks": checks, "policy": p},
-    )
+    state = B.T if passed == total else (B.F if passed == 0 else B.B)
+    return Attestation("DCS-XC-PRIV-001", state, "aws",
+                       f"{passed}/{total} password-policy checks pass",
+                       {"checks": checks})
