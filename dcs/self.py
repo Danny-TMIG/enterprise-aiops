@@ -15,6 +15,7 @@ from pathlib import Path
 from dcs import sources as src
 
 # Side-effect imports: each module registers @source handlers.
+from dcs.sources import aws as _aws  # noqa: F401
 from dcs.sources import github as _github  # noqa: F401
 
 ROOT = Path(__file__).resolve().parent
