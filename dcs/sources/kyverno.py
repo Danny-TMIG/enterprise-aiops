@@ -1,4 +1,5 @@
 """Kyverno source — PolicyReport CRDs from `kubectl get polr -A -o json`."""
+
 from __future__ import annotations
 
 from dcs.sources import Attestation, B, meet, source
@@ -12,13 +13,15 @@ def kyverno_policyreports() -> Attestation:
     data, err = read_json("DCS_KYVERNO_JSON", REQ, "kyverno")
     if err:
         return err
+    if data is None:
+        return Attestation(REQ, B.U, "kyverno", "no data")
     items = data.get("items", []) if isinstance(data, dict) else data
     if not items:
         return Attestation(REQ, B.U, "kyverno", "no PolicyReports")
 
     results: list[tuple[str, B]] = []
     for report in items:
-        for r in (report.get("results") or []):
+        for r in report.get("results") or []:
             name = r.get("policy", "?") + "/" + r.get("rule", "?")
             result = r.get("result", "").lower()
             if result == "pass":
@@ -33,7 +36,9 @@ def kyverno_policyreports() -> Attestation:
         folded = meet(folded, s)
     fails = [n for n, s in results if s == B.F]
     return Attestation(
-        REQ, folded, "kyverno",
+        REQ,
+        folded,
+        "kyverno",
         f"{len(results)} policy results, {len(fails)} fail",
         {"failures": fails[:10]},
     )

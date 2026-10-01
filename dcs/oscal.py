@@ -10,10 +10,11 @@ Belnap -> OSCAL status:
   U -> not-applicable   (control was not evaluated)
   B -> satisfied + prop dcs:conflict=true
 """
+
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 
 def _status(state: str) -> tuple[str, dict]:
@@ -28,7 +29,7 @@ def _status(state: str) -> tuple[str, dict]:
 
 
 def to_oscal(payload: dict, *, title: str = "dcs conformance") -> dict:
-    now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+    now = datetime.now(UTC).isoformat().replace("+00:00", "Z")
     findings = []
     for r in payload["results"]:
         status, prop = _status(r["state"])
@@ -40,18 +41,19 @@ def to_oscal(payload: dict, *, title: str = "dcs conformance") -> dict:
         }
         if prop:
             target["props"] = [prop]
-        findings.append({
-            "uuid": str(uuid.uuid5(uuid.NAMESPACE_URL, r["id"] + r["state"])),
-            "title": r.get("title", r["id"]),
-            "description": r.get("id"),
-            "target": target,
-            "props": [
-                {"name": "dcs:criticality", "value": r.get("criticality", "")},
-                {"name": "dcs:state", "value": r["state"]},
-                {"name": "dcs:attestation_count",
-                 "value": str(len(r.get("attestations", [])))},
-            ],
-        })
+        findings.append(
+            {
+                "uuid": str(uuid.uuid5(uuid.NAMESPACE_URL, r["id"] + r["state"])),
+                "title": r.get("title", r["id"]),
+                "description": r.get("id"),
+                "target": target,
+                "props": [
+                    {"name": "dcs:criticality", "value": r.get("criticality", "")},
+                    {"name": "dcs:state", "value": r["state"]},
+                    {"name": "dcs:attestation_count", "value": str(len(r.get("attestations", [])))},
+                ],
+            }
+        )
 
     return {
         "assessment-results": {
@@ -63,13 +65,15 @@ def to_oscal(payload: dict, *, title: str = "dcs conformance") -> dict:
                 "oscal-version": "1.1.2",
             },
             "import-ap": {"href": "#dcs-self"},
-            "results": [{
-                "uuid": str(uuid.uuid4()),
-                "title": title,
-                "description": "Belnap-folded conformance from dcs.self",
-                "start": now,
-                "end": now,
-                "findings": findings,
-            }],
+            "results": [
+                {
+                    "uuid": str(uuid.uuid4()),
+                    "title": title,
+                    "description": "Belnap-folded conformance from dcs.self",
+                    "start": now,
+                    "end": now,
+                    "findings": findings,
+                }
+            ],
         },
     }

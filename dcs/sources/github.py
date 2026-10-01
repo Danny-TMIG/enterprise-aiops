@@ -1,4 +1,5 @@
 """GitHub source — attestations from the GitHub REST API."""
+
 from __future__ import annotations
 
 import json
@@ -36,8 +37,9 @@ def readme_present() -> Attestation:
     ok, data = _get(f"/repos/{repo}/readme")
     if not ok:
         return Attestation("DCS-DA-001", B.U, "github", f"api: {data}")
-    return Attestation("DCS-DA-001", B.T, "github", "readme present",
-                       {"url": data.get("html_url", "")})
+    return Attestation(
+        "DCS-DA-001", B.T, "github", "readme present", {"url": data.get("html_url", "")}
+    )
 
 
 @source("DCS-AUT-001")
@@ -50,8 +52,9 @@ def workflows_present() -> Attestation:
         return Attestation("DCS-AUT-001", B.U, "github", f"api: {data}")
     if not isinstance(data, list):
         return Attestation("DCS-AUT-001", B.F, "github", "no workflows directory")
-    return Attestation("DCS-AUT-001", B.T, "github",
-                       f"{len(data)} workflow(s) present", {"count": len(data)})
+    return Attestation(
+        "DCS-AUT-001", B.T, "github", f"{len(data)} workflow(s) present", {"count": len(data)}
+    )
 
 
 @source("DCS-COH-001")
@@ -62,5 +65,4 @@ def default_branch() -> Attestation:
     ok, data = _get(f"/repos/{repo}")
     if not ok:
         return Attestation("DCS-COH-001", B.U, "github", f"api: {data}")
-    return Attestation("DCS-COH-001", B.T, "github",
-                       f"default: {data.get('default_branch','')}")
+    return Attestation("DCS-COH-001", B.T, "github", f"default: {data.get('default_branch', '')}")

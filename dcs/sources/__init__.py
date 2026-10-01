@@ -4,11 +4,13 @@ A source attests to a requirement's state. The engine folds all sources
 into a single Belnap FOUR verdict. Binary sources collapse; Belnap
 sources surface disagreement as CONFLICT.
 """
+
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Callable
+from typing import Any
 
 
 class B(str, Enum):
@@ -17,6 +19,7 @@ class B(str, Enum):
     Subclasses str so dataclass asdict() + json.dumps() work without a
     custom encoder.
     """
+
     T = "T"
     F = "F"
     U = "U"
@@ -37,9 +40,11 @@ _SOURCES: dict[str, list[Callable[[], Attestation]]] = {}
 
 def source(req_id: str):
     """Register a source function for a requirement id."""
+
     def deco(fn):
         _SOURCES.setdefault(req_id, []).append(fn)
         return fn
+
     return deco
 
 
@@ -49,19 +54,27 @@ def sources_for(req_id: str) -> list[Callable[[], Attestation]]:
 
 def meet(a: B, b: B) -> B:
     """Belnap meet (AND): T∧T=T, T∧F=B, U identity, B absorbing."""
-    if a == b: return a
-    if a == B.U: return b
-    if b == B.U: return a
-    if a == B.B or b == B.B: return B.B
+    if a == b:
+        return a
+    if a == B.U:
+        return b
+    if b == B.U:
+        return a
+    if a == B.B or b == B.B:
+        return B.B
     return B.B  # T and F
 
 
 def join(a: B, b: B) -> B:
     """Belnap join (OR): F∨F=F, T∨F=B, U identity, B absorbing."""
-    if a == b: return a
-    if a == B.U: return b
-    if b == B.U: return a
-    if a == B.B or b == B.B: return B.B
+    if a == b:
+        return a
+    if a == B.U:
+        return b
+    if b == B.U:
+        return a
+    if a == B.B or b == B.B:
+        return B.B
     return B.B
 
 

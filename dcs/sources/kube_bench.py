@@ -1,4 +1,5 @@
 """kube-bench source — CIS Kubernetes Benchmark results."""
+
 from __future__ import annotations
 
 from dcs.sources import Attestation, B, meet, source
@@ -12,6 +13,8 @@ def kube_bench_report() -> Attestation:
     data, err = read_json("DCS_KUBE_BENCH_JSON", REQ, "kube-bench")
     if err:
         return err
+    if data is None:
+        return Attestation(REQ, B.U, "kube-bench", "no data")
     if not isinstance(data, dict):
         return Attestation(REQ, B.U, "kube-bench", "unexpected root type")
 
@@ -34,7 +37,9 @@ def kube_bench_report() -> Attestation:
         folded = meet(folded, s)
     fails = [rid for rid, s in results if s == B.F]
     return Attestation(
-        REQ, folded, "kube-bench",
+        REQ,
+        folded,
+        "kube-bench",
         f"{len(results)} tests, {len(fails)} fail",
         {"failures": fails[:10]},
     )

@@ -134,15 +134,16 @@ def coherence_roster() -> None:
     assert len(HATS) >= 8
     assert all(isinstance(v, str) and v for v in HATS.values())
     from dcs.team import ROSTER
+
     assigned: set[str] = set()
     for hats in ROSTER.values():
         for h in hats:
             assert h not in assigned, f"hat {h} assigned twice"
             assigned.add(h)
     assert set(HATS) == assigned, (
-        f"missing: {sorted(set(HATS) - assigned)}; "
-        f"extra: {sorted(assigned - set(HATS))}"
+        f"missing: {sorted(set(HATS) - assigned)}; extra: {sorted(assigned - set(HATS))}"
     )
+
 
 @requirement(
     id="DCS-CONF-001",

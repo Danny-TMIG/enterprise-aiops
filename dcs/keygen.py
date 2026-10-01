@@ -3,13 +3,14 @@
 Writes dcs/key.hex (private, hex) and dcs/key.pub.hex (public, hex).
 Files are gitignored. Run once per machine.
 """
+
 from __future__ import annotations
 
 import sys
 from pathlib import Path
 
-from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
 ROOT = Path(__file__).resolve().parent
 

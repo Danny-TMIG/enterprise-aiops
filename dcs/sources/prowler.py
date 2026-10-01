@@ -4,9 +4,8 @@ Prowler emits one finding per (check, resource). We fold them per
 requirement id if the check name maps, otherwise aggregate under a
 single synthetic requirement.
 """
-from __future__ import annotations
 
-from collections import defaultdict
+from __future__ import annotations
 
 from dcs.sources import Attestation, B, meet, source
 from dcs.sources._file import read_json
@@ -48,17 +47,17 @@ def _aggregate(req_id: str) -> Attestation:
     data, err = read_json("DCS_PROWLER_JSON", req_id, "prowler")
     if err:
         return err
+    if data is None:
+        return Attestation(req_id, B.U, "prowler", "no data")
     findings = data if isinstance(data, list) else data.get("findings", [])
     if not findings:
         return Attestation(req_id, B.U, "prowler", "no findings")
 
     matching = [
-        f for f in findings
-        if CHECK_MAP.get(f.get("check_id", ""), f.get("check_id", "")) == req_id
+        f for f in findings if CHECK_MAP.get(f.get("check_id", ""), f.get("check_id", "")) == req_id
     ]
     if not matching:
-        return Attestation(req_id, B.U, "prowler",
-                           f"no findings mapped to {req_id}")
+        return Attestation(req_id, B.U, "prowler", f"no findings mapped to {req_id}")
 
     states = [_ocsf_state(f) for f in matching]
     folded = states[0]
@@ -66,7 +65,9 @@ def _aggregate(req_id: str) -> Attestation:
         folded = meet(folded, s)
     fails = [f.get("resource_uid", "?") for f, s in zip(matching, states) if s == B.F]
     return Attestation(
-        req_id, folded, "prowler",
+        req_id,
+        folded,
+        "prowler",
         f"{len(matching)} findings, {len(fails)} fail",
         {"failures": fails[:10]},
     )

@@ -1,4 +1,5 @@
 """Team roster — deterministic partition of the hat set."""
+
 from __future__ import annotations
 
 from dcs.hats import HATS

@@ -7,7 +7,8 @@ name = "dcs-conformance"
 version = "1.0.0"
 description = "Belnap-folded conformance: OSCAL + in-toto bundles from any source"
 readme = "README.md"
-license = { text = "Apache-2.0" }
+license = "Apache-2.0"
+license-files = ["LICENSE"]
 requires-python = ">=3.11"
 authors = [{ name = "Danny", email = "danny@dannylabs.example" }]
 keywords = [
@@ -17,7 +18,6 @@ keywords = [
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -73,6 +73,7 @@ exclude_lines = [
 
 [tool.ruff]
 line-length = 100
+extend-exclude = ["dcs/_cli_orig.py"]
 target-version = "py312"
 
 [tool.ruff.lint]
@@ -83,7 +84,9 @@ ignore = [
     "E731", "E741",
     "N802", "N803", "N805", "N806", "N812",
     "PT011", "PT017", "PT018",
-    "S102", "S108", "S307", "S311", "S603", "S607", "S608",
+    "S102", "S108", "S307", "S310", "S311", "S603", "S607", "S608",
+    "S110",
+    "UP042",
 ]
 
 [tool.ruff.format]

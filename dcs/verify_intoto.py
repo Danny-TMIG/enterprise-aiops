@@ -6,6 +6,7 @@ Usage:
 Exit 0 on success (signed and valid, or unsigned and shaped correctly),
 1 on any verification failure.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -45,8 +46,8 @@ def verify(path: Path, external_pubkey: str | None = None) -> int:
         return 0
 
     try:
-        from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
         from cryptography.exceptions import InvalidSignature
+        from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
     except ImportError:
         print("FAIL: cryptography not installed; cannot verify")
         return 1

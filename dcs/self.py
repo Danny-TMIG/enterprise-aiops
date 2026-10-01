@@ -9,6 +9,7 @@ Emits three files per run:
   self-<ts>.oscal.json    OSCAL Assessment Results (NIST / FedRAMP)
   self-<ts>.intoto.json   in-toto v1 Statement in a DSSE envelope
 """
+
 from __future__ import annotations
 
 import importlib
@@ -88,17 +89,23 @@ def run() -> dict:
             try:
                 atts.append(fn())
             except Exception as e:
-                atts.append(src.Attestation(
-                    req_id, src.B.U, fn.__module__,
-                    "source error: " + type(e).__name__ + ": " + str(e),
-                ))
-        results.append({
-            "id": req_id,
-            "criticality": entry.get("criticality", "MUST"),
-            "title": entry.get("title", ""),
-            "state": src.fold(atts).value,
-            "attestations": [asdict(a) for a in atts],
-        })
+                atts.append(
+                    src.Attestation(
+                        req_id,
+                        src.B.U,
+                        fn.__module__,
+                        "source error: " + type(e).__name__ + ": " + str(e),
+                    )
+                )
+        results.append(
+            {
+                "id": req_id,
+                "criticality": entry.get("criticality", "MUST"),
+                "title": entry.get("title", ""),
+                "state": src.fold(atts).value,
+                "attestations": [asdict(a) for a in atts],
+            }
+        )
     return {"results": results, "manifest": str(MANIFEST)}
 
 
@@ -116,21 +123,19 @@ def summarize(payload: dict) -> dict:
 
     conflicts = [r["id"] for r in payload["results"] if r["state"] == "B"]
     must_bad = [
-        r["id"] for r in payload["results"]
+        r["id"]
+        for r in payload["results"]
         if r["criticality"] == "MUST" and r["state"] in ("F", "B")
     ]
     dual_attested = sum(
-        1 for r in payload["results"]
+        1
+        for r in payload["results"]
         if r["criticality"] == "MUST"
         and sum(1 for a in r["attestations"] if a["state"] != "U") >= 2
     )
-    must_total = sum(
-        1 for r in payload["results"] if r["criticality"] == "MUST"
-    )
+    must_total = sum(1 for r in payload["results"] if r["criticality"] == "MUST")
 
-    verdict = (
-        "CONFORMANT" if not must_bad and not conflicts else "NON_CONFORMANT"
-    )
+    verdict = "CONFORMANT" if not must_bad and not conflicts else "NON_CONFORMANT"
     return {
         "verdict": verdict,
         "counts": counts,
@@ -145,6 +150,7 @@ def _write_exports(payload: dict, out_dir: Path, stem: str) -> None:
     """Write OSCAL and in-toto sidecars next to the primary bundle."""
     try:
         from dcs.oscal import to_oscal
+
         oscal = to_oscal(payload, title="dcs self " + stem)
         path = out_dir / (stem + ".oscal.json")
         path.write_text(json.dumps(oscal, indent=2))
@@ -154,6 +160,7 @@ def _write_exports(payload: dict, out_dir: Path, stem: str) -> None:
 
     try:
         from dcs.intoto import to_dsse, to_statement
+
         stmt = to_statement(payload, subject_name="dcs-self-" + stem)
         env = to_dsse(stmt)
         path = out_dir / (stem + ".intoto.json")
@@ -176,6 +183,7 @@ def main() -> int:
     }
     try:
         from dcs.signing import sign_bundle
+
         signed = sign_bundle(bundle)
     except Exception:
         signed = bundle

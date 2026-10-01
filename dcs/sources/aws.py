@@ -4,6 +4,7 @@ boto3 is optional. If it isn't installed, or credentials aren't
 configured, every source returns U (unknown). U is identity in the
 Belnap meet, so the verdict narrows but does not break.
 """
+
 from __future__ import annotations
 
 from dcs.sources import Attestation, B, meet, source
@@ -24,8 +25,7 @@ def _client(service: str):
 
 
 def _unavailable(req_id: str) -> Attestation:
-    return Attestation(req_id, B.U, "aws",
-                       "boto3 not installed or AWS credentials not configured")
+    return Attestation(req_id, B.U, "aws", "boto3 not installed or AWS credentials not configured")
 
 
 @source("DCS-XC-BACKUP-001")
@@ -37,8 +37,9 @@ def s3_encryption_at_rest() -> Attestation:
     try:
         buckets = c.list_buckets().get("Buckets", [])
     except Exception as e:
-        return Attestation("DCS-XC-BACKUP-001", B.U, "aws",
-                           f"list_buckets: {type(e).__name__}: {e}")
+        return Attestation(
+            "DCS-XC-BACKUP-001", B.U, "aws", f"list_buckets: {type(e).__name__}: {e}"
+        )
     if not buckets:
         return Attestation("DCS-XC-BACKUP-001", B.U, "aws", "no buckets")
 
@@ -73,9 +74,13 @@ def s3_encryption_at_rest() -> Attestation:
     if unknown:
         reason += f"; unchecked: {unknown[:3]}"
 
-    return Attestation("DCS-XC-BACKUP-001", folded, "aws", reason,
-                       {"total": len(buckets), "unencrypted": unencrypted,
-                        "unknown": unknown})
+    return Attestation(
+        "DCS-XC-BACKUP-001",
+        folded,
+        "aws",
+        reason,
+        {"total": len(buckets), "unencrypted": unencrypted, "unknown": unknown},
+    )
 
 
 @source("DCS-NWE-001")
@@ -87,25 +92,26 @@ def cloudtrail_multi_region() -> Attestation:
     try:
         trails = c.describe_trails(includeShadowTrails=False).get("trailList", [])
     except Exception as e:
-        return Attestation("DCS-NWE-001", B.U, "aws",
-                           f"describe_trails: {type(e).__name__}: {e}")
+        return Attestation("DCS-NWE-001", B.U, "aws", f"describe_trails: {type(e).__name__}: {e}")
 
     multi = [t for t in trails if t.get("IsMultiRegionTrail")]
     if not multi:
-        return Attestation("DCS-NWE-001", B.F, "aws",
-                           "no multi-region trail configured")
+        return Attestation("DCS-NWE-001", B.F, "aws", "no multi-region trail configured")
 
     name = multi[0]["Name"]
     try:
         status = c.get_trail_status(Name=name)
     except Exception as e:
-        return Attestation("DCS-NWE-001", B.U, "aws",
-                           f"get_trail_status: {type(e).__name__}: {e}")
+        return Attestation("DCS-NWE-001", B.U, "aws", f"get_trail_status: {type(e).__name__}: {e}")
 
     logging_on = bool(status.get("IsLogging"))
-    return Attestation("DCS-NWE-001", B.T if logging_on else B.F, "aws",
-                       f"trail {name}: multi-region=True, logging={logging_on}",
-                       {"trail": name, "logging": logging_on})
+    return Attestation(
+        "DCS-NWE-001",
+        B.T if logging_on else B.F,
+        "aws",
+        f"trail {name}: multi-region=True, logging={logging_on}",
+        {"trail": name, "logging": logging_on},
+    )
 
 
 @source("DCS-XC-PRIV-001")
@@ -119,8 +125,9 @@ def iam_password_policy() -> Attestation:
     except c.exceptions.NoSuchEntityException:
         return Attestation("DCS-XC-PRIV-001", B.F, "aws", "no policy")
     except Exception as e:
-        return Attestation("DCS-XC-PRIV-001", B.U, "aws",
-                           f"get_account_password_policy: {type(e).__name__}: {e}")
+        return Attestation(
+            "DCS-XC-PRIV-001", B.U, "aws", f"get_account_password_policy: {type(e).__name__}: {e}"
+        )
 
     checks = {
         "min_length_14": p.get("MinimumPasswordLength", 0) >= 14,
@@ -133,6 +140,10 @@ def iam_password_policy() -> Attestation:
     passed = sum(checks.values())
     total = len(checks)
     state = B.T if passed == total else (B.F if passed == 0 else B.B)
-    return Attestation("DCS-XC-PRIV-001", state, "aws",
-                       f"{passed}/{total} password-policy checks pass",
-                       {"checks": checks})
+    return Attestation(
+        "DCS-XC-PRIV-001",
+        state,
+        "aws",
+        f"{passed}/{total} password-policy checks pass",
+        {"checks": checks},
+    )

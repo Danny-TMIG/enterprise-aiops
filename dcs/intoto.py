@@ -12,6 +12,7 @@ Signing key resolution order:
 If neither exists, the envelope is emitted with signatures=[] and
 is still a valid DSSE envelope.
 """
+
 from __future__ import annotations
 
 import base64
@@ -25,18 +26,18 @@ PREDICATE_TYPE = "https://dcs.dannylabs.example/attestation/v1"
 
 
 def _digest(payload: dict) -> str:
-    return hashlib.sha256(
-        json.dumps(payload, sort_keys=True).encode()
-    ).hexdigest()
+    return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
 
 
 def to_statement(payload: dict, subject_name: str = "dcs-self") -> dict:
     return {
         "_type": STATEMENT_TYPE,
-        "subject": [{
-            "name": subject_name,
-            "digest": {"sha256": _digest(payload)},
-        }],
+        "subject": [
+            {
+                "name": subject_name,
+                "digest": {"sha256": _digest(payload)},
+            }
+        ],
         "predicateType": PREDICATE_TYPE,
         "predicate": payload,
     }
@@ -66,16 +67,19 @@ def to_dsse(statement: dict) -> dict:
 
     try:
         from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
+
         key_hex = Path(key_path).read_text().strip()
         priv = Ed25519PrivateKey.from_private_bytes(bytes.fromhex(key_hex))
         pub_raw = priv.public_key().public_bytes_raw()
         sig = priv.sign(payload_bytes)
-        envelope["signatures"].append({
-            "keyid": hashlib.sha256(pub_raw).hexdigest()[:16],
-            "sig": base64.b64encode(sig).decode(),
-            "public": pub_raw.hex(),
-            "alg": "ed25519",
-        })
+        envelope["signatures"].append(
+            {
+                "keyid": hashlib.sha256(pub_raw).hexdigest()[:16],
+                "sig": base64.b64encode(sig).decode(),
+                "public": pub_raw.hex(),
+                "alg": "ed25519",
+            }
+        )
     except Exception:
         pass
 

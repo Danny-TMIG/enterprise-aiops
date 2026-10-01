@@ -10,6 +10,7 @@ Maps OpenSCAP's five states into Belnap FOUR:
   unknown        -> U
   notapplicable  -> U (was not evaluated; absence of evidence)
 """
+
 from __future__ import annotations
 
 import os
@@ -31,6 +32,7 @@ def _parse_arf(path: Path) -> dict[str, str]:
     except Exception:
         return {}
     out: dict[str, str] = {}
+
     # Traverse: <arf:report><ds:result><rule-result idref=...><result>...</result>
     def walk(o):
         if isinstance(o, dict):
@@ -46,6 +48,7 @@ def _parse_arf(path: Path) -> dict[str, str]:
         elif isinstance(o, list):
             for v in o:
                 walk(v)
+
     walk(doc)
     return out
 
@@ -68,9 +71,12 @@ def openscap_report() -> Attestation:
         return Attestation(REQ, B.U, "oscap", f"{path} not found")
     rules = _parse_arf(p)
     if not rules:
-        return Attestation(REQ, B.U, "oscap",
-                           "no rules parsed (install xmltodict, or pass a "
-                           "JSON sidecar via DCS_OSCAP_JSON)")
+        return Attestation(
+            REQ,
+            B.U,
+            "oscap",
+            "no rules parsed (install xmltodict, or pass a JSON sidecar via DCS_OSCAP_JSON)",
+        )
     states = [(_belnap(s), rid) for rid, s in rules.items()]
     folded = states[0][0]
     for s, _ in states[1:]:
@@ -78,8 +84,10 @@ def openscap_report() -> Attestation:
     fails = [rid for s, rid in states if s == B.F]
     unk = [rid for s, rid in states if s == B.U]
     return Attestation(
-        REQ, folded, "oscap",
+        REQ,
+        folded,
+        "oscap",
         f"{len(rules)} rules: "
-        f"{sum(1 for s,_ in states if s==B.T)} pass, {len(fails)} fail, {len(unk)} unknown",
+        f"{sum(1 for s, _ in states if s == B.T)} pass, {len(fails)} fail, {len(unk)} unknown",
         {"failures": fails[:10], "unknowns": unk[:10]},
     )
