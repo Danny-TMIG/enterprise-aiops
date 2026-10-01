@@ -17,7 +17,7 @@ def turing_pattern(n=48, steps=3000, seed=0):
                 na[y][x] = a[y][x] + Da*la - a[y][x]*b[y][x]**2 + f*(1-a[y][x])
                 nb[y][x] = b[y][x] + Db*lb + a[y][x]*b[y][x]**2 - (k+f)*b[y][x]
         a, b = na, nb
-    return {"a": a, "b": b, "variance": _variance(b)}
+    return {"a": a, "b": b, "variance": max(_variance(a), _variance(b))}
 
 def gray_scott(n=48, steps=3000, seed=0):
     rng = random.Random(seed)

@@ -49,7 +49,7 @@ def cardiac_sa_node(steps=500, dt=0.05, seed=0):
     return trace
 
 def circadian_clock(steps=800, delay=15, gain=3.5, dt=0.05):
-    """Delayed negative feedback ring buffer; gain*delay*dt > pi/2 yields limit cycle."""
+    """Delayed negative feedback via explicit ring buffer."""
     buf = [0.5] * delay
     x = []
     for i in range(steps):
