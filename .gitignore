@@ -37,3 +37,8 @@ uvicorn.log
 .env
 .env.local
 .DS_Store
+checkpoints/
+data/*.db-shm
+data/*.db-wal
+dcs/key.hex
+dcs/key.pub.hex
