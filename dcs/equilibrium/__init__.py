@@ -5,6 +5,7 @@ target:   FLOOR = N requirements per hat (default 12)
 delta:    target - count for each hat
 status:   balanced iff every hat ≥ floor
 """
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -17,7 +18,7 @@ FLOOR = 12
 
 def compute(std_path: Path, floor: int = FLOOR) -> dict:
     std = load(std_path)
-    per_hat = {h: 0 for h in HATS}
+    per_hat = dict.fromkeys(HATS, 0)
     for r in std.requirements:
         for h in r.hats:
             if h in per_hat:

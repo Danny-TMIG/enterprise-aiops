@@ -4,6 +4,7 @@ Catalog at data/nature.txt: (code, class, local rule) tuples.
 One module per class: foraging, walk, consensus, stigmergy, flocking,
 oscillator, morpho, threshold, adaptation, population, flow.
 """
+
 from pathlib import Path
 
 CATALOG_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "nature.txt"

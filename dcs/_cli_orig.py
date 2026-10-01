@@ -1,11 +1,23 @@
 """dcs — command-line interface."""
+
 from __future__ import annotations
-import argparse, json, sys
+
+import argparse
+import json
+import sys
 from pathlib import Path
 
-from dcs import __version__
-from dcs import breadth, coalesce, conform, equivalence, evidence, generate, standard as std_mod, transparency, verify
-
+from dcs import (
+    __version__,
+    breadth,
+    coalesce,
+    conform,
+    equivalence,
+    generate,
+    transparency,
+    verify,
+)
+from dcs import standard as std_mod
 
 ROOT = Path.cwd()
 STD = ROOT / "dcs/standards/aiops.json"
@@ -28,42 +40,51 @@ def cmd_generate(args):
         "published": "2026-09-30",
         "authority": "local",
     }
-    import pkgutil, importlib
+    import pkgutil
+
     import dcs.hats as _hats
+
     hat_modules = [
         f"dcs.hats.{m.name}"
         for m in pkgutil.iter_modules(_hats.__path__)
         if not m.name.startswith("_")
     ]
     import dcs.crosscut as _xc
+
     xc_modules = [
         f"dcs.crosscut.{m.name}"
         for m in pkgutil.iter_modules(_xc.__path__)
         if not m.name.startswith("_")
     ]
     import dcs.nature as _nat
+
     nat_modules = [
         f"dcs.nature.{m.name}"
         for m in pkgutil.iter_modules(_nat.__path__)
         if not m.name.startswith("_")
     ]
     import dcs.equilibrium as _eq
+
     eq_modules = [
         f"dcs.equilibrium.{m.name}"
         for m in pkgutil.iter_modules(_eq.__path__)
         if not m.name.startswith("_")
     ]
-    out = generate.emit(meta, [
-        "dcs.tests.train",
-        "dcs.tests.mesh",
-        "dcs.tests.puzzles",
-        "dcs.tests.equivalence",
-        "dcs.tests.conformance",
-        *hat_modules,
-        *xc_modules,
-        *nat_modules,
-        *eq_modules,
-    ], STD)
+    out = generate.emit(
+        meta,
+        [
+            "dcs.tests.train",
+            "dcs.tests.mesh",
+            "dcs.tests.puzzles",
+            "dcs.tests.equivalence",
+            "dcs.tests.conformance",
+            *hat_modules,
+            *xc_modules,
+            *nat_modules,
+            *eq_modules,
+        ],
+        STD,
+    )
     md = generate.render_markdown(json.loads(out.read_text()))
     (out.parent / "aiops.md").write_text(md)
     print(f"wrote {out}")
@@ -76,21 +97,26 @@ def cmd_conform(args):
     bundle = conform.run(std, ROOT, sign_key=key)
     EVIDENCE.mkdir(parents=True, exist_ok=True)
     import time
+
     path = EVIDENCE / f"run-{int(time.time())}.json"
     bundle.write(path)
     transparency.append(LOG, bundle.digest, bundle.verdict())
-    print(json.dumps({
-        "bundle": str(path),
-        "digest": bundle.digest,
-        "verdict": bundle.verdict(),
-        "summary": bundle.summary(),
-        "signed": bundle.signature is not None,
-    }, indent=2))
+    print(
+        json.dumps(
+            {
+                "bundle": str(path),
+                "digest": bundle.digest,
+                "verdict": bundle.verdict(),
+                "summary": bundle.summary(),
+                "signed": bundle.signature is not None,
+            },
+            indent=2,
+        )
+    )
 
 
 def cmd_verify(args):
-    report = verify.verify(Path(args.bundle), _load_std_path(), ROOT,
-                           re_run=not args.no_replay)
+    report = verify.verify(Path(args.bundle), _load_std_path(), ROOT, re_run=not args.no_replay)
     print(json.dumps(report, indent=2))
     sys.exit(0 if report["integrity"] and report["verdict"] == "CONFORMANT" else 1)
 
@@ -99,24 +125,24 @@ def _load_std_path():
     return STD
 
 
-
 def cmd_equivalence_report(args):
     """Exercise every registered equivalence pair on live artifacts."""
     import json
-    from app.train.core import TrainConfig, Trainer
-    from app.train import mesh as _mesh
-    from dcs import standard as _std
-    from pathlib import Path
 
-    tr = Trainer(TrainConfig(kinds=["sudoku"], difficulties=["easy"],
-                             puzzles_per_tile=1, seed=0))
+    from app.train import mesh as _mesh
+    from app.train.core import TrainConfig, Trainer
+    from dcs import standard as _std
+
+    tr = Trainer(TrainConfig(kinds=["sudoku"], difficulties=["easy"], puzzles_per_tile=1, seed=0))
     r0, r1, r2 = tr.step(0), tr.step(1), tr.step(2)
 
     artifacts = {
-        "Run": (r0, r0),                                  # reflexive
+        "Run": (r0, r0),  # reflexive
         "RunSequence": ([r0, r1], [r0, r1]),
-        "MeshOfMeshes": (_mesh.MeshOfMeshes([r0, r1]),
-                         _mesh.MeshOfMeshes([r1, r0])),   # semantic unordered
+        "MeshOfMeshes": (
+            _mesh.MeshOfMeshes([r0, r1]),
+            _mesh.MeshOfMeshes([r1, r0]),
+        ),  # semantic unordered
         "Weave": (_mesh.weave([r0, r1]), _mesh.weave([r0, r1])),
         "CrissCross": (_mesh.criss_cross(r0, r1), _mesh.criss_cross(r0, r1)),
         "Pollinate": (_mesh.pollinate(r0, r1), _mesh.pollinate(r0, r1)),
@@ -130,8 +156,8 @@ def cmd_equivalence_report(args):
     for kind, (a, b) in artifacts.items():
         try:
             report[kind] = {
-                "exact":     equivalence.exact(kind, a, b),
-                "semantic":  equivalence.semantic(kind, a, b),
+                "exact": equivalence.exact(kind, a, b),
+                "semantic": equivalence.semantic(kind, a, b),
             }
         except KeyError as e:
             report[kind] = {"error": str(e)}
@@ -141,21 +167,18 @@ def cmd_equivalence_report(args):
 def cmd_coalesce_report(args):
     """Exercise every registered coalescence op on live artifacts."""
     import json
-    from pathlib import Path
-    from app.train.core import TrainConfig, Trainer
+
     from app.train import mesh as _mesh
+    from app.train.core import TrainConfig, Trainer
     from dcs import standard as _std
 
-    tr = Trainer(TrainConfig(kinds=["sudoku"], difficulties=["easy"],
-                             puzzles_per_tile=1, seed=0))
+    tr = Trainer(TrainConfig(kinds=["sudoku"], difficulties=["easy"], puzzles_per_tile=1, seed=0))
     r0, r1 = tr.step(0), tr.step(1)
 
     pairs = [
         ("Run", r0, r0),
         ("RunSequence", [r0], [r1]),
-        ("MeshOfMeshes",
-         _mesh.MeshOfMeshes([r0]),
-         _mesh.MeshOfMeshes([r1])),
+        ("MeshOfMeshes", _mesh.MeshOfMeshes([r0]), _mesh.MeshOfMeshes([r1])),
         ("CrissCross", _mesh.criss_cross(r0, r1), _mesh.criss_cross(r1, r0)),
         ("Pollinate", _mesh.pollinate(r0, r1), _mesh.pollinate(r0, r1)),
     ]
@@ -186,18 +209,25 @@ def cmd_coalesce_report(args):
 def cmd_equiv(args):
     import json
     from pathlib import Path
+
     a = json.loads(Path(args.a).read_text()) if Path(args.a).exists() else args.a
     b = json.loads(Path(args.b).read_text()) if Path(args.b).exists() else args.b
-    print(json.dumps({
-        "kind": args.kind,
-        "exact": equivalence.exact(args.kind, a, b),
-        "semantic": equivalence.semantic(args.kind, a, b),
-    }, indent=2))
+    print(
+        json.dumps(
+            {
+                "kind": args.kind,
+                "exact": equivalence.exact(args.kind, a, b),
+                "semantic": equivalence.semantic(args.kind, a, b),
+            },
+            indent=2,
+        )
+    )
 
 
 def cmd_merge(args):
     import json
     from pathlib import Path
+
     a = json.loads(Path(args.a).read_text()) if Path(args.a).exists() else args.a
     b = json.loads(Path(args.b).read_text()) if Path(args.b).exists() else args.b
     m = coalesce.merge(args.kind, a, b)
@@ -213,13 +243,17 @@ def cmd_merge(args):
         print(json.dumps(payload, indent=2, default=str))
 
 
-
 def cmd_laws(args):
     import json
+
     from dcs import laws
+
     report = laws.run_all()
-    print(json.dumps({k: v for k, v in report.items()
-                      if k in ("n_passed", "n_failed", "n_laws")}, indent=2))
+    print(
+        json.dumps(
+            {k: v for k, v in report.items() if k in ("n_passed", "n_failed", "n_laws")}, indent=2
+        )
+    )
     for name in report["passed"]:
         print(f"  ✓ {name}")
     for name, err in report["failed"]:
@@ -228,19 +262,18 @@ def cmd_laws(args):
 
 
 def cmd_breadth(args):
-    from dcs import breadth
     print(breadth.render_matrix(STD))
-
 
 
 def cmd_equilibrium(args):
     from dcs import equilibrium
-    print(equilibrium.render(STD))
 
+    print(equilibrium.render(STD))
 
 
 def cmd_conformance(args):
     from dcs.conformance import assess, render
+
     rep = assess(STD, ROOT)
     print(render(rep))
     return 0 if rep.verdict == "CONFORMANT" else 1
@@ -248,6 +281,7 @@ def cmd_conformance(args):
 
 def cmd_coherence(args):
     from dcs.coherence import assess, render
+
     rep = assess(ROOT, std_path=STD)
     print(render(rep))
     return 0 if rep.coherent else 1
@@ -255,8 +289,15 @@ def cmd_coherence(args):
 
 def cmd_coordinate(args):
     import json as _j
-    from dcs.team.coord import quorum, Epoch, reconcile, reconcile_commutative, \
-        reconcile_associative, reconcile_idempotent
+
+    from dcs.team.coord import (
+        Epoch,
+        quorum,
+        reconcile,
+        reconcile_associative,
+        reconcile_commutative,
+        reconcile_idempotent,
+    )
 
     report = {}
     try:
@@ -264,9 +305,11 @@ def cmd_coordinate(args):
         report["quorum"] = {"winner": win, "count": n}
     except Exception as e:
         report["quorum"] = {"error": str(e)}
-    e = Epoch(); [e.bump() for _ in range(4)]
-    report["epoch"] = {"current": e.current, "monotonic": e.is_monotonic()}
-    a = {"x": 1, "y": 2}; b = {"y": 3, "z": 4}
+    _exc = Epoch()
+    [_exc.bump() for _ in range(4)]
+    report["epoch"] = {"current": _exc.current, "monotonic": _exc.is_monotonic()}
+    a = {"x": 1, "y": 2}
+    b = {"y": 3, "z": 4}
     report["reconcile"] = {
         "merged": reconcile([a, b]),
         "commutative": reconcile_commutative(a, b),
@@ -277,18 +320,27 @@ def cmd_coordinate(args):
     return 0
 
 
-
 def cmd_balance(args):
     from dcs import balance
+
     print(balance.render(floor=getattr(args, "floor", 12)))
 
 
 def cmd_converge(args):
     from dcs import balance
-    print(balance.converge(floor=getattr(args, "floor", 12), max_steps=getattr(args, "max_steps", 40), write=getattr(args, "write", False)))
+
+    print(
+        balance.converge(
+            floor=getattr(args, "floor", 12),
+            max_steps=getattr(args, "max_steps", 40),
+            write=getattr(args, "write", False),
+        )
+    )
+
 
 def cmd_hats(args):
     from dcs.hats import HATS
+
     std = _load_std()
     used = {}
     for r in std.requirements:
@@ -306,7 +358,7 @@ def cmd_log(args):
     print(json.dumps(r, indent=2))
     if LOG.exists():
         for line in LOG.read_text().splitlines()[-10:]:
-            e = json.loads(line)
+            _exc = json.loads(line)
             print(f"  {e['ts']:.0f}  {e['verdict']:<14}  {e['bundle']}")
 
 
@@ -331,21 +383,17 @@ def main(argv=None):
     sub.add_parser("breadth", help="report hat + section coverage")
     sub.add_parser("equilibrium", help="per-hat balance report")
 
-
-    sub.add_parser("equivalence-report",
-                   help="audit equivalence relations project-wide")
-    sub.add_parser("coalesce-report",
-                   help="audit coalescence operations project-wide")
-    e = sub.add_parser("equiv", help="compare two artifacts")
-    e.add_argument("kind")
-    e.add_argument("a")
-    e.add_argument("b")
+    sub.add_parser("equivalence-report", help="audit equivalence relations project-wide")
+    sub.add_parser("coalesce-report", help="audit coalescence operations project-wide")
+    _exc = sub.add_parser("equiv", help="compare two artifacts")
+    _exc.add_argument("kind")
+    _exc.add_argument("a")
+    _exc.add_argument("b")
     m = sub.add_parser("merge", help="coalesce two artifacts")
     m.add_argument("kind")
     m.add_argument("a")
     m.add_argument("b")
     m.add_argument("-o", "--out", help="write merged artifact to file")
-
 
     args = p.parse_args(argv)
     return {

@@ -1,26 +1,36 @@
 """DE — data eng. Topological DAG execution."""
+
 from dcs.generate import requirement
+
 
 def run_dag(steps, ctx):
     done = set()
     while len(done) < len(steps):
         progressed = False
         for name, deps, fn in steps:
-            if name in done: continue
+            if name in done:
+                continue
             if all(d in done for d in deps):
-                ctx[name] = fn(ctx); done.add(name); progressed = True
+                ctx[name] = fn(ctx)
+                done.add(name)
+                progressed = True
         if not progressed:
             raise RuntimeError(f"cycle or missing dep among {steps}")
     return ctx
 
-@requirement(id="DCS-DE-001", title="DAG executes in dependency order",
-             section="DE.dataeng", hats=["DE"], criticality="MUST")
+
+@requirement(
+    id="DCS-DE-001",
+    title="DAG executes in dependency order",
+    section="DE.dataeng",
+    hats=["DE"],
+    criticality="MUST",
+)
 def test():
     steps = [
-        ("load",  [],         lambda c: 10),
-        ("clean", ["load"],   lambda c: c["load"] + 1),
-        ("emit",  ["clean"],  lambda c: c["clean"] * 2),
+        ("load", [], lambda c: 10),
+        ("clean", ["load"], lambda c: c["load"] + 1),
+        ("emit", ["clean"], lambda c: c["clean"] * 2),
     ]
     out = run_dag(steps, {})
     assert out["emit"] == 22, out
-

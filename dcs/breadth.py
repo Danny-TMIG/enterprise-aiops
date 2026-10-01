@@ -1,10 +1,12 @@
 """Breadth metrics: which hats are exercised by which requirement."""
+
 from __future__ import annotations
+
 from collections import defaultdict
 from pathlib import Path
 
-from dcs.standard import load
 from dcs.hats import HATS
+from dcs.standard import load
 
 
 def compute(std_path: Path) -> dict:
@@ -30,11 +32,11 @@ def compute(std_path: Path) -> dict:
 def render_matrix(std_path: Path) -> str:
     m = compute(std_path)
     lines = [
-        f"Breadth report",
-        f"==============",
+        "Breadth report",
+        "==============",
         f"requirements:   {m['total_requirements']}",
         f"hats total:     {m['total_hats']}",
-        f"hats covered:   {m['hats_covered']} ({m['hats_covered']*100//m['total_hats']}%)",
+        f"hats covered:   {m['hats_covered']} ({m['hats_covered'] * 100 // m['total_hats']}%)",
         f"hats missing:   {', '.join(m['hats_uncovered']) or '(none)'}",
         "",
         "Per hat:",

@@ -1,10 +1,25 @@
 """Coordination: do many agents agree together?"""
+
 from __future__ import annotations
-from typing import Iterable, List
+
+from collections.abc import Iterable
+
 from dcs.triad.lattice import (
-    VState, PASS, FAIL, UNKNOWN, CONFLICT,
-    fold_v, join_know, join_truth, meet_truth,
-    consensus as _consensus, quorum as _quorum,
+    CONFLICT,
+    FAIL,
+    PASS,
+    UNKNOWN,
+    VState,
+    fold_v,
+    join_know,
+    join_truth,
+    meet_truth,
+)
+from dcs.triad.lattice import (
+    consensus as _consensus,
+)
+from dcs.triad.lattice import (
+    quorum as _quorum,
 )
 
 
@@ -46,8 +61,7 @@ def veto(states: Iterable[VState]) -> VState:
     return UNKNOWN
 
 
-def weighted(states: Iterable[VState], *,
-             weights: Iterable[float] | None = None) -> VState:
+def weighted(states: Iterable[VState], *, weights: Iterable[float] | None = None) -> VState:
     s = [_coerce(x) for x in states]
     if not s:
         return UNKNOWN
@@ -57,8 +71,8 @@ def weighted(states: Iterable[VState], *,
     total = sum(w)
     if total <= 0:
         return UNKNOWN
-    p = sum(wi for wi, st in zip(w, s) if st == PASS)
-    f = sum(wi for wi, st in zip(w, s) if st == FAIL)
+    p = sum(wi for wi, st in zip(w, s, strict=True) if st == PASS)
+    f = sum(wi for wi, st in zip(w, s, strict=True) if st == FAIL)
     if p == 0 and f == 0:
         return UNKNOWN
     if p > f:

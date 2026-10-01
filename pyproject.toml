@@ -15,6 +15,50 @@ dcs = "dcs.cli:main"
 include = ["dcs*", "app*"]
 exclude = ["tests*", ".venv*", ".lanes*"]
 
+[tool.ruff]
+extend-exclude = ["dcs/_cli_orig.py"]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "S", "C4", "PT"]
+ignore = [
+    "S101",  # asserts are the point of the test suite
+    "B007",  # unused loop var — common pattern
+    "B905",  # zip(seq, seq[1:]) intentionally mismatched
+    "E731",  # lambda for local sort keys
+    "E741",  # l / I as scientific variable names
+    "N802", "N803", "N805", "N806", "N812",  # domain naming
+    "PT011", "PT017", "PT018",  # test-style preferences
+    "S102", "S108", "S307", "S311", "S603", "S607", "S608",  # test-only security
+]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.12"
+files = ["dcs"]
+mypy_path = "."
+namespace_packages = false
+warn_return_any = false
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "dcs.nature.*"
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = false
+
+[[tool.mypy.overrides]]
+module = "app.*"
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = "dcs._cli_orig"
+ignore_errors = true
+
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = "--cov=app --cov-report=term-missing --cov-fail-under=0 -v"

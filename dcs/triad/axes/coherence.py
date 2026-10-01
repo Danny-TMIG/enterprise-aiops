@@ -1,7 +1,11 @@
 """Coherence: do two artifacts agree with each other?"""
+
 from __future__ import annotations
-from typing import Any, Callable, Iterable
-from dcs.triad.lattice import VState, PASS, FAIL, UNKNOWN, join_know, fold_v
+
+from collections.abc import Callable, Iterable
+from typing import Any
+
+from dcs.triad.lattice import FAIL, PASS, UNKNOWN, VState, fold_v, join_know
 
 
 def equivalence(a: Any, b: Any, *, eq: Callable[[Any, Any], bool]) -> VState:
@@ -25,8 +29,7 @@ def incompatible(a: Any, b: Any, *, disjoint: Callable[[Any, Any], bool]) -> VSt
         return UNKNOWN
 
 
-def relation(a: Any, b: Any, *,
-             rel: Callable[[Any, Any], bool | None]) -> VState:
+def relation(a: Any, b: Any, *, rel: Callable[[Any, Any], bool | None]) -> VState:
     try:
         got = rel(a, b)
     except Exception:

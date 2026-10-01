@@ -1,13 +1,21 @@
 """Conformance: does the artifact match its declaration?"""
+
 from __future__ import annotations
-from typing import Any, Callable, Iterable
-from dcs.triad.lattice import VState, PASS, FAIL, UNKNOWN
+
+from collections.abc import Callable, Iterable
+from typing import Any
+
+from dcs.triad.lattice import FAIL, PASS, UNKNOWN, VState
 
 
-def resolve(declared: Any, actual: Any, *,
-            compare: Callable[[Any, Any], bool] | None = None) -> VState:
+def resolve(
+    declared: Any, actual: Any, *, compare: Callable[[Any, Any], bool] | None = None
+) -> VState:
     if compare is None:
-        compare = lambda d, a: d == a
+
+        def compare(d, a):  # noqa: E731
+            return d == a
+
     try:
         return PASS if compare(declared, actual) else FAIL
     except Exception:
@@ -20,8 +28,9 @@ def schema(declared_fields: set, actual_fields: set) -> VState:
     return PASS if set(actual_fields) >= set(declared_fields) else FAIL
 
 
-def behavioral(pred: Callable[[Any], bool], sample: Iterable[Any], *,
-               epsilon: float = 1e-9) -> VState:
+def behavioral(
+    pred: Callable[[Any], bool], sample: Iterable[Any], *, epsilon: float = 1e-9
+) -> VState:
     s = list(sample)
     if not s:
         return UNKNOWN
@@ -36,8 +45,7 @@ def behavioral(pred: Callable[[Any], bool], sample: Iterable[Any], *,
     return UNKNOWN
 
 
-def certificate(claim: dict, cert: dict, *,
-                verifier: Callable[[dict, dict], bool]) -> VState:
+def certificate(claim: dict, cert: dict, *, verifier: Callable[[dict, dict], bool]) -> VState:
     try:
         ok = verifier(claim, cert)
     except Exception:

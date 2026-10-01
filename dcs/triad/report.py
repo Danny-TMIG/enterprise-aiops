@@ -1,4 +1,5 @@
 """Human-readable renderings."""
+
 from dcs.triad.lattice import ALL_STATES
 from dcs.triad.laws import run_all
 

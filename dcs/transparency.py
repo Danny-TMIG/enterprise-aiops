@@ -1,6 +1,10 @@
 """Append-only Merkle-chained log of conformance runs."""
+
 from __future__ import annotations
-import hashlib, json, time
+
+import hashlib
+import json
+import time
 from pathlib import Path
 
 
@@ -37,8 +41,7 @@ def verify_chain(log_path: Path) -> dict:
         e = json.loads(line)
         if e["prev"] != prev:
             return {"entries": n, "valid": False, "broken_at": n}
-        h = _hash(json.dumps({k: v for k, v in e.items() if k != "entry_hash"},
-                              sort_keys=True))
+        h = _hash(json.dumps({k: v for k, v in e.items() if k != "entry_hash"}, sort_keys=True))
         if h != e["entry_hash"]:
             return {"entries": n, "valid": False, "broken_at": n, "reason": "hash"}
         prev = e["entry_hash"]

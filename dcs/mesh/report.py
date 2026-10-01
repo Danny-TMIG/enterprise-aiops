@@ -1,8 +1,10 @@
 """Human-readable renderings."""
+
 import json
-from dcs.mesh.taxonomy import FAMILIES, AXIS_OF
-from dcs.mesh.ucs import UCS, UCS_STAGES
+
 from dcs.mesh.laws import run_all
+from dcs.mesh.taxonomy import AXIS_OF, FAMILIES
+from dcs.mesh.ucs import UCS, UCS_STAGES
 
 
 def family_table() -> str:
@@ -10,8 +12,7 @@ def family_table() -> str:
     for fam, body in FAMILIES.items():
         stages = body["stages"]
         axis = AXIS_OF[fam]
-        lines.append(f"  {fam}  {body['title']:<12}  "
-                     f"{len(stages):>3} stages  axis={axis}")
+        lines.append(f"  {fam}  {body['title']:<12}  {len(stages):>3} stages  axis={axis}")
     lines.append("")
     lines.append("  G Generator   C Compiler   R Resolver")
     lines.append("  D Daemon      B Binary     K Kernel")

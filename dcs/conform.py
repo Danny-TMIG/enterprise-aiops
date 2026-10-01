@@ -1,14 +1,19 @@
 """Run a standard against a reference; produce evidence."""
+
 from __future__ import annotations
-import importlib, time, traceback
+
+import importlib
+import time
+import traceback
+from collections.abc import Callable
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 from dcs.evidence import Bundle, RequirementResult, digest_of
-from dcs.standard import Standard, Requirement
-
+from dcs.standard import Standard
 
 _CONFORM_ACTIVE = False
+
 
 def _resolve(dotted: str) -> Callable[[], Any]:
     mod_path, _, attr = dotted.rpartition(".")
@@ -20,7 +25,6 @@ def _resolve(dotted: str) -> Callable[[], Any]:
 
 
 def _reference_meta(root: Path) -> dict:
-    import subprocess
     version = "0.0.0"
     py = root / "app/__init__.py"
     if py.exists():
@@ -28,14 +32,16 @@ def _reference_meta(root: Path) -> dict:
             if line.startswith("__version__"):
                 version = line.split("=", 1)[1].strip().strip("'\"")
                 break
-    digest = "sha256:" + __import__("hashlib").sha256(
-        b"".join(sorted(p.read_bytes() for p in root.glob("app/**/*.py")))
-    ).hexdigest()[:16]
+    digest = (
+        "sha256:"
+        + __import__("hashlib")
+        .sha256(b"".join(sorted(p.read_bytes() for p in root.glob("app/**/*.py"))))
+        .hexdigest()[:16]
+    )
     return {"name": "enterprise_aiops", "version": version, "digest": digest}
 
 
-def _run_inner(standard: Standard, root: Path, *,
-        sign_key: Path | None = None) -> Bundle:
+def _run_inner(standard: Standard, root: Path, *, sign_key: Path | None = None) -> Bundle:
     bundle = Bundle(
         standard_ref=standard.ref,
         reference=_reference_meta(root),
@@ -79,15 +85,21 @@ def _conform_guard(fn):
     def wrapper(*a, **kw):
         global _CONFORM_ACTIVE
         if _CONFORM_ACTIVE:
-            return {"verdict": "IN_PROGRESS", "_reentrant": True, "ok": True,
-                    "summary": {"MUST_pass": 0, "MUST_fail": 0},
-                    "signed": False}
+            return {
+                "verdict": "IN_PROGRESS",
+                "_reentrant": True,
+                "ok": True,
+                "summary": {"MUST_pass": 0, "MUST_fail": 0},
+                "signed": False,
+            }
         _CONFORM_ACTIVE = True
         try:
             return fn(*a, **kw)
         finally:
             _CONFORM_ACTIVE = False
+
     wrapper.__name__ = fn.__name__
     return wrapper
+
 
 run = _conform_guard(_run_inner)

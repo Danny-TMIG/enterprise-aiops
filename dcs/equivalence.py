@@ -9,16 +9,17 @@ Rules:
     reflexive, symmetric, transitive for both.
     exact ⇒ semantic (checked by DCS-EQ-002).
 """
+
 from __future__ import annotations
 
 import hashlib
 import json
-from typing import Any, Callable, Dict, Iterable, Tuple
-
+from collections.abc import Callable, Iterable
+from typing import Any
 
 ExactFn = Callable[[Any, Any], bool]
 SemanticFn = Callable[[Any, Any], bool]
-_REGISTRY: Dict[str, Tuple[ExactFn, SemanticFn]] = {}
+_REGISTRY: dict[str, tuple[ExactFn, SemanticFn]] = {}
 
 
 def register(kind: str, exact: ExactFn, semantic: SemanticFn) -> None:
@@ -54,7 +55,7 @@ def _digest(obj: Any) -> str:
     return "sha256:" + hashlib.sha256(_canon(obj)).hexdigest()
 
 
-def _proj(d: Dict[str, Any], keys: Iterable[str]) -> Dict[str, Any]:
+def _proj(d: dict[str, Any], keys: Iterable[str]) -> dict[str, Any]:
     return {k: d.get(k) for k in keys}
 
 
@@ -110,8 +111,13 @@ def _tile_exact(a, b):
 
 
 def _tile_semantic(a, b):
-    return (a.kind, a.solver, a.difficulty, a.trials, a.passes) == \
-           (b.kind, b.solver, b.difficulty, b.trials, b.passes)
+    return (a.kind, a.solver, a.difficulty, a.trials, a.passes) == (
+        b.kind,
+        b.solver,
+        b.difficulty,
+        b.trials,
+        b.passes,
+    )
 
 
 register("TrainTile", _tile_exact, _tile_semantic)
@@ -188,8 +194,7 @@ def _weave_exact(a, b):
 
 
 def _weave_semantic(a, b):
-    return (a.get("runs") == b.get("runs")
-            and a.get("outcomes") == b.get("outcomes"))
+    return a.get("runs") == b.get("runs") and a.get("outcomes") == b.get("outcomes")
 
 
 register("Weave", _weave_exact, _weave_semantic)
@@ -222,10 +227,14 @@ register("Pollinate", _pl_exact, _pl_semantic)
 
 # Standard / Requirement
 def _req_exact(a, b):
-    return (a.id, a.title, a.section, tuple(a.hats),
-            a.criticality, a.test) == \
-           (b.id, b.title, b.section, tuple(b.hats),
-            b.criticality, b.test)
+    return (a.id, a.title, a.section, tuple(a.hats), a.criticality, a.test) == (
+        b.id,
+        b.title,
+        b.section,
+        tuple(b.hats),
+        b.criticality,
+        b.test,
+    )
 
 
 def _req_semantic(a, b):
@@ -236,14 +245,15 @@ register("Requirement", _req_exact, _req_semantic)
 
 
 def _std_exact(a, b):
-    return a.ref == b.ref and \
-        [(r.id, r.test) for r in a.requirements] == \
-        [(r.id, r.test) for r in b.requirements]
+    return a.ref == b.ref and [(r.id, r.test) for r in a.requirements] == [
+        (r.id, r.test) for r in b.requirements
+    ]
 
 
 def _std_semantic(a, b):
-    return sorted((r.id, r.criticality) for r in a.requirements) == \
-           sorted((r.id, r.criticality) for r in b.requirements)
+    return sorted((r.id, r.criticality) for r in a.requirements) == sorted(
+        (r.id, r.criticality) for r in b.requirements
+    )
 
 
 register("Standard", _std_exact, _std_semantic)
@@ -260,8 +270,7 @@ def _bundle_semantic(a, b):
     if a.get("verdict") != b.get("verdict"):
         return False
     key = lambda r: (r["id"], bool(r.get("pass")))
-    return sorted(map(key, a.get("results", []))) == \
-           sorted(map(key, b.get("results", [])))
+    return sorted(map(key, a.get("results", []))) == sorted(map(key, b.get("results", [])))
 
 
 register("Bundle", _bundle_exact, _bundle_semantic)
@@ -273,8 +282,7 @@ def _log_exact(a, b):
 
 
 def _log_semantic(a, b):
-    return (a.get("bundle") == b.get("bundle")
-            and a.get("verdict") == b.get("verdict"))
+    return a.get("bundle") == b.get("bundle") and a.get("verdict") == b.get("verdict")
 
 
 register("LogEntry", _log_exact, _log_semantic)
@@ -282,8 +290,7 @@ register("LogEntry", _log_exact, _log_semantic)
 
 # Log chain
 def _chain_exact(a, b):
-    return [e.get("entry_hash") for e in a] == \
-           [e.get("entry_hash") for e in b]
+    return [e.get("entry_hash") for e in a] == [e.get("entry_hash") for e in b]
 
 
 def _chain_semantic(a, b):
@@ -345,8 +352,9 @@ register("CD", _cd_exact, _cd_semantic)
 
 # Configs
 def _config_exact(a, b):
-    return _canon(a.to_dict() if hasattr(a, "to_dict") else a.__dict__) == \
-           _canon(b.to_dict() if hasattr(b, "to_dict") else b.__dict__)
+    return _canon(a.to_dict() if hasattr(a, "to_dict") else a.__dict__) == _canon(
+        b.to_dict() if hasattr(b, "to_dict") else b.__dict__
+    )
 
 
 def _config_semantic(a, b):
@@ -362,8 +370,11 @@ register("Config", _config_exact, _config_semantic)
 
 # Generic dict of dicts (for rates, metrics)
 register("Dict", _json_exact, _json_semantic)
-register("FloatDict", _json_exact, lambda a, b: _dict_close(a, b) if
-         isinstance(a, dict) and isinstance(b, dict) else a == b)
+register(
+    "FloatDict",
+    _json_exact,
+    lambda a, b: _dict_close(a, b) if isinstance(a, dict) and isinstance(b, dict) else a == b,
+)
 
 
 # Byte blobs
@@ -381,12 +392,13 @@ register("Bytes", _bytes_exact, _bytes_semantic)
 # ── canonical key ──────────────────────────────────────────────────
 def canonical_key(kind: str, obj: Any) -> str:
     if hasattr(obj, "digest"):
-        return getattr(obj, "digest")
+        return obj.digest
     if kind == "TrainTile":
         return f"{obj.kind}/{obj.solver}/{obj.difficulty}"
     if kind == "Bundle":
         return obj.get("digest") or _digest(obj)
     return _digest(obj)
+
 
 # ── Nature phenomena ───────────────────────────────────────────────
 def _nat_exact(a, b):

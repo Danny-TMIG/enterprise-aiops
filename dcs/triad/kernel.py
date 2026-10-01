@@ -1,17 +1,22 @@
 """The unified triad kernel + proof-carrying receipts."""
+
 from __future__ import annotations
-import hashlib, json, time
-from dataclasses import dataclass, field
-from typing import Any, Callable, Iterable
 
+import hashlib
+import json
+from collections.abc import Callable, Iterable
+from dataclasses import dataclass
+
+from dcs.triad.axes import coherence, conformance, coordination
 from dcs.triad.lattice import (
-    VState, PASS, FAIL, UNKNOWN, CONFLICT,
-    meet_truth, join_truth, join_know, ALL_STATES,
+    CONFLICT,
+    FAIL,
+    UNKNOWN,
+    VState,
+    join_know,
+    join_truth,
+    meet_truth,
 )
-from dcs.triad.axes import conformance as C
-from dcs.triad.axes import coherence as H
-from dcs.triad.axes import coordination as D
-
 
 KERNEL_VERSION = "triad-0.1.0"
 
@@ -39,21 +44,21 @@ class Triad:
             return "UNKNOWN"
         return "PASS"
 
-    def conjunction(self, other: "Triad") -> "Triad":
+    def conjunction(self, other: Triad) -> Triad:
         return Triad(
             meet_truth(self.conformance, other.conformance),
             meet_truth(self.coherence, other.coherence),
             meet_truth(self.coordination, other.coordination),
         )
 
-    def disjunction(self, other: "Triad") -> "Triad":
+    def disjunction(self, other: Triad) -> Triad:
         return Triad(
             join_truth(self.conformance, other.conformance),
             join_truth(self.coherence, other.coherence),
             join_truth(self.coordination, other.coordination),
         )
 
-    def merge(self, other: "Triad") -> "Triad":
+    def merge(self, other: Triad) -> Triad:
         return Triad(
             join_know(self.conformance, other.conformance),
             join_know(self.coherence, other.coherence),
@@ -106,33 +111,35 @@ class Kernel:
 
     # --- axis resolvers ---
 
-    def conformance(self, declared, actual, *,
-                    compare: Callable | None = None) -> VState:
-        return C.resolve(declared, actual, compare=compare)
+    def conformance(self, declared, actual, *, compare: Callable | None = None) -> VState:
+        return conformance.resolve(declared, actual, compare=compare)
 
-    def coherence(self, a, b, *,
-                  relation: Callable | None = None,
-                  mode: str = "equivalence") -> VState:
+    def coherence(
+        self, a, b, *, relation: Callable | None = None, mode: str = "equivalence"
+    ) -> VState:
         if relation is None:
-            relation = lambda x, y: x == y
+
+            def relation(x, y):  # noqa: E731
+                return x == y
+
         if mode == "equivalence":
-            return H.equivalence(a, b, eq=relation)
+            return coherence.equivalence(a, b, eq=relation)
         if mode == "refinement":
-            return H.refinement(a, b, implies=relation)
+            return coherence.refinement(a, b, implies=relation)
         if mode == "incompatibility":
-            return H.incompatible(a, b, disjoint=relation)
+            return coherence.incompatible(a, b, disjoint=relation)
         if mode == "relation":
-            return H.relation(a, b, rel=relation)
+            return coherence.relation(a, b, rel=relation)
         raise ValueError(f"unknown coherence mode: {mode!r}")
 
     def coordination(self, states, *, mode: str = "merge") -> VState:
         fns = {
-            "merge": D.merge,
-            "conjunction": D.conjunction,
-            "disjunction": D.disjunction,
-            "consensus": D.consensus,
-            "quorum": D.quorum,
-            "veto": D.veto,
+            "merge": coordination.merge,
+            "conjunction": coordination.conjunction,
+            "disjunction": coordination.disjunction,
+            "consensus": coordination.consensus,
+            "quorum": coordination.quorum,
+            "veto": coordination.veto,
         }
         if mode not in fns:
             raise ValueError(f"unknown coordination mode: {mode!r}")
@@ -149,12 +156,14 @@ class Kernel:
         d_state = UNKNOWN
         if c:
             c_state = self.conformance(
-                c.get("declared"), c.get("actual"),
+                c.get("declared"),
+                c.get("actual"),
                 compare=c.get("compare"),
             )
         if h:
             h_state = self.coherence(
-                h.get("a"), h.get("b"),
+                h.get("a"),
+                h.get("b"),
                 relation=h.get("relation"),
                 mode=h.get("mode", "equivalence"),
             )
@@ -167,8 +176,7 @@ class Kernel:
 
     # --- receipts ---
 
-    def receipt(self, triad: Triad, *,
-                derivation: Iterable[dict] = ()) -> Receipt:
+    def receipt(self, triad: Triad, *, derivation: Iterable[dict] = ()) -> Receipt:
         deriv = tuple(sorted(_canon(d) for d in derivation))
         payload = {
             "triad": triad.to_dict(),
@@ -204,7 +212,7 @@ class Kernel:
         c = self.conformance(self.version, self.version)
         v1 = _digest({"a": 1, "b": 2})
         v2 = _digest({"b": 2, "a": 1})
-        h = H.equivalence(v1, v2, eq=lambda x, y: x == y)
+        h = coherence.equivalence(v1, v2, eq=lambda x, y: x == y)
         runs = [self.conformance(1, 1) for _ in range(3)]
-        d = D.consensus(runs)
+        d = coordination.consensus(runs)
         return Triad(c, h, d)

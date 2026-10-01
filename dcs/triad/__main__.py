@@ -1,17 +1,18 @@
 """python -m dcs.triad — CLI."""
-import argparse, json, sys
-from dcs.triad.kernel import Kernel, Triad
-from dcs.triad.report import lattice_diagram, law_report
-from dcs.triad.lattice import UNKNOWN, PASS, FAIL, CONFLICT
 
+import argparse
+import json
+
+from dcs.triad.kernel import Kernel
+from dcs.triad.report import lattice_diagram, law_report
 
 DEMO_SPEC = {
     "conformance": {"declared": {"a": 1, "b": 2}, "actual": {"a": 1, "b": 2}},
-    "coherence":   {"a": "hello", "b": "hello", "mode": "equivalence"},
-    "coordination":{"states": [{"t": 1, "f": 0},
-                               {"t": 1, "f": 0},
-                               {"t": 0, "f": 1}],
-                    "mode": "quorum"},
+    "coherence": {"a": "hello", "b": "hello", "mode": "equivalence"},
+    "coordination": {
+        "states": [{"t": 1, "f": 0}, {"t": 1, "f": 0}, {"t": 0, "f": 1}],
+        "mode": "quorum",
+    },
 }
 
 
@@ -35,34 +36,49 @@ def main(argv=None):
     elif args.cmd == "self-verify":
         t = k.self_verify()
         r = k.receipt(t)
-        print(json.dumps({
-            "triad": t.to_dict(),
-            "verdict": t.verdict(),
-            "digest": r.digest,
-            "receipt_check": k.check(r),
-        }, indent=2))
+        print(
+            json.dumps(
+                {
+                    "triad": t.to_dict(),
+                    "verdict": t.verdict(),
+                    "digest": r.digest,
+                    "receipt_check": k.check(r),
+                },
+                indent=2,
+            )
+        )
     elif args.cmd == "demo":
         t = k.verify(DEMO_SPEC)
-        r = k.receipt(t, derivation=[{"step": "conformance"},
-                                     {"step": "coherence"},
-                                     {"step": "coordination"}])
-        print(json.dumps({
-            "triad": t.to_dict(),
-            "verdict": t.verdict(),
-            "digest": r.digest,
-            "signature": r.signature[:16] + "...",
-            "receipt_check": k.check(r),
-        }, indent=2))
+        r = k.receipt(
+            t, derivation=[{"step": "conformance"}, {"step": "coherence"}, {"step": "coordination"}]
+        )
+        print(
+            json.dumps(
+                {
+                    "triad": t.to_dict(),
+                    "verdict": t.verdict(),
+                    "digest": r.digest,
+                    "signature": r.signature[:16] + "...",
+                    "receipt_check": k.check(r),
+                },
+                indent=2,
+            )
+        )
     elif args.cmd == "verify":
         spec = json.loads(open(args.spec).read())
         t = k.verify(spec)
         r = k.receipt(t)
-        print(json.dumps({
-            "triad": t.to_dict(),
-            "verdict": t.verdict(),
-            "digest": r.digest,
-            "receipt_check": k.check(r),
-        }, indent=2))
+        print(
+            json.dumps(
+                {
+                    "triad": t.to_dict(),
+                    "verdict": t.verdict(),
+                    "digest": r.digest,
+                    "receipt_check": k.check(r),
+                },
+                indent=2,
+            )
+        )
 
 
 if __name__ == "__main__":

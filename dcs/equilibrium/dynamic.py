@@ -10,18 +10,17 @@ recorded as a trajectory point. The controller stops when either:
 
 Every state transition is signed.
 """
+
 from __future__ import annotations
 
 import hashlib
 import json
 import time
 from dataclasses import asdict, dataclass, field
-from pathlib import Path
-from typing import Any, Dict, List, Optional
 
-from dcs.equilibrium.templates import template_for, TEMPLATES
+from dcs.equilibrium.templates import TEMPLATES
 from dcs.hats import HATS
-from dcs.standard import Requirement, Standard, load
+from dcs.standard import Requirement, Standard
 
 
 # ── state ─────────────────────────────────────────────────────────
@@ -29,7 +28,7 @@ from dcs.standard import Requirement, Standard, load
 class HatState:
     code: str
     count: int
-    delta: int          # floor - count (0 means at/above)
+    delta: int  # floor - count (0 means at/above)
     used_templates: int
 
 
@@ -38,40 +37,38 @@ class Step:
     index: int
     ts: float
     floor: int
-    per_hat: Dict[str, HatState]
-    added: List[str] = field(default_factory=list)   # requirement ids added
+    per_hat: dict[str, HatState]
+    added: list[str] = field(default_factory=list)  # requirement ids added
     digest: str = ""
 
     def to_dict(self):
         return {
-            "index": self.index, "ts": self.ts, "floor": self.floor,
+            "index": self.index,
+            "ts": self.ts,
+            "floor": self.floor,
             "per_hat": {k: asdict(v) for k, v in self.per_hat.items()},
-            "added": self.added, "digest": self.digest,
+            "added": self.added,
+            "digest": self.digest,
         }
 
 
 # ── measurement ───────────────────────────────────────────────────
-def measure(std: Standard, floor: int) -> Dict[str, HatState]:
-    counts = {h: 0 for h in HATS}
+def measure(std: Standard, floor: int) -> dict[str, HatState]:
+    counts = dict.fromkeys(HATS, 0)
     for r in std.requirements:
         for h in r.hats:
             if h in counts:
                 counts[h] += 1
     return {
-        h: HatState(code=h, count=counts[h],
-                    delta=max(0, floor - counts[h]),
-                    used_templates=0)
+        h: HatState(code=h, count=counts[h], delta=max(0, floor - counts[h]), used_templates=0)
         for h in HATS
     }
 
 
-def derive_floor(std: Standard, *, multiplier: float = 0.0,
-                 minimum: int = 8) -> int:
+def derive_floor(std: Standard, *, multiplier: float = 0.0, minimum: int = 8) -> int:
     """Floor = max(minimum, ceil(multiplier * median_hat_count)).
     Default multiplier 0 means floor is just minimum; controller escalates."""
-    counts = sorted(
-        sum(1 for r in std.requirements if h in r.hats) for h in HATS
-    )
+    counts = sorted(sum(1 for r in std.requirements if h in r.hats) for h in HATS)
     median = counts[len(counts) // 2]
     return max(minimum, int(median * multiplier) if multiplier else minimum)
 
@@ -84,7 +81,7 @@ class RequirementGenerator:
         self.seed = seed
         self._used: set[str] = set()
 
-    def for_hat(self, hat: str) -> Optional[Requirement]:
+    def for_hat(self, hat: str) -> Requirement | None:
         if hat not in TEMPLATES:
             return None
         fn = TEMPLATES[hat]
@@ -104,11 +101,10 @@ class RequirementGenerator:
 
 
 # ── controller ────────────────────────────────────────────────────
-def step(std: Standard, floor: int, gen: RequirementGenerator,
-         index: int) -> tuple[Standard, Step]:
+def step(std: Standard, floor: int, gen: RequirementGenerator, index: int) -> tuple[Standard, Step]:
     """One cycle: measure, generate one requirement per unsatisfied hat."""
     per_hat = measure(std, floor)
-    added: List[str] = []
+    added: list[str] = []
 
     existing = list(std.requirements)
     for hat, state in per_hat.items():
@@ -122,23 +118,34 @@ def step(std: Standard, floor: int, gen: RequirementGenerator,
         state.used_templates += 1
 
     new_std = Standard(
-        id=std.id, version=std.version, title=std.title,
-        published=std.published, authority=std.authority,
+        id=std.id,
+        version=std.version,
+        title=std.title,
+        published=std.published,
+        authority=std.authority,
         requirements=existing,
     )
     st = Step(
-        index=index, ts=time.time(), floor=floor,
-        per_hat=measure(new_std, floor), added=added,
+        index=index,
+        ts=time.time(),
+        floor=floor,
+        per_hat=measure(new_std, floor),
+        added=added,
     )
     st.digest = _digest(st)
     return new_std, st
 
 
-def converge(std: Standard, *, floor: int = 12,
-             max_steps: int = 200, seed: int = 0,
-             trace: Optional[List[Step]] = None) -> tuple[Standard, List[Step]]:
+def converge(
+    std: Standard,
+    *,
+    floor: int = 12,
+    max_steps: int = 200,
+    seed: int = 0,
+    trace: list[Step] | None = None,
+) -> tuple[Standard, list[Step]]:
     gen = RequirementGenerator(seed)
-    steps: List[Step] = []
+    steps: list[Step] = []
     cur = std
     for i in range(max_steps):
         cur, st = step(cur, floor, gen, i)
@@ -152,9 +159,14 @@ def converge(std: Standard, *, floor: int = 12,
 
 def _digest(st: Step) -> str:
     payload = json.dumps(
-        {"index": st.index, "floor": st.floor, "added": st.added,
-         "per_hat": {k: v.count for k, v in st.per_hat.items()}},
-        sort_keys=True, separators=(",", ":"),
+        {
+            "index": st.index,
+            "floor": st.floor,
+            "added": st.added,
+            "per_hat": {k: v.count for k, v in st.per_hat.items()},
+        },
+        sort_keys=True,
+        separators=(",", ":"),
     ).encode()
     return "sha256:" + hashlib.sha256(payload).hexdigest()[:16]
 
@@ -168,12 +180,11 @@ def render_step(st: Step) -> str:
     at = sum(1 for v in st.per_hat.values() if v.delta == 0)
     lines.append(f"  hats at floor: {at}/{len(st.per_hat)}  total need: {need}")
     if st.added:
-        lines.append(f"  new: {', '.join(st.added[:8])}"
-                     + (" ..." if len(st.added) > 8 else ""))
+        lines.append(f"  new: {', '.join(st.added[:8])}" + (" ..." if len(st.added) > 8 else ""))
     return "\n".join(lines)
 
 
-def render_trace(steps: List[Step]) -> str:
+def render_trace(steps: list[Step]) -> str:
     lines = [f"trace: {len(steps)} step(s)"]
     for st in steps:
         lines.append(render_step(st))

@@ -1,9 +1,11 @@
 """Standard loading + schema validation."""
+
 from __future__ import annotations
-import json, re
+
+import json
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import List
 
 _REQ_ID = re.compile(r"^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$")
 _CRIT = {"MUST", "SHOULD", "MAY"}
@@ -14,9 +16,9 @@ class Requirement:
     id: str
     title: str
     section: str
-    hats: List[str]
+    hats: list[str]
     criticality: str
-    test: str           # dotted path to a callable
+    test: str  # dotted path to a callable
 
 
 @dataclass(frozen=True)
@@ -26,7 +28,7 @@ class Standard:
     title: str
     published: str
     authority: str
-    requirements: List[Requirement] = field(default_factory=list)
+    requirements: list[Requirement] = field(default_factory=list)
 
     @property
     def ref(self) -> str:
@@ -52,7 +54,7 @@ def load(path: str | Path) -> Standard:
     for raw in doc.get("requirements", []):
         for k in ("id", "title", "section", "hats", "criticality", "test"):
             if k not in raw:
-                raise ValueError(f"requirement missing {k}: {raw.get('id','?')}")
+                raise ValueError(f"requirement missing {k}: {raw.get('id', '?')}")
         if not _REQ_ID.match(raw["id"]):
             raise ValueError(f"bad id: {raw['id']}")
         if raw["criticality"] not in _CRIT:
@@ -60,14 +62,22 @@ def load(path: str | Path) -> Standard:
         if raw["id"] in seen:
             raise ValueError(f"duplicate id: {raw['id']}")
         seen.add(raw["id"])
-        reqs.append(Requirement(
-            id=raw["id"], title=raw["title"], section=raw["section"],
-            hats=list(raw["hats"]), criticality=raw["criticality"],
-            test=raw["test"],
-        ))
+        reqs.append(
+            Requirement(
+                id=raw["id"],
+                title=raw["title"],
+                section=raw["section"],
+                hats=list(raw["hats"]),
+                criticality=raw["criticality"],
+                test=raw["test"],
+            )
+        )
 
     return Standard(
-        id=meta["id"], version=meta["version"], title=meta["title"],
-        published=meta["published"], authority=meta["authority"],
+        id=meta["id"],
+        version=meta["version"],
+        title=meta["title"],
+        published=meta["published"],
+        authority=meta["authority"],
         requirements=reqs,
     )

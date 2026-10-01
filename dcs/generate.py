@@ -4,28 +4,40 @@ Does not invent requirements. It reads an existing, hand-annotated
 invariant module (``@requirement``-decorated functions) and produces a
 schema-valid standard JSON.
 """
+
 from __future__ import annotations
-import importlib, inspect, json
+
+import importlib
+import inspect
+import json
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 MARKER = "_dcs_requirement"
 
 
-def requirement(*, id: str, title: str, section: str,
-                hats: List[str], criticality: str = "MUST"):
+def requirement(*, id: str, title: str, section: str, hats: list[str], criticality: str = "MUST"):
     """Decorator: mark a function as a standard requirement."""
+
     def deco(fn):
-        setattr(fn, MARKER, {
-            "id": id, "title": title, "section": section,
-            "hats": hats, "criticality": criticality,
-            "test": f"{fn.__module__}.{fn.__name__}",
-        })
+        setattr(
+            fn,
+            MARKER,
+            {
+                "id": id,
+                "title": title,
+                "section": section,
+                "hats": hats,
+                "criticality": criticality,
+                "test": f"{fn.__module__}.{fn.__name__}",
+            },
+        )
         return fn
+
     return deco
 
 
-def collect(module_paths: List[str]) -> List[Dict[str, Any]]:
+def collect(module_paths: list[str]) -> list[dict[str, Any]]:
     out = []
     for mp in module_paths:
         mod = importlib.import_module(mp)
@@ -36,15 +48,13 @@ def collect(module_paths: List[str]) -> List[Dict[str, Any]]:
     return sorted(out, key=lambda r: r["id"])
 
 
-def emit(standard_meta: Dict[str, Any],
-         modules: List[str],
-         out_path: Path) -> Path:
+def emit(standard_meta: dict[str, Any], modules: list[str], out_path: Path) -> Path:
     doc = {"standard": standard_meta, "requirements": collect(modules)}
     out_path.write_text(json.dumps(doc, indent=2))
     return out_path
 
 
-def render_markdown(doc: Dict[str, Any]) -> str:
+def render_markdown(doc: dict[str, Any]) -> str:
     meta = doc["standard"]
     lines = [
         f"# {meta['title']}",
@@ -56,7 +66,7 @@ def render_markdown(doc: Dict[str, Any]) -> str:
         "## Requirements",
         "",
     ]
-    by_section: Dict[str, List[Dict[str, Any]]] = {}
+    by_section: dict[str, list[dict[str, Any]]] = {}
     for r in doc["requirements"]:
         by_section.setdefault(r["section"], []).append(r)
     for sect in sorted(by_section):

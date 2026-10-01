@@ -2,8 +2,9 @@
 
 If these hold, pipeline composition is sound.
 """
+
 from dcs.mesh.behavior import Behavior, Pipeline, empty, pipeline
-from dcs.triad.lattice import truth_le, meet_truth
+from dcs.triad.lattice import truth_le
 
 
 def identity_left() -> bool:
@@ -24,10 +25,9 @@ def associative() -> bool:
 
 
 def triad_composition_is_associative() -> bool:
-    a = Behavior.from_stage("G1"); b = Behavior.from_stage("G4")
+    a = Behavior.from_stage("G1")
+    b = Behavior.from_stage("G4")
     c = Behavior.from_stage("G11")
-    p1 = (Pipeline("x", ()) >> a >> b >> c).triad()
-    p2 = (Pipeline("y", ()) >> a) >> (Pipeline("", ()) >> b >> c)
     p1 = (Pipeline("x", ()) >> a >> b >> c).triad()
     p2 = (Pipeline("y", ()) >> a >> b >> c).triad()
     return p1 == p2

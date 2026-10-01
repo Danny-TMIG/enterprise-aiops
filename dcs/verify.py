@@ -1,5 +1,7 @@
 """Third-party verification of an evidence bundle."""
+
 from __future__ import annotations
+
 import json
 from pathlib import Path
 
@@ -9,21 +11,20 @@ from dcs.standard import load
 
 try:
     import nacl.signing  # type: ignore
+
     _NACL = True
 except Exception:
     _NACL = False
 
 
-def verify(bundle_path: Path, standard_path: Path, root: Path,
-           *, re_run: bool = True) -> dict:
+def verify(bundle_path: Path, standard_path: Path, root: Path, *, re_run: bool = True) -> dict:
     raw = json.loads(bundle_path.read_text())
 
     # 1. structural integrity
     claimed = raw.get("digest")
-    unsigned = {k: raw[k] for k in
-                ("standard_ref", "reference", "started", "completed", "results")}
+    unsigned = {k: raw[k] for k in ("standard_ref", "reference", "started", "completed", "results")}
     actual = digest_of(unsigned)
-    integrity = (claimed == actual)
+    integrity = claimed == actual
 
     # 2. signature (if present and nacl available)
     sig_ok = None
@@ -43,9 +44,7 @@ def verify(bundle_path: Path, standard_path: Path, root: Path,
         replay = {
             "fresh_verdict": fresh.verdict(),
             "matches_claimed": fresh.verdict() == raw.get("verdict"),
-            "results_equal": (
-                [r.to_dict() for r in fresh.results] == raw.get("results")
-            ),
+            "results_equal": ([r.to_dict() for r in fresh.results] == raw.get("results")),
         }
 
     return {

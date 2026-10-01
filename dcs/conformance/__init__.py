@@ -1,15 +1,15 @@
 """Conformance: does the artifact match its declaration?
 
-    declared:  what the standard says
-    actual:    what the reference does (measured by re-running)
-    delta:     disagreements
-    verdict:   CONFORMANT iff declared == actual
+declared:  what the standard says
+actual:    what the reference does (measured by re-running)
+delta:     disagreements
+verdict:   CONFORMANT iff declared == actual
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List
 
 from dcs.conform import run as run_standard
 from dcs.standard import Standard, load
@@ -25,7 +25,7 @@ class ConformanceReport:
     actual_should_pass: int
     actual_may_pass: int
     verdict: str
-    disagreements: List[dict]
+    disagreements: list[dict]
 
     def to_dict(self) -> dict:
         return self.__dict__
@@ -42,7 +42,8 @@ def assess(std_path: Path, root: Path, *, sign_key: Path | None = None) -> Confo
 
     disagreements = [
         {"id": rr.id, "criticality": rr.criticality, "error": rr.error}
-        for rr in bundle.results if not rr.pass_
+        for rr in bundle.results
+        if not rr.pass_
     ]
 
     return ConformanceReport(
@@ -63,7 +64,8 @@ def render(rep: ConformanceReport) -> str:
         f"conformance report  {rep.standard_ref}",
         "=" * 50,
         f"declared MUST/SHOULD/MAY:  {rep.declared_must}/{rep.declared_should}/{rep.declared_may}",
-        f"actual   MUST/SHOULD/MAY:  {rep.actual_must_pass}/{rep.actual_should_pass}/{rep.actual_may_pass}",
+        f"actual   MUST/SHOULD/MAY:  "
+        f"{rep.actual_must_pass}/{rep.actual_should_pass}/{rep.actual_may_pass}",
         f"verdict: {rep.verdict}",
     ]
     if rep.disagreements:

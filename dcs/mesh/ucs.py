@@ -2,7 +2,8 @@
 
 Composes stages from the six taxonomies into the pipeline UCS documents.
 """
-from dcs.mesh.behavior import Behavior, Pipeline, pipeline
+
+from dcs.mesh.behavior import pipeline
 
 UCS_STAGES = (
     # Bootstrap

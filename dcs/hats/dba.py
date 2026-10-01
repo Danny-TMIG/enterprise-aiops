@@ -1,6 +1,9 @@
 """DBA — query planner uses the index."""
+
 import sqlite3
+
 from dcs.generate import requirement
+
 
 def setup() -> sqlite3.Connection:
     c = sqlite3.connect(":memory:")
@@ -11,14 +14,20 @@ def setup() -> sqlite3.Connection:
     c.commit()
     return c
 
+
 def plan_uses_index(c, sql) -> bool:
     rows = c.execute("EXPLAIN QUERY PLAN " + sql).fetchall()
     return any("INDEX" in str(r) for r in rows)
 
-@requirement(id="DCS-DBA-001", title="lookup on digest uses the index",
-             section="DBA.dba", hats=["DBA"], criticality="MUST")
+
+@requirement(
+    id="DCS-DBA-001",
+    title="lookup on digest uses the index",
+    section="DBA.dba",
+    hats=["DBA"],
+    criticality="MUST",
+)
 def test():
     c = setup()
     sql = "SELECT id FROM runs WHERE digest = 'sha256:0'"
     assert plan_uses_index(c, sql)
-
