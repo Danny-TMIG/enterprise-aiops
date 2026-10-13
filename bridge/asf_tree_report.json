@@ -1,0 +1,613 @@
+{
+  "grammar_total": 75,
+  "indexes_loaded": 0,
+  "tree_references": 75,
+  "bucket_counts": {
+    "implemented": 0,
+    "partial": 0,
+    "referenced": 75,
+    "missing": 0
+  },
+  "components": [
+    {
+      "id": "CMP-CTL-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-CTL-002",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-CTL-003",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-CTL-004",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-DAT-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-DAT-002",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-ECO-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-EVD-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-EVD-002",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-EVD-003",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-EXE-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-EXE-002",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-EXE-003",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-EXE-004",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-EXE-005",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-EXE-006",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-EXE-007",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-RES-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-RES-002",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-RES-003",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-RES-004",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-RES-005",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-RES-006",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-RES-007",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-TRU-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-TRU-002",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-TRU-003",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-TRU-004",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-TRU-005",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "CMP-TRU-006",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-ASSUR-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-ASSUR-002",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-ASSUR-003",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-ASSUR-004",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-CMP-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-CMP-002",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-CMP-003",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-CMP-004",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-CMP-005",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-CORE-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-CORE-002",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-CORE-003",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-CORE-004",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-INT-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-INT-002",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-INT-003",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-REA-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-REA-002",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-REA-003",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-REA-004",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "COG-REA-005",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-ADM-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-ADM-002",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-CAP-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-CAP-002",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-CAP-003",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-EVD-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-EVD-002",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-EVD-003",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-FED-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-IAM-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-IAM-002",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-IAM-003",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-IAM-004",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-INF-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-INF-002",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-INF-003",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-INF-004",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-INF-005",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-KRN-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-KRN-002",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-KRN-003",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-POL-001",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-POL-002",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    },
+    {
+      "id": "GOV-POL-003",
+      "referenced_by": [
+        "vatican/proof/asf_component_grammar.ebnf"
+      ],
+      "symbols_matched": [],
+      "status": "referenced"
+    }
+  ]
+}

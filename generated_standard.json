@@ -1,0 +1,551 @@
+{
+  "name": "DCS Reference Standard",
+  "version": "0.5.0",
+  "generated_at": 1790868797.6025379,
+  "basis": {
+    "algebra": "Belnap FOUR + Cayley-Dickson dim 8",
+    "lifecycle": "apoptosispoiesis (survival predicate)",
+    "chain": "hash-linked Ed25519 attestations",
+    "layers": [
+      "ontology",
+      "logic",
+      "causality",
+      "conation",
+      "norms",
+      "verification",
+      "closure"
+    ]
+  },
+  "hats": [
+    {
+      "code": "FE",
+      "layer": 0,
+      "verb": "render",
+      "output": "view",
+      "anchor": "W3C HTML/CSS"
+    },
+    {
+      "code": "BE",
+      "layer": 0,
+      "verb": "serve",
+      "output": "endpoint",
+      "anchor": "IETF HTTP"
+    },
+    {
+      "code": "FS",
+      "layer": 0,
+      "verb": "span",
+      "output": "app",
+      "anchor": "W3C WAI-ARIA"
+    },
+    {
+      "code": "MO",
+      "layer": 0,
+      "verb": "present",
+      "output": "screen",
+      "anchor": "W3C PWA"
+    },
+    {
+      "code": "EMB",
+      "layer": 0,
+      "verb": "sense",
+      "output": "signal",
+      "anchor": "ISO 26262"
+    },
+    {
+      "code": "FW",
+      "layer": 0,
+      "verb": "boot",
+      "output": "firmware",
+      "anchor": "NIST SP 800-193"
+    },
+    {
+      "code": "KRN",
+      "layer": 0,
+      "verb": "schedule",
+      "output": "process",
+      "anchor": "POSIX"
+    },
+    {
+      "code": "SYS",
+      "layer": 0,
+      "verb": "compose",
+      "output": "system",
+      "anchor": "ISO 12207"
+    },
+    {
+      "code": "DIS",
+      "layer": 1,
+      "verb": "coordinate",
+      "output": "consensus",
+      "anchor": "IETF Raft"
+    },
+    {
+      "code": "NET",
+      "layer": 1,
+      "verb": "route",
+      "output": "packet",
+      "anchor": "IETF TCP/IP"
+    },
+    {
+      "code": "DB",
+      "layer": 1,
+      "verb": "persist",
+      "output": "row",
+      "anchor": "ISO SQL"
+    },
+    {
+      "code": "DBA",
+      "layer": 1,
+      "verb": "tune",
+      "output": "query plan",
+      "anchor": "ISO SQL"
+    },
+    {
+      "code": "DE",
+      "layer": 1,
+      "verb": "pipeline",
+      "output": "dataset",
+      "anchor": "ISO 8000"
+    },
+    {
+      "code": "DS",
+      "layer": 1,
+      "verb": "model",
+      "output": "insight",
+      "anchor": "NIST AI RMF"
+    },
+    {
+      "code": "MLE",
+      "layer": 1,
+      "verb": "train",
+      "output": "model",
+      "anchor": "NIST AI RMF"
+    },
+    {
+      "code": "RES",
+      "layer": 1,
+      "verb": "investigate",
+      "output": "paper",
+      "anchor": "COPE"
+    },
+    {
+      "code": "GFX",
+      "layer": 2,
+      "verb": "draw",
+      "output": "frame",
+      "anchor": "Khronos Vulkan"
+    },
+    {
+      "code": "GAME",
+      "layer": 2,
+      "verb": "simulate",
+      "output": "game state",
+      "anchor": "IEEE 754"
+    },
+    {
+      "code": "SHD",
+      "layer": 2,
+      "verb": "shade",
+      "output": "pixel",
+      "anchor": "Khronos SPIR-V"
+    },
+    {
+      "code": "CMP",
+      "layer": 2,
+      "verb": "compile",
+      "output": "binary",
+      "anchor": "ISO C"
+    },
+    {
+      "code": "PL",
+      "layer": 2,
+      "verb": "design",
+      "output": "language",
+      "anchor": "ISO 9899"
+    },
+    {
+      "code": "FM",
+      "layer": 2,
+      "verb": "prove",
+      "output": "proof",
+      "anchor": "ISO 26262 ASIL-D"
+    },
+    {
+      "code": "SO",
+      "layer": 3,
+      "verb": "attack",
+      "output": "exploit",
+      "anchor": "NIST SP 800-115"
+    },
+    {
+      "code": "SD",
+      "layer": 3,
+      "verb": "defend",
+      "output": "control",
+      "anchor": "NIST SP 800-53"
+    },
+    {
+      "code": "CRY",
+      "layer": 3,
+      "verb": "encrypt",
+      "output": "cipher",
+      "anchor": "NIST FIPS 186"
+    },
+    {
+      "code": "RE",
+      "layer": 3,
+      "verb": "reverse",
+      "output": "analysis",
+      "anchor": "DMCA 1201"
+    },
+    {
+      "code": "SRE",
+      "layer": 3,
+      "verb": "observe",
+      "output": "SLO",
+      "anchor": "Google SRE"
+    },
+    {
+      "code": "DO",
+      "layer": 3,
+      "verb": "deploy",
+      "output": "release",
+      "anchor": "ITIL 4"
+    },
+    {
+      "code": "PLT",
+      "layer": 4,
+      "verb": "enable",
+      "output": "platform",
+      "anchor": "CNCF"
+    },
+    {
+      "code": "CL",
+      "layer": 4,
+      "verb": "provision",
+      "output": "resource",
+      "anchor": "ISO 27017"
+    },
+    {
+      "code": "REL",
+      "layer": 4,
+      "verb": "release",
+      "output": "version",
+      "anchor": "SemVer 2.0"
+    },
+    {
+      "code": "QA",
+      "layer": 4,
+      "verb": "test",
+      "output": "report",
+      "anchor": "ISO 29119"
+    },
+    {
+      "code": "AUT",
+      "layer": 4,
+      "verb": "automate",
+      "output": "pipeline",
+      "anchor": "ISO 12207"
+    },
+    {
+      "code": "HPC",
+      "layer": 4,
+      "verb": "parallelize",
+      "output": "kernel",
+      "anchor": "OpenMP 5.0"
+    },
+    {
+      "code": "SCI",
+      "layer": 5,
+      "verb": "reproduce",
+      "output": "result",
+      "anchor": "FAIR"
+    },
+    {
+      "code": "QT",
+      "layer": 5,
+      "verb": "price",
+      "output": "greeks",
+      "anchor": "IOSCO"
+    },
+    {
+      "code": "ROB",
+      "layer": 5,
+      "verb": "actuate",
+      "output": "motion",
+      "anchor": "ISO 10218"
+    },
+    {
+      "code": "SIM",
+      "layer": 5,
+      "verb": "model",
+      "output": "synthetic",
+      "anchor": "IEEE 1516"
+    },
+    {
+      "code": "CAD",
+      "layer": 5,
+      "verb": "design",
+      "output": "model",
+      "anchor": "ISO 10303"
+    },
+    {
+      "code": "AU",
+      "layer": 5,
+      "verb": "mix",
+      "output": "audio",
+      "anchor": "AES-67"
+    },
+    {
+      "code": "VID",
+      "layer": 6,
+      "verb": "encode",
+      "output": "stream",
+      "anchor": "ISO 14496"
+    },
+    {
+      "code": "TW",
+      "layer": 6,
+      "verb": "document",
+      "output": "manual",
+      "anchor": "ISO 26514"
+    },
+    {
+      "code": "DA",
+      "layer": 6,
+      "verb": "advocate",
+      "output": "post",
+      "anchor": "FTC 5"
+    },
+    {
+      "code": "SA",
+      "layer": 6,
+      "verb": "architect",
+      "output": "solution",
+      "anchor": "TOGAF 10"
+    },
+    {
+      "code": "HW",
+      "layer": 6,
+      "verb": "fabricate",
+      "output": "silicon",
+      "anchor": "ISO 9001"
+    },
+    {
+      "code": "NWE",
+      "layer": 6,
+      "verb": "interconnect",
+      "output": "topology",
+      "anchor": "ISO 11801"
+    },
+    {
+      "code": "STE",
+      "layer": 6,
+      "verb": "store",
+      "output": "volume",
+      "anchor": "ISO 14721"
+    },
+    {
+      "code": "CMP2",
+      "layer": 6,
+      "verb": "audit",
+      "output": "certificate",
+      "anchor": "ISO 27001"
+    }
+  ],
+  "clauses": [
+    {
+      "clause": "\u00a71",
+      "title": "ontology",
+      "requirement": "Every action attributed to a hat at layer 0 (ontology) must carry an attestation anchored to one of: IETF HTTP, ISO 12207, ISO 26262, NIST SP 800-193, POSIX, W3C HTML/CSS, W3C PWA, W3C WAI-ARIA",
+      "hats": [
+        "FE",
+        "BE",
+        "FS",
+        "MO",
+        "EMB",
+        "FW",
+        "KRN",
+        "SYS"
+      ],
+      "conformance_test": "dcs.tests.layers.L0"
+    },
+    {
+      "clause": "\u00a72",
+      "title": "logic",
+      "requirement": "Every action attributed to a hat at layer 1 (logic) must carry an attestation anchored to one of: COPE, IETF Raft, IETF TCP/IP, ISO 8000, ISO SQL, NIST AI RMF",
+      "hats": [
+        "DIS",
+        "NET",
+        "DB",
+        "DBA",
+        "DE",
+        "DS",
+        "MLE",
+        "RES"
+      ],
+      "conformance_test": "dcs.tests.layers.L1"
+    },
+    {
+      "clause": "\u00a73",
+      "title": "causality",
+      "requirement": "Every action attributed to a hat at layer 2 (causality) must carry an attestation anchored to one of: IEEE 754, ISO 26262 ASIL-D, ISO 9899, ISO C, Khronos SPIR-V, Khronos Vulkan",
+      "hats": [
+        "GFX",
+        "GAME",
+        "SHD",
+        "CMP",
+        "PL",
+        "FM"
+      ],
+      "conformance_test": "dcs.tests.layers.L2"
+    },
+    {
+      "clause": "\u00a74",
+      "title": "conation",
+      "requirement": "Every action attributed to a hat at layer 3 (conation) must carry an attestation anchored to one of: DMCA 1201, Google SRE, ITIL 4, NIST FIPS 186, NIST SP 800-115, NIST SP 800-53",
+      "hats": [
+        "SO",
+        "SD",
+        "CRY",
+        "RE",
+        "SRE",
+        "DO"
+      ],
+      "conformance_test": "dcs.tests.layers.L3"
+    },
+    {
+      "clause": "\u00a75",
+      "title": "norms",
+      "requirement": "Every action attributed to a hat at layer 4 (norms) must carry an attestation anchored to one of: CNCF, ISO 12207, ISO 27017, ISO 29119, OpenMP 5.0, SemVer 2.0",
+      "hats": [
+        "PLT",
+        "CL",
+        "REL",
+        "QA",
+        "AUT",
+        "HPC"
+      ],
+      "conformance_test": "dcs.tests.layers.L4"
+    },
+    {
+      "clause": "\u00a76",
+      "title": "verification",
+      "requirement": "Every action attributed to a hat at layer 5 (verification) must carry an attestation anchored to one of: AES-67, FAIR, IEEE 1516, IOSCO, ISO 10218, ISO 10303",
+      "hats": [
+        "SCI",
+        "QT",
+        "ROB",
+        "SIM",
+        "CAD",
+        "AU"
+      ],
+      "conformance_test": "dcs.tests.layers.L5"
+    },
+    {
+      "clause": "\u00a77",
+      "title": "closure",
+      "requirement": "Every action attributed to a hat at layer 6 (closure) must carry an attestation anchored to one of: FTC 5, ISO 11801, ISO 14496, ISO 14721, ISO 26514, ISO 27001, ISO 9001, TOGAF 10",
+      "hats": [
+        "VID",
+        "TW",
+        "DA",
+        "SA",
+        "HW",
+        "NWE",
+        "STE",
+        "CMP2"
+      ],
+      "conformance_test": "dcs.tests.layers.L6"
+    }
+  ],
+  "bodies": {
+    "ISO": [
+      "AUT",
+      "CAD",
+      "CL",
+      "CMP",
+      "CMP2",
+      "DB",
+      "DBA",
+      "DE",
+      "EMB",
+      "FM",
+      "HW",
+      "NWE",
+      "PL",
+      "QA",
+      "ROB",
+      "STE",
+      "SYS",
+      "TW",
+      "VID"
+    ],
+    "IETF": [
+      "BE",
+      "DIS",
+      "NET"
+    ],
+    "W3C": [
+      "FE",
+      "FS",
+      "MO"
+    ],
+    "NIST": [
+      "CRY",
+      "DS",
+      "FW",
+      "MLE",
+      "SD",
+      "SO"
+    ],
+    "IEEE": [
+      "GAME",
+      "SIM"
+    ],
+    "CNCF": [
+      "PLT"
+    ],
+    "Khronos": [
+      "GFX",
+      "SHD"
+    ],
+    "OpenMP": [
+      "HPC"
+    ],
+    "TOGAF": [
+      "SA"
+    ],
+    "ITIL": [
+      "DO"
+    ],
+    "POSIX": [
+      "KRN"
+    ],
+    "SemVer": [
+      "REL"
+    ],
+    "COPE": [
+      "RES"
+    ],
+    "FAIR": [
+      "SCI"
+    ],
+    "IOSCO": [
+      "QT"
+    ],
+    "FTC": [
+      "DA"
+    ],
+    "DMCA": [
+      "RE"
+    ],
+    "AES": [
+      "AU"
+    ],
+    "Google SRE": [
+      "SRE"
+    ]
+  }
+}

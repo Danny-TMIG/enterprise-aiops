@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  universal-platform-core:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ghcr.io/danny-tmig/universal-platform:latest
+    container_name: universal_platform_runtime
+    ports:
+      - "8080:8080"
+    environment:
+      - DEBIAN_FRONTEND=noninteractive
+    restart: always

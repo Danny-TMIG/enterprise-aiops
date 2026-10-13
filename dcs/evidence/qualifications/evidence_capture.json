@@ -1,0 +1,31 @@
+{
+  "claim": "evidence can be captured, signed, stored, and independently reproduced",
+  "command": ".venv/bin/python -c \"from dcs.sdlc_engine import SDLCEngine; e=SDLCEngine('dcs/standards/sdlc.json'); ids=e.process_all(); assert len(ids)==1485; print('OK', len(ids))\"",
+  "completed_at": "2026-10-01T18:38:07.393982+00:00",
+  "environment": {
+    "cwd": "/Users/metadusa/enterprise_aiops",
+    "platform": "darwin",
+    "python": "3.12.14"
+  },
+  "id": "66ce2ebfa1663a02",
+  "implementation": {
+    "path": "/Users/metadusa/enterprise_aiops/dcs/evidence_chain.py",
+    "sha256": "0eed6bf7de9edfe5bd602a050c34850ef7ba90f1bc5fd65af14f7baead52462d"
+  },
+  "observation": {
+    "returncode": 0,
+    "stderr": "",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "OK 1485\n",
+    "stdout_sha256": "32dd6b45301904e09a1a0deb6a42d39851b686fa3a2e7aff6e8d68d70a02e857"
+  },
+  "requirement_ref": "evidence_capture@1.0.0",
+  "result": "PASS",
+  "schema": "dcs.evidence.v1",
+  "signature": "c41f654b824f1a5443f4d2f27d6d6ae5f2e5807d376bdf2e756199421003183d",
+  "started_at": "2026-10-01T18:38:07.364103+00:00",
+  "test": {
+    "path": "/Users/metadusa/enterprise_aiops/dcs/tests/test_evidence_chain.py",
+    "sha256": "07e6a1cb34e09aeeaa127813b2166082bf2ea1c20ae4b0779b88d3d24c2a2cd4"
+  }
+}

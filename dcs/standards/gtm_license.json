@@ -1,0 +1,42 @@
+{
+  "$schema": "https://in-toto.io",
+  "_type": "https://in-toto.io",
+  "engine_version": "2.0.0",
+  "pipeline_metadata": {
+    "substrate_class": "sovereign_local_inference",
+    "prime_modulo_field": 257,
+    "distribution_gate": "execution_gated"
+  },
+  "compliance_lanes": [
+    {
+      "lane_id": "LANE-002",
+      "name": "Sovereign Layer 0 Attestation",
+      "primitive": "rolling_primitive_modulo",
+      "required_gates": [
+        "cryptographic_provenance_verification",
+        "in_toto_statement_structural_conformance"
+      ]
+    },
+    {
+      "lane_id": "LANE-004",
+      "name": "Legal Substrate Mapping",
+      "primitive": "dual_clause_open_source_validation",
+      "required_gates": [
+        "license_header_presence_assertion",
+        "dependency_vulnerability_isolation"
+      ]
+    }
+  ],
+  "license_matrices": {
+    "core_kernel": {
+      "identifier": "Apache-2.0",
+      "file_path": "LICENSE",
+      "enforce_even_numbered_version_locks": true
+    },
+    "cryptographic_primitives": {
+      "identifier": "BSD-2-Clause",
+      "file_path": "dcs/verify.py",
+      "rolling_seed_step_constant": 17
+    }
+  }
+}

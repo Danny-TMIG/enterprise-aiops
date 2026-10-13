@@ -1,0 +1,1120 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-10-01T17:52:03.353255+00:00",
+    "component": {
+      "type": "application",
+      "name": "dcs",
+      "version": "0.5.0"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "name": "accelerate",
+      "version": "1.15.0"
+    },
+    {
+      "type": "library",
+      "name": "aiohappyeyeballs",
+      "version": "2.7.1"
+    },
+    {
+      "type": "library",
+      "name": "aiohttp",
+      "version": "3.14.3"
+    },
+    {
+      "type": "library",
+      "name": "aiosignal",
+      "version": "1.4.0"
+    },
+    {
+      "type": "library",
+      "name": "alembic",
+      "version": "1.20.0"
+    },
+    {
+      "type": "library",
+      "name": "annotated-doc",
+      "version": "0.0.5"
+    },
+    {
+      "type": "library",
+      "name": "annotated-types",
+      "version": "0.8.0"
+    },
+    {
+      "type": "library",
+      "name": "anyio",
+      "version": "4.15.1"
+    },
+    {
+      "type": "library",
+      "name": "asgiref",
+      "version": "3.12.1"
+    },
+    {
+      "type": "library",
+      "name": "ast_serialize",
+      "version": "0.11.2"
+    },
+    {
+      "type": "library",
+      "name": "attrs",
+      "version": "26.1.0"
+    },
+    {
+      "type": "library",
+      "name": "backports.zstd",
+      "version": "1.7.0"
+    },
+    {
+      "type": "library",
+      "name": "blinker",
+      "version": "1.9.0"
+    },
+    {
+      "type": "library",
+      "name": "blis",
+      "version": "1.3.3"
+    },
+    {
+      "type": "library",
+      "name": "boto3",
+      "version": "1.43.106"
+    },
+    {
+      "type": "library",
+      "name": "botocore",
+      "version": "1.43.106"
+    },
+    {
+      "type": "library",
+      "name": "build",
+      "version": "1.6.1"
+    },
+    {
+      "type": "library",
+      "name": "cachetools",
+      "version": "7.2.0"
+    },
+    {
+      "type": "library",
+      "name": "catalogue",
+      "version": "2.0.10"
+    },
+    {
+      "type": "library",
+      "name": "certifi",
+      "version": "2026.7.22"
+    },
+    {
+      "type": "library",
+      "name": "cffi",
+      "version": "2.1.1"
+    },
+    {
+      "type": "library",
+      "name": "charset-normalizer",
+      "version": "3.5.2"
+    },
+    {
+      "type": "library",
+      "name": "cirq",
+      "version": "1.7.0"
+    },
+    {
+      "type": "library",
+      "name": "cirq-aqt",
+      "version": "1.7.0"
+    },
+    {
+      "type": "library",
+      "name": "cirq-core",
+      "version": "1.7.0"
+    },
+    {
+      "type": "library",
+      "name": "cirq-google",
+      "version": "1.7.0"
+    },
+    {
+      "type": "library",
+      "name": "cirq-ionq",
+      "version": "1.7.0"
+    },
+    {
+      "type": "library",
+      "name": "cirq-pasqal",
+      "version": "1.7.0"
+    },
+    {
+      "type": "library",
+      "name": "cirq-web",
+      "version": "1.7.0"
+    },
+    {
+      "type": "library",
+      "name": "click",
+      "version": "8.5.0"
+    },
+    {
+      "type": "library",
+      "name": "clickhouse-connect",
+      "version": "1.9.0"
+    },
+    {
+      "type": "library",
+      "name": "cloudpathlib",
+      "version": "0.25.0"
+    },
+    {
+      "type": "library",
+      "name": "cloudpickle",
+      "version": "3.1.2"
+    },
+    {
+      "type": "library",
+      "name": "confection",
+      "version": "1.3.3"
+    },
+    {
+      "type": "library",
+      "name": "contourpy",
+      "version": "1.4.0"
+    },
+    {
+      "type": "library",
+      "name": "coverage",
+      "version": "7.16.2"
+    },
+    {
+      "type": "library",
+      "name": "cryptography",
+      "version": "50.0.2"
+    },
+    {
+      "type": "library",
+      "name": "cycler",
+      "version": "0.12.1"
+    },
+    {
+      "type": "library",
+      "name": "cymem",
+      "version": "2.0.13"
+    },
+    {
+      "type": "library",
+      "name": "Cython",
+      "version": "3.3.0"
+    },
+    {
+      "type": "library",
+      "name": "databricks-sdk",
+      "version": "0.144.0"
+    },
+    {
+      "type": "library",
+      "name": "dcs",
+      "version": "0.5.0"
+    },
+    {
+      "type": "library",
+      "name": "defusedxml",
+      "version": "0.7.1"
+    },
+    {
+      "type": "library",
+      "name": "Deprecated",
+      "version": "1.3.1"
+    },
+    {
+      "type": "library",
+      "name": "diffusers",
+      "version": "0.40.0"
+    },
+    {
+      "type": "library",
+      "name": "dill",
+      "version": "0.4.1"
+    },
+    {
+      "type": "library",
+      "name": "Django",
+      "version": "6.1.1"
+    },
+    {
+      "type": "library",
+      "name": "docker",
+      "version": "7.2.0"
+    },
+    {
+      "type": "library",
+      "name": "docutils",
+      "version": "0.23"
+    },
+    {
+      "type": "library",
+      "name": "duet",
+      "version": "0.2.9"
+    },
+    {
+      "type": "library",
+      "name": "execnet",
+      "version": "2.1.2"
+    },
+    {
+      "type": "library",
+      "name": "fastapi",
+      "version": "0.142.2"
+    },
+    {
+      "type": "library",
+      "name": "filelock",
+      "version": "4.0.7"
+    },
+    {
+      "type": "library",
+      "name": "Flask",
+      "version": "3.1.3"
+    },
+    {
+      "type": "library",
+      "name": "flask-cors",
+      "version": "6.0.5"
+    },
+    {
+      "type": "library",
+      "name": "fonttools",
+      "version": "4.66.1"
+    },
+    {
+      "type": "library",
+      "name": "formulaic",
+      "version": "1.2.2"
+    },
+    {
+      "type": "library",
+      "name": "frozenlist",
+      "version": "1.8.0"
+    },
+    {
+      "type": "library",
+      "name": "fsspec",
+      "version": "2026.9.0"
+    },
+    {
+      "type": "library",
+      "name": "gitdb",
+      "version": "4.0.12"
+    },
+    {
+      "type": "library",
+      "name": "GitPython",
+      "version": "3.2.0"
+    },
+    {
+      "type": "library",
+      "name": "google-api-core",
+      "version": "2.40.0"
+    },
+    {
+      "type": "library",
+      "name": "google-auth",
+      "version": "2.59.1"
+    },
+    {
+      "type": "library",
+      "name": "googleapis-common-protos",
+      "version": "1.75.5"
+    },
+    {
+      "type": "library",
+      "name": "graphene",
+      "version": "3.4.3"
+    },
+    {
+      "type": "library",
+      "name": "graphql-core",
+      "version": "3.2.13"
+    },
+    {
+      "type": "library",
+      "name": "graphql-relay",
+      "version": "3.2.0"
+    },
+    {
+      "type": "library",
+      "name": "grpc-interceptor",
+      "version": "0.15.4"
+    },
+    {
+      "type": "library",
+      "name": "grpcio",
+      "version": "1.84.0"
+    },
+    {
+      "type": "library",
+      "name": "grpcio-status",
+      "version": "1.84.0"
+    },
+    {
+      "type": "library",
+      "name": "gunicorn",
+      "version": "26.2.0"
+    },
+    {
+      "type": "library",
+      "name": "h11",
+      "version": "0.16.0"
+    },
+    {
+      "type": "library",
+      "name": "hf-xet",
+      "version": "1.6.0"
+    },
+    {
+      "type": "library",
+      "name": "httpcore",
+      "version": "1.0.9"
+    },
+    {
+      "type": "library",
+      "name": "httpx",
+      "version": "0.28.1"
+    },
+    {
+      "type": "library",
+      "name": "huey",
+      "version": "3.4.0"
+    },
+    {
+      "type": "library",
+      "name": "huggingface_hub",
+      "version": "1.33.0"
+    },
+    {
+      "type": "library",
+      "name": "hvac",
+      "version": "2.4.0"
+    },
+    {
+      "type": "library",
+      "name": "id",
+      "version": "1.6.1"
+    },
+    {
+      "type": "library",
+      "name": "idna",
+      "version": "3.20"
+    },
+    {
+      "type": "library",
+      "name": "importlib_metadata",
+      "version": "9.0.1"
+    },
+    {
+      "type": "library",
+      "name": "iniconfig",
+      "version": "2.3.0"
+    },
+    {
+      "type": "library",
+      "name": "interface_meta",
+      "version": "2.0.1"
+    },
+    {
+      "type": "library",
+      "name": "itsdangerous",
+      "version": "2.2.0"
+    },
+    {
+      "type": "library",
+      "name": "jaraco.classes",
+      "version": "3.4.0"
+    },
+    {
+      "type": "library",
+      "name": "jaraco.context",
+      "version": "6.1.2"
+    },
+    {
+      "type": "library",
+      "name": "jaraco.functools",
+      "version": "4.6.0"
+    },
+    {
+      "type": "library",
+      "name": "jax",
+      "version": "0.11.2"
+    },
+    {
+      "type": "library",
+      "name": "jaxlib",
+      "version": "0.11.2"
+    },
+    {
+      "type": "library",
+      "name": "Jinja2",
+      "version": "3.1.6"
+    },
+    {
+      "type": "library",
+      "name": "jmespath",
+      "version": "1.1.0"
+    },
+    {
+      "type": "library",
+      "name": "joblib",
+      "version": "1.6.0"
+    },
+    {
+      "type": "library",
+      "name": "keyring",
+      "version": "25.7.0"
+    },
+    {
+      "type": "library",
+      "name": "kiwisolver",
+      "version": "1.5.1"
+    },
+    {
+      "type": "library",
+      "name": "librt",
+      "version": "0.16.0"
+    },
+    {
+      "type": "library",
+      "name": "lz4",
+      "version": "4.4.5"
+    },
+    {
+      "type": "library",
+      "name": "Mako",
+      "version": "1.4.3"
+    },
+    {
+      "type": "library",
+      "name": "markdown-it-py",
+      "version": "4.2.0"
+    },
+    {
+      "type": "library",
+      "name": "MarkupSafe",
+      "version": "3.0.3"
+    },
+    {
+      "type": "library",
+      "name": "matplotlib",
+      "version": "3.11.2"
+    },
+    {
+      "type": "library",
+      "name": "mdurl",
+      "version": "0.1.2"
+    },
+    {
+      "type": "library",
+      "name": "ml_dtypes",
+      "version": "0.6.0"
+    },
+    {
+      "type": "library",
+      "name": "mlflow",
+      "version": "3.16.1"
+    },
+    {
+      "type": "library",
+      "name": "mlflow-skinny",
+      "version": "3.16.1"
+    },
+    {
+      "type": "library",
+      "name": "mlflow-tracing",
+      "version": "3.16.1"
+    },
+    {
+      "type": "library",
+      "name": "mlx",
+      "version": "0.32.3"
+    },
+    {
+      "type": "library",
+      "name": "mlx-lm",
+      "version": "0.31.3"
+    },
+    {
+      "type": "library",
+      "name": "mlx-metal",
+      "version": "0.32.3"
+    },
+    {
+      "type": "library",
+      "name": "more-itertools",
+      "version": "11.1.0"
+    },
+    {
+      "type": "library",
+      "name": "mpmath",
+      "version": "1.3.0"
+    },
+    {
+      "type": "library",
+      "name": "msgpack",
+      "version": "1.2.3"
+    },
+    {
+      "type": "library",
+      "name": "multidict",
+      "version": "6.9.1"
+    },
+    {
+      "type": "library",
+      "name": "murmurhash",
+      "version": "1.0.15"
+    },
+    {
+      "type": "library",
+      "name": "mypy",
+      "version": "2.3.1"
+    },
+    {
+      "type": "library",
+      "name": "mypy_extensions",
+      "version": "1.1.0"
+    },
+    {
+      "type": "library",
+      "name": "narwhals",
+      "version": "2.26.0"
+    },
+    {
+      "type": "library",
+      "name": "networkx",
+      "version": "3.7"
+    },
+    {
+      "type": "library",
+      "name": "nh3",
+      "version": "0.3.7"
+    },
+    {
+      "type": "library",
+      "name": "nltk",
+      "version": "3.10.3"
+    },
+    {
+      "type": "library",
+      "name": "numpy",
+      "version": "2.5.3"
+    },
+    {
+      "type": "library",
+      "name": "opentelemetry-api",
+      "version": "1.45.0"
+    },
+    {
+      "type": "library",
+      "name": "opentelemetry-proto",
+      "version": "1.45.0"
+    },
+    {
+      "type": "library",
+      "name": "opentelemetry-sdk",
+      "version": "1.45.0"
+    },
+    {
+      "type": "library",
+      "name": "opentelemetry-semantic-conventions",
+      "version": "0.66b0"
+    },
+    {
+      "type": "library",
+      "name": "opt_einsum",
+      "version": "3.4.0"
+    },
+    {
+      "type": "library",
+      "name": "packaging",
+      "version": "26.3"
+    },
+    {
+      "type": "library",
+      "name": "pandas",
+      "version": "3.0.6"
+    },
+    {
+      "type": "library",
+      "name": "pathspec",
+      "version": "1.1.1"
+    },
+    {
+      "type": "library",
+      "name": "patsy",
+      "version": "1.0.3"
+    },
+    {
+      "type": "library",
+      "name": "peft",
+      "version": "0.21.1"
+    },
+    {
+      "type": "library",
+      "name": "pillow",
+      "version": "12.3.0"
+    },
+    {
+      "type": "library",
+      "name": "pip",
+      "version": "26.2.1"
+    },
+    {
+      "type": "library",
+      "name": "pluggy",
+      "version": "1.6.0"
+    },
+    {
+      "type": "library",
+      "name": "preshed",
+      "version": "3.0.13"
+    },
+    {
+      "type": "library",
+      "name": "prettytable",
+      "version": "3.18.0"
+    },
+    {
+      "type": "library",
+      "name": "propcache",
+      "version": "0.5.4"
+    },
+    {
+      "type": "library",
+      "name": "proto-plus",
+      "version": "1.29.0"
+    },
+    {
+      "type": "library",
+      "name": "protobuf",
+      "version": "6.33.6"
+    },
+    {
+      "type": "library",
+      "name": "psutil",
+      "version": "7.2.2"
+    },
+    {
+      "type": "library",
+      "name": "pyarrow",
+      "version": "25.0.1"
+    },
+    {
+      "type": "library",
+      "name": "pyasn1",
+      "version": "0.6.4"
+    },
+    {
+      "type": "library",
+      "name": "pyasn1_modules",
+      "version": "0.4.2"
+    },
+    {
+      "type": "library",
+      "name": "pycparser",
+      "version": "3.0"
+    },
+    {
+      "type": "library",
+      "name": "pydantic",
+      "version": "2.13.5"
+    },
+    {
+      "type": "library",
+      "name": "pydantic_core",
+      "version": "2.46.5"
+    },
+    {
+      "type": "library",
+      "name": "Pygments",
+      "version": "2.21.0"
+    },
+    {
+      "type": "library",
+      "name": "pyngrok",
+      "version": "8.1.2"
+    },
+    {
+      "type": "library",
+      "name": "pyparsing",
+      "version": "3.3.3"
+    },
+    {
+      "type": "library",
+      "name": "pyproject_hooks",
+      "version": "1.3.3"
+    },
+    {
+      "type": "library",
+      "name": "pyquil",
+      "version": "4.21.0"
+    },
+    {
+      "type": "library",
+      "name": "pytest",
+      "version": "9.1.1"
+    },
+    {
+      "type": "library",
+      "name": "pytest-asyncio",
+      "version": "1.4.0"
+    },
+    {
+      "type": "library",
+      "name": "pytest-cov",
+      "version": "7.1.0"
+    },
+    {
+      "type": "library",
+      "name": "pytest-timeout",
+      "version": "2.4.0"
+    },
+    {
+      "type": "library",
+      "name": "pytest-xdist",
+      "version": "3.8.0"
+    },
+    {
+      "type": "library",
+      "name": "python-dateutil",
+      "version": "2.9.0.post0"
+    },
+    {
+      "type": "library",
+      "name": "python-dotenv",
+      "version": "1.2.3"
+    },
+    {
+      "type": "library",
+      "name": "python-owasp-zap-v2.4",
+      "version": "0.1.0"
+    },
+    {
+      "type": "library",
+      "name": "python-rapidjson",
+      "version": "1.25"
+    },
+    {
+      "type": "library",
+      "name": "PyYAML",
+      "version": "6.0.3"
+    },
+    {
+      "type": "library",
+      "name": "pyzmq",
+      "version": "27.2.0"
+    },
+    {
+      "type": "library",
+      "name": "qcs-api-client-common",
+      "version": "0.22.1"
+    },
+    {
+      "type": "library",
+      "name": "qcs-sdk-python",
+      "version": "0.21.22"
+    },
+    {
+      "type": "library",
+      "name": "qiskit",
+      "version": "2.5.2"
+    },
+    {
+      "type": "library",
+      "name": "quil",
+      "version": "0.18.0"
+    },
+    {
+      "type": "library",
+      "name": "readme_renderer",
+      "version": "46.0"
+    },
+    {
+      "type": "library",
+      "name": "redis",
+      "version": "8.1.0"
+    },
+    {
+      "type": "library",
+      "name": "regex",
+      "version": "2026.9.29"
+    },
+    {
+      "type": "library",
+      "name": "requests",
+      "version": "2.34.2"
+    },
+    {
+      "type": "library",
+      "name": "requests-toolbelt",
+      "version": "1.0.0"
+    },
+    {
+      "type": "library",
+      "name": "rfc3986",
+      "version": "2.0.0"
+    },
+    {
+      "type": "library",
+      "name": "rich",
+      "version": "15.0.0"
+    },
+    {
+      "type": "library",
+      "name": "rigetti-quax",
+      "version": "0.7.7"
+    },
+    {
+      "type": "library",
+      "name": "rpcq",
+      "version": "3.11.0"
+    },
+    {
+      "type": "library",
+      "name": "ruamel.yaml",
+      "version": "0.19.1"
+    },
+    {
+      "type": "library",
+      "name": "ruff",
+      "version": "0.16.9"
+    },
+    {
+      "type": "library",
+      "name": "rustworkx",
+      "version": "0.18.1"
+    },
+    {
+      "type": "library",
+      "name": "s3transfer",
+      "version": "0.19.2"
+    },
+    {
+      "type": "library",
+      "name": "safetensors",
+      "version": "0.8.0"
+    },
+    {
+      "type": "library",
+      "name": "scikit-learn",
+      "version": "1.9.1"
+    },
+    {
+      "type": "library",
+      "name": "scipy",
+      "version": "1.18.1"
+    },
+    {
+      "type": "library",
+      "name": "seaborn",
+      "version": "0.13.2"
+    },
+    {
+      "type": "library",
+      "name": "sentencepiece",
+      "version": "0.2.2"
+    },
+    {
+      "type": "library",
+      "name": "setuptools",
+      "version": "84.0.0"
+    },
+    {
+      "type": "library",
+      "name": "shellingham",
+      "version": "1.5.4"
+    },
+    {
+      "type": "library",
+      "name": "six",
+      "version": "1.17.0"
+    },
+    {
+      "type": "library",
+      "name": "skops",
+      "version": "0.16.0"
+    },
+    {
+      "type": "library",
+      "name": "smart_open",
+      "version": "8.0.2"
+    },
+    {
+      "type": "library",
+      "name": "smmap",
+      "version": "5.0.3"
+    },
+    {
+      "type": "library",
+      "name": "spacy",
+      "version": "3.8.16"
+    },
+    {
+      "type": "library",
+      "name": "spacy-legacy",
+      "version": "3.0.12"
+    },
+    {
+      "type": "library",
+      "name": "spacy-loggers",
+      "version": "1.0.5"
+    },
+    {
+      "type": "library",
+      "name": "SQLAlchemy",
+      "version": "2.1.1"
+    },
+    {
+      "type": "library",
+      "name": "sqlparse",
+      "version": "0.6.0"
+    },
+    {
+      "type": "library",
+      "name": "srsly",
+      "version": "2.5.4"
+    },
+    {
+      "type": "library",
+      "name": "starlette",
+      "version": "1.7.0"
+    },
+    {
+      "type": "library",
+      "name": "statsmodels",
+      "version": "0.15.0"
+    },
+    {
+      "type": "library",
+      "name": "stevedore",
+      "version": "5.9.1"
+    },
+    {
+      "type": "library",
+      "name": "sympy",
+      "version": "1.14.0"
+    },
+    {
+      "type": "library",
+      "name": "thinc",
+      "version": "8.3.13"
+    },
+    {
+      "type": "library",
+      "name": "threadpoolctl",
+      "version": "3.7.0"
+    },
+    {
+      "type": "library",
+      "name": "tokenizers",
+      "version": "0.23.2"
+    },
+    {
+      "type": "library",
+      "name": "torch",
+      "version": "2.14.1"
+    },
+    {
+      "type": "library",
+      "name": "tqdm",
+      "version": "4.70.1"
+    },
+    {
+      "type": "library",
+      "name": "transformers",
+      "version": "5.18.0"
+    },
+    {
+      "type": "library",
+      "name": "twine",
+      "version": "7.0.0"
+    },
+    {
+      "type": "library",
+      "name": "typedunits",
+      "version": "0.0.2"
+    },
+    {
+      "type": "library",
+      "name": "typer",
+      "version": "0.27.2"
+    },
+    {
+      "type": "library",
+      "name": "types-Deprecated",
+      "version": "1.3.1.20260928"
+    },
+    {
+      "type": "library",
+      "name": "typing-inspection",
+      "version": "0.4.4"
+    },
+    {
+      "type": "library",
+      "name": "typing_extensions",
+      "version": "4.16.0"
+    },
+    {
+      "type": "library",
+      "name": "urllib3",
+      "version": "2.8.0"
+    },
+    {
+      "type": "library",
+      "name": "uvicorn",
+      "version": "0.54.0"
+    },
+    {
+      "type": "library",
+      "name": "wasabi",
+      "version": "1.1.3"
+    },
+    {
+      "type": "library",
+      "name": "wcwidth",
+      "version": "0.9.1"
+    },
+    {
+      "type": "library",
+      "name": "weasel",
+      "version": "1.0.0"
+    },
+    {
+      "type": "library",
+      "name": "Werkzeug",
+      "version": "3.1.9"
+    },
+    {
+      "type": "library",
+      "name": "wrapt",
+      "version": "2.5.0"
+    },
+    {
+      "type": "library",
+      "name": "yarl",
+      "version": "1.25.1"
+    },
+    {
+      "type": "library",
+      "name": "zaproxy",
+      "version": "0.6.0"
+    },
+    {
+      "type": "library",
+      "name": "zipp",
+      "version": "4.1.0"
+    }
+  ]
+}

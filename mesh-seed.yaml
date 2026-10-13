@@ -1,0 +1,21 @@
+version: 1
+intent_channel: cli | api | git
+substrate: auto | cpu | gpu | dpu | npu | object_store
+verification:
+  scan: [codeql, codacy]
+  prove: [prove2me, lean4agent, leandojo]
+  kernel: lean4-kernel
+governance:
+  budget_usd: 500
+  fail_closed: true
+  rollback: epoch
+  human_gates: [spec, delivery]
+evidence:
+  format: proof_object_v1
+  seal: dsse-hmac-sha256
+  stores: [novafabric, aar-alc]
+cpvo:
+  rate_input_token_usd: 0.000003
+  rate_output_token_usd: 0.000015
+  rate_compute_ms_usd: 0.0000001
+  rate_verify_ms_usd: 0.00000005

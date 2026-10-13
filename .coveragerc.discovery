@@ -1,0 +1,12 @@
+[run]
+branch = True
+source = dcs
+disable_warnings = include-ignored
+
+[report]
+show_missing = True
+include =
+    dcs/verify.py
+    dcs/verify_intoto.py
+    dcs/mesh/behavior.py
+    dcs/self.py

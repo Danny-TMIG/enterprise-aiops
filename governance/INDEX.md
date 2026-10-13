@@ -1,0 +1,9 @@
+# Governance Bundle
+
+Generated: 2026-10-01T17:52:03.353255+00:00
+Commit: 719c9811dd8132d32191c24d7246e51120b2aa92
+SDLC: 1485
+Bodies: 26
+SBOM: 221
+SLSA digest: e0a4c47035dbd4b66569e1203b7808f0
+Resolved tests: 1485/1485

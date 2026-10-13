@@ -1,0 +1,762 @@
+{
+  "standard_ref": "dcs.aiops@1.0.0",
+  "reference": {
+    "name": "enterprise_aiops",
+    "version": "0.0.0",
+    "digest": "sha256:af0ae49dcfa769fa"
+  },
+  "started": 1790816839.0862179,
+  "completed": 1790816839.8070772,
+  "results": [
+    {
+      "id": "DCS-AU-001",
+      "criticality": "MUST",
+      "duration_ms": 0.11666701175272465,
+      "detail": "dcs.hats.au.test returned cleanly",
+      "evidence": "sha256:90448ee93d137fca10c46a6b2676dad6376651d6ff284eeb06664cdde67929bf",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-AUT-001",
+      "criticality": "MUST",
+      "duration_ms": 0.05195799167267978,
+      "detail": "dcs.hats.aut.test returned cleanly",
+      "evidence": "sha256:1a74875bafcc89ac48b6a364c51ed87d8448d4648513d49fe9dd9469a832167a",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-BE-001",
+      "criticality": "MUST",
+      "duration_ms": 0.25458401069045067,
+      "detail": "dcs.hats.be.test returned cleanly",
+      "evidence": "sha256:a01c7219ff693839bedbef09a7aeb16209043c89bb8b4afbb1c81e28eb1ec283",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CAD-001",
+      "criticality": "MUST",
+      "duration_ms": 0.05487501039169729,
+      "detail": "dcs.hats.cad.test returned cleanly",
+      "evidence": "sha256:1ce7b9b00430d2dde25dc34ed827d098f824aca84627f66699be4f8e8d0ccd7d",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CL-001",
+      "criticality": "MUST",
+      "duration_ms": 0.05487499583978206,
+      "detail": "dcs.hats.cl.test returned cleanly",
+      "evidence": "sha256:cb15d877912ffb08a885f1e6b191903804c8ebbc2f6a8a3f0b89b7e4f3b355b4",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CMP-001",
+      "criticality": "MUST",
+      "duration_ms": 0.07287498738151044,
+      "detail": "dcs.hats.cmp.test returned cleanly",
+      "evidence": "sha256:92b8b2c402f61caad74d673bf5215770d3733971a7bed6ea62bc0b9227ac85d2",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CMP2-001",
+      "criticality": "MUST",
+      "duration_ms": 0.3748339950107038,
+      "detail": "dcs.hats.cmp2.test returned cleanly",
+      "evidence": "sha256:ef535bf14f71959cc8aaca1ca4176a5ab37d09f1faf4149af444be34914b2a7c",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CO-001",
+      "criticality": "MUST",
+      "duration_ms": 0.1452919968869537,
+      "detail": "dcs.tests.equivalence.every_coalesce_registered returned cleanly",
+      "evidence": "sha256:48f43a1f5d2949d4048257569e75dc653288f352a8dd7b02eb36001bcaad073a",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CO-002",
+      "criticality": "MUST",
+      "duration_ms": 20.055375003721565,
+      "detail": "dcs.tests.equivalence.mesh_coalescence_laws returned cleanly",
+      "evidence": "sha256:b8c39ceb307cd563de16a058216aedaa5d1c7a08c58edd244b49a88815da52b5",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CO-003",
+      "criticality": "MUST",
+      "duration_ms": 2.9742499900748953,
+      "detail": "dcs.tests.equivalence.run_merge_rejects_disagreement returned cleanly",
+      "evidence": "sha256:dfe21720935f89ae31ecc0310a58aab45463ebcacf4d7256e430a00e97a8d1aa",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CO-004",
+      "criticality": "MUST",
+      "duration_ms": 0.011750002158805728,
+      "detail": "dcs.tests.equivalence.requirement_takes_stricter returned cleanly",
+      "evidence": "sha256:f00723fce33f6de56cf856a9fb4278c484638a9a01ee2a65fc985047f94e7dce",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CO-005",
+      "criticality": "MUST",
+      "duration_ms": 0.05604200123343617,
+      "detail": "dcs.tests.equivalence.bundle_pessimistic returned cleanly",
+      "evidence": "sha256:e5586bfa9f1f939098297195d7f75b7d2f1e391ce81e05dae0bb6d9b98f62b78",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-CRY-001",
+      "criticality": "MUST",
+      "duration_ms": 0.1969580043805763,
+      "detail": "dcs.hats.cry.test returned cleanly",
+      "evidence": "sha256:b88459f30989f58c16b0459d7a3ab728477556ea561bf589d3d444bae8b440da",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-DA-001",
+      "criticality": "MUST",
+      "duration_ms": 0.06999999459367245,
+      "detail": "dcs.hats.da.test returned cleanly",
+      "evidence": "sha256:46cd49f4de729e7187d343df2347d4f572b638ca655d176591c83c72500f95b5",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-DB-001",
+      "criticality": "MUST",
+      "duration_ms": 1.7026669956976548,
+      "detail": "dcs.hats.db.test returned cleanly",
+      "evidence": "sha256:7efc1da9e5eee04b1879fa23e8ad95573fb911faf6464beb7e09084b604e1917",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-DBA-001",
+      "criticality": "MUST",
+      "duration_ms": 0.16591700841672719,
+      "detail": "dcs.hats.dba.test returned cleanly",
+      "evidence": "sha256:26ed766cf33e1fed99c643c3db7ce2866c5899e7093788ac98d2d2e8ab81b135",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-DE-001",
+      "criticality": "MUST",
+      "duration_ms": 0.05149999924469739,
+      "detail": "dcs.hats.de.test returned cleanly",
+      "evidence": "sha256:15c44ff20aa2b2981145b708f1c44b77542985eacf9816436c1110b1657ad2e4",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-DIS-001",
+      "criticality": "MUST",
+      "duration_ms": 0.048333007725887,
+      "detail": "dcs.hats.dis.test returned cleanly",
+      "evidence": "sha256:80bae952e53c6ed3c731157dce411870d1d7432b8d946a60d453813fc59293c8",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-DO-001",
+      "criticality": "MUST",
+      "duration_ms": 0.04591699689626694,
+      "detail": "dcs.hats.do.test returned cleanly",
+      "evidence": "sha256:7f6fd299464928c758f95d702e15a8f9bf1687543431ec1bc7f5448c005d547a",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-DS-001",
+      "criticality": "MUST",
+      "duration_ms": 0.04533398896455765,
+      "detail": "dcs.hats.ds.test returned cleanly",
+      "evidence": "sha256:8b40568ccffa80a8810c62f60a23c2605a95dd4c143b1813a7d6f6f0d9a72ed5",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-EMB-001",
+      "criticality": "MUST",
+      "duration_ms": 0.06337498780339956,
+      "detail": "dcs.hats.emb.test returned cleanly",
+      "evidence": "sha256:d0f24f038d840741368305c0cee8e04d743f4e252bafc294f1eb57cfbf9e76f1",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-EQ-001",
+      "criticality": "MUST",
+      "duration_ms": 0.006291986210271716,
+      "detail": "dcs.tests.equivalence.every_kind_registered returned cleanly",
+      "evidence": "sha256:712cf674dd04ca562c33c04c223ab0da0f38bbc8feeb341f8acfa68e7e76f77e",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-EQ-002",
+      "criticality": "MUST",
+      "duration_ms": 7.9384999989997596,
+      "detail": "dcs.tests.equivalence.exact_implies_semantic returned cleanly",
+      "evidence": "sha256:e1500c19542ad4a6f81b07c89cedc6c49e6c143c8a8bc65c117804ac8a1a5919",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-EQ-003",
+      "criticality": "MUST",
+      "duration_ms": 17.64041699061636,
+      "detail": "dcs.tests.equivalence.equivalence_is_relation returned cleanly",
+      "evidence": "sha256:9304fe0e3e0dee259f1fdabec9452bb367f33ff5e76fe635356be9f1a06d9a25",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-FE-001",
+      "criticality": "MUST",
+      "duration_ms": 1.6401660104747862,
+      "detail": "dcs.hats.fe.test returned cleanly",
+      "evidence": "sha256:e89567556076eace01886e30d46eaa60950652752c8f55875b733f6283ae42dc",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-FM-001",
+      "criticality": "MUST",
+      "duration_ms": 0.05929199687670916,
+      "detail": "dcs.hats.fmtl.test returned cleanly",
+      "evidence": "sha256:3032945fff24362f7bc30670842747dfa1eb518a738a38abafdf81f0c8e03c5c",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-FS-001",
+      "criticality": "MUST",
+      "duration_ms": 0.05733399302698672,
+      "detail": "dcs.hats.fs.test returned cleanly",
+      "evidence": "sha256:87a52eb9f6e0d11eaa7869f434f6d8751b0e0d9d17954e24d5741a5fa35448c0",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-FW-001",
+      "criticality": "MUST",
+      "duration_ms": 0.04704200546257198,
+      "detail": "dcs.hats.fw.test returned cleanly",
+      "evidence": "sha256:0d6fa91cfdb2ddf19840bcf94c7de9fcdfffd78b7d67c27facc7d0b501b2d4cf",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-GAME-001",
+      "criticality": "MUST",
+      "duration_ms": 366.7689169960795,
+      "detail": "dcs.hats.game.test returned cleanly",
+      "evidence": "sha256:f6f2b05c26ddb98cc7b43f4e56f21143f4846916602749b151734eb6472200ad",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-GFX-001",
+      "criticality": "MUST",
+      "duration_ms": 0.2082090068142861,
+      "detail": "dcs.hats.gfx.test returned cleanly",
+      "evidence": "sha256:938dd1ad968a29dbbdad159dfdaa9c22f7be2ce668e7877b6543fc9de5d9fab4",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-HPC-001",
+      "criticality": "MUST",
+      "duration_ms": 1.8900419963756576,
+      "detail": "dcs.hats.hpc.test returned cleanly",
+      "evidence": "sha256:4b2769ae46ebbe74af82813b7257cdceafe6c28bfdd79ccc781a67fa7a8a2911",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-HW-001",
+      "criticality": "MUST",
+      "duration_ms": 0.10637499508447945,
+      "detail": "dcs.hats.hw.test returned cleanly",
+      "evidence": "sha256:cc2912967b8cbe892a5ba29d9345c8400b7ba275befad9b9fdec89a91a9ffbdc",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-KRN-001",
+      "criticality": "MUST",
+      "duration_ms": 0.5674170097336173,
+      "detail": "dcs.hats.krn.test returned cleanly",
+      "evidence": "sha256:2c8a4f8b0c653e6efe8e1e880ef3bb77230e09ea80ea6fefd6a46575f2280f0e",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-MESH-001",
+      "criticality": "MUST",
+      "duration_ms": 0.07237499812617898,
+      "detail": "dcs.tests.mesh.mesh_add_run returned cleanly",
+      "evidence": "sha256:0dcf0f7bbc40b410ade67351709f29085f75016ddcce1d1f7e6858e3f9bce05c",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-MESH-002",
+      "criticality": "MUST",
+      "duration_ms": 0.0029579969123005867,
+      "detail": "dcs.tests.mesh.weave_accepts_list returned cleanly",
+      "evidence": "sha256:a8be67bc5e02b5a28c5747e474af3ada99a343026573a24c9490b790f6caccaf",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-MESH-003",
+      "criticality": "MUST",
+      "duration_ms": 0.002833010512404144,
+      "detail": "dcs.tests.mesh.mesh_exports returned cleanly",
+      "evidence": "sha256:2130a7afadc1e232a4e9721be1deeb036dd9b10ccb6a71425723dac3aabf6c5b",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-MLE-001",
+      "criticality": "MUST",
+      "duration_ms": 0.0576250022277236,
+      "detail": "dcs.hats.mle.test returned cleanly",
+      "evidence": "sha256:1463401851c13e495fede7dcb2db6cc9047b91102622235658062448f3f380da",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-MO-001",
+      "criticality": "MUST",
+      "duration_ms": 0.057958008255809546,
+      "detail": "dcs.hats.mo.test returned cleanly",
+      "evidence": "sha256:1877718456de931e9e6cbbdc7179285545356d373d520136523cb4907ead1dca",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NET-001",
+      "criticality": "MUST",
+      "duration_ms": 3.4147499973187223,
+      "detail": "dcs.hats.net.test returned cleanly",
+      "evidence": "sha256:05e1421513def42d16f39851d2a06b39a79abe40c79ed92e989c8af3d3c2cf5b",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-NWE-001",
+      "criticality": "MUST",
+      "duration_ms": 0.062457998865284026,
+      "detail": "dcs.hats.nwe.test returned cleanly",
+      "evidence": "sha256:31013049bef14d970a8092af6ba3c38d80330962f40720682e182c180c20ed48",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-PL-001",
+      "criticality": "MUST",
+      "duration_ms": 0.05904100544285029,
+      "detail": "dcs.hats.pl.test returned cleanly",
+      "evidence": "sha256:706fdc3619295812e99f77921ef08afed18a8ba10b2d1d591ea72c0c8bc5253d",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-PLT-001",
+      "criticality": "MUST",
+      "duration_ms": 0.044917003833688796,
+      "detail": "dcs.hats.plt.test returned cleanly",
+      "evidence": "sha256:d6cb443b93a62cd5e66b7c47972210ef3b504ff2db4a55363d780372b4a75e33",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-PUZ-001",
+      "criticality": "MUST",
+      "duration_ms": 0.1745830086292699,
+      "detail": "dcs.tests.puzzles.scramble_safe returned cleanly",
+      "evidence": "sha256:ab4ff5f092c7066418fc6523510aa4b423b1248a70cae7529fc8763ded674560",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-PUZ-002",
+      "criticality": "MUST",
+      "duration_ms": 17.261832996155135,
+      "detail": "dcs.tests.puzzles.solve_round_trip returned cleanly",
+      "evidence": "sha256:de0542508ab6154dd895884cd33f8d7d77df2351cba979e28a7bda40ffcb2150",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-QA-001",
+      "criticality": "MUST",
+      "duration_ms": 0.06049999501556158,
+      "detail": "dcs.hats.qa.test returned cleanly",
+      "evidence": "sha256:3a4d770f3985ae39b2fea48ec8957c60ac9f64ab7e8b98d57f41990187815725",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-QT-001",
+      "criticality": "MUST",
+      "duration_ms": 4.138000003877096,
+      "detail": "dcs.hats.qt.test returned cleanly",
+      "evidence": "sha256:861046b6d32015a377656a5513417e677cfe8cf3686cbefb5366550ad6562f59",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-RE-001",
+      "criticality": "MUST",
+      "duration_ms": 0.06858300184831023,
+      "detail": "dcs.hats.re.test returned cleanly",
+      "evidence": "sha256:66f00faf7ba37b39f12955470bf419fd5590b095d6655f625544bd11a9bebe11",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-REL-001",
+      "criticality": "MUST",
+      "duration_ms": 0.11483300477266312,
+      "detail": "dcs.hats.rel.test returned cleanly",
+      "evidence": "sha256:d6c2dbeacb14184afd86d0051f612c0f4ec84bd268a45ff5119e50f99092d7df",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-RES-001",
+      "criticality": "MUST",
+      "duration_ms": 0.05712499842047691,
+      "detail": "dcs.hats.res.test returned cleanly",
+      "evidence": "sha256:d60d9e58442c8e9d04c93bbbf4f4508fbb5ea033873574941e88b89c73be83fd",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-ROB-001",
+      "criticality": "MUST",
+      "duration_ms": 0.04841599729843438,
+      "detail": "dcs.hats.rob.test returned cleanly",
+      "evidence": "sha256:52e85c3a32c9d825680c897a147e5f3930368c20472856415bbb97d27b046b84",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-SA-001",
+      "criticality": "MUST",
+      "duration_ms": 0.05370799044612795,
+      "detail": "dcs.hats.sa.test returned cleanly",
+      "evidence": "sha256:244c889d15b4eecaad152c93e2b1360b81b9527b067b7fbed056db1d5cdb8792",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-SCI-001",
+      "criticality": "MUST",
+      "duration_ms": 0.25224999990314245,
+      "detail": "dcs.hats.sci.test returned cleanly",
+      "evidence": "sha256:9d303a17de7da54e02e2ce83db3add733cc6f231a93039d98fc8ef4b8086843e",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-SD-001",
+      "criticality": "MUST",
+      "duration_ms": 0.08641599561087787,
+      "detail": "dcs.hats.sd.test returned cleanly",
+      "evidence": "sha256:d7dab34252c6410e0e59d49b0b89a49e6d53f942b3fec5ffa7880fdebe602409",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-SHD-001",
+      "criticality": "MUST",
+      "duration_ms": 0.050749993533827364,
+      "detail": "dcs.hats.shd.test returned cleanly",
+      "evidence": "sha256:88b0ef91d5fd94b86bc07799ca61455ec7d966e87262bee9814bf98cf363c8cf",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-SIM-001",
+      "criticality": "MUST",
+      "duration_ms": 0.04866700328420848,
+      "detail": "dcs.hats.sim.test returned cleanly",
+      "evidence": "sha256:8868cd0684f368a9a7ede2604f4296f95a4bd9b428446e0a1ea2dff8d5a827d7",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-SO-001",
+      "criticality": "MUST",
+      "duration_ms": 0.167582998983562,
+      "detail": "dcs.hats.so.test returned cleanly",
+      "evidence": "sha256:d4f76ccad9e6152f6411c4ab6501b75ca5ab278f8465a5de82435aea780b044b",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-SRE-001",
+      "criticality": "MUST",
+      "duration_ms": 0.050125003326684237,
+      "detail": "dcs.hats.sre.test returned cleanly",
+      "evidence": "sha256:00f20e8d88efda3e4854451e50ee3929db1131ed544f79ceb21c1906a2b88215",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-STE-001",
+      "criticality": "MUST",
+      "duration_ms": 0.058083998737856746,
+      "detail": "dcs.hats.ste.test returned cleanly",
+      "evidence": "sha256:bd0bbdb3baa2454e42765f2359c54e6aa7399096af6edc5730951f31852b810c",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-SYS-001",
+      "criticality": "MUST",
+      "duration_ms": 0.07508300768677145,
+      "detail": "dcs.hats.sys.test returned cleanly",
+      "evidence": "sha256:42d159932c5b807f38f8ec05ec40dc439e5a942a76dfd0c9295e1cfe3a75df21",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-TRAIN-001",
+      "criticality": "MUST",
+      "duration_ms": 0.8759999909671023,
+      "detail": "dcs.tests.train.run_has_parent_id returned cleanly",
+      "evidence": "sha256:f207ff75256dec5629a091c5762164ca7c1b112de342eae8748f31b9b7cb0307",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-TRAIN-002",
+      "criticality": "MUST",
+      "duration_ms": 0.04787500074598938,
+      "detail": "dcs.tests.train.trainer_has_step returned cleanly",
+      "evidence": "sha256:86b033539c9cdc2f9f0855d5b839217756a4cab311a49e01ceffeae1e24213ce",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-TRAIN-003",
+      "criticality": "MUST",
+      "duration_ms": 16.70720800757408,
+      "detail": "dcs.tests.train.trans_produces_chain returned cleanly",
+      "evidence": "sha256:13c551f1f419f63d7e4c5a79e81eafd5b54036584352e6d091f79f85421ccb52",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-TRAIN-004",
+      "criticality": "MUST",
+      "duration_ms": 54.52262501057703,
+      "detail": "dcs.tests.train.pollinate_reports_change returned cleanly",
+      "evidence": "sha256:ca67d59d7b2cc5295e8156fc11c5b7c55441d6a2e076161b51192a272cde2003",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-TRAIN-005",
+      "criticality": "MUST",
+      "duration_ms": 172.86166599660646,
+      "detail": "dcs.tests.train.cli_runs returned cleanly",
+      "evidence": "sha256:3668304e0ff0d8ae744b9dfbc85feca2db4e660935c35d2fbc9e86f32c7a1a14",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-TW-001",
+      "criticality": "MUST",
+      "duration_ms": 0.15670800348743796,
+      "detail": "dcs.hats.tw.test returned cleanly",
+      "evidence": "sha256:ec7b07908ae5eead3dd7b37fd4ea3f961b26f6689589e66fe3e9d0ea8c85104d",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-VID-001",
+      "criticality": "MUST",
+      "duration_ms": 0.057375000324100256,
+      "detail": "dcs.hats.vid.test returned cleanly",
+      "evidence": "sha256:c116b0206269bcc7c5b3678d152621f960f72671767b08f6546b5a7168753c8c",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-A11Y-001",
+      "criticality": "MUST",
+      "duration_ms": 0.17483400006312877,
+      "detail": "dcs.crosscut.a11y.test returned cleanly",
+      "evidence": "sha256:c967be96794bbbb10b6e3084e23c274c6671a6bafddb6bd92e8d2f3115d230be",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-BACKUP-001",
+      "criticality": "MUST",
+      "duration_ms": 0.07183400157373399,
+      "detail": "dcs.crosscut.backup.test returned cleanly",
+      "evidence": "sha256:aeaa4b8e90d317f887bbb3e5afce7a74e5acf9e708240568f509dc1492a7a6f8",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-CDC-001",
+      "criticality": "MUST",
+      "duration_ms": 0.06770799518562853,
+      "detail": "dcs.crosscut.cdc.test returned cleanly",
+      "evidence": "sha256:df0389fa59f9ac86d06a8616d3397abf1b9567d4bd5ef8f861d6af666fbfcc1a",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-CHAOS-001",
+      "criticality": "MUST",
+      "duration_ms": 0.4092500021215528,
+      "detail": "Traceback (most recent call last):\n  File \"/Users/metadusa/enterprise_aiops/dcs/conform.py\", line 49, in run\n    fn()\n  File \"/Users/metadusa/enterprise_aiops/dcs/crosscut/chaos.py\", line 26, in test\n    assert 0.25 < ok/1000 < 0.35, ok\n           ^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 720\n",
+      "evidence": "sha256:632c50dd3d211e6fdd9ba3fe75b3a4fc11dde99c5eaabb263465783144ecf3cd",
+      "error": "AssertionError: 720",
+      "pass": false
+    },
+    {
+      "id": "DCS-XC-CIRCUIT-001",
+      "criticality": "MUST",
+      "duration_ms": 0.06804199074395001,
+      "detail": "dcs.crosscut.circuit.test returned cleanly",
+      "evidence": "sha256:a41e124845d5b486ed2d78f8903200499db318067c1701c4a8134625ad793f06",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-CLOCK-001",
+      "criticality": "MUST",
+      "duration_ms": 0.06266699347179383,
+      "detail": "dcs.crosscut.clock.test returned cleanly",
+      "evidence": "sha256:cce363f5af03fc2a121a26b632bbccca3152d52ce1639cd04db56050ded169bc",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-CONC-001",
+      "criticality": "MUST",
+      "duration_ms": 21.6828330012504,
+      "detail": "dcs.crosscut.concurrency.test returned cleanly",
+      "evidence": "sha256:f16c8cafa6ff88f258cfb41be399a3c889810538438386f3d64f7ee99a83c998",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-DEPLOY-001",
+      "criticality": "MUST",
+      "duration_ms": 0.11429200822021812,
+      "detail": "dcs.crosscut.deploy.test returned cleanly",
+      "evidence": "sha256:66b02c2dcd2c8c7fdfbd70ad5cbf981538ddab9edfac3b1d3a897c571c5aa703",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-FLAG-001",
+      "criticality": "MUST",
+      "duration_ms": 0.5105419986648485,
+      "detail": "dcs.crosscut.flag.test returned cleanly",
+      "evidence": "sha256:40552aa3fecb859fa49b69cc6b87875b79941a6a689c73fbbab0d98eaa2bed98",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-I18N-001",
+      "criticality": "MUST",
+      "duration_ms": 0.06858300184831023,
+      "detail": "dcs.crosscut.i18n.test returned cleanly",
+      "evidence": "sha256:6afd8a4c76e7839d5739a54779f2ccec69a7137f414aae35350cc9265e60ca37",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-OBS-001",
+      "criticality": "MUST",
+      "duration_ms": 0.11720899783540517,
+      "detail": "dcs.crosscut.observability.test returned cleanly",
+      "evidence": "sha256:4ec7d7f420c080e3570ffe10381b9ce695cb84a33e0266ee7bc55f25c02ef4ee",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-PRIV-001",
+      "criticality": "MUST",
+      "duration_ms": 0.20170799689367414,
+      "detail": "dcs.crosscut.privacy.test returned cleanly",
+      "evidence": "sha256:9bf8d346174809a38d23d2de81e06427c27780115b14417584b502505ce94269",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-RATE-001",
+      "criticality": "MUST",
+      "duration_ms": 0.08295899897348136,
+      "detail": "dcs.crosscut.ratelimit.test returned cleanly",
+      "evidence": "sha256:ed1b58f504752d502cc1cc798e4b724c613905aaec4366a8d2fff5e27efa06cf",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-SAGA-001",
+      "criticality": "MUST",
+      "duration_ms": 0.07525000546593219,
+      "detail": "dcs.crosscut.saga.test returned cleanly",
+      "evidence": "sha256:1e5a3d6b1b205ac1d8c1dd4385e20d3662b33ec69017434ffeb69930b0dba783",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-SEMVER-001",
+      "criticality": "MUST",
+      "duration_ms": 0.06891699740663171,
+      "detail": "dcs.crosscut.semver.test returned cleanly",
+      "evidence": "sha256:ff7693bd27b659f49d89a6d4eaa7a3578a3d429010b0a0759eeef6f404f852b9",
+      "error": null,
+      "pass": true
+    },
+    {
+      "id": "DCS-XC-TIME-001",
+      "criticality": "MUST",
+      "duration_ms": 1.3068749976810068,
+      "detail": "dcs.crosscut.time.test returned cleanly",
+      "evidence": "sha256:bd6e8b8f0e32fbcda4ec38eef4fe55e95a52d73cb9acbc81a024872820fda786",
+      "error": null,
+      "pass": true
+    }
+  ],
+  "summary": {
+    "MUST_pass": 81,
+    "MUST_fail": 1,
+    "SHOULD_pass": 0,
+    "SHOULD_fail": 0,
+    "MAY_pass": 0,
+    "MAY_fail": 0
+  },
+  "verdict": "NON_CONFORMANT",
+  "digest": "sha256:f4c3412398fe06d143e9b196e0b9d2e21df34bc58906e7810c8faee231dadac8",
+  "signature": "a71f31b83b67a515d893618f30406b4006394333aeb35700db3289ae500ca10204583c658519a7d05423581fbdc16d95208766ae89d9db2c5c41bb5ef9854a01",
+  "public_key": "e18d5f740b90d21a53b8548a74920b62926a1c89f20b10f7442f4e4898b2be09"
+}

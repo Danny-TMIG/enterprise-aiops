@@ -1,0 +1,191 @@
+{
+  "name": "ai-governance",
+  "version": "0.1.0",
+  "frameworks": [
+    "EU-AI-Act",
+    "NIST-AI-RMF-1.0",
+    "ISO-IEC-42001"
+  ],
+  "requirements": [
+    {
+      "id": "AIG-RISK-001",
+      "title": "risk register exists and is non-empty",
+      "section": "risk",
+      "hats": [
+        "AI",
+        "SO"
+      ],
+      "criticality": "MUST",
+      "framework": "EU-AI-Act Art.9",
+      "test": "dcs.tests.ai_governance.risk_register_exists"
+    },
+    {
+      "id": "AIG-RISK-002",
+      "title": "risks have owners and mitigations",
+      "section": "risk",
+      "hats": [
+        "AI",
+        "SO"
+      ],
+      "criticality": "MUST",
+      "framework": "EU-AI-Act Art.9",
+      "test": "dcs.tests.ai_governance.risk_owners_assigned"
+    },
+    {
+      "id": "AIG-DATA-001",
+      "title": "training data provenance is documented",
+      "section": "data",
+      "hats": [
+        "AI",
+        "ML"
+      ],
+      "criticality": "MUST",
+      "framework": "EU-AI-Act Art.10",
+      "test": "dcs.tests.ai_governance.data_provenance"
+    },
+    {
+      "id": "AIG-DATA-002",
+      "title": "bias examination performed",
+      "section": "data",
+      "hats": [
+        "AI",
+        "ML"
+      ],
+      "criticality": "MUST",
+      "framework": "EU-AI-Act Art.10",
+      "test": "dcs.tests.ai_governance.bias_examined"
+    },
+    {
+      "id": "AIG-DOC-001",
+      "title": "technical documentation present",
+      "section": "documentation",
+      "hats": [
+        "AI",
+        "DA"
+      ],
+      "criticality": "MUST",
+      "framework": "EU-AI-Act Art.11",
+      "test": "dcs.tests.ai_governance.technical_docs"
+    },
+    {
+      "id": "AIG-DOC-002",
+      "title": "model card exists",
+      "section": "documentation",
+      "hats": [
+        "AI",
+        "DA"
+      ],
+      "criticality": "MUST",
+      "framework": "NIST-AI-RMF MAP-1.1",
+      "test": "dcs.tests.ai_governance.model_card_exists"
+    },
+    {
+      "id": "AIG-LOG-001",
+      "title": "inference logging enabled",
+      "section": "logging",
+      "hats": [
+        "AI",
+        "SO"
+      ],
+      "criticality": "MUST",
+      "framework": "EU-AI-Act Art.12",
+      "test": "dcs.tests.ai_governance.inference_logging"
+    },
+    {
+      "id": "AIG-LOG-002",
+      "title": "logs are tamper-evident",
+      "section": "logging",
+      "hats": [
+        "AI",
+        "SO"
+      ],
+      "criticality": "MUST",
+      "framework": "EU-AI-Act Art.12",
+      "test": "dcs.tests.ai_governance.logs_tamper_evident"
+    },
+    {
+      "id": "AIG-TRANS-001",
+      "title": "capabilities and limits documented",
+      "section": "transparency",
+      "hats": [
+        "AI",
+        "DA"
+      ],
+      "criticality": "MUST",
+      "framework": "EU-AI-Act Art.13",
+      "test": "dcs.tests.ai_governance.capabilities_documented"
+    },
+    {
+      "id": "AIG-TRANS-002",
+      "title": "users informed of AI interaction",
+      "section": "transparency",
+      "hats": [
+        "AI",
+        "FE"
+      ],
+      "criticality": "MUST",
+      "framework": "EU-AI-Act Art.50",
+      "test": "dcs.tests.ai_governance.ai_disclosure"
+    },
+    {
+      "id": "AIG-HUM-001",
+      "title": "human oversight mechanism exists",
+      "section": "oversight",
+      "hats": [
+        "AI",
+        "SO"
+      ],
+      "criticality": "MUST",
+      "framework": "EU-AI-Act Art.14",
+      "test": "dcs.tests.ai_governance.human_oversight"
+    },
+    {
+      "id": "AIG-HUM-002",
+      "title": "kill switch / stop control",
+      "section": "oversight",
+      "hats": [
+        "AI",
+        "SRE"
+      ],
+      "criticality": "MUST",
+      "framework": "NIST-AI-RMF MANAGE-4.1",
+      "test": "dcs.tests.ai_governance.kill_switch"
+    },
+    {
+      "id": "AIG-ACC-001",
+      "title": "accuracy metrics reported",
+      "section": "accuracy",
+      "hats": [
+        "AI",
+        "ML"
+      ],
+      "criticality": "MUST",
+      "framework": "EU-AI-Act Art.15",
+      "test": "dcs.tests.ai_governance.accuracy_reported"
+    },
+    {
+      "id": "AIG-ACC-002",
+      "title": "robustness tested against adversarial input",
+      "section": "accuracy",
+      "hats": [
+        "AI",
+        "QA"
+      ],
+      "criticality": "SHOULD",
+      "framework": "EU-AI-Act Art.15",
+      "test": "dcs.tests.ai_governance.robustness_tested"
+    },
+    {
+      "id": "AIG-GOV-001",
+      "title": "AI governance policy published",
+      "section": "governance",
+      "hats": [
+        "AI",
+        "CMP2"
+      ],
+      "criticality": "SHOULD",
+      "framework": "ISO-IEC-42001 Cl.5",
+      "test": "dcs.tests.ai_governance.governance_policy"
+    }
+  ]
+}

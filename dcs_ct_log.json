@@ -1,0 +1,13 @@
+{
+  "entries": [
+    {
+      "index": 0,
+      "license_digest": "c911a9842d26c5e7d3f417332192ad0e007b2574672c99eb33f393cc04a53ab6",
+      "holder": "corrected-system",
+      "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "leaf_hash": "2998a356bf2d1b51425be00273b8d8cc85dc990fa4fa37fe2316fc0d55b8e249",
+      "timestamp": 1790869008.997345
+    }
+  ],
+  "root": "2998a356bf2d1b51425be00273b8d8cc85dc990fa4fa37fe2316fc0d55b8e249"
+}

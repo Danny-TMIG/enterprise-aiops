@@ -1,0 +1,6 @@
+{
+  "AXIOM": "Engineering is the systematic application of science, mathematics, and empirical evidence to translate abstract intent into functional reality, spanning digital abstractions, physical matter, and complex adaptive systems.",
+  "PARSING_MODE": "STRICT_AST",
+  "DQUOTE_IMMUNITY": true,
+  "HATS": ["FE", "BE", "FS", "MO", "GAME", "EMB", "FW", "KRN", "SYS", "HW", "DIS", "NET", "CL", "PLT", "STE", "NWE", "DB", "DBA", "DE", "DS", "MLE", "RES", "SO", "SD", "CRY", "RE", "FM", "CMP", "PL", "SRE", "DO", "REL", "QA", "AUT", "CMP2", "GFX", "SHD", "AU", "VID", "ROB", "SIM", "CAD", "HPC", "SCI", "QT", "TW", "DA", "SA"]
+}

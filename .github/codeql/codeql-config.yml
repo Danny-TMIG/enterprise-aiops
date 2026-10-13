@@ -1,0 +1,29 @@
+name: "tmig CodeQL config"
+paths-ignore:
+  - web/node_modules
+  - .venv
+  - .codeql-db
+  - .codeql-results
+  - build
+  - dist
+  - "**/node_modules"
+  - "**/site-packages"
+queries:
+  - uses: security-extended
+query-filters:
+  - exclude:
+      id: py/catch-base-exception
+  - exclude:
+      id: py/empty-except
+  - exclude:
+      id: py/print-during-import
+  - exclude:
+      id: py/multiple-definition
+  - exclude:
+      id: py/file-not-closed
+  - exclude:
+      id: py/unused-import
+  - exclude:
+      id: py/unused-local-variable
+  - exclude:
+      id: py/unused-module-variable

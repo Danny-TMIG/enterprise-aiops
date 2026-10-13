@@ -1,0 +1,2 @@
+# Define whitespace filters for CodeQL internal text/database page dumps
+dcs_codeql/**/page-* whitespace=-trailing-space

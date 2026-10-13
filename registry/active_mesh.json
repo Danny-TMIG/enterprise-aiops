@@ -1,0 +1,29 @@
+{
+  "models": [
+    {
+      "id": "mlx-community/Qwen2.5-7B-Instruct-4bit",
+      "costPerToken": 0,
+      "capabilities": {
+        "supportedModalities": [
+          "text",
+          "code"
+        ],
+        "contextWindow": 32768,
+        "localExecution": true
+      }
+    },
+    {
+      "id": "anthropic/claude-3-5-sonnet",
+      "costPerToken": 0.000003,
+      "capabilities": {
+        "supportedModalities": [
+          "text",
+          "vision",
+          "code"
+        ],
+        "contextWindow": 200000,
+        "localExecution": false
+      }
+    }
+  ]
+}

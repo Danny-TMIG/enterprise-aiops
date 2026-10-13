@@ -1,0 +1,8 @@
+[DIAGNOSIS]
+- Error: argparse SystemExit: 2 (unrecognized subcommand 'database').
+- Cause: The custom wrapper parser defines top-level choices as {install, create, analyze, report, all}.
+- Invocation Mismatch: The test runner executed `database analyze` (official GitHub CodeQL CLI syntax), which the wrapper's argparse rejects.
+
+[FIX OPTIONS]
+1. Update Wrapper Parser: Modify the wrapper's argument parser to support the `database` subcommand namespace.
+2. Update Runner Invocation: Adjust the command builder in the scan runner to match the wrapper's flat verbs (e.g., replace `database analyze` with `analyze`).

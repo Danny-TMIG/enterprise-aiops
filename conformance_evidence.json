@@ -1,0 +1,354 @@
+{
+  "generated_at": 1790880306.939245,
+  "chain_length": 48,
+  "chain_head": "5471ea5341f0231769d5cd0e6edea58fd2d616fc3cf9492f108e0dbff27a561f",
+  "verdict": {
+    "chain_valid": true,
+    "entries": 48,
+    "per_entry": [
+      {
+        "i": 0,
+        "action": "FE-000",
+        "hat": "FE",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 1,
+        "action": "BE-001",
+        "hat": "BE",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 2,
+        "action": "FS-002",
+        "hat": "FS",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 3,
+        "action": "MO-003",
+        "hat": "MO",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 4,
+        "action": "EMB-004",
+        "hat": "EMB",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 5,
+        "action": "FW-005",
+        "hat": "FW",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 6,
+        "action": "KRN-006",
+        "hat": "KRN",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 7,
+        "action": "SYS-007",
+        "hat": "SYS",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 8,
+        "action": "DIS-008",
+        "hat": "DIS",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 9,
+        "action": "NET-009",
+        "hat": "NET",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 10,
+        "action": "DB-010",
+        "hat": "DB",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 11,
+        "action": "DBA-011",
+        "hat": "DBA",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 12,
+        "action": "DE-012",
+        "hat": "DE",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 13,
+        "action": "DS-013",
+        "hat": "DS",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 14,
+        "action": "MLE-014",
+        "hat": "MLE",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 15,
+        "action": "RES-015",
+        "hat": "RES",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 16,
+        "action": "GFX-016",
+        "hat": "GFX",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 17,
+        "action": "GAME-017",
+        "hat": "GAME",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 18,
+        "action": "SHD-018",
+        "hat": "SHD",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 19,
+        "action": "CMP-019",
+        "hat": "CMP",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 20,
+        "action": "PL-020",
+        "hat": "PL",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 21,
+        "action": "FM-021",
+        "hat": "FM",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 22,
+        "action": "SO-022",
+        "hat": "SO",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 23,
+        "action": "SD-023",
+        "hat": "SD",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 24,
+        "action": "CRY-024",
+        "hat": "CRY",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 25,
+        "action": "RE-025",
+        "hat": "RE",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 26,
+        "action": "SRE-026",
+        "hat": "SRE",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 27,
+        "action": "DO-027",
+        "hat": "DO",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 28,
+        "action": "PLT-028",
+        "hat": "PLT",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 29,
+        "action": "CL-029",
+        "hat": "CL",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 30,
+        "action": "REL-030",
+        "hat": "REL",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 31,
+        "action": "QA-031",
+        "hat": "QA",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 32,
+        "action": "AUT-032",
+        "hat": "AUT",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 33,
+        "action": "HPC-033",
+        "hat": "HPC",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 34,
+        "action": "SCI-034",
+        "hat": "SCI",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 35,
+        "action": "QT-035",
+        "hat": "QT",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 36,
+        "action": "ROB-036",
+        "hat": "ROB",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 37,
+        "action": "SIM-037",
+        "hat": "SIM",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 38,
+        "action": "CAD-038",
+        "hat": "CAD",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 39,
+        "action": "AU-039",
+        "hat": "AU",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 40,
+        "action": "VID-040",
+        "hat": "VID",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 41,
+        "action": "TW-041",
+        "hat": "TW",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 42,
+        "action": "DA-042",
+        "hat": "DA",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 43,
+        "action": "SA-043",
+        "hat": "SA",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 44,
+        "action": "HW-044",
+        "hat": "HW",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 45,
+        "action": "NWE-045",
+        "hat": "NWE",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 46,
+        "action": "STE-046",
+        "hat": "STE",
+        "flags": [],
+        "status": "PASS"
+      },
+      {
+        "i": 47,
+        "action": "CMP2-047",
+        "hat": "CMP2",
+        "flags": [],
+        "status": "PASS"
+      }
+    ],
+    "rogue": false,
+    "verdict": "PASS"
+  },
+  "spec": {
+    "body": "ISO/IEC 12207 (software lifecycle)",
+    "annex": "A.7 (verification)",
+    "scope": "every action in the population"
+  }
+}

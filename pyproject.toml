@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aiops_platform_metadusa_cell"
+version = "1.0.0"
+description = "A sovereign AIOps engine processing system telemetry natively in RAM"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name="Danny", email="metadusa@dannys-macbook.internal" }]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

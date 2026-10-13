@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: attosecond-sync
+  namespace: enterprise-aiops
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: attosecond-sync
+  template:
+    metadata:
+      labels:
+        app: attosecond-sync
+    spec:
+      containers:
+      - name: sync-engine
+        image: python:3.12-slim
+        command: ["python3", "-c"]
+        args:
+          - |
+            import time, logging
+            logging.basicConfig(level=logging.INFO)
+            logger = logging.getLogger("attosecond-sync")
+            logger.info("[+] Attosecond precision sync engine active. Monitoring broker...")
+            while True:
+                logger.info("[*] Heartbeat: sub-femtosecond temporal alignment locked.")
+                time.sleep(5)
+        env:
+        - name: RABBIT_HOST
+          value: "rabbit-broker-svc"

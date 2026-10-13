@@ -1,0 +1,310 @@
+{
+  "found_component_ids": [
+    "CMP-CTL-001",
+    "CMP-CTL-002",
+    "CMP-CTL-003",
+    "CMP-CTL-004",
+    "CMP-DAT-001",
+    "CMP-DAT-002",
+    "CMP-ECO-001",
+    "CMP-EVD-001",
+    "CMP-EVD-002",
+    "CMP-EVD-003",
+    "CMP-EXE-001",
+    "CMP-EXE-002",
+    "CMP-EXE-003",
+    "CMP-EXE-004",
+    "CMP-EXE-005",
+    "CMP-EXE-006",
+    "CMP-EXE-007",
+    "CMP-RES-001",
+    "CMP-RES-002",
+    "CMP-RES-003",
+    "CMP-RES-004",
+    "CMP-RES-005",
+    "CMP-RES-006",
+    "CMP-RES-007",
+    "CMP-TRU-001",
+    "CMP-TRU-002",
+    "CMP-TRU-003",
+    "CMP-TRU-004",
+    "CMP-TRU-005",
+    "CMP-TRU-006",
+    "COG-ASSUR-001",
+    "COG-ASSUR-002",
+    "COG-ASSUR-003",
+    "COG-ASSUR-004",
+    "COG-CMP-001",
+    "COG-CMP-002",
+    "COG-CMP-003",
+    "COG-CMP-004",
+    "COG-CMP-005",
+    "COG-CORE-001",
+    "COG-CORE-002",
+    "COG-CORE-003",
+    "COG-CORE-004",
+    "COG-INT-001",
+    "COG-INT-002",
+    "COG-INT-003",
+    "COG-REA-001",
+    "COG-REA-002",
+    "COG-REA-003",
+    "COG-REA-004",
+    "COG-REA-005",
+    "GOV-ADM-001",
+    "GOV-ADM-002",
+    "GOV-CAP-001",
+    "GOV-CAP-002",
+    "GOV-CAP-003",
+    "GOV-EVD-001",
+    "GOV-EVD-002",
+    "GOV-EVD-003",
+    "GOV-FED-001",
+    "GOV-IAM-001",
+    "GOV-IAM-002",
+    "GOV-IAM-003",
+    "GOV-IAM-004",
+    "GOV-INF-001",
+    "GOV-INF-002",
+    "GOV-INF-003",
+    "GOV-INF-004",
+    "GOV-INF-005",
+    "GOV-KRN-001",
+    "GOV-KRN-002",
+    "GOV-KRN-003",
+    "GOV-POL-001",
+    "GOV-POL-002",
+    "GOV-POL-003"
+  ],
+  "counts": {
+    "total": 75,
+    "grammar_total": 75
+  },
+  "references": {
+    "CMP-CTL-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-CTL-002": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-CTL-003": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-CTL-004": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-DAT-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-DAT-002": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-ECO-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-EVD-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-EVD-002": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-EVD-003": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-EXE-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-EXE-002": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-EXE-003": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-EXE-004": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-EXE-005": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-EXE-006": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-EXE-007": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-RES-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-RES-002": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-RES-003": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-RES-004": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-RES-005": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-RES-006": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-RES-007": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-TRU-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-TRU-002": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-TRU-003": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-TRU-004": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-TRU-005": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "CMP-TRU-006": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-ASSUR-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-ASSUR-002": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-ASSUR-003": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-ASSUR-004": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-CMP-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-CMP-002": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-CMP-003": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-CMP-004": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-CMP-005": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-CORE-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-CORE-002": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-CORE-003": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-CORE-004": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-INT-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-INT-002": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-INT-003": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-REA-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-REA-002": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-REA-003": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-REA-004": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "COG-REA-005": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-ADM-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-ADM-002": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-CAP-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-CAP-002": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-CAP-003": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-EVD-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-EVD-002": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-EVD-003": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-FED-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-IAM-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-IAM-002": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-IAM-003": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-IAM-004": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-INF-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-INF-002": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-INF-003": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-INF-004": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-INF-005": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-KRN-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-KRN-002": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-KRN-003": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-POL-001": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-POL-002": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ],
+    "GOV-POL-003": [
+      "vatican/proof/asf_component_grammar.ebnf"
+    ]
+  }
+}

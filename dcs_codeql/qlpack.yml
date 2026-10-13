@@ -1,0 +1,6 @@
+name: dcs/certification
+version: 0.1.0
+description: CodeQL queries grounding DCS license claims
+dependencies:
+  codeql/python-all: "*"
+extractor: python

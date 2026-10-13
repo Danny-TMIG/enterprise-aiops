@@ -1,0 +1,32 @@
+{
+  "id": "evidence_capture",
+  "version": "1.0.0",
+  "plane": "evidence",
+  "claim": "evidence can be captured, signed, stored, and independently reproduced",
+  "implementation": "dcs/evidence_chain.py",
+  "test": "dcs/tests/test_evidence_chain.py",
+  "requirements": [
+    "capture hashes implementation and test files",
+    "capture records stdout/stderr sha256 and return code",
+    "capture returns PASS on exit 0, FAIL otherwise, BLOCKED on timeout",
+    "verify re-runs the command and compares hashes",
+    "verify returns PASS only when implementation, test, stdout, and return code all match",
+    "verify returns PARTIAL on any mismatch",
+    "sign produces an HMAC-SHA256 over canonical record content",
+    "verify_signature returns True only for the signing key",
+    "records persist to disk and reload identically"
+  ],
+  "evidence_required": [
+    "test run passing on all requirements",
+    "one signed record capturing a real claim",
+    "one independent verification confirming reproducibility"
+  ],
+  "result_states_allowed": [
+    "PASS",
+    "FAIL",
+    "PARTIAL",
+    "BLOCKED",
+    "NOT_RUN"
+  ],
+  "expiration_days": 90
+}

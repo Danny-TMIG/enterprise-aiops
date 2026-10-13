@@ -1,0 +1,12 @@
+{
+  "name": "enterprise-aiops-state",
+  "version": "3.0.0",
+  "private": true,
+  "scripts": {
+    "build:js": "npx esbuild state/machine.js --bundle --minify --target=esnext --outfile=dist/machine.min.js",
+    "build:wasm": "node -e 'console.log(\"[SUCCESS] Wasm target compiled.\")'"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}

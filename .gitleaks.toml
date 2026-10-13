@@ -1,0 +1,7 @@
+title = "gitleaks configuration"
+
+[allowlist]
+description = "Global allowlist"
+paths = [
+    ''\.git/''
+]

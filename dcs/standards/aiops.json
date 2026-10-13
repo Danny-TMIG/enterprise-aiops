@@ -1,0 +1,2832 @@
+{
+  "standard": {
+    "id": "dcs.aiops",
+    "version": "1.0.0",
+    "title": "Enterprise AIOps Reference Standard",
+    "published": "2026-09-30",
+    "authority": "local"
+  },
+  "requirements": [
+    {
+      "id": "DCS-AU-001",
+      "title": "WAV header has RIFF/WAVE/fmt/data chunks",
+      "section": "AU.audio",
+      "hats": [
+        "AU"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.au.test"
+    },
+    {
+      "id": "DCS-AUT-001",
+      "title": "generated scripts always carry set -euo pipefail",
+      "section": "AUT.automation",
+      "hats": [
+        "AUT"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.aut.test"
+    },
+    {
+      "id": "DCS-BE-001",
+      "title": "backend returns typed envelope",
+      "section": "BE.backend",
+      "hats": [
+        "BE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.be.test"
+    },
+    {
+      "id": "DCS-CAD-001",
+      "title": "box volume is w*h*d",
+      "section": "CAD.cad",
+      "hats": [
+        "CAD"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.cad.test"
+    },
+    {
+      "id": "DCS-CL-001",
+      "title": "store does put/get/list with prefixes",
+      "section": "CL.cloud",
+      "hats": [
+        "CL"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.cl.test"
+    },
+    {
+      "id": "DCS-CMP-001",
+      "title": "expression compiler handles precedence",
+      "section": "CMP.compiler",
+      "hats": [
+        "CMP"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.cmp.test"
+    },
+    {
+      "id": "DCS-CMP2-001",
+      "title": "compliance can reflect on its own standard",
+      "section": "CMP2.compliance",
+      "hats": [
+        "CMP2"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.cmp2.test"
+    },
+    {
+      "id": "DCS-CO-001",
+      "title": "every coalescible kind is registered",
+      "section": "coalescence",
+      "hats": [
+        "FM",
+        "PL"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.equivalence.every_coalesce_registered"
+    },
+    {
+      "id": "DCS-CO-002",
+      "title": "mesh coalescence is commutative + idempotent",
+      "section": "coalescence",
+      "hats": [
+        "DIS",
+        "FM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.equivalence.mesh_coalescence_laws"
+    },
+    {
+      "id": "DCS-CO-003",
+      "title": "run coalescence refuses disagreement",
+      "section": "coalescence",
+      "hats": [
+        "FM",
+        "SRE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.equivalence.run_merge_rejects"
+    },
+    {
+      "id": "DCS-CO-004",
+      "title": "requirement coalescence takes stricter criticality",
+      "section": "coalescence",
+      "hats": [
+        "CMP2",
+        "FM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.equivalence.requirement_stricter"
+    },
+    {
+      "id": "DCS-CO-005",
+      "title": "bundle coalescence is pessimistic on conflict",
+      "section": "coalescence",
+      "hats": [
+        "CMP2",
+        "SD"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.equivalence.bundle_pessimistic"
+    },
+    {
+      "id": "DCS-COH-001",
+      "title": "standard and evidence agree on requirement ids",
+      "section": "coherence",
+      "hats": [
+        "CMP2",
+        "FM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.conformance.coherence_standard_evidence"
+    },
+    {
+      "id": "DCS-COH-002",
+      "title": "equivalence and coalescence registries align",
+      "section": "coherence",
+      "hats": [
+        "FM",
+        "PL"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.conformance.coherence_registries"
+    },
+    {
+      "id": "DCS-COH-003",
+      "title": "team roster partitions the hat set",
+      "section": "coherence",
+      "hats": [
+        "SA",
+        "PL"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.conformance.coherence_roster"
+    },
+    {
+      "id": "DCS-CONF-001",
+      "title": "standard declaration matches evidence actuals",
+      "section": "conformance",
+      "hats": [
+        "CMP2",
+        "QA"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.conformance.declared_matches_actual"
+    },
+    {
+      "id": "DCS-CONF-002",
+      "title": "conformance verdict is CONFORMANT",
+      "section": "conformance",
+      "hats": [
+        "CMP2",
+        "QA",
+        "SRE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.conformance.verdict_is_conformant"
+    },
+    {
+      "id": "DCS-CRD-001",
+      "title": "quorum requires strict majority",
+      "section": "coordination",
+      "hats": [
+        "DIS",
+        "SRE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.conformance.quorum_strict"
+    },
+    {
+      "id": "DCS-CRD-002",
+      "title": "epoch is strictly monotonic",
+      "section": "coordination",
+      "hats": [
+        "DIS",
+        "SIM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.conformance.epoch_monotonic"
+    },
+    {
+      "id": "DCS-CRD-003",
+      "title": "reconcile is commutative",
+      "section": "coordination",
+      "hats": [
+        "DIS",
+        "FM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.conformance.reconcile_commutative"
+    },
+    {
+      "id": "DCS-CRD-004",
+      "title": "reconcile is associative",
+      "section": "coordination",
+      "hats": [
+        "DIS",
+        "FM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.conformance.reconcile_associative"
+    },
+    {
+      "id": "DCS-CRD-005",
+      "title": "reconcile is idempotent",
+      "section": "coordination",
+      "hats": [
+        "DIS",
+        "FM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.conformance.reconcile_idempotent"
+    },
+    {
+      "id": "DCS-CRY-001",
+      "title": "HMAC verifies and rejects tampered tags",
+      "section": "CRY.crypto",
+      "hats": [
+        "CRY"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.cry.test"
+    },
+    {
+      "id": "DCS-DA-001",
+      "title": "documented examples are syntactically valid",
+      "section": "DA.devrel",
+      "hats": [
+        "DA"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.da.test"
+    },
+    {
+      "id": "DCS-DB-001",
+      "title": "insert + select round-trips",
+      "section": "DB.database",
+      "hats": [
+        "DB"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.db.test"
+    },
+    {
+      "id": "DCS-DBA-001",
+      "title": "lookup on digest uses the index",
+      "section": "DBA.dba",
+      "hats": [
+        "DBA"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.dba.test"
+    },
+    {
+      "id": "DCS-DE-001",
+      "title": "DAG executes in dependency order",
+      "section": "DE.dataeng",
+      "hats": [
+        "DE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.de.test"
+    },
+    {
+      "id": "DCS-DIS-001",
+      "title": "gossip converges to full membership",
+      "section": "DIS.distributed",
+      "hats": [
+        "DIS"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.dis.test"
+    },
+    {
+      "id": "DCS-DO-001",
+      "title": "deploy plan topo-sorts services",
+      "section": "DO.devops",
+      "hats": [
+        "DO"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.do.test"
+    },
+    {
+      "id": "DCS-DS-001",
+      "title": "CI brackets the sample mean",
+      "section": "DS.datascience",
+      "hats": [
+        "DS"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.ds.test"
+    },
+    {
+      "id": "DCS-EMB-001",
+      "title": "hot-path function fits a 64-byte budget",
+      "section": "EMB.embedded",
+      "hats": [
+        "EMB"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.emb.test"
+    },
+    {
+      "id": "DCS-EQ-001",
+      "title": "every artifact kind has an equivalence relation",
+      "section": "equivalence",
+      "hats": [
+        "FM",
+        "PL"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.equivalence.every_kind_registered"
+    },
+    {
+      "id": "DCS-EQ-002",
+      "title": "exact implies semantic for every kind",
+      "section": "equivalence",
+      "hats": [
+        "FM",
+        "SCI"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.equivalence.exact_implies_semantic"
+    },
+    {
+      "id": "DCS-EQ-003",
+      "title": "equivalence is reflexive, symmetric",
+      "section": "equivalence",
+      "hats": [
+        "FM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.equivalence.equivalence_is_relation"
+    },
+    {
+      "id": "DCS-FE-001",
+      "title": "index is well-formed and exposes an htmx contract",
+      "section": "FE.frontend",
+      "hats": [
+        "FE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.fe.test"
+    },
+    {
+      "id": "DCS-FM-001",
+      "title": "De Morgan holds exhaustively",
+      "section": "FM.formal",
+      "hats": [
+        "FM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.fmtl.test"
+    },
+    {
+      "id": "DCS-FS-001",
+      "title": "FE + BE compose into one page",
+      "section": "FS.fullstack",
+      "hats": [
+        "FS"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.fs.test"
+    },
+    {
+      "id": "DCS-FW-001",
+      "title": "frame/unframe round-trips",
+      "section": "FW.firmware",
+      "hats": [
+        "FW"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.fw.test"
+    },
+    {
+      "id": "DCS-GAME-001",
+      "title": "minimax never loses from an empty board",
+      "section": "GAME.game",
+      "hats": [
+        "GAME"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.game.test"
+    },
+    {
+      "id": "DCS-GFX-001",
+      "title": "SVG has one rect per data point",
+      "section": "GFX.graphics",
+      "hats": [
+        "GFX"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.gfx.test"
+    },
+    {
+      "id": "DCS-HPC-001",
+      "title": "parallel map preserves order",
+      "section": "HPC.hpc",
+      "hats": [
+        "HPC"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.hpc.test"
+    },
+    {
+      "id": "DCS-HW-001",
+      "title": "hardware fit honors core and memory ceilings",
+      "section": "HW.hardware",
+      "hats": [
+        "HW"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.hw.test"
+    },
+    {
+      "id": "DCS-KRN-001",
+      "title": "process has non-zero soft nofile limit",
+      "section": "KRN.kernel",
+      "hats": [
+        "KRN"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.krn.test"
+    },
+    {
+      "id": "DCS-MESH-001",
+      "title": "MeshOfMeshes.add_run accepts a bare Run",
+      "section": "mesh",
+      "hats": [
+        "DIS",
+        "SYS"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.mesh.mesh_add_run"
+    },
+    {
+      "id": "DCS-MESH-002",
+      "title": "weave accepts a list",
+      "section": "mesh",
+      "hats": [
+        "DE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.mesh.weave_accepts_list"
+    },
+    {
+      "id": "DCS-MESH-003",
+      "title": "mesh exports the five public names",
+      "section": "mesh",
+      "hats": [
+        "PL",
+        "BE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.mesh.mesh_exports"
+    },
+    {
+      "id": "DCS-MLE-001",
+      "title": "manifest schema is enforced",
+      "section": "MLE.mleng",
+      "hats": [
+        "MLE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.mle.test"
+    },
+    {
+      "id": "DCS-MO-001",
+      "title": "PWA manifest is complete",
+      "section": "MO.mobile",
+      "hats": [
+        "MO"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.mo.test"
+    },
+    {
+      "id": "DCS-NAT-ADP-001",
+      "title": "habituation decays monotonically",
+      "section": "nature.adaptation",
+      "hats": [
+        "SCI",
+        "MLE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.adaptation.test_habituation"
+    },
+    {
+      "id": "DCS-NAT-ADP-002",
+      "title": "sensitization grows monotonically",
+      "section": "nature.adaptation",
+      "hats": [
+        "SCI"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.adaptation.test_sensitization"
+    },
+    {
+      "id": "DCS-NAT-ADP-003",
+      "title": "hebbian weight increases with co-firing",
+      "section": "nature.adaptation",
+      "hats": [
+        "MLE",
+        "RES"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.adaptation.test_hebbian"
+    },
+    {
+      "id": "DCS-NAT-ADP-004",
+      "title": "STDP is asymmetric around dt=0",
+      "section": "nature.adaptation",
+      "hats": [
+        "MLE",
+        "SCI"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.adaptation.test_stdp"
+    },
+    {
+      "id": "DCS-NAT-ADP-005",
+      "title": "homeostasis drives to setpoint",
+      "section": "nature.adaptation",
+      "hats": [
+        "SRE",
+        "SCI"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.adaptation.test_homeostasis"
+    },
+    {
+      "id": "DCS-NAT-ADP-006",
+      "title": "allostasis tracks predictive signal",
+      "section": "nature.adaptation",
+      "hats": [
+        "SRE",
+        "MLE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.adaptation.test_allostasis"
+    },
+    {
+      "id": "DCS-NAT-ADP-007",
+      "title": "clonal selection improves affinity",
+      "section": "nature.adaptation",
+      "hats": [
+        "SCI",
+        "SO"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.adaptation.test_immune"
+    },
+    {
+      "id": "DCS-NAT-ADP-008",
+      "title": "chemotaxis climbs a gradient",
+      "section": "nature.adaptation",
+      "hats": [
+        "SCI",
+        "ROB"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.adaptation.test_chemotaxis"
+    },
+    {
+      "id": "DCS-NAT-CON-001",
+      "title": "hive average equals arithmetic mean",
+      "section": "nature.consensus",
+      "hats": [
+        "DIS",
+        "SCI"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.consensus.test_bee_average"
+    },
+    {
+      "id": "DCS-NAT-CON-002",
+      "title": "quorum commits above threshold",
+      "section": "nature.consensus",
+      "hats": [
+        "DIS",
+        "AUT"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.consensus.test_quorum"
+    },
+    {
+      "id": "DCS-NAT-FLK-001",
+      "title": "boids reaches non-zero polarisation",
+      "section": "nature.flocking",
+      "hats": [
+        "GFX",
+        "SCI",
+        "SIM"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.flocking.test_boids_polarised"
+    },
+    {
+      "id": "DCS-NAT-FLK-002",
+      "title": "murmuration uses exactly k-nearest",
+      "section": "nature.flocking",
+      "hats": [
+        "SCI",
+        "SIM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.flocking.test_murmuration_k"
+    },
+    {
+      "id": "DCS-NAT-FLK-003",
+      "title": "polarisation peaks near critical density",
+      "section": "nature.flocking",
+      "hats": [
+        "SCI",
+        "RES"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.flocking.test_critical_peak"
+    },
+    {
+      "id": "DCS-NAT-FLK-004",
+      "title": "fish school stays in positive quadrant edges",
+      "section": "nature.flocking",
+      "hats": [
+        "SCI",
+        "SIM"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.flocking.test_fish_edge"
+    },
+    {
+      "id": "DCS-NAT-FLK-005",
+      "title": "locust swarm aligns in x",
+      "section": "nature.flocking",
+      "hats": [
+        "SCI",
+        "SIM"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.flocking.test_locust_align"
+    },
+    {
+      "id": "DCS-NAT-FLOW-001",
+      "title": "Fick flux scales with concentration gradient",
+      "section": "nature.flow",
+      "hats": [
+        "SCI",
+        "HPC"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.flow.test_fick"
+    },
+    {
+      "id": "DCS-NAT-FLOW-002",
+      "title": "Darcy flow scales with pressure gradient",
+      "section": "nature.flow",
+      "hats": [
+        "SCI"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.flow.test_darcy"
+    },
+    {
+      "id": "DCS-NAT-FLOW-003",
+      "title": "Poiseuille flow \u221d r\u2074",
+      "section": "nature.flow",
+      "hats": [
+        "SCI",
+        "HPC"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.flow.test_poiseuille"
+    },
+    {
+      "id": "DCS-NAT-FLOW-004",
+      "title": "Kirchhoff: in = out",
+      "section": "nature.flow",
+      "hats": [
+        "NET",
+        "SYS"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.flow.test_kirchhoff"
+    },
+    {
+      "id": "DCS-NAT-FLOW-005",
+      "title": "Fourier heat flux with negative gradient",
+      "section": "nature.flow",
+      "hats": [
+        "SCI"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.flow.test_fourier"
+    },
+    {
+      "id": "DCS-NAT-FLOW-006",
+      "title": "Nernst potential for K+ is negative inside",
+      "section": "nature.flow",
+      "hats": [
+        "SCI",
+        "RES"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.flow.test_nernst"
+    },
+    {
+      "id": "DCS-NAT-FLOW-007",
+      "title": "chemostat reaches steady state",
+      "section": "nature.flow",
+      "hats": [
+        "SCI",
+        "DB"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.flow.test_chemostat"
+    },
+    {
+      "id": "DCS-NAT-FLOW-008",
+      "title": "osmosis driven by concentration difference",
+      "section": "nature.flow",
+      "hats": [
+        "SCI",
+        "EMB"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.flow.test_osmosis"
+    },
+    {
+      "id": "DCS-NAT-FLOW-009",
+      "title": "diffusion-limited flux scales with 1/\u03b4",
+      "section": "nature.flow",
+      "hats": [
+        "SCI"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.flow.test_diffusion_limited"
+    },
+    {
+      "id": "DCS-NAT-FRG-001",
+      "title": "levy flight revisits fewer cells than brownian at equal steps",
+      "section": "nature.foraging",
+      "hats": [
+        "SCI",
+        "RES",
+        "ROB"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.foraging.test_levy_more_efficient"
+    },
+    {
+      "id": "DCS-NAT-FRG-002",
+      "title": "brownian search is diffusive (rms ~ sqrt(n))",
+      "section": "nature.foraging",
+      "hats": [
+        "SCI"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.foraging.test_brownian_diffusive"
+    },
+    {
+      "id": "DCS-NAT-FRG-003",
+      "title": "area-restricted stays bounded near origin",
+      "section": "nature.foraging",
+      "hats": [
+        "SCI",
+        "SIM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.foraging.test_ar_bounded"
+    },
+    {
+      "id": "DCS-NAT-FRG-004",
+      "title": "albatross drifts toward gradient target",
+      "section": "nature.foraging",
+      "hats": [
+        "SCI",
+        "RES"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.foraging.test_albatross_gradient"
+    },
+    {
+      "id": "DCS-NAT-MOR-001",
+      "title": "Turing pattern forms non-uniform b",
+      "section": "nature.morpho",
+      "hats": [
+        "SCI",
+        "SIM",
+        "GFX"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.morpho.test_turing"
+    },
+    {
+      "id": "DCS-NAT-MOR-002",
+      "title": "Gray-Scott v is spatially non-uniform",
+      "section": "nature.morpho",
+      "hats": [
+        "SCI",
+        "SIM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.morpho.test_gs"
+    },
+    {
+      "id": "DCS-NAT-MOR-003",
+      "title": "BZ reaction sustains a spatial pattern",
+      "section": "nature.morpho",
+      "hats": [
+        "SCI"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.morpho.test_bz"
+    },
+    {
+      "id": "DCS-NAT-MOR-004",
+      "title": "DLA produces a branching fractal cluster",
+      "section": "nature.morpho",
+      "hats": [
+        "SCI",
+        "GFX"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.morpho.test_dla"
+    },
+    {
+      "id": "DCS-NAT-MOR-005",
+      "title": "Eden growth is compact (low perimeter/area)",
+      "section": "nature.morpho",
+      "hats": [
+        "SCI"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.morpho.test_eden_compact"
+    },
+    {
+      "id": "DCS-NAT-MOR-006",
+      "title": "lichen edge grows outward",
+      "section": "nature.morpho",
+      "hats": [
+        "SCI",
+        "SIM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.morpho.test_lichen"
+    },
+    {
+      "id": "DCS-NAT-MOR-007",
+      "title": "tree branches double per level",
+      "section": "nature.morpho",
+      "hats": [
+        "GFX",
+        "SCI"
+      ],
+      "criticality": "MAY",
+      "test": "dcs.nature.morpho.test_tree"
+    },
+    {
+      "id": "DCS-NAT-OSC-001",
+      "title": "kuramoto synchronises above K_c",
+      "section": "nature.oscillator",
+      "hats": [
+        "SCI",
+        "HPC"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.oscillator.test_kuramoto_sync"
+    },
+    {
+      "id": "DCS-NAT-OSC-002",
+      "title": "firefly pulse-coupling converges to phase lock",
+      "section": "nature.oscillator",
+      "hats": [
+        "SCI",
+        "SIM"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.oscillator.test_firefly_lock"
+    },
+    {
+      "id": "DCS-NAT-OSC-003",
+      "title": "cricket chorus matches firefly coupling",
+      "section": "nature.oscillator",
+      "hats": [
+        "SCI"
+      ],
+      "criticality": "MAY",
+      "test": "dcs.nature.oscillator.test_cricket"
+    },
+    {
+      "id": "DCS-NAT-OSC-004",
+      "title": "cardiac SA node exhibits relaxation spikes",
+      "section": "nature.oscillator",
+      "hats": [
+        "SCI",
+        "SIM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.oscillator.test_cardiac"
+    },
+    {
+      "id": "DCS-NAT-OSC-005",
+      "title": "circadian clock oscillates via delayed feedback",
+      "section": "nature.oscillator",
+      "hats": [
+        "SCI",
+        "SIM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.oscillator.test_circadian"
+    },
+    {
+      "id": "DCS-NAT-OSC-006",
+      "title": "Peskin-Mirollo firing synchronises",
+      "section": "nature.oscillator",
+      "hats": [
+        "SCI",
+        "HPC"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.oscillator.test_peskin"
+    },
+    {
+      "id": "DCS-NAT-OSC-007",
+      "title": "FitzHugh-Nagumo produces spikes",
+      "section": "nature.oscillator",
+      "hats": [
+        "SCI"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.oscillator.test_fhn"
+    },
+    {
+      "id": "DCS-NAT-OSC-008",
+      "title": "Hodgkin-Huxley produces an action potential",
+      "section": "nature.oscillator",
+      "hats": [
+        "SCI",
+        "RES"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.oscillator.test_hh"
+    },
+    {
+      "id": "DCS-NAT-POP-001",
+      "title": "logistic saturates at K",
+      "section": "nature.population",
+      "hats": [
+        "DS",
+        "SCI"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.population.test_logistic"
+    },
+    {
+      "id": "DCS-NAT-POP-002",
+      "title": "gompertz approaches its plateau",
+      "section": "nature.population",
+      "hats": [
+        "DS",
+        "SCI"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.population.test_gompertz"
+    },
+    {
+      "id": "DCS-NAT-POP-003",
+      "title": "Allee effect: below threshold \u2192 extinction",
+      "section": "nature.population",
+      "hats": [
+        "SCI",
+        "DS"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.population.test_allee"
+    },
+    {
+      "id": "DCS-NAT-POP-004",
+      "title": "Lotka-Volterra shows bounded cycles",
+      "section": "nature.population",
+      "hats": [
+        "SCI",
+        "QT"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.population.test_lv"
+    },
+    {
+      "id": "DCS-NAT-POP-005",
+      "title": "SIR conserves total population",
+      "section": "nature.population",
+      "hats": [
+        "DS",
+        "SCI"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.population.test_sir"
+    },
+    {
+      "id": "DCS-NAT-POP-006",
+      "title": "SIRS shows waning immunity (R re-enters S)",
+      "section": "nature.population",
+      "hats": [
+        "DS",
+        "SCI"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.population.test_sirs"
+    },
+    {
+      "id": "DCS-NAT-POP-007",
+      "title": "host-parasite cycles (Red Queen)",
+      "section": "nature.population",
+      "hats": [
+        "SCI",
+        "QT"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.population.test_hp"
+    },
+    {
+      "id": "DCS-NAT-POP-008",
+      "title": "spatial predator-prey forms patterns",
+      "section": "nature.population",
+      "hats": [
+        "SCI",
+        "SIM"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.population.test_spatial"
+    },
+    {
+      "id": "DCS-NAT-STG-001",
+      "title": "ant colony collects food using pheromone trail",
+      "section": "nature.stigmergy",
+      "hats": [
+        "DIS",
+        "SCI"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.stigmergy.test_colony"
+    },
+    {
+      "id": "DCS-NAT-STG-002",
+      "title": "termite deposits evaporate over time",
+      "section": "nature.stigmergy",
+      "hats": [
+        "SCI",
+        "SIM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.stigmergy.test_termite_evap"
+    },
+    {
+      "id": "DCS-NAT-STG-003",
+      "title": "slime mold prunes weak edges",
+      "section": "nature.stigmergy",
+      "hats": [
+        "DIS",
+        "SCI"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.stigmergy.test_slime_pruning"
+    },
+    {
+      "id": "DCS-NAT-THR-001",
+      "title": "quorum fires above threshold",
+      "section": "nature.threshold",
+      "hats": [
+        "SCI",
+        "DIS"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.threshold.test_quorum"
+    },
+    {
+      "id": "DCS-NAT-THR-002",
+      "title": "sigmoid is monotone and bounded",
+      "section": "nature.threshold",
+      "hats": [
+        "SCI",
+        "MLE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.threshold.test_sigmoid"
+    },
+    {
+      "id": "DCS-NAT-THR-003",
+      "title": "integrate-and-fire fires on accumulated input",
+      "section": "nature.threshold",
+      "hats": [
+        "MLE",
+        "SCI"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.threshold.test_lif"
+    },
+    {
+      "id": "DCS-NAT-THR-004",
+      "title": "gene toggle is bistable (exactly one high)",
+      "section": "nature.threshold",
+      "hats": [
+        "SCI",
+        "RES"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.threshold.test_toggle"
+    },
+    {
+      "id": "DCS-NAT-THR-005",
+      "title": "order parameter zero below critical point",
+      "section": "nature.threshold",
+      "hats": [
+        "SCI",
+        "FM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.threshold.test_percolation"
+    },
+    {
+      "id": "DCS-NAT-WALK-001",
+      "title": "correlated walk is ballistic at kappa=1",
+      "section": "nature.walk",
+      "hats": [
+        "SCI",
+        "SIM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.walk.test_correlated_ballistic"
+    },
+    {
+      "id": "DCS-NAT-WALK-002",
+      "title": "elephant walk keeps full history",
+      "section": "nature.walk",
+      "hats": [
+        "SCI",
+        "RES"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.walk.test_elephant_memory"
+    },
+    {
+      "id": "DCS-NAT-WALK-003",
+      "title": "self-avoiding walk never revisits",
+      "section": "nature.walk",
+      "hats": [
+        "SCI"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.nature.walk.test_saw_no_revisit"
+    },
+    {
+      "id": "DCS-NAT-WALK-004",
+      "title": "persistent walk ends far from origin",
+      "section": "nature.walk",
+      "hats": [
+        "SCI"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.walk.test_persistent_far"
+    },
+    {
+      "id": "DCS-NAT-WALK-005",
+      "title": "2D levy walk has heavy-tail step distribution",
+      "section": "nature.walk",
+      "hats": [
+        "SCI",
+        "QT"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.nature.walk.test_levy_2d_heavy_tail"
+    },
+    {
+      "id": "DCS-NET-001",
+      "title": "connect helper survives unreachable target",
+      "section": "NET.networking",
+      "hats": [
+        "NET"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.net.test"
+    },
+    {
+      "id": "DCS-NWE-001",
+      "title": "egress allowlist blocks non-listed targets",
+      "section": "NWE.neteng",
+      "hats": [
+        "NWE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.nwe.test"
+    },
+    {
+      "id": "DCS-PL-001",
+      "title": "grammar exposes expr/term/factor",
+      "section": "PL.pldesign",
+      "hats": [
+        "PL"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.pl.test"
+    },
+    {
+      "id": "DCS-PLT-001",
+      "title": "platform classified",
+      "section": "PLT.platform",
+      "hats": [
+        "PLT"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.plt.test"
+    },
+    {
+      "id": "DCS-PUZ-001",
+      "title": "scramble never returns SOLVED",
+      "section": "puzzles",
+      "hats": [
+        "SCI",
+        "FM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.puzzles.scramble_safe"
+    },
+    {
+      "id": "DCS-PUZ-002",
+      "title": "solve_cube round-trips",
+      "section": "puzzles",
+      "hats": [
+        "SCI",
+        "MLE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.puzzles.solve_round_trip"
+    },
+    {
+      "id": "DCS-QA-001",
+      "title": "expectation helper enforces and reports",
+      "section": "QA.qa",
+      "hats": [
+        "QA"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.qa.test"
+    },
+    {
+      "id": "DCS-QT-001",
+      "title": "MC pi within 0.05 of math.pi",
+      "section": "QT.quant",
+      "hats": [
+        "QT"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.qt.test"
+    },
+    {
+      "id": "DCS-RE-001",
+      "title": "opaque blob round-trips",
+      "section": "RE.reverse",
+      "hats": [
+        "RE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.re.test"
+    },
+    {
+      "id": "DCS-REL-001",
+      "title": "semver parses and bumps",
+      "section": "REL.release",
+      "hats": [
+        "REL"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.rel.test"
+    },
+    {
+      "id": "DCS-RES-001",
+      "title": "improvement gate rejects noise",
+      "section": "RES.research",
+      "hats": [
+        "RES"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.res.test"
+    },
+    {
+      "id": "DCS-ROB-001",
+      "title": "FK reaches the expected folded pose",
+      "section": "ROB.robotics",
+      "hats": [
+        "ROB"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.rob.test"
+    },
+    {
+      "id": "DCS-SA-001",
+      "title": "arch graph is acyclic",
+      "section": "SA.solutionsarch",
+      "hats": [
+        "SA"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.sa.test"
+    },
+    {
+      "id": "DCS-SCI-001",
+      "title": "Kahan error below 1e-6 for 10k floats",
+      "section": "SCI.scientific",
+      "hats": [
+        "SCI"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.sci.test"
+    },
+    {
+      "id": "DCS-SD-001",
+      "title": "allowlist rejects path traversal",
+      "section": "SD.defensive",
+      "hats": [
+        "SD"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.sd.test"
+    },
+    {
+      "id": "DCS-SHD-001",
+      "title": "fragment shader is structurally sound",
+      "section": "SHD.shader",
+      "hats": [
+        "SHD"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.shd.test"
+    },
+    {
+      "id": "DCS-SIM-001",
+      "title": "stepper produces n+1 states",
+      "section": "SIM.simulation",
+      "hats": [
+        "SIM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.sim.test"
+    },
+    {
+      "id": "DCS-SO-001",
+      "title": "fuzz harness raises only ValueError",
+      "section": "SO.offensive",
+      "hats": [
+        "SO"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.so.test"
+    },
+    {
+      "id": "DCS-SRE-001",
+      "title": "error budget enforced",
+      "section": "SRE.sre",
+      "hats": [
+        "SRE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.sre.test"
+    },
+    {
+      "id": "DCS-STE-001",
+      "title": "segment appends are indexed and readable",
+      "section": "STE.storage",
+      "hats": [
+        "STE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.ste.test"
+    },
+    {
+      "id": "DCS-SYS-001",
+      "title": "open fd count is bounded",
+      "section": "SYS.systems",
+      "hats": [
+        "SYS"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.sys.test"
+    },
+    {
+      "id": "DCS-TRAIN-001",
+      "title": "Run carries parent_id",
+      "section": "train",
+      "hats": [
+        "BE",
+        "DE",
+        "FM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.train.run_has_parent_id"
+    },
+    {
+      "id": "DCS-TRAIN-002",
+      "title": "Trainer exposes step + _evolve",
+      "section": "train",
+      "hats": [
+        "BE",
+        "MLE",
+        "FM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.train.trainer_has_step"
+    },
+    {
+      "id": "DCS-TRAIN-003",
+      "title": "trans produces an edge chain",
+      "section": "train",
+      "hats": [
+        "DIS",
+        "DE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.train.trans_produces_chain"
+    },
+    {
+      "id": "DCS-TRAIN-004",
+      "title": "pollinate emits change deltas",
+      "section": "train",
+      "hats": [
+        "DE",
+        "DS"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.train.pollinate_reports_change"
+    },
+    {
+      "id": "DCS-TRAIN-005",
+      "title": "CLI runs to completion",
+      "section": "train",
+      "hats": [
+        "BE",
+        "TW",
+        "QA"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.tests.train.cli_runs"
+    },
+    {
+      "id": "DCS-TW-001",
+      "title": "TOC anchors are kebab-cased",
+      "section": "TW.techwriter",
+      "hats": [
+        "TW"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.tw.test"
+    },
+    {
+      "id": "DCS-VID-001",
+      "title": "2s @ 30fps \u2192 60 frames",
+      "section": "VID.video",
+      "hats": [
+        "VID"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.hats.vid.test"
+    },
+    {
+      "id": "DCS-XC-A11Y-001",
+      "title": "black-on-white clears WCAG AA 4.5:1",
+      "section": "X.a11y",
+      "hats": [
+        "FE",
+        "GFX",
+        "QA"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.crosscut.a11y.test"
+    },
+    {
+      "id": "DCS-XC-BACKUP-001",
+      "title": "snapshot/restore is integrity-checked",
+      "section": "X.backup",
+      "hats": [
+        "STE",
+        "SRE",
+        "SD"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.crosscut.backup.test"
+    },
+    {
+      "id": "DCS-XC-CDC-001",
+      "title": "version stamps are monotonic",
+      "section": "X.cdc",
+      "hats": [
+        "DE",
+        "DB",
+        "STE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.crosscut.cdc.test"
+    },
+    {
+      "id": "DCS-XC-CHAOS-001",
+      "title": "chaos injects exactly the configured fraction",
+      "section": "X.chaos",
+      "hats": [
+        "SRE",
+        "QA",
+        "SO"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.crosscut.chaos.test"
+    },
+    {
+      "id": "DCS-XC-CIRCUIT-001",
+      "title": "breaker opens after threshold",
+      "section": "X.circuit",
+      "hats": [
+        "SRE",
+        "DIS",
+        "NET"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.crosscut.circuit.test"
+    },
+    {
+      "id": "DCS-XC-CLOCK-001",
+      "title": "injectable clock is monotonic",
+      "section": "X.clock",
+      "hats": [
+        "SYS",
+        "SIM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.crosscut.clock.test"
+    },
+    {
+      "id": "DCS-XC-CONC-001",
+      "title": "single-flight dedupes concurrent calls",
+      "section": "X.concurrency",
+      "hats": [
+        "SYS",
+        "DIS"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.crosscut.concurrency.test"
+    },
+    {
+      "id": "DCS-XC-DEPLOY-001",
+      "title": "canary rolls back when over budget",
+      "section": "X.deploy",
+      "hats": [
+        "DO",
+        "SRE",
+        "REL"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.crosscut.deploy.test"
+    },
+    {
+      "id": "DCS-XC-FLAG-001",
+      "title": "rollout is deterministic and stable",
+      "section": "X.flags",
+      "hats": [
+        "REL",
+        "DO"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.crosscut.flag.test"
+    },
+    {
+      "id": "DCS-XC-I18N-001",
+      "title": "message catalog falls back to English",
+      "section": "X.i18n",
+      "hats": [
+        "FE",
+        "TW",
+        "DA"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.crosscut.i18n.test"
+    },
+    {
+      "id": "DCS-XC-OBS-001",
+      "title": "metrics enforce cardinality ceiling",
+      "section": "X.observability",
+      "hats": [
+        "SRE",
+        "SYS"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.crosscut.observability.test"
+    },
+    {
+      "id": "DCS-XC-PRIV-001",
+      "title": "redactor strips email/phone/SSN",
+      "section": "X.privacy",
+      "hats": [
+        "SD",
+        "CMP2",
+        "BE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.crosscut.privacy.test"
+    },
+    {
+      "id": "DCS-XC-RATE-001",
+      "title": "token bucket enforces burst then rate",
+      "section": "X.ratelimit",
+      "hats": [
+        "NET",
+        "NWE",
+        "SRE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.crosscut.ratelimit.test"
+    },
+    {
+      "id": "DCS-XC-SAGA-001",
+      "title": "saga compensates in reverse order",
+      "section": "X.saga",
+      "hats": [
+        "DIS",
+        "DE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.crosscut.saga.test"
+    },
+    {
+      "id": "DCS-XC-SEMVER-001",
+      "title": "caret/tilde/exact match correctly",
+      "section": "X.semver",
+      "hats": [
+        "REL",
+        "PL"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.crosscut.semver.test"
+    },
+    {
+      "id": "DCS-XC-TIME-001",
+      "title": "elapsed monotonic time is non-negative",
+      "section": "X.time",
+      "hats": [
+        "SYS",
+        "SIM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.crosscut.time.test"
+    },
+    {
+      "id": "EQ-AU-002",
+      "title": "sample rate is standard",
+      "section": "EQ.ui",
+      "hats": [
+        "AU"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.au_rate"
+    },
+    {
+      "id": "EQ-AU-003",
+      "title": "PCM amplitude in [-1, 1]",
+      "section": "EQ.ui",
+      "hats": [
+        "AU"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.au_pcm"
+    },
+    {
+      "id": "EQ-AU-004",
+      "title": "channel count is 1 or 2",
+      "section": "EQ.ui",
+      "hats": [
+        "AU"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.au_channels"
+    },
+    {
+      "id": "EQ-AUT-002",
+      "title": "script exits on error",
+      "section": "EQ.meta",
+      "hats": [
+        "AUT"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.aut_exit"
+    },
+    {
+      "id": "EQ-AUT-003",
+      "title": "job scheduler rejects invalid cron",
+      "section": "EQ.meta",
+      "hats": [
+        "AUT"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.aut_cron"
+    },
+    {
+      "id": "EQ-BE-002",
+      "title": "request envelope carries a trace id",
+      "section": "EQ.systems",
+      "hats": [
+        "BE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.be_trace"
+    },
+    {
+      "id": "EQ-BE-003",
+      "title": "errors map to 4xx or 5xx",
+      "section": "EQ.systems",
+      "hats": [
+        "BE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.be_err_status"
+    },
+    {
+      "id": "EQ-BE-004",
+      "title": "pagination has a bounded limit",
+      "section": "EQ.systems",
+      "hats": [
+        "BE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.be_page_limit"
+    },
+    {
+      "id": "EQ-BE-005",
+      "title": "content negotiation picks JSON",
+      "section": "EQ.systems",
+      "hats": [
+        "BE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.be_negotiate"
+    },
+    {
+      "id": "EQ-BE-006",
+      "title": "idempotency key required for POST-create",
+      "section": "EQ.systems",
+      "hats": [
+        "BE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.be_idem"
+    },
+    {
+      "id": "EQ-BE-007",
+      "title": "response body is valid UTF-8",
+      "section": "EQ.systems",
+      "hats": [
+        "BE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.be_utf8"
+    },
+    {
+      "id": "EQ-CAD-002",
+      "title": "all box dimensions positive",
+      "section": "EQ.ui",
+      "hats": [
+        "CAD"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.cad_dims"
+    },
+    {
+      "id": "EQ-CAD-003",
+      "title": "mesh vertex/face ratio is Euler-consistent",
+      "section": "EQ.ui",
+      "hats": [
+        "CAD"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.cad_euler"
+    },
+    {
+      "id": "EQ-CL-002",
+      "title": "cloud region is well-formed",
+      "section": "EQ.systems",
+      "hats": [
+        "CL"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.cl_region"
+    },
+    {
+      "id": "EQ-CL-003",
+      "title": "bucket names are lowercase",
+      "section": "EQ.systems",
+      "hats": [
+        "CL"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.cl_bucket"
+    },
+    {
+      "id": "EQ-CL-004",
+      "title": "IAM action is scoped",
+      "section": "EQ.systems",
+      "hats": [
+        "CL"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.cl_iam"
+    },
+    {
+      "id": "EQ-CMP-002",
+      "title": "constant folding is idempotent",
+      "section": "EQ.meta",
+      "hats": [
+        "CMP"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.cmp_fold"
+    },
+    {
+      "id": "EQ-CMP-003",
+      "title": "dead code elimination preserves semantics",
+      "section": "EQ.meta",
+      "hats": [
+        "CMP"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.equilibrium.meta.cmp_dce"
+    },
+    {
+      "id": "EQ-CMP-004",
+      "title": "SSA form: each name assigned once",
+      "section": "EQ.meta",
+      "hats": [
+        "CMP"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.equilibrium.meta.cmp_ssa"
+    },
+    {
+      "id": "EQ-CMP2-002",
+      "title": "every requirement has a stable id",
+      "section": "EQ.security",
+      "hats": [
+        "CMP2"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.security.cmp2_ids"
+    },
+    {
+      "id": "EQ-CMP2-003",
+      "title": "evidence is content-addressed",
+      "section": "EQ.security",
+      "hats": [
+        "CMP2"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.security.cmp2_digest"
+    },
+    {
+      "id": "EQ-CRY-002",
+      "title": "AES-GCM tag is 16 bytes",
+      "section": "EQ.security",
+      "hats": [
+        "CRY"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.security.cry_tag_len"
+    },
+    {
+      "id": "EQ-CRY-003",
+      "title": "nonce is unique per message",
+      "section": "EQ.security",
+      "hats": [
+        "CRY"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.security.cry_nonce"
+    },
+    {
+      "id": "EQ-CRY-004",
+      "title": "KDF output is deterministic per salt",
+      "section": "EQ.security",
+      "hats": [
+        "CRY"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.security.cry_kdf"
+    },
+    {
+      "id": "EQ-DA-002",
+      "title": "example shows expected output",
+      "section": "EQ.ui",
+      "hats": [
+        "DA"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.da_output"
+    },
+    {
+      "id": "EQ-DA-003",
+      "title": "quickstart fits a single code block",
+      "section": "EQ.ui",
+      "hats": [
+        "DA"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.da_quickstart"
+    },
+    {
+      "id": "EQ-DB-002",
+      "title": "transaction rolls back on error",
+      "section": "EQ.systems",
+      "hats": [
+        "DB"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.db_rollback"
+    },
+    {
+      "id": "EQ-DB-003",
+      "title": "UNIQUE constraint enforced",
+      "section": "EQ.systems",
+      "hats": [
+        "DB"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.db_unique"
+    },
+    {
+      "id": "EQ-DB-004",
+      "title": "foreign key cascades",
+      "section": "EQ.systems",
+      "hats": [
+        "DB"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.db_fk"
+    },
+    {
+      "id": "EQ-DBA-002",
+      "title": "index covers the query projection",
+      "section": "EQ.systems",
+      "hats": [
+        "DBA"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.dba_covering"
+    },
+    {
+      "id": "EQ-DBA-003",
+      "title": "ANALYZE populates sqlite_stat1",
+      "section": "EQ.systems",
+      "hats": [
+        "DBA"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.equilibrium.systems.dba_analyze"
+    },
+    {
+      "id": "EQ-DE-002",
+      "title": "pipeline emits a manifest",
+      "section": "EQ.systems",
+      "hats": [
+        "DE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.de_manifest"
+    },
+    {
+      "id": "EQ-DE-003",
+      "title": "DAG detects cycles",
+      "section": "EQ.systems",
+      "hats": [
+        "DE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.de_cycle"
+    },
+    {
+      "id": "EQ-DE-004",
+      "title": "backfill mode re-runs only failed partitions",
+      "section": "EQ.systems",
+      "hats": [
+        "DE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.de_backfill"
+    },
+    {
+      "id": "EQ-DIS-002",
+      "title": "eventual consistency converges",
+      "section": "EQ.meta",
+      "hats": [
+        "DIS"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.dis_converge"
+    },
+    {
+      "id": "EQ-DIS-003",
+      "title": "consensus requires quorum",
+      "section": "EQ.meta",
+      "hats": [
+        "DIS"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.dis_quorum"
+    },
+    {
+      "id": "EQ-DIS-004",
+      "title": "vector clock orders causality",
+      "section": "EQ.meta",
+      "hats": [
+        "DIS"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.dis_vclock"
+    },
+    {
+      "id": "EQ-DO-002",
+      "title": "deploy plan has rollback",
+      "section": "EQ.systems",
+      "hats": [
+        "DO"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.do_rollback"
+    },
+    {
+      "id": "EQ-DO-003",
+      "title": "deployment is versioned",
+      "section": "EQ.systems",
+      "hats": [
+        "DO"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.do_versioned"
+    },
+    {
+      "id": "EQ-DS-002",
+      "title": "median is order-invariant",
+      "section": "EQ.systems",
+      "hats": [
+        "DS"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.ds_median"
+    },
+    {
+      "id": "EQ-DS-003",
+      "title": "std of constant series is zero",
+      "section": "EQ.systems",
+      "hats": [
+        "DS"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.ds_std"
+    },
+    {
+      "id": "EQ-DS-004",
+      "title": "correlation is in [-1, 1]",
+      "section": "EQ.systems",
+      "hats": [
+        "DS"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.ds_corr"
+    },
+    {
+      "id": "EQ-EMB-002",
+      "title": "bit width is a power of two",
+      "section": "EQ.systems",
+      "hats": [
+        "EMB"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.emb_bitwidth"
+    },
+    {
+      "id": "EQ-EMB-003",
+      "title": "flash write is word-aligned",
+      "section": "EQ.systems",
+      "hats": [
+        "EMB"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.emb_aligned"
+    },
+    {
+      "id": "EQ-FE-002",
+      "title": "HTML id attributes are unique",
+      "section": "EQ.ui",
+      "hats": [
+        "FE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.fe_ids_unique"
+    },
+    {
+      "id": "EQ-FE-003",
+      "title": "CSS selectors are balanced",
+      "section": "EQ.ui",
+      "hats": [
+        "FE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.fe_css_balanced"
+    },
+    {
+      "id": "EQ-FE-004",
+      "title": "hyperlink target is valid",
+      "section": "EQ.ui",
+      "hats": [
+        "FE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.fe_link_target"
+    },
+    {
+      "id": "EQ-FE-005",
+      "title": "aria-label present on icon buttons",
+      "section": "EQ.ui",
+      "hats": [
+        "FE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.fe_aria"
+    },
+    {
+      "id": "EQ-FM-002",
+      "title": "forall over finite domain is decidable",
+      "section": "EQ.meta",
+      "hats": [
+        "FM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.fm_finite"
+    },
+    {
+      "id": "EQ-FM-003",
+      "title": "induction base + step",
+      "section": "EQ.meta",
+      "hats": [
+        "FM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.fm_induction"
+    },
+    {
+      "id": "EQ-FS-002",
+      "title": "hydration payload is valid JSON",
+      "section": "EQ.ui",
+      "hats": [
+        "FS"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.fs_hydration"
+    },
+    {
+      "id": "EQ-FS-003",
+      "title": "SSR and CSR render the same shell",
+      "section": "EQ.ui",
+      "hats": [
+        "FS"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.fs_ssr"
+    },
+    {
+      "id": "EQ-FW-002",
+      "title": "frame header length prefix is correct",
+      "section": "EQ.systems",
+      "hats": [
+        "FW"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.fw_prefix"
+    },
+    {
+      "id": "EQ-FW-003",
+      "title": "CRC matches on round-trip",
+      "section": "EQ.systems",
+      "hats": [
+        "FW"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.fw_crc"
+    },
+    {
+      "id": "EQ-GAME-002",
+      "title": "turn order alternates",
+      "section": "EQ.ui",
+      "hats": [
+        "GAME"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.game_turns"
+    },
+    {
+      "id": "EQ-GAME-003",
+      "title": "move inside board bounds",
+      "section": "EQ.ui",
+      "hats": [
+        "GAME"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.game_bounds"
+    },
+    {
+      "id": "EQ-GAME-004",
+      "title": "terminal states are absorbing",
+      "section": "EQ.ui",
+      "hats": [
+        "GAME"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.game_terminal"
+    },
+    {
+      "id": "EQ-GFX-002",
+      "title": "SVG viewBox declared",
+      "section": "EQ.ui",
+      "hats": [
+        "GFX"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.gfx_viewbox"
+    },
+    {
+      "id": "EQ-GFX-003",
+      "title": "polygon closes with Z",
+      "section": "EQ.ui",
+      "hats": [
+        "GFX"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.gfx_polygon"
+    },
+    {
+      "id": "EQ-GFX-004",
+      "title": "gradient stops in [0,1]",
+      "section": "EQ.ui",
+      "hats": [
+        "GFX"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.gfx_gradient"
+    },
+    {
+      "id": "EQ-HPC-002",
+      "title": "thread pool bound respected",
+      "section": "EQ.systems",
+      "hats": [
+        "HPC"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.hpc_pool"
+    },
+    {
+      "id": "EQ-HPC-003",
+      "title": "chunked iteration preserves order",
+      "section": "EQ.systems",
+      "hats": [
+        "HPC"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.hpc_chunks"
+    },
+    {
+      "id": "EQ-HW-002",
+      "title": "memory size is a power of two GiB",
+      "section": "EQ.systems",
+      "hats": [
+        "HW"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.hw_mem"
+    },
+    {
+      "id": "EQ-HW-003",
+      "title": "core count matches a known Apple Silicon config",
+      "section": "EQ.systems",
+      "hats": [
+        "HW"
+      ],
+      "criticality": "MAY",
+      "test": "dcs.equilibrium.systems.hw_cores"
+    },
+    {
+      "id": "EQ-KRN-002",
+      "title": "SIGINT handler is installed",
+      "section": "EQ.systems",
+      "hats": [
+        "KRN"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.equilibrium.systems.krn_sigint"
+    },
+    {
+      "id": "EQ-KRN-003",
+      "title": "umask is set (non-default)",
+      "section": "EQ.systems",
+      "hats": [
+        "KRN"
+      ],
+      "criticality": "MAY",
+      "test": "dcs.equilibrium.systems.krn_umask"
+    },
+    {
+      "id": "EQ-MLE-002",
+      "title": "cross-validation splits do not overlap",
+      "section": "EQ.meta",
+      "hats": [
+        "MLE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.mle_cv"
+    },
+    {
+      "id": "EQ-MLE-003",
+      "title": "model digest is stable across loads",
+      "section": "EQ.meta",
+      "hats": [
+        "MLE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.mle_digest"
+    },
+    {
+      "id": "EQ-MLE-004",
+      "title": "batch dimension is preserved",
+      "section": "EQ.meta",
+      "hats": [
+        "MLE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.mle_batch"
+    },
+    {
+      "id": "EQ-MO-002",
+      "title": "viewport meta is present",
+      "section": "EQ.ui",
+      "hats": [
+        "MO"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.mo_viewport"
+    },
+    {
+      "id": "EQ-MO-003",
+      "title": "manifest icons include 512px",
+      "section": "EQ.ui",
+      "hats": [
+        "MO"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.mo_icon_sizes"
+    },
+    {
+      "id": "EQ-MO-004",
+      "title": "offline service worker caches shell",
+      "section": "EQ.ui",
+      "hats": [
+        "MO"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.equilibrium.ui.mo_sw"
+    },
+    {
+      "id": "EQ-NET-002",
+      "title": "packet length matches header",
+      "section": "EQ.security",
+      "hats": [
+        "NET"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.security.net_length"
+    },
+    {
+      "id": "EQ-NET-003",
+      "title": "checksum is verified",
+      "section": "EQ.security",
+      "hats": [
+        "NET"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.security.net_checksum"
+    },
+    {
+      "id": "EQ-NWE-002",
+      "title": "ACL deny beats allow",
+      "section": "EQ.security",
+      "hats": [
+        "NWE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.security.nwe_acl"
+    },
+    {
+      "id": "EQ-NWE-003",
+      "title": "rate limit is finite",
+      "section": "EQ.security",
+      "hats": [
+        "NWE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.security.nwe_limit"
+    },
+    {
+      "id": "EQ-PL-002",
+      "title": "operator precedence is unambiguous",
+      "section": "EQ.meta",
+      "hats": [
+        "PL"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.pl_prec"
+    },
+    {
+      "id": "EQ-PL-003",
+      "title": "left-associative subtraction",
+      "section": "EQ.meta",
+      "hats": [
+        "PL"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.pl_left"
+    },
+    {
+      "id": "EQ-PLT-002",
+      "title": "platform-specific path resolution",
+      "section": "EQ.systems",
+      "hats": [
+        "PLT"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.plt_paths"
+    },
+    {
+      "id": "EQ-PLT-003",
+      "title": "sys.executable is non-empty",
+      "section": "EQ.systems",
+      "hats": [
+        "PLT"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.plt_exec"
+    },
+    {
+      "id": "EQ-QA-002",
+      "title": "assertion reports the actual value",
+      "section": "EQ.security",
+      "hats": [
+        "QA"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.security.qa_msg"
+    },
+    {
+      "id": "EQ-QA-003",
+      "title": "expected exceptions are asserted",
+      "section": "EQ.security",
+      "hats": [
+        "QA"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.security.qa_raises"
+    },
+    {
+      "id": "EQ-QT-002",
+      "title": "Black-Scholes formula sanity",
+      "section": "EQ.meta",
+      "hats": [
+        "QT"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.equilibrium.meta.qt_bs"
+    },
+    {
+      "id": "EQ-QT-003",
+      "title": "VaR is monotone in confidence",
+      "section": "EQ.meta",
+      "hats": [
+        "QT"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.qt_var"
+    },
+    {
+      "id": "EQ-RE-002",
+      "title": "objdump-style string extraction finds markers",
+      "section": "EQ.security",
+      "hats": [
+        "RE"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.equilibrium.security.re_strings"
+    },
+    {
+      "id": "EQ-RE-003",
+      "title": "hexdump uses fixed width",
+      "section": "EQ.security",
+      "hats": [
+        "RE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.security.re_hexdump"
+    },
+    {
+      "id": "EQ-REL-002",
+      "title": "changelog entries carry a version",
+      "section": "EQ.meta",
+      "hats": [
+        "REL"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.rel_changelog"
+    },
+    {
+      "id": "EQ-REL-003",
+      "title": "git tag matches version",
+      "section": "EQ.meta",
+      "hats": [
+        "REL"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.rel_tag"
+    },
+    {
+      "id": "EQ-REL-004",
+      "title": "prerelease ordering",
+      "section": "EQ.meta",
+      "hats": [
+        "REL"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.equilibrium.meta.rel_prerelease"
+    },
+    {
+      "id": "EQ-RES-002",
+      "title": "replication increases confidence",
+      "section": "EQ.meta",
+      "hats": [
+        "RES"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.res_replication"
+    },
+    {
+      "id": "EQ-RES-003",
+      "title": "p-value bounded",
+      "section": "EQ.meta",
+      "hats": [
+        "RES"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.res_pval"
+    },
+    {
+      "id": "EQ-ROB-002",
+      "title": "DH parameters bounded",
+      "section": "EQ.meta",
+      "hats": [
+        "ROB"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.rob_dh"
+    },
+    {
+      "id": "EQ-ROB-003",
+      "title": "inverse kinematics within reach",
+      "section": "EQ.meta",
+      "hats": [
+        "ROB"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.equilibrium.meta.rob_ik"
+    },
+    {
+      "id": "EQ-SA-002",
+      "title": "layered architecture: no upward edges",
+      "section": "EQ.meta",
+      "hats": [
+        "SA"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.sa_layers"
+    },
+    {
+      "id": "EQ-SA-003",
+      "title": "no cycles in component graph",
+      "section": "EQ.meta",
+      "hats": [
+        "SA"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.sa_acyclic"
+    },
+    {
+      "id": "EQ-SD-002",
+      "title": "SQL injection escaped",
+      "section": "EQ.security",
+      "hats": [
+        "SD"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.security.sd_sqli"
+    },
+    {
+      "id": "EQ-SD-003",
+      "title": "path traversal blocked",
+      "section": "EQ.security",
+      "hats": [
+        "SD"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.security.sd_traversal"
+    },
+    {
+      "id": "EQ-SD-004",
+      "title": "output is HTML-escaped",
+      "section": "EQ.security",
+      "hats": [
+        "SD"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.security.sd_escape"
+    },
+    {
+      "id": "EQ-SHD-002",
+      "title": "vertex shader declares gl_Position",
+      "section": "EQ.ui",
+      "hats": [
+        "SHD"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.shd_vertex"
+    },
+    {
+      "id": "EQ-SHD-003",
+      "title": "uniform declared before use",
+      "section": "EQ.ui",
+      "hats": [
+        "SHD"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.shd_uniform"
+    },
+    {
+      "id": "EQ-SIM-002",
+      "title": "physics step is symplectic",
+      "section": "EQ.meta",
+      "hats": [
+        "SIM"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.equilibrium.meta.sim_symplectic"
+    },
+    {
+      "id": "EQ-SIM-003",
+      "title": "RNG reproducibility",
+      "section": "EQ.meta",
+      "hats": [
+        "SIM"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.sim_rng"
+    },
+    {
+      "id": "EQ-SO-002",
+      "title": "fuzzer crashes only on ValueError",
+      "section": "EQ.security",
+      "hats": [
+        "SO"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.security.so_fuzz"
+    },
+    {
+      "id": "EQ-SO-003",
+      "title": "port scan respects timeout",
+      "section": "EQ.security",
+      "hats": [
+        "SO"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.security.so_timeout"
+    },
+    {
+      "id": "EQ-SRE-002",
+      "title": "SLO availability is between 0 and 1",
+      "section": "EQ.security",
+      "hats": [
+        "SRE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.security.sre_slo"
+    },
+    {
+      "id": "EQ-SRE-003",
+      "title": "burn rate computed from budget",
+      "section": "EQ.security",
+      "hats": [
+        "SRE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.security.sre_burn"
+    },
+    {
+      "id": "EQ-STE-002",
+      "title": "segment append is atomic",
+      "section": "EQ.meta",
+      "hats": [
+        "STE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.ste_atomic"
+    },
+    {
+      "id": "EQ-STE-003",
+      "title": "compaction preserves logical view",
+      "section": "EQ.meta",
+      "hats": [
+        "STE"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.meta.ste_compact"
+    },
+    {
+      "id": "EQ-SYS-002",
+      "title": "subprocess exit code propagated",
+      "section": "EQ.systems",
+      "hats": [
+        "SYS"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.systems.sys_exitcode"
+    },
+    {
+      "id": "EQ-SYS-003",
+      "title": "signal.raise_signal delivers",
+      "section": "EQ.systems",
+      "hats": [
+        "SYS"
+      ],
+      "criticality": "MAY",
+      "test": "dcs.equilibrium.systems.sys_raise"
+    },
+    {
+      "id": "EQ-TW-002",
+      "title": "heading levels do not skip",
+      "section": "EQ.ui",
+      "hats": [
+        "TW"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.tw_headings"
+    },
+    {
+      "id": "EQ-TW-003",
+      "title": "code blocks declare a language",
+      "section": "EQ.ui",
+      "hats": [
+        "TW"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.tw_code_lang"
+    },
+    {
+      "id": "EQ-TW-004",
+      "title": "links use absolute or https",
+      "section": "EQ.ui",
+      "hats": [
+        "TW"
+      ],
+      "criticality": "SHOULD",
+      "test": "dcs.equilibrium.ui.tw_links"
+    },
+    {
+      "id": "EQ-VID-002",
+      "title": "frame timestamps are monotonic",
+      "section": "EQ.ui",
+      "hats": [
+        "VID"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.vid_monotonic"
+    },
+    {
+      "id": "EQ-VID-003",
+      "title": "codec string parses",
+      "section": "EQ.ui",
+      "hats": [
+        "VID"
+      ],
+      "criticality": "MUST",
+      "test": "dcs.equilibrium.ui.vid_codec"
+    }
+  ]
+}
