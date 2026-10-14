@@ -7,7 +7,7 @@ du -sh . 2>/dev/null
 
 echo
 echo "== top-level entries (largest first) =="
-du -sh .[!.]* * 2>/dev/null | sort -rh | head -30
+du -sh * .[!.]* 2>/dev/null | sort -rh | head -30
 
 echo
 echo "== git objects =="
@@ -35,5 +35,5 @@ tmp=$(mktemp -d)
 git clone -q --depth=1 "$(git remote get-url origin)" "$tmp/clone"
 printf "clone total: %s\n" "$(du -sh "$tmp/clone" | cut -f1)"
 printf "clone .git:  %s\n" "$(du -sh "$tmp/clone/.git" | cut -f1)"
-printf "clone files: %s\n" "$(du -sh --exclude=.git "$tmp/clone" | cut -f1)"
+printf "clone files: %s\n" "$(find "$tmp/clone" -type f -not -path '*/.git/*' | wc -l | tr -d ' ')"
 rm -rf "$tmp"
