@@ -63,6 +63,19 @@
       "component_bindings": [
         "governance-cell"
       ]
+    },
+    {
+      "node_id": "federation-gateway",
+      "unit_id": "federation-gateway-cell",
+      "units": [
+        "federation-gateway-cell"
+      ],
+      "component_bindings": [
+        "GOV-FED-001-federation-gateway-and-domain-exchange-coordinator"
+      ],
+      "role": "authority",
+      "failure_isolation": "soft",
+      "cross_domain_flow": "govern-mediated"
     }
   ],
   "federation_rules": {
@@ -93,6 +106,7 @@
     "operations-cell": "deploy/units/operations-cell",
     "finance-cell": "deploy/units/finance-cell",
     "logistics-cell": "deploy/units/logistics-cell",
-    "governance-cell": "deploy/units/governance-cell"
+    "governance-cell": "deploy/units/governance-cell",
+    "federation-gateway-cell": "deploy/units/federation-gateway-cell"
   }
 }

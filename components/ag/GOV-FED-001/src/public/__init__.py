@@ -1,3 +1,3 @@
-from .mod001 import Fed001, Fed001Error
+from .gateway import FederationGatewayError, flow_decision, validate_against_schema
 
-__all__ = ["Fed001", "Fed001Error"]
+__all__ = ["FederationGatewayError", "flow_decision", "validate_against_schema"]

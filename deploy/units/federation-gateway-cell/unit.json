@@ -1,0 +1,38 @@
+{
+  "unit_id": "federation-gateway-cell",
+  "owner": "govern-team",
+  "description": "Enterprise federation gateway — mediates all cross-domain exchange between Operations, Finance and Logistics under a single enterprise authority.",
+  "constituent_components": [
+    "GOV-FED-001-federation-gateway-and-domain-exchange-coordinator"
+  ],
+  "artifact": {
+    "coordinates": "local://federation-gateway-cell",
+    "digest": null,
+    "status": "declared-not-built"
+  },
+  "contract_versions": {
+    "federation-gateway": "asf.gov.federation_gateway.v1",
+    "common-envelope": "asf.common.envelope.v1",
+    "authorization-decision": "asf.gov.authorization_decision.v1",
+    "information-flow-decision": "asf.gov.information_flow_decision.v1"
+  },
+  "state_owners": [
+    "GOV-FED-001-federation-gateway-and-domain-exchange-coordinator"
+  ],
+  "dependencies": [
+    "governance-cell"
+  ],
+  "placement": "enterprise-multidepartment",
+  "rollout_policy": "manual",
+  "profile_bindings": ["enterprise-multidepartment"],
+  "health_checks": {
+    "readiness": "/healthz",
+    "liveness": "/livez"
+  },
+  "resource_limits": {
+    "cpu_cores": 4,
+    "memory_gb": 8
+  },
+  "secrets": [],
+  "migrations": []
+}
