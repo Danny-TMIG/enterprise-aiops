@@ -1,15 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <title>Aether Telemetry Dashboard</title>
-    <link rel="stylesheet" href="/styles/styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard — ASF</title>
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="stylesheet" href="/styles/global.css" />
 </head>
-<body data-theme="dark">
-    <div class="container">
-        <h1>Live Telemetry Stream</h1>
-        <div id="metrics-view" class="card">Loading telemetry payload...</div>
-    </div>
-    <script type="module" src="/js/ui.js"></script>
+<body>
+  <main>
+    <h1>Dashboard</h1>
+    <asf-button label="Click"></asf-button>
+  </main>
+  <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

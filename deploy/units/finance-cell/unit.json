@@ -1,8 +1,12 @@
 {
   "unit_id": "finance-cell",
   "owner": "finance-team",
-  "description": "Finance departmental cell — compute contract kernel, execution gateway, admission/quota/lease manager.",
-  "constituent_components": ["CMP-CTL-001-compute-contract-kernel","CMP-CTL-002-execution-gateway","CMP-RES-007-admission-quota-and-lease-manager"],
+  "description": "Finance departmental cell \u2014 compute contract kernel, execution gateway, admission/quota/lease manager.",
+  "constituent_components": [
+    "CMP-CTL-001-compute-contract-kernel",
+    "CMP-CTL-002-execution-gateway",
+    "CMP-RES-007-admission-quota-and-lease-manager"
+  ],
   "artifact": {
     "coordinates": "local://finance-cell",
     "digest": null,
@@ -13,11 +17,17 @@
     "execution-order": "asf.gov.execution_order.v1",
     "execution-result": "asf.cmp.execution_result.v1"
   },
-  "state_owners": ["GOV-KRN-001-governance-object-model-and-registry","GOV-IAM-003-authorization-decision-engine"],
-  "dependencies": ["governance-cell"],
-  "placement": "departmental-cpu",
+  "state_owners": [
+    "CMP-RES-007-admission-quota-and-lease-manager"
+  ],
+  "dependencies": [
+    "governance-cell"
+  ],
+  "placement": "enterprise-multidepartment",
   "rollout_policy": "staged",
-  "profile_bindings": ["enterprise-multidepartment"],
+  "profile_bindings": [
+    "enterprise-multidepartment"
+  ],
   "health_checks": {
     "readiness": "/healthz",
     "liveness": "/livez"

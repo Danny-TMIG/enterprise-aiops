@@ -1,0 +1,9 @@
+---
+- name: ASF SELinux enforcing
+  hosts: asf_nodes
+  become: true
+  roles:
+    - rhel-system-roles.selinux
+  vars:
+    selinux_state: enforcing
+    selinux_policy: targeted

@@ -1,0 +1,13 @@
+{
+  "profile_id": "device-continuity",
+  "description": "Supported client versions, local storage/authority bounds, handoff/reconnect and revocation behaviour for device-side continuity.",
+  "authority_scope": "device-local",
+  "federation": false,
+  "hardware_envelope": {
+    "min_cpu_cores": 2,
+    "min_memory_gb": 8,
+    "architecture": ["arm64", "x86_64"],
+    "accelerator_required": false
+  },
+  "unit_map": {}
+}

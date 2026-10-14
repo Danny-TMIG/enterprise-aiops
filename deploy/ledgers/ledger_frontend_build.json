@@ -1,0 +1,50 @@
+{
+  "ledger": "frontend_build",
+  "sealed_at": 1791941371.567311,
+  "dist_root": "dist",
+  "sha256": "163ac94381b7e03140338a470e715f4ff9c49ecb255a6aa5018739578809da63",
+  "manifest": {
+    "schema": "asf.frontend_build_manifest.v1",
+    "framework": "lit",
+    "build_system": "vite",
+    "language": "typescript",
+    "service_worker": "stale-while-revalidate",
+    "components": [
+      "button",
+      "card",
+      "badge",
+      "modal",
+      "sidebar",
+      "navbar",
+      "footer",
+      "grid",
+      "form-input",
+      "select",
+      "table",
+      "pagination",
+      "tooltip",
+      "dropdown",
+      "carousel",
+      "tabs"
+    ],
+    "pages": [
+      "index",
+      "dashboard",
+      "about",
+      "contact",
+      "offline"
+    ],
+    "declared_unavailable": {
+      "webxr": "requires physical XR hardware not present on this host",
+      "webauthn": "requires a platform authenticator or external security key",
+      "webgpu_compute": "requires WebGPU-capable browser and driver validation",
+      "push_notifications": "requires an external push service",
+      "vision_worker": "requires a real vision model artifact",
+      "nlp_worker": "requires a real NLP model artifact",
+      "vector_worker": "requires a real embedding model artifact",
+      "physics_worker": "requires a physics engine dependency not vendored here",
+      "compile_worker": "requires a compiler toolchain not vendored here",
+      "transpile_worker": "overlaps build_system; not generated separately"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asf.deploy.profile.v1",
+  "type": "object",
+  "required": ["profile_id"],
+  "properties": {
+    "profile_id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "unit_map": {
+      "type": "object",
+      "additionalProperties": { "type": "string", "pattern": "^deploy/units/" }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["node_id","role"],
+        "properties": {
+          "node_id":            { "type": "string" },
+          "unit_id":            { "type": "string" },
+          "units":              { "type": "array", "items": { "type": "string" } },
+          "component_bindings": { "type": "array", "items": { "type": "string" } },
+          "role":               { "type": "string", "enum": ["primary","authority","edge"] },
+          "failure_isolation":  { "type": "string", "enum": ["hard","soft"] },
+          "cross_domain_flow":  { "type": "string" }
+        }
+      }
+    }
+  }
+}

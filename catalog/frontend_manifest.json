@@ -1,0 +1,54 @@
+{
+  "schema": "asf.frontend_manifest.v1",
+  "target": "public/",
+  "framework": {
+    "choices": ["lit", "react", "vue", "svelte", "none"],
+    "selected": "lit",
+    "reason": "Web Components; framework-agnostic; smallest real runtime."
+  },
+  "build_system": {
+    "choices": ["vite", "webpack", "rollup", "parcel", "esbuild", "turbopack"],
+    "selected": "vite",
+    "reason": "One build system. Others are alternatives, not complements."
+  },
+  "language": {
+    "choices": ["typescript", "javascript"],
+    "selected": "typescript"
+  },
+  "style_strategy": {
+    "choices": ["css-tokens", "scss", "postcss", "css-in-js", "tailwind"],
+    "selected": "css-tokens",
+    "reason": "Native custom properties; no preprocessor required."
+  },
+  "service_worker": {
+    "choices": ["none", "cache-first", "network-first", "stale-while-revalidate", "workbox"],
+    "selected": "stale-while-revalidate",
+    "offline_fallback": "public/offline.html"
+  },
+  "test_runner": {
+    "choices": ["vitest", "jest", "playwright", "cypress"],
+    "selected": ["vitest", "playwright"]
+  },
+  "pwa": {
+    "enabled": true,
+    "manifest_path": "public/manifest.webmanifest"
+  },
+  "components": [
+    "button", "card", "badge", "modal", "sidebar", "navbar",
+    "footer", "grid", "form-input", "select", "table",
+    "pagination", "tooltip", "dropdown", "carousel", "tabs"
+  ],
+  "pages": ["index", "dashboard", "about", "contact", "offline"],
+  "declared_unavailable": {
+    "webxr": "requires physical XR hardware not present on this host",
+    "webauthn": "requires a platform authenticator or external security key",
+    "webgpu_compute": "requires WebGPU-capable browser and driver validation",
+    "push_notifications": "requires an external push service",
+    "vision_worker": "requires a real vision model artifact",
+    "nlp_worker": "requires a real NLP model artifact",
+    "vector_worker": "requires a real embedding model artifact",
+    "physics_worker": "requires a physics engine dependency not vendored here",
+    "compile_worker": "requires a compiler toolchain not vendored here",
+    "transpile_worker": "overlaps build_system; not generated separately"
+  }
+}

@@ -1,23 +1,32 @@
 {
   "unit_id": "governance-cell",
   "owner": "govern-team",
-  "description": "Enterprise governance authority — object model registry, state/transition engine, decision/outcome correlation.",
-  "constituent_components": ["GOV-KRN-001-governance-object-model-and-registry","GOV-KRN-002-governed-state-and-transition-engine","GOV-KRN-003-decision-and-outcome-correlation"],
+  "description": "Enterprise governance authority \u2014 object model registry, state/transition engine, decision/outcome correlation.",
+  "constituent_components": [
+    "GOV-KRN-001-governance-object-model-and-registry",
+    "GOV-KRN-002-governed-state-and-transition-engine",
+    "GOV-KRN-003-decision-and-outcome-correlation"
+  ],
   "artifact": {
-    "coordinates": "local://governance-cell",
-    "digest": null,
-    "status": "declared-not-built"
+    "coordinates": "deploy/units/governance-cell/build/dist/asf_governance_cell-0.1.0-py3-none-any.whl",
+    "digest": "sha256:0d5b87ca998c05eb827060d39edd8f065fe579c99ecaa1259c6fb95b0d1e5aef",
+    "status": "built"
   },
   "contract_versions": {
     "common-envelope": "asf.common.envelope.v1",
     "execution-order": "asf.gov.execution_order.v1",
     "execution-result": "asf.cmp.execution_result.v1"
   },
-  "state_owners": ["GOV-KRN-001-governance-object-model-and-registry"],
+  "state_owners": [
+    "GOV-KRN-001-governance-object-model-and-registry",
+    "GOV-KRN-002-governed-state-and-transition-engine"
+  ],
   "dependencies": [],
   "placement": "enterprise-multidepartment",
   "rollout_policy": "staged",
-  "profile_bindings": ["enterprise-multidepartment"],
+  "profile_bindings": [
+    "enterprise-multidepartment"
+  ],
   "health_checks": {
     "readiness": "/healthz",
     "liveness": "/livez"

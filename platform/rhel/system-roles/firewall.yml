@@ -1,0 +1,14 @@
+---
+- name: ASF default-deny firewall
+  hosts: asf_nodes
+  become: true
+  roles:
+    - rhel-system-roles.firewall
+  vars:
+    firewall:
+      - zone: public
+        service: [ssh]
+        state: enabled
+      - zone: public
+        state: enabled
+        forward: false

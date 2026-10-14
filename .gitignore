@@ -23,3 +23,13 @@ uvicorn.log
 botnet.db
 state.mmap
 affected.json
+node_modules/
+.vite/
+public/dist/
+**/__pycache__/
+*.pyc
+.ruff_cache/
+.mypy_cache/
+deploy/units/*/build/dist/
+deploy/units/*/build/*.egg-info/
+deploy/units/*/build/build/

@@ -1,9 +1,0 @@
-{
-  "unit_id": "core-governance-cell",
-  "owner": "Govern Kernel Team",
-  "constituent_components": [
-    "GOV-KRN-001",
-    "GOV-KRN-002",
-    "GOV-IAM-003"
-  ]
-}

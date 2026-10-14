@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+"""platform_validate.py — validate platform/ on macOS. Parse + lint only."""
+from __future__ import annotations
+import json, shutil, subprocess, sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+PLATFORM = ROOT / "platform"
+errors: list[str] = []
+
+REQUIRED_TOOLS = ["yamllint", "shellcheck"]
+MISSING = [t for t in REQUIRED_TOOLS if not shutil.which(t)]
+if MISSING:
+    print(f"missing tools: {MISSING}", file=sys.stderr)
+    print("  install: brew install yamllint shellcheck", file=sys.stderr)
+    sys.exit(2)
+
+for p in sorted(PLATFORM.rglob("*.json")):
+    try:
+        d = json.loads(p.read_text())
+    except Exception as e:
+        errors.append(f"{p.relative_to(ROOT)}: invalid JSON: {e}")
+        continue
+    if "declared_only" in d and d["declared_only"] is not True:
+        errors.append(f"{p.relative_to(ROOT)}: declared_only must be true")
+
+yaml_files = sorted(list(PLATFORM.rglob("*.yml")) + list(PLATFORM.rglob("*.yaml")))
+for y in yaml_files:
+    r = subprocess.run(["yamllint", "-f", "parsable", str(y)], capture_output=True, text=True)
+    for line in r.stdout.splitlines():
+        if line.strip():
+            errors.append(f"yamllint {y.relative_to(ROOT)}: {line}")
+
+for sh in sorted(PLATFORM.rglob("*.sh")):
+    r = subprocess.run(["shellcheck", "-S", "warning", "-f", "gcc", str(sh)], capture_output=True, text=True)
+    for line in r.stdout.splitlines():
+        if line.strip():
+            errors.append(f"shellcheck {sh.relative_to(ROOT)}: {line}")
+
+for ks in sorted(PLATFORM.rglob("*.ks")):
+    src = ks.read_text()
+    if "$(" in src:
+        errors.append(f"{ks.relative_to(ROOT)}: unquoted command substitution in kickstart")
+
+limits = PLATFORM / "LIMITS.md"
+if not limits.exists():
+    errors.append("platform/LIMITS.md missing")
+else:
+    text = limits.read_text()
+    for sub in sorted(p.name for p in PLATFORM.iterdir() if p.is_dir()):
+        if sub not in text:
+            errors.append(f"LIMITS.md does not mention platform/{sub}")
+
+for sub in sorted(p for p in PLATFORM.iterdir() if p.is_dir()):
+    files = [f for f in sub.rglob("*") if f.is_file()]
+    if not files:
+        errors.append(f"platform/{sub.name} is empty")
+
+if errors:
+    print(f"platform_validate: {len(errors)} error(s)")
+    for e in errors:
+        print(f"  - {e}")
+    sys.exit(1)
+print(f"platform_validate: OK — {len(yaml_files)} YAML, "
+      f"{len(list(PLATFORM.rglob('*.json')))} JSON, "
+      f"{len(list(PLATFORM.rglob('*.sh')))} shell, "
+      f"{len(list(PLATFORM.rglob('*.ks')))} kickstart all valid")
+sys.exit(0)

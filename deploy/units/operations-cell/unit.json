@@ -1,8 +1,12 @@
 {
   "unit_id": "operations-cell",
   "owner": "operations-team",
-  "description": "Operations departmental cell — compute contract kernel, execution gateway, scheduler.",
-  "constituent_components": ["CMP-CTL-001-compute-contract-kernel","CMP-CTL-002-execution-gateway","CMP-EXE-004-scheduler"],
+  "description": "Operations departmental cell \u2014 compute contract kernel, execution gateway, scheduler.",
+  "constituent_components": [
+    "CMP-CTL-001-compute-contract-kernel",
+    "CMP-CTL-002-execution-gateway",
+    "CMP-EXE-004-scheduler"
+  ],
   "artifact": {
     "coordinates": "local://operations-cell",
     "digest": null,
@@ -13,11 +17,17 @@
     "execution-order": "asf.gov.execution_order.v1",
     "execution-result": "asf.cmp.execution_result.v1"
   },
-  "state_owners": ["GOV-KRN-001-governance-object-model-and-registry","GOV-KRN-002-governed-state-and-transition-engine"],
-  "dependencies": ["governance-cell"],
-  "placement": "departmental-cpu",
+  "state_owners": [
+    "CMP-CTL-001-compute-contract-kernel"
+  ],
+  "dependencies": [
+    "governance-cell"
+  ],
+  "placement": "enterprise-multidepartment",
   "rollout_policy": "staged",
-  "profile_bindings": ["enterprise-multidepartment"],
+  "profile_bindings": [
+    "enterprise-multidepartment"
+  ],
   "health_checks": {
     "readiness": "/healthz",
     "liveness": "/livez"

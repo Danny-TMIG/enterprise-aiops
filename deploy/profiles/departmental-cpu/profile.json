@@ -1,0 +1,13 @@
+{
+  "profile_id": "departmental-cpu",
+  "description": "CPU-only departmental services and approved resource envelope. Sized for a single department on commodity CPU hardware with no accelerator requirement.",
+  "authority_scope": "single-department",
+  "federation": false,
+  "hardware_envelope": {
+    "min_cpu_cores": 4,
+    "min_memory_gb": 16,
+    "architecture": ["arm64", "x86_64"],
+    "accelerator_required": false
+  },
+  "unit_map": {}
+}

@@ -1,0 +1,22 @@
+---
+- name: Deploy ASF units on RHEL
+  hosts: asf_nodes
+  become: true
+  roles:
+    - asf-common
+  tasks:
+    - name: Ensure /opt/asf/units exists
+      ansible.builtin.file:
+        path: /opt/asf/units/{{ asf_unit_id }}
+        state: directory
+        mode: "0755"
+    - name: Place unit.json
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../../../deploy/units/{{ asf_unit_id }}/unit.json"
+        dest: /opt/asf/units/{{ asf_unit_id }}/unit.json
+        mode: "0644"
+    - name: Place runbook.md
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../../../deploy/units/{{ asf_unit_id }}/runbook.md"
+        dest: /opt/asf/units/{{ asf_unit_id }}/runbook.md
+        mode: "0644"

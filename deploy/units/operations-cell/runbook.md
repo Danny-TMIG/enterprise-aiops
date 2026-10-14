@@ -6,21 +6,33 @@ Owner: operations-team
 Operations departmental cell — compute contract kernel, execution gateway, scheduler.
 
 ## Dependencies
-["governance-cell"]
+- governance-cell
 
 ## Diagnostics
 - `curl http://127.0.0.1:<port>/healthz`
-- Check `state_dir` for SQLite files.
+- Inspect the unit's state directory for SQLite files.
 
 ## Containment
-Isolate the unit by stopping its process; do not touch peer units' state dirs.
+Stop only this unit. Never touch a peer unit's state directory.
 
 ## Backup / restore
-- Backup: copy `state_dir` to cold storage.
-- Restore: stop unit, restore `state_dir`, restart.
+- Backup: copy state directory to cold storage.
+- Restore: stop unit, restore state directory, restart.
 
 ## Rollback
-Restore previous artifact digest recorded in the release manifest.
+Restore the artifact digest recorded in the release manifest.
 
 ## Incident evidence
 Emit to `dcs/evidence/` and `deploy/ledgers/federation_evidence.jsonl`.
+
+---
+
+## Build status
+
+This unit is intentionally `artifact.status = "declared-not-built"`.
+
+Reason: its `constituent_components` reference public interfaces that do not yet
+have real bodies behind them in `components/<layer>/<id>/src/public/`. Building a
+wheel here would require fabricating implementations, which the ASF anti-stub
+rule forbids. The unit is declared, cross-referenced, and validated; it is not
+built.

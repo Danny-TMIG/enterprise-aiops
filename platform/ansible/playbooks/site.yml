@@ -1,0 +1,5 @@
+---
+- import_playbook: ../rhel/system-roles/crypto_policies.yml
+- import_playbook: ../rhel/system-roles/selinux.yml
+- import_playbook: ../rhel/system-roles/firewall.yml
+- import_playbook: deploy-units.yml

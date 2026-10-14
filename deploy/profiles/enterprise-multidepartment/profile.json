@@ -16,9 +16,7 @@
       ],
       "unit_id": "operations-cell",
       "component_bindings": [
-        "compute-contract-kernel",
-        "execution-gateway",
-        "scheduler"
+        "operations-cell"
       ]
     },
     {
@@ -33,9 +31,7 @@
       ],
       "unit_id": "finance-cell",
       "component_bindings": [
-        "compute-contract-kernel",
-        "execution-gateway",
-        "admission-quota-and-lease-manager"
+        "finance-cell"
       ]
     },
     {
@@ -50,9 +46,7 @@
       ],
       "unit_id": "logistics-cell",
       "component_bindings": [
-        "compute-contract-kernel",
-        "execution-gateway",
-        "data-staging-and-result-collection"
+        "logistics-cell"
       ]
     },
     {
@@ -67,9 +61,7 @@
       ],
       "unit_id": "governance-cell",
       "component_bindings": [
-        "governance-object-model-and-registry",
-        "governed-state-and-transition-engine",
-        "decision-and-outcome-correlation"
+        "governance-cell"
       ]
     }
   ],

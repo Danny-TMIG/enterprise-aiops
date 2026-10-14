@@ -1,0 +1,13 @@
+---
+- name: ASF governance drift remediation
+  hosts: all
+  sources:
+    - ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 5000
+  rules:
+    - name: Governance registry hash mismatch
+      condition: event.payload.component == "GOV-KRN-001" and event.payload.verified == false
+      action:
+        run_playbook:
+          name: playbooks/remediate_governance_registry.yml

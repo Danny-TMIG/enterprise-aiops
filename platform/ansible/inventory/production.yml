@@ -1,0 +1,13 @@
+---
+all:
+  children:
+    asf_nodes:
+      hosts:
+        operations-cell.asf.local:
+          asf_unit_id: operations-cell
+        finance-cell.asf.local:
+          asf_unit_id: finance-cell
+        logistics-cell.asf.local:
+          asf_unit_id: logistics-cell
+        governance-cell.asf.local:
+          asf_unit_id: governance-cell

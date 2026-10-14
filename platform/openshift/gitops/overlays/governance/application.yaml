@@ -1,0 +1,21 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: asf-governance-cell
+  namespace: openshift-gitops
+spec:
+  project: asf-enterprise
+  source:
+    repoURL: https://github.com/Danny-TMIG/enterprise_aiops.git
+    targetRevision: main
+    path: deploy/units/governance-cell
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: asf-governance
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

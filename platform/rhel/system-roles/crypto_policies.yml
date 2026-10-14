@@ -1,0 +1,9 @@
+---
+- name: ASF FIPS + PQ-ready crypto policy
+  hosts: asf_nodes
+  become: true
+  roles:
+    - rhel-system-roles.crypto_policies
+  vars:
+    crypto_policies_policy: FIPS
+    crypto_policies_reboot_ok: true

@@ -1,0 +1,22 @@
+{
+  "schema": "asf.federation_activation_gate.v1",
+  "current_status": "declared-not-active",
+  "flip_would_require": {
+    "named_owner": {
+      "component_id": "GOV-FED-001-federation-gateway-and-domain-exchange-coordinator",
+      "owner": null,
+      "present": false
+    },
+    "contract_version": { "schema_id": null, "present": false },
+    "runbook": {
+      "path": "deploy/units/federation-gateway-cell/runbook.md",
+      "present": false
+    },
+    "reviewed_by": {
+      "engineering_review": null,
+      "security_review": null,
+      "ops_review": null
+    }
+  },
+  "reason_still_blocked": "Per ASF v1.2, GOV-FED-001 is Deferred. Production federation requires a named owner, a component contract version, and an approved runbook, none of which exist."
+}
