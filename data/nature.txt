@@ -87,39 +87,39 @@ termite_mound | Distributed construction with no central controller; ventilation
 # BACKLOG (not yet derived): biofilm | Surface-attached microbial community encased in extracellular matrix; exhibits emergent antibiotic tolerance and quorum sensing.
 
 # --- added to close catalog/derived gap ---
-albatross_forage | source phenomenon (see data/algorithms.json)
-all_or_none | source phenomenon (see data/algorithms.json)
-allostasis | source phenomenon (see data/algorithms.json)
-ant_quorum | source phenomenon (see data/algorithms.json)
-area_restricted | source phenomenon (see data/algorithms.json)
-bee_waggle | source phenomenon (see data/algorithms.json)
-belousov_zhabotinsky | source phenomenon (see data/algorithms.json)
-boids | source phenomenon (see data/algorithms.json)
-brownian_search | source phenomenon (see data/algorithms.json)
-circadian_clock | source phenomenon (see data/algorithms.json)
-cricket_chorus | source phenomenon (see data/algorithms.json)
-dla | source phenomenon (see data/algorithms.json)
-eden_growth | source phenomenon (see data/algorithms.json)
-elephant_walk | source phenomenon (see data/algorithms.json)
-firefly_sync | source phenomenon (see data/algorithms.json)
-fish_school | source phenomenon (see data/algorithms.json)
-fitzhugh_nagumo | source phenomenon (see data/algorithms.json)
-gene_switch | source phenomenon (see data/algorithms.json)
-habituation | source phenomenon (see data/algorithms.json)
-hodgkin_huxley | source phenomenon (see data/algorithms.json)
-homeostasis | source phenomenon (see data/algorithms.json)
-immune_affinity | source phenomenon (see data/algorithms.json)
-levy_walk_2d | source phenomenon (see data/algorithms.json)
-lichen_edge | source phenomenon (see data/algorithms.json)
-locust_swarm | source phenomenon (see data/algorithms.json)
-murmuration_critical | source phenomenon (see data/algorithms.json)
-neuron_threshold | source phenomenon (see data/algorithms.json)
-persistent_walk | source phenomenon (see data/algorithms.json)
-phase_transition | source phenomenon (see data/algorithms.json)
-self_avoiding_walk | source phenomenon (see data/algorithms.json)
-sensitization | source phenomenon (see data/algorithms.json)
-slime_mold | source phenomenon (see data/algorithms.json)
-starling_murmuration | source phenomenon (see data/algorithms.json)
-stdp | source phenomenon (see data/algorithms.json)
-tree_branching | source phenomenon (see data/algorithms.json)
-turing_pattern | source phenomenon (see data/algorithms.json)
+albatross_forage | Transoceanic foraging of wandering albatross; empirically power-law flight-time distribution with exponent near -1.5, matching a Lévy-flight search.
+all_or_none | Threshold all-or-none firing of an axon; responses below threshold decay passively, above threshold produce a fixed action potential (Bowditch 1871).
+allostasis | Stability through change: physiological setpoints shift predictively ahead of anticipated demand rather than being held fixed (Sterling & Eyer 1988).
+ant_quorum | Ants commit to a new nest site when the number of recruiters at a candidate exceeds a quorum; a distributed decision rule with positive feedback (Pratt 2002).
+area_restricted | Area-restricted search: after a prey encounter, a forager increases turning rate and slows, concentrating effort locally before resuming long-range movement (Benhamou 2007).
+bee_waggle | Honeybee waggle dance encodes direction and distance to a resource; recruits sample dancers and the colony allocates foragers by profitability (von Frisch 1967).
+belousov_zhabotinsky | Oscillating chemical reaction (bromate-malonic acid catalyst) producing travelling colour waves; the canonical excitable medium (Field, Kőrös & Noyes 1972).
+boids | Reynolds' three rules — separation, alignment, cohesion — produce lifelike flocking from purely local, agent-level interactions (Reynolds 1987).
+brownian_search | Random search with independent Gaussian increments; optimal when targets are dense and randomly placed (Einstein 1905; Viswanathan 1999).
+circadian_clock | Cell-autonomous ~24 h oscillator built on interlocked transcriptional-translational feedback loops (PER/CRY, CLOCK/BMAL1) in mammals.
+cricket_chorus | Male crickets adjust calling to neighbours' rhythm; small phase leads bias the population toward synchronous chorusing (Greenfield 1994).
+dla | Diffusion-limited aggregation: random-walking particles stick irreversibly on contact, yielding fractal clusters with dimension ≈ 1.71 in 2D (Witten & Sander 1981).
+eden_growth | Stochastic surface growth where a random perimeter site is added each step; produces a rough interface with KPZ-like scaling (Eden 1961).
+elephant_walk | Elephant movement shows memory-driven, directionally persistent paths rather than pure Brownian or Lévy walks (Moorcroft 2006).
+firefly_sync | Pulse-coupled oscillators: each firefly flashes, then resets its internal phase; large populations spontaneously synchronize (Mirollo & Strogatz 1990).
+fish_school | Schools form via edge-following and attraction to neighbours, giving polarized, cohesive groups with emergent startle waves (Hemelrijk 2015).
+fitzhugh_nagumo | Two-variable reduction of the Hodgkin-Huxley model; a fast activator and slow inhibitor produce excitable spikes and relaxation oscillations (FitzHugh 1961).
+gene_switch | Bistable toggle switch built from two mutually repressing genes; the classic synthetic-biology memory element (Gardner, Cantor & Collins 2000).
+habituation | Repeated neutral stimuli produce a decrementing response; the simplest form of non-associative learning (Thompson & Spencer 1966).
+hodgkin_huxley | Quantitative model of the action potential from voltage-gated Na+ and K+ conductances; the founding biophysical model of excitability (Hodgkin & Huxley 1952).
+homeostasis | Negative-feedback regulation holds internal variables near setpoints (Cannon 1932); error signal drives corrective action.
+immune_affinity | Clonal selection: lymphocytes whose receptors match an antigen proliferate and differentiate; affinity maturation sharpens the response (Burnet 1959).
+levy_walk_2d | Two-dimensional Lévy walk: step lengths power-law distributed, direction isotropic; optimal random search for sparse targets (Viswanathan 1999).
+lichen_edge | Slow boundary expansion of crustose lichens; radial growth rate is roughly constant, making lichens a dating tool (Watson 2014).
+locust_swarm | Dense marching bands form because locusts cannibalize the individual in front; local repulsion plus forward attraction produce coherent motion (Buhl 2006).
+murmuration_critical | Starling murmurations show scale-free correlations and maximal susceptibility — evidence the flock operates near a critical point (Cavagna 2010).
+neuron_threshold | Leaky integrate-and-fire: membrane potential integrates input and emits a spike when it crosses threshold, then resets (Lapicque 1907).
+persistent_walk | Correlated random walk: heading is autocorrelated across steps, interpolating between ballistic and diffusive motion (Kareiva 1983).
+phase_transition | Order parameter changes qualitatively as a control parameter crosses a critical value; Ising spins are the canonical example (Onsager 1944).
+self_avoiding_walk | Random walk on a lattice that never revisits a site; models polymer conformation and gives the Flory exponent ν ≈ 3/4 in 2D (Flory 1949).
+sensitization | Strong or noxious stimuli amplify subsequent responses; the mirror of habituation in non-associative learning (Groves & Thompson 1970).
+slime_mold | Physarum forages by reinforcing tubes that carry more flux and pruning the rest, solving shortest-path problems without a nervous system (Tero 2007).
+starling_murmuration | Topological (not metric) interaction: each bird tracks a fixed number of nearest neighbours regardless of distance, giving scale-free flocks (Ballerini 2008).
+stdp | Spike-timing-dependent plasticity: synapses strengthen when pre precedes post within tens of ms and weaken in the reverse order (Bi & Poo 1998).
+tree_branching | L-system rewriting rules generate self-similar branching structures that match real tree architecture and light capture (Prusinkiewicz 1990).
+turing_pattern | Reaction-diffusion with differential diffusivity destabilizes a uniform state into stationary spots or stripes; morphogen basis of animal markings (Turing 1952).
