@@ -1,4 +1,13 @@
 import sys
+
+from pathlib import Path as _Path
+def _find_repo_root(start=None):
+    p = (start or _Path(__file__)).resolve()
+    if p.is_file(): p = p.parent
+    for parent in [p, *p.parents]:
+        if (parent / 'pyproject.toml').exists(): return parent
+    return p.parent.parent
+_REPO_ROOT = _find_repo_root()
 if sys.version_info < (3, 11):
     sys.exit(
         f"ERROR: this repo requires Python >=3.11 (typing.Self). "
@@ -17,9 +26,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-
-
+ROOT = _REPO_ROOT
 def run_command(cmd, description):
     print(f"⚙️ [RUN] {description}...")
     res = subprocess.run(cmd, shell=True, capture_output=True, text=True)
@@ -61,7 +68,7 @@ def main():
 
     # 2. Run Diagnostic Integration Test
     if not run_command(
-        "python3 integration/test_full_stack_diagnostic.py", "Full-Stack Cross-Layer Diagnostic"
+        "python3 integration/e2e/test_full_stack_diagnostic.py", "Full-Stack Cross-Layer Diagnostic"
     ):
         sys.exit(1)
 

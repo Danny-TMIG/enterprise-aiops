@@ -7,7 +7,16 @@ import json
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+from pathlib import Path as _Path
+def _repo_root():
+    p = _Path(__file__).resolve()
+    for parent in [p.parent, *p.parents]:
+        if (parent / 'pyproject.toml').exists():
+            return parent
+    return p.parent.parent
+_REPO_ROOT = _repo_root()
+
+ROOT = _REPO_ROOT
 GATE = ROOT / "deploy/profiles/enterprise-multidepartment/federation-activation-gate.json"
 FED  = ROOT / "deploy/profiles/enterprise-multidepartment/federation.json"
 

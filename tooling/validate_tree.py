@@ -8,12 +8,19 @@ module under src/public/.
 
 from __future__ import annotations
 
+from pathlib import Path as _Path
+def _find_repo_root(start=None):
+    p = (start or _Path(__file__)).resolve()
+    if p.is_file(): p = p.parent
+    for parent in [p, *p.parents]:
+        if (parent / 'pyproject.toml').exists(): return parent
+    return p.parent.parent
+_REPO_ROOT = _find_repo_root()
+
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-
-
+ROOT = _REPO_ROOT
 def _flatten_catalog(doc: dict) -> list[str]:
     if "layers" in doc and isinstance(doc["layers"], dict):
         flat: list[str] = []
@@ -26,6 +33,10 @@ def _flatten_catalog(doc: dict) -> list[str]:
 def main() -> int:
     print("🔍 [LINTER] Starting Aether monorepo structural validation...")
     catalog_path = ROOT / "catalog" / "components.json"
+    if not catalog_path.exists():
+        alt = ROOT / "catalog" / "inventories" / "components.json"
+        if alt.exists():
+            catalog_path = alt
     if not catalog_path.exists():
         print("❌ CRITICAL: catalog/components.json is missing.")
         return 1

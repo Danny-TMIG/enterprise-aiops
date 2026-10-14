@@ -4,7 +4,16 @@ from __future__ import annotations
 import json, shutil, subprocess, sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+from pathlib import Path as _Path
+def _find_repo_root(start=None):
+    p = (start or _Path(__file__)).resolve()
+    if p.is_file(): p = p.parent
+    for parent in [p, *p.parents]:
+        if (parent / 'pyproject.toml').exists(): return parent
+    return p.parent.parent
+_REPO_ROOT = _find_repo_root()
+
+ROOT = _REPO_ROOT
 PLATFORM = ROOT / "platform"
 errors: list[str] = []
 
