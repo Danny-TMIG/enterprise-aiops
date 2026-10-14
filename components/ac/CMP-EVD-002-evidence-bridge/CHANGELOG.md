@@ -1,2 +1,4 @@
-# Changelog - CMP-EVD-002-evidence-bridge
-- Initial release candidate under ASF v1.2[cite: 2].
+# Changelog - CMP-EVD-002
+
+## [1.0.0] - 2026-10-06
+- Initial release candidate.

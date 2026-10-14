@@ -1,2 +1,2 @@
-# Component: COG-ASSUR-002-replay-and-evaluation-runtime
-Governed by ASF v1.2 specification[cite: 2].
+# COG-ASSUR-002 — Replay And Evaluation Runtime
+**Layer:** AX | **Status:** Core v1

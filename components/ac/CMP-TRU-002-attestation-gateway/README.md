@@ -1,2 +1,2 @@
-# Component: CMP-TRU-002-attestation-gateway
-Governed by ASF v1.2 specification[cite: 2].
+# CMP-TRU-002 — Attestation Gateway
+**Layer:** AC | **Status:** Core v1

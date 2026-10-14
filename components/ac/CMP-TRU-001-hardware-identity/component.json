@@ -1,5 +1,7 @@
 {
-  "component_id": "CMP-TRU-001-hardware-identity",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "CMP-TRU-001",
+  "slug": "hardware-identity",
+  "layer": "ac",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

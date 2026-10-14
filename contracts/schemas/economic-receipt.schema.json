@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asf.tmig/schemas/economic-receipt.schema.json",
+  "title": "E \u2014 Receipt artifact (economic-receipt)",
+  "type": "object",
+  "required": [
+    "artifact",
+    "produced_by",
+    "reads",
+    "summary"
+  ],
+  "properties": {
+    "artifact": {
+      "const": "economic-receipt"
+    },
+    "produced_by": {
+      "type": "string"
+    },
+    "reads": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 4
+    },
+    "baseline_usd": {
+      "type": "number"
+    },
+    "actual_usd": {
+      "type": "number"
+    },
+    "delta_usd": {
+      "type": "number"
+    },
+    "line_items": {
+      "type": "array"
+    }
+  },
+  "additionalProperties": true
+}

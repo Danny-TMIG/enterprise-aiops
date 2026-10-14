@@ -1,5 +1,7 @@
 {
-  "component_id": "CMP-RES-003-resource-model-and-inventory",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "CMP-RES-003",
+  "slug": "resource-model-and-inventory",
+  "layer": "ac",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

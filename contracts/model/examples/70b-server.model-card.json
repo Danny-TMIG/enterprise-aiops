@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "model_id": "asf-medium",
+  "model_version": "1.0.0",
+  "parameter_count": { "total": 70000000000, "active": null, "units": "parameters" },
+  "modality": ["text", "structured"],
+  "context_window": { "tokens": 131072, "extension_mechanism": null },
+  "quantization": { "supported": ["fp8", "int8"], "default": "fp8" },
+  "license": { "spdx": "Apache-2.0", "commercial_use": true, "url": null },
+  "compute_budget": { "training_flops": null, "gpu_hours": null, "hardware": "8x-a100", "inference_cost_model": { "cost_per_1k_input_tokens_usd": 0.01, "cost_per_1k_output_tokens_usd": 0.03 } },
+  "substrate_descriptor": {
+    "identity": "asf-medium",
+    "version": "1.0.0",
+    "provenance": "local",
+    "integrity": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+    "lifecycle_state": "qualified"
+  },
+  "capabilities": [
+    { "class": "reasoning", "supported": true, "detail": "neural, symbolic, retrieval" },
+    { "class": "planning", "supported": true, "detail": "decompose, revise" },
+    { "class": "knowledge_access", "supported": true, "detail": "via GovernedKnowledgeResult" },
+    { "class": "tool_use", "supported": true, "detail": "via CapabilityRequest" },
+    { "class": "abstention", "supported": true, "detail": null },
+    { "class": "uncertainty_reporting", "supported": true, "detail": "confidence only" }
+  ],
+  "evidence_obligations": [
+    { "claim": "invocation_receipt", "source": "adapter", "integrity_required": true },
+    { "claim": "reasoning_graph", "source": "reasoning_fabric", "integrity_required": true }
+  ],
+  "classification_ceiling": "confidential",
+  "deployment_profiles": [
+    { "profile": "S", "serving_pattern": "aggregated_router", "quantization": "fp8" },
+    { "profile": "L", "serving_pattern": "aggregated", "quantization": "int8" }
+  ]
+}

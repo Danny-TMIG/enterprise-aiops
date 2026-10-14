@@ -1,2 +1,4 @@
-# Changelog - COG-CMP-003-cognitive-cell-runtime
-- Initial release candidate under ASF v1.2[cite: 2].
+# Changelog - COG-CMP-003
+
+## [1.0.0] - 2026-10-06
+- Initial release candidate.

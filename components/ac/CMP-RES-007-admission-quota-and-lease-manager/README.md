@@ -1,2 +1,2 @@
-# Component: CMP-RES-007-admission-quota-and-lease-manager
-Governed by ASF v1.2 specification[cite: 2].
+# CMP-RES-007 — Admission Quota And Lease Manager
+**Layer:** AC | **Status:** Core v1

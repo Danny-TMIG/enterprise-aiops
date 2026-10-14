@@ -1,2 +1,2 @@
-# Component: GOV-CAP-001-capability-registry
-Governed by ASF v1.2 specification[cite: 2].
+# GOV-CAP-001 — Capability Registry
+**Layer:** AG | **Status:** Core v1

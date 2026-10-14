@@ -1,0 +1,12 @@
+{
+  "unit": "one-ticket",
+  "quantity": 1,
+  "quality_bar": "first-time-fix >= 0.85",
+  "deadline": "2026-10-20T00:00:00Z",
+  "risk_class": "R2",
+  "budget_ceiling_usd": 4.5,
+  "oversight_requirement": "L2",
+  "requester_identity": "alice@example",
+  "domain": "bpo",
+  "description": "Customer reports login timeout after password reset."
+}

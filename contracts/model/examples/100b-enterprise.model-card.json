@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "model_id": "asf-large",
+  "model_version": "1.0.0",
+  "parameter_count": { "total": 100000000000, "active": null, "units": "parameters" },
+  "modality": ["text", "image", "structured"],
+  "context_window": { "tokens": 262144, "extension_mechanism": null },
+  "quantization": { "supported": ["fp16", "fp8"], "default": "fp8" },
+  "license": { "spdx": "Apache-2.0", "commercial_use": true, "url": null },
+  "compute_budget": { "training_flops": null, "gpu_hours": null, "hardware": "h100-cluster", "inference_cost_model": { "cost_per_1k_input_tokens_usd": 0.03, "cost_per_1k_output_tokens_usd": 0.09 } },
+  "substrate_descriptor": {
+    "identity": "asf-large",
+    "version": "1.0.0",
+    "provenance": "local",
+    "integrity": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+    "lifecycle_state": "qualified"
+  },
+  "capabilities": [
+    { "class": "reasoning", "supported": true, "detail": "neural, symbolic, numerical, search, proof, hybrid" },
+    { "class": "planning", "supported": true, "detail": "decompose, revise, recursive" },
+    { "class": "knowledge_access", "supported": true, "detail": "via GovernedKnowledgeResult" },
+    { "class": "tool_use", "supported": true, "detail": "via CapabilityRequest" },
+    { "class": "memory_access", "supported": true, "detail": "read/write via COG-CORE-003" },
+    { "class": "code_generation", "supported": true, "detail": "python, typescript" },
+    { "class": "abstention", "supported": true, "detail": null },
+    { "class": "uncertainty_reporting", "supported": true, "detail": "confidence + calibration" }
+  ],
+  "evidence_obligations": [
+    { "claim": "invocation_receipt", "source": "adapter", "integrity_required": true },
+    { "claim": "reasoning_graph", "source": "reasoning_fabric", "integrity_required": true },
+    { "claim": "plan_version", "source": "planning", "integrity_required": true }
+  ],
+  "classification_ceiling": "secret",
+  "deployment_profiles": [
+    { "profile": "E", "serving_pattern": "disaggregated", "quantization": "fp8" },
+    { "profile": "S", "serving_pattern": "disaggregated", "quantization": "fp8" }
+  ]
+}

@@ -1,2 +1,2 @@
-# Component: GOV-INF-004-schema-and-data-contract-registry
-Governed by ASF v1.2 specification[cite: 2].
+# GOV-INF-004 — Schema And Data Contract Registry
+**Layer:** AG | **Status:** Core v1

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asf.tmig/schemas/zenith-seal.schema.json",
+  "title": "Z \u2014 Zenith artifact (zenith-seal)",
+  "type": "object",
+  "required": [
+    "artifact",
+    "produced_by",
+    "reads",
+    "summary"
+  ],
+  "properties": {
+    "artifact": {
+      "const": "zenith-seal"
+    },
+    "produced_by": {
+      "type": "string"
+    },
+    "reads": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 4
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "artifact_hashes": {
+      "type": "array"
+    },
+    "merkle_root": {
+      "type": "string"
+    },
+    "signature": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

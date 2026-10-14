@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asf.tmig/schemas/common-envelope.schema.json",
+  "title": "F \u2014 Envelope artifact (common-envelope)",
+  "type": "object",
+  "required": [
+    "artifact",
+    "produced_by",
+    "reads",
+    "summary"
+  ],
+  "properties": {
+    "artifact": {
+      "const": "common-envelope"
+    },
+    "produced_by": {
+      "type": "string"
+    },
+    "reads": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 4
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "object_id": {
+      "type": "string"
+    },
+    "correlation_id": {
+      "type": "string"
+    },
+    "classification": {
+      "enum": [
+        "unclassified",
+        "internal",
+        "confidential",
+        "secret"
+      ]
+    },
+    "integrity": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

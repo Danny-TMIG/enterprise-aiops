@@ -1,5 +1,7 @@
 {
-  "component_id": "CMP-TRU-004-secure-execution-environment",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "CMP-TRU-004",
+  "slug": "secure-execution-environment",
+  "layer": "ac",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

@@ -1,2 +1,2 @@
-# Component: GOV-CAP-003-governed-action-and-execution-order-coordinator
-Governed by ASF v1.2 specification[cite: 2].
+# GOV-CAP-003 — Governed Action And Execution Order Coordinator
+**Layer:** AG | **Status:** Core v1

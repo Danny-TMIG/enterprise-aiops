@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "model_id": "example-small",
+  "model_version": "1.0.0",
+  "parameter_count": { "total": 3000000000, "active": null, "units": "parameters" },
+  "modality": ["text"],
+  "context_window": { "tokens": 8192, "extension_mechanism": null },
+  "quantization": { "supported": ["int4", "int8"], "default": "int4" },
+  "license": { "spdx": "Apache-2.0", "commercial_use": true, "url": null },
+  "compute_budget": { "training_flops": null, "gpu_hours": null, "hardware": null, "inference_cost_model": null },
+  "substrate_descriptor": {
+    "identity": "example-small",
+    "version": "1.0.0",
+    "provenance": "example",
+    "integrity": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "lifecycle_state": "registered"
+  },
+  "capabilities": [
+    { "class": "reasoning", "supported": true, "detail": "neural" },
+    { "class": "abstention", "supported": true, "detail": null }
+  ],
+  "evidence_obligations": [
+    { "claim": "invocation_receipt", "source": "adapter", "integrity_required": true }
+  ],
+  "classification_ceiling": "internal",
+  "deployment_profiles": [
+    { "profile": "M", "serving_pattern": "aggregated", "quantization": "int4" }
+  ]
+}

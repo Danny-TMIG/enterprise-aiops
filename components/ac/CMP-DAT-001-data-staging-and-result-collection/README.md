@@ -1,2 +1,2 @@
-# Component: CMP-DAT-001-data-staging-and-result-collection
-Governed by ASF v1.2 specification[cite: 2].
+# CMP-DAT-001 — Data Staging And Result Collection
+**Layer:** AC | **Status:** Core v1

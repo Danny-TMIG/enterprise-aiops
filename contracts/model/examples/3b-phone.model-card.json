@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "model_id": "asf-tiny",
+  "model_version": "1.0.0",
+  "parameter_count": { "total": 3000000000, "active": null, "units": "parameters" },
+  "modality": ["text"],
+  "context_window": { "tokens": 4096, "extension_mechanism": null },
+  "quantization": { "supported": ["int4"], "default": "int4" },
+  "license": { "spdx": "Apache-2.0", "commercial_use": true, "url": null },
+  "compute_budget": { "training_flops": null, "gpu_hours": null, "hardware": "mobile-npu", "inference_cost_model": null },
+  "substrate_descriptor": {
+    "identity": "asf-tiny",
+    "version": "1.0.0",
+    "provenance": "local",
+    "integrity": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "lifecycle_state": "qualified"
+  },
+  "capabilities": [
+    { "class": "reasoning", "supported": true, "detail": "neural, bounded" },
+    { "class": "knowledge_access", "supported": false, "detail": "local only" },
+    { "class": "abstention", "supported": true, "detail": null }
+  ],
+  "evidence_obligations": [
+    { "claim": "invocation_receipt", "source": "adapter", "integrity_required": true }
+  ],
+  "classification_ceiling": "internal",
+  "deployment_profiles": [
+    { "profile": "M", "serving_pattern": "aggregated", "quantization": "int4" }
+  ]
+}

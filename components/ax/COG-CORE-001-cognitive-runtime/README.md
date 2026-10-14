@@ -1,2 +1,2 @@
-# Component: COG-CORE-001-cognitive-runtime
-Governed by ASF v1.2 specification[cite: 2].
+# COG-CORE-001 — Cognitive Runtime
+**Layer:** AX | **Status:** Core v1

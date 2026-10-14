@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asf.tmig/schemas/execution-contract.schema.json",
+  "title": "A \u2014 Contract artifact (execution-contract)",
+  "type": "object",
+  "required": [
+    "artifact",
+    "produced_by",
+    "reads",
+    "summary"
+  ],
+  "properties": {
+    "artifact": {
+      "const": "execution-contract"
+    },
+    "produced_by": {
+      "type": "string"
+    },
+    "reads": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 4
+    },
+    "unit": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "quality_floor": {
+      "type": "string"
+    },
+    "deadline": {
+      "type": "string"
+    },
+    "risk_class": {
+      "enum": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ]
+    },
+    "budget_ceiling_usd": {
+      "type": "number"
+    },
+    "oversight_requirement": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

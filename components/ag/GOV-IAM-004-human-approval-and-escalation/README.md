@@ -1,2 +1,2 @@
-# Component: GOV-IAM-004-human-approval-and-escalation
-Governed by ASF v1.2 specification[cite: 2].
+# GOV-IAM-004 — Human Approval And Escalation
+**Layer:** AG | **Status:** Core v1

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asf.tmig/model/model-classification-binding.schema.json",
+  "title": "Model Classification Binding",
+  "type": "object",
+  "required": ["schema_version", "model_id", "classification_ceiling", "enforced_by", "effective_from"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "model_id": { "type": "string" },
+    "classification_ceiling": { "enum": ["unclassified", "internal", "confidential", "secret"] },
+    "enforced_by": { "const": "GOV-INF-002" },
+    "effective_from": { "type": "string", "format": "date-time" },
+    "effective_until": { "type": ["string", "null"], "format": "date-time" },
+    "evidence_ref": { "type": "string" }
+  }
+}

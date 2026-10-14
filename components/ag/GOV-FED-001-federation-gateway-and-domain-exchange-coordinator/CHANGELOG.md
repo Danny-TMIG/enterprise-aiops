@@ -1,2 +1,4 @@
-# Changelog - GOV-FED-001-federation-gateway-and-domain-exchange-coordinator
-- Initial release candidate under ASF v1.2[cite: 2].
+# Changelog - GOV-FED-001
+
+## [1.0.0] - 2026-10-06
+- Initial release candidate.

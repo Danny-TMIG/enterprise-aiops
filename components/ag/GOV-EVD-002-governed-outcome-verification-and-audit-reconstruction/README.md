@@ -1,2 +1,2 @@
-# Component: GOV-EVD-002-governed-outcome-verification-and-audit-reconstruction
-Governed by ASF v1.2 specification[cite: 2].
+# GOV-EVD-002 — Governed Outcome Verification And Audit Reconstruction
+**Layer:** AG | **Status:** Core v1

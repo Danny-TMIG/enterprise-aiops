@@ -1,2 +1,2 @@
-# Component: GOV-ADM-001-govern-control-plane-and-configuration
-Governed by ASF v1.2 specification[cite: 2].
+# GOV-ADM-001 — Govern Control Plane And Configuration
+**Layer:** AG | **Status:** Core v1

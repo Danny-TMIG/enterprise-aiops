@@ -1,2 +1,2 @@
-# Component: COG-REA-004-planning-and-decomposition
-Governed by ASF v1.2 specification[cite: 2].
+# COG-REA-004 — Planning And Decomposition
+**Layer:** AX | **Status:** Core v1

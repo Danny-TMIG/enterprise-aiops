@@ -1,5 +1,7 @@
 {
-  "component_id": "GOV-FED-001-federation-gateway-and-domain-exchange-coordinator",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "GOV-FED-001",
+  "slug": "federation-gateway-and-domain-exchange-coordinator",
+  "layer": "ag",
+  "status": "Production federation deferred",
+  "governance": "ASF11-FR-001..017"
 }

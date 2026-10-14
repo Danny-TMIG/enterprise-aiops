@@ -1,2 +1,2 @@
-# Component: COG-ASSUR-001-evidence-projection
-Governed by ASF v1.2 specification[cite: 2].
+# COG-ASSUR-001 — Evidence Projection
+**Layer:** AX | **Status:** Core v1

@@ -1,2 +1,2 @@
-# Component: GOV-CAP-002-capability-authorization-and-eligibility
-Governed by ASF v1.2 specification[cite: 2].
+# GOV-CAP-002 — Capability Authorization And Eligibility
+**Layer:** AG | **Status:** Core v1

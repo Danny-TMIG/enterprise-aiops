@@ -1,2 +1,2 @@
-# Component: CMP-EVD-001-observation-and-telemetry
-Governed by ASF v1.2 specification[cite: 2].
+# CMP-EVD-001 — Observation And Telemetry
+**Layer:** AC | **Status:** Core v1

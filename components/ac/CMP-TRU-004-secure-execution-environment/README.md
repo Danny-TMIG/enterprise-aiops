@@ -1,2 +1,2 @@
-# Component: CMP-TRU-004-secure-execution-environment
-Governed by ASF v1.2 specification[cite: 2].
+# CMP-TRU-004 — Secure Execution Environment
+**Layer:** AC | **Status:** Core v1

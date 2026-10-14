@@ -1,5 +1,7 @@
 {
-  "component_id": "COG-CMP-005-adaptation-manager",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "COG-CMP-005",
+  "slug": "adaptation-manager",
+  "layer": "ax",
+  "status": "Bounded proposed changes",
+  "governance": "ASF11-FR-001..017"
 }

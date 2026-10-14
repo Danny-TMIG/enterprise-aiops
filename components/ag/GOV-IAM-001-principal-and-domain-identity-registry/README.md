@@ -1,2 +1,2 @@
-# Component: GOV-IAM-001-principal-and-domain-identity-registry
-Governed by ASF v1.2 specification[cite: 2].
+# GOV-IAM-001 — Principal And Domain Identity Registry
+**Layer:** AG | **Status:** Core v1

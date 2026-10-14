@@ -1,2 +1,2 @@
-# Component: CMP-EXE-002-native-runtime
-Governed by ASF v1.2 specification[cite: 2].
+# CMP-EXE-002 — Native Runtime
+**Layer:** AC | **Status:** Core v1

@@ -1,2 +1,4 @@
-# Changelog - CMP-RES-002-topology-resolver
-- Initial release candidate under ASF v1.2[cite: 2].
+# Changelog - CMP-RES-002
+
+## [1.0.0] - 2026-10-06
+- Initial release candidate.

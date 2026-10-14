@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asf.tmig/schemas/variance-report.schema.json",
+  "title": "V \u2014 Variance artifact (variance-report)",
+  "type": "object",
+  "required": [
+    "artifact",
+    "produced_by",
+    "reads",
+    "summary"
+  ],
+  "properties": {
+    "artifact": {
+      "const": "variance-report"
+    },
+    "produced_by": {
+      "type": "string"
+    },
+    "reads": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 4
+    },
+    "variances": {
+      "type": "array"
+    }
+  },
+  "additionalProperties": true
+}

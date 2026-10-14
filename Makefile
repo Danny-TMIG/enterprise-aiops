@@ -50,3 +50,18 @@ platform-validate:
 
 federation-gate:
 	python3 tooling/validation/check_federation_gate.py
+
+web-status:
+	@python3 tooling/validation/status_json.py
+
+web-dev:
+	@cd web && npm run dev
+
+web-build:
+	@cd web && npm install && npm run build
+
+web-test:
+	@cd web && npm install && npm run test
+
+web-e2e:
+	@cd web && npm install && npx playwright install --with-deps && npm run e2e

@@ -1,2 +1,2 @@
-# Component: CMP-TRU-006-secrets-and-key-delivery
-Governed by ASF v1.2 specification[cite: 2].
+# CMP-TRU-006 — Secrets And Key Delivery
+**Layer:** AC | **Status:** Core v1

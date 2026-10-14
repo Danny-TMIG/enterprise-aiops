@@ -1,5 +1,7 @@
 {
-  "component_id": "GOV-CAP-003-governed-action-and-execution-order-coordinator",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "GOV-CAP-003",
+  "slug": "governed-action-and-execution-order-coordinator",
+  "layer": "ag",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

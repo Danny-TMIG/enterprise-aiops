@@ -1,2 +1,2 @@
-# Component: GOV-INF-001-classification-and-labeling
-Governed by ASF v1.2 specification[cite: 2].
+# GOV-INF-001 — Classification And Labeling
+**Layer:** AG | **Status:** Core v1

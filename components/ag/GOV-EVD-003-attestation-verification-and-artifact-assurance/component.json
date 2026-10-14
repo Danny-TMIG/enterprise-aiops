@@ -1,5 +1,7 @@
 {
-  "component_id": "GOV-EVD-003-attestation-verification-and-artifact-assurance",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "GOV-EVD-003",
+  "slug": "attestation-verification-and-artifact-assurance",
+  "layer": "ag",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

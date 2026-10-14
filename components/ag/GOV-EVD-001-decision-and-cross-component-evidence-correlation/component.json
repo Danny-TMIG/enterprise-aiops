@@ -1,5 +1,7 @@
 {
-  "component_id": "GOV-EVD-001-decision-and-cross-component-evidence-correlation",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "GOV-EVD-001",
+  "slug": "decision-and-cross-component-evidence-correlation",
+  "layer": "ag",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

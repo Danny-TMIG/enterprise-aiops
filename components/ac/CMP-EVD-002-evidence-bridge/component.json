@@ -1,5 +1,7 @@
 {
-  "component_id": "CMP-EVD-002-evidence-bridge",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "CMP-EVD-002",
+  "slug": "evidence-bridge",
+  "layer": "ac",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

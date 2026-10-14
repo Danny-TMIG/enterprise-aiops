@@ -1,0 +1,462 @@
+{
+  "schema_version": "1.0",
+  "control_plane": "A-Z Economic Control Plane",
+  "version": "1.0.0",
+  "layers": [
+    {
+      "letter": "A",
+      "name": "Contract",
+      "role": "Define",
+      "reads": [
+        "input"
+      ],
+      "writes": [
+        "ExecutionContract"
+      ],
+      "pollinates": [
+        "L",
+        "G",
+        "F"
+      ],
+      "artifact": "execution-contract"
+    },
+    {
+      "letter": "B",
+      "name": "Constraints",
+      "role": "Govern",
+      "reads": [
+        "A"
+      ],
+      "writes": [
+        "ConstraintBinding"
+      ],
+      "pollinates": [
+        "H",
+        "O",
+        "K"
+      ],
+      "artifact": "constraint-binding"
+    },
+    {
+      "letter": "C",
+      "name": "Norm",
+      "role": "Calibrate",
+      "reads": [
+        "input",
+        "A"
+      ],
+      "writes": [
+        "NormCurve"
+      ],
+      "pollinates": [
+        "D",
+        "V"
+      ],
+      "artifact": "norm-curve"
+    },
+    {
+      "letter": "D",
+      "name": "Market",
+      "role": "Allocate",
+      "reads": [
+        "A",
+        "B",
+        "C"
+      ],
+      "writes": [
+        "AllocationDecision"
+      ],
+      "pollinates": [
+        "I",
+        "S",
+        "G"
+      ],
+      "artifact": "allocation-decision"
+    },
+    {
+      "letter": "E",
+      "name": "Receipt",
+      "role": "Prove",
+      "reads": [
+        "D"
+      ],
+      "writes": [
+        "EconomicReceipt"
+      ],
+      "pollinates": [
+        "W",
+        "Z",
+        "Y"
+      ],
+      "artifact": "economic-receipt"
+    },
+    {
+      "letter": "F",
+      "name": "Envelope",
+      "role": "Frame",
+      "reads": [
+        "A",
+        "B"
+      ],
+      "writes": [
+        "CommonEnvelope"
+      ],
+      "pollinates": [
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z"
+      ],
+      "artifact": "common-envelope"
+    },
+    {
+      "letter": "G",
+      "name": "Fidelity",
+      "role": "Measure",
+      "reads": [
+        "A",
+        "B",
+        "D"
+      ],
+      "writes": [
+        "FidelityScore"
+      ],
+      "pollinates": [
+        "H",
+        "S"
+      ],
+      "artifact": "fidelity-score"
+    },
+    {
+      "letter": "H",
+      "name": "Gate",
+      "role": "Admit",
+      "reads": [
+        "A",
+        "B",
+        "G"
+      ],
+      "writes": [
+        "GateDecision"
+      ],
+      "pollinates": [
+        "I",
+        "O",
+        "X"
+      ],
+      "artifact": "gate-decision"
+    },
+    {
+      "letter": "I",
+      "name": "Identity",
+      "role": "Bind",
+      "reads": [
+        "A"
+      ],
+      "writes": [
+        "IdentityBinding"
+      ],
+      "pollinates": [
+        "K",
+        "T"
+      ],
+      "artifact": "identity-binding"
+    },
+    {
+      "letter": "J",
+      "name": "Handle",
+      "role": "Route",
+      "reads": [
+        "D",
+        "H",
+        "I"
+      ],
+      "writes": [
+        "RoutingHandle"
+      ],
+      "pollinates": [
+        "M"
+      ],
+      "artifact": "routing-handle"
+    },
+    {
+      "letter": "K",
+      "name": "Jurisdiction",
+      "role": "Scope",
+      "reads": [
+        "B",
+        "J"
+      ],
+      "writes": [
+        "JurisdictionScope"
+      ],
+      "pollinates": [
+        "R",
+        "M"
+      ],
+      "artifact": "jurisdiction-scope"
+    },
+    {
+      "letter": "L",
+      "name": "Kind",
+      "role": "Classify",
+      "reads": [
+        "input",
+        "A"
+      ],
+      "writes": [
+        "WorkKind"
+      ],
+      "pollinates": [
+        "C",
+        "D"
+      ],
+      "artifact": "work-kind"
+    },
+    {
+      "letter": "M",
+      "name": "Ledger",
+      "role": "Record",
+      "reads": [
+        "ALL"
+      ],
+      "writes": [
+        "LedgerEntry"
+      ],
+      "pollinates": [
+        "N",
+        "P",
+        "T"
+      ],
+      "artifact": "ledger-entry"
+    },
+    {
+      "letter": "N",
+      "name": "Meter",
+      "role": "Count",
+      "reads": [
+        "M"
+      ],
+      "writes": [
+        "MeterReading"
+      ],
+      "pollinates": [
+        "U",
+        "E"
+      ],
+      "artifact": "meter-reading"
+    },
+    {
+      "letter": "O",
+      "name": "Oversight",
+      "role": "Supervise",
+      "reads": [
+        "H",
+        "B"
+      ],
+      "writes": [
+        "OversightPlan"
+      ],
+      "pollinates": [
+        "Q",
+        "X"
+      ],
+      "artifact": "oversight-plan"
+    },
+    {
+      "letter": "P",
+      "name": "Provenance",
+      "role": "Trace",
+      "reads": [
+        "ALL"
+      ],
+      "writes": [
+        "ProvenanceChain"
+      ],
+      "pollinates": [
+        "T",
+        "W"
+      ],
+      "artifact": "provenance-chain"
+    },
+    {
+      "letter": "Q",
+      "name": "Quality",
+      "role": "Assure",
+      "reads": [
+        "O"
+      ],
+      "writes": [
+        "QualityVerdict"
+      ],
+      "pollinates": [
+        "R",
+        "Y"
+      ],
+      "artifact": "quality-verdict"
+    },
+    {
+      "letter": "R",
+      "name": "Risk",
+      "role": "Bound",
+      "reads": [
+        "K",
+        "Q"
+      ],
+      "writes": [
+        "RiskBound"
+      ],
+      "pollinates": [
+        "X",
+        "Z"
+      ],
+      "artifact": "risk-bound"
+    },
+    {
+      "letter": "S",
+      "name": "Shadow",
+      "role": "Preview",
+      "reads": [
+        "D",
+        "G"
+      ],
+      "writes": [
+        "ShadowProposal"
+      ],
+      "pollinates": [
+        "H",
+        "X"
+      ],
+      "artifact": "shadow-proposal"
+    },
+    {
+      "letter": "T",
+      "name": "Trust",
+      "role": "Attest",
+      "reads": [
+        "J",
+        "M",
+        "P"
+      ],
+      "writes": [
+        "Attestation"
+      ],
+      "pollinates": [
+        "E",
+        "W"
+      ],
+      "artifact": "attestation"
+    },
+    {
+      "letter": "U",
+      "name": "Usage",
+      "role": "Attribute",
+      "reads": [
+        "N"
+      ],
+      "writes": [
+        "UsageAttribution"
+      ],
+      "pollinates": [
+        "V",
+        "E"
+      ],
+      "artifact": "usage-attribution"
+    },
+    {
+      "letter": "V",
+      "name": "Variance",
+      "role": "Compare",
+      "reads": [
+        "C",
+        "U"
+      ],
+      "writes": [
+        "VarianceReport"
+      ],
+      "pollinates": [
+        "E",
+        "Y"
+      ],
+      "artifact": "variance-report"
+    },
+    {
+      "letter": "W",
+      "name": "Witness",
+      "role": "Corroborate",
+      "reads": [
+        "E",
+        "T",
+        "P"
+      ],
+      "writes": [
+        "WitnessVerdict"
+      ],
+      "pollinates": [
+        "Z"
+      ],
+      "artifact": "witness-verdict"
+    },
+    {
+      "letter": "X",
+      "name": "eXception",
+      "role": "Handle",
+      "reads": [
+        "ANY_REJECTION"
+      ],
+      "writes": [
+        "ExceptionRecord"
+      ],
+      "pollinates": [
+        "M",
+        "Z"
+      ],
+      "artifact": "exception-record"
+    },
+    {
+      "letter": "Y",
+      "name": "Yield",
+      "role": "Realize",
+      "reads": [
+        "Q",
+        "V"
+      ],
+      "writes": [
+        "YieldReport"
+      ],
+      "pollinates": [
+        "Z"
+      ],
+      "artifact": "yield-report"
+    },
+    {
+      "letter": "Z",
+      "name": "Zenith",
+      "role": "Close",
+      "reads": [
+        "ALL"
+      ],
+      "writes": [
+        "ZenithSeal"
+      ],
+      "pollinates": [],
+      "artifact": "zenith-seal"
+    }
+  ]
+}

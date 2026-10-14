@@ -1,11 +1,2 @@
-*                       @Danny-TMIG
-/components/ax/         @Danny-TMIG
-/components/ag/         @Danny-TMIG
-/components/ac/         @Danny-TMIG
-/contracts/             @Danny-TMIG
-/docs/AUTHORITY.md      @Danny-TMIG
-/docs/STATUS.md         @Danny-TMIG
-/tooling/               @Danny-TMIG
-/integration/           @Danny-TMIG
-/deploy/                @Danny-TMIG
-/.github/workflows/     @Danny-TMIG
+# CODEOWNERS
+* @engineering-directorate

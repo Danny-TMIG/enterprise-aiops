@@ -1,2 +1,2 @@
-# Component: CMP-CTL-003-control-plane-coordinator
-Governed by ASF v1.2 specification[cite: 2].
+# CMP-CTL-003 — Control Plane Coordinator
+**Layer:** AC | **Status:** Core v1

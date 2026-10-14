@@ -1,2 +1,2 @@
-# Component: CMP-TRU-001-hardware-identity
-Governed by ASF v1.2 specification[cite: 2].
+# CMP-TRU-001 — Hardware Identity
+**Layer:** AC | **Status:** Core v1

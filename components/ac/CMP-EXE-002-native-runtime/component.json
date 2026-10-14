@@ -1,5 +1,7 @@
 {
-  "component_id": "CMP-EXE-002-native-runtime",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "CMP-EXE-002",
+  "slug": "native-runtime",
+  "layer": "ac",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asf.tmig/schemas/shadow-proposal.schema.json",
+  "title": "S \u2014 Shadow artifact (shadow-proposal)",
+  "type": "object",
+  "required": [
+    "artifact",
+    "produced_by",
+    "reads",
+    "summary"
+  ],
+  "properties": {
+    "artifact": {
+      "const": "shadow-proposal"
+    },
+    "produced_by": {
+      "type": "string"
+    },
+    "reads": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 4
+    },
+    "proposed_allocation": {
+      "type": "string"
+    },
+    "projected_cost": {
+      "type": "number"
+    },
+    "projected_quality": {
+      "type": "number"
+    }
+  },
+  "additionalProperties": true
+}

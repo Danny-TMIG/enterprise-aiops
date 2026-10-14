@@ -1,5 +1,7 @@
 {
-  "component_id": "COG-CMP-004-swarm-coordinator",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "COG-CMP-004",
+  "slug": "swarm-coordinator",
+  "layer": "ax",
+  "status": "Research/deferred",
+  "governance": "ASF11-FR-001..017"
 }

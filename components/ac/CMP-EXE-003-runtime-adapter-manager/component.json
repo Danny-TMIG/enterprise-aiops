@@ -1,5 +1,7 @@
 {
-  "component_id": "CMP-EXE-003-runtime-adapter-manager",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "CMP-EXE-003",
+  "slug": "runtime-adapter-manager",
+  "layer": "ac",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

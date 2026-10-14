@@ -1,2 +1,2 @@
-# Component: CMP-EVD-003-physical-provenance
-Governed by ASF v1.2 specification[cite: 2].
+# CMP-EVD-003 — Physical Provenance
+**Layer:** AC | **Status:** Core v1

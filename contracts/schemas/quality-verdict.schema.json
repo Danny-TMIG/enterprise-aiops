@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asf.tmig/schemas/quality-verdict.schema.json",
+  "title": "Q \u2014 Quality artifact (quality-verdict)",
+  "type": "object",
+  "required": [
+    "artifact",
+    "produced_by",
+    "reads",
+    "summary"
+  ],
+  "properties": {
+    "artifact": {
+      "const": "quality-verdict"
+    },
+    "produced_by": {
+      "type": "string"
+    },
+    "reads": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 4
+    },
+    "verdict": {
+      "enum": [
+        "pass",
+        "fail",
+        "partial"
+      ]
+    },
+    "criteria": {
+      "type": "array"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,2 +1,2 @@
-# Component: CMP-RES-004-resource-discovery-and-advertisement
-Governed by ASF v1.2 specification[cite: 2].
+# CMP-RES-004 — Resource Discovery And Advertisement
+**Layer:** AC | **Status:** Core v1

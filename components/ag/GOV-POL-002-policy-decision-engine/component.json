@@ -1,5 +1,7 @@
 {
-  "component_id": "GOV-POL-002-policy-decision-engine",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "GOV-POL-002",
+  "slug": "policy-decision-engine",
+  "layer": "ag",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

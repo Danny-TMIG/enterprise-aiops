@@ -1,2 +1,2 @@
-# Component: CMP-RES-006-allocation-and-reservation
-Governed by ASF v1.2 specification[cite: 2].
+# CMP-RES-006 — Allocation And Reservation
+**Layer:** AC | **Status:** Core v1

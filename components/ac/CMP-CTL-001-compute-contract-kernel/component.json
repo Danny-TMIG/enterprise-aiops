@@ -1,5 +1,7 @@
 {
-  "component_id": "CMP-CTL-001-compute-contract-kernel",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "CMP-CTL-001",
+  "slug": "compute-contract-kernel",
+  "layer": "ac",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

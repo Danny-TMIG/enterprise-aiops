@@ -1,2 +1,2 @@
-# Component: COG-CMP-002-skill-and-capability-interface
-Governed by ASF v1.2 specification[cite: 2].
+# COG-CMP-002 — Skill And Capability Interface
+**Layer:** AX | **Status:** Core v1

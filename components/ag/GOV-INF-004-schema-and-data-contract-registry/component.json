@@ -1,5 +1,7 @@
 {
-  "component_id": "GOV-INF-004-schema-and-data-contract-registry",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "GOV-INF-004",
+  "slug": "schema-and-data-contract-registry",
+  "layer": "ag",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

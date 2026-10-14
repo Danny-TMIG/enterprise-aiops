@@ -1,5 +1,7 @@
 {
-  "component_id": "CMP-TRU-002-attestation-gateway",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "CMP-TRU-002",
+  "slug": "attestation-gateway",
+  "layer": "ac",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

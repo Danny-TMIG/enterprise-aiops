@@ -1,2 +1,4 @@
-# Changelog - GOV-POL-002-policy-decision-engine
-- Initial release candidate under ASF v1.2[cite: 2].
+# Changelog - GOV-POL-002
+
+## [1.0.0] - 2026-10-06
+- Initial release candidate.

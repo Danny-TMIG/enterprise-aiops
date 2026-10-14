@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asf.tmig/layers/layer.schema.json",
+  "title": "A-Z Control Plane Layer",
+  "type": "object",
+  "required": ["letter", "name", "role", "version", "reads", "writes", "pollinates",
+    "preconditions", "postconditions", "invariants",
+    "evidence_obligations", "failure_states", "prompt_ref", "schema_ref"],
+  "properties": {
+    "letter": { "type": "string", "pattern": "^[A-Z]$" },
+    "name": { "type": "string", "minLength": 3 },
+    "role": { "type": "string", "minLength": 3 },
+    "version": { "type": "string" },
+    "owner": { "type": "string" },
+    "reads": { "type": "array", "items": { "type": "string" } },
+    "writes": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "pollinates": { "type": "array", "items": { "type": "string", "pattern": "^[A-Z]$" } },
+    "preconditions": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "postconditions": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "invariants": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "evidence_obligations": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "failure_states": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "prompt_ref": { "type": "string" },
+    "schema_ref": { "type": "string" }
+  }
+}

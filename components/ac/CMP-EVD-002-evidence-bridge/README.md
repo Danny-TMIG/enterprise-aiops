@@ -1,2 +1,2 @@
-# Component: CMP-EVD-002-evidence-bridge
-Governed by ASF v1.2 specification[cite: 2].
+# CMP-EVD-002 — Evidence Bridge
+**Layer:** AC | **Status:** Core v1

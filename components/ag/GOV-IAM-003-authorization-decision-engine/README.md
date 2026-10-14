@@ -1,2 +1,2 @@
-# Component: GOV-IAM-003-authorization-decision-engine
-Governed by ASF v1.2 specification[cite: 2].
+# GOV-IAM-003 — Authorization Decision Engine
+**Layer:** AG | **Status:** Core v1

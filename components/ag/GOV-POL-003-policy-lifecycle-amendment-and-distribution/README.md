@@ -1,2 +1,2 @@
-# Component: GOV-POL-003-policy-lifecycle-amendment-and-distribution
-Governed by ASF v1.2 specification[cite: 2].
+# GOV-POL-003 — Policy Lifecycle Amendment And Distribution
+**Layer:** AG | **Status:** Core v1

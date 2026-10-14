@@ -1,2 +1,2 @@
-# Component: COG-REA-001-knowledge-interface
-Governed by ASF v1.2 specification[cite: 2].
+# COG-REA-001 — Knowledge Interface
+**Layer:** AX | **Status:** Core v1

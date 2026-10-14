@@ -1,5 +1,7 @@
 {
-  "component_id": "CMP-CTL-002-execution-gateway",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "CMP-CTL-002",
+  "slug": "execution-gateway",
+  "layer": "ac",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

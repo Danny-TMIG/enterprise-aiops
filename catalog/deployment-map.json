@@ -1,12 +1,4 @@
 {
-  "schema_version": "1.0",
-  "status": "draft",
-  "profiles": {
-    "M": { "label": "Mobile", "treatment": "validation-gated" },
-    "L": { "label": "Local", "treatment": "reference-candidate" },
-    "S": { "label": "Server", "treatment": "reference-candidate" },
-    "E": { "label": "Enterprise", "treatment": "core-local-federation-deferred" },
-    "G": { "label": "Global", "treatment": "end-state-implementation-deferred" }
-  },
-  "component_profiles": {}
+  "default_unit": "core-runtime-unit",
+  "target": "Apple M4 Max"
 }

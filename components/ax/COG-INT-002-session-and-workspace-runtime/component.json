@@ -1,5 +1,7 @@
 {
-  "component_id": "COG-INT-002-session-and-workspace-runtime",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "COG-INT-002",
+  "slug": "session-and-workspace-runtime",
+  "layer": "ax",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

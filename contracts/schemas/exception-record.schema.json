@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asf.tmig/schemas/exception-record.schema.json",
+  "title": "X \u2014 eXception artifact (exception-record)",
+  "type": "object",
+  "required": [
+    "artifact",
+    "produced_by",
+    "reads",
+    "summary"
+  ],
+  "properties": {
+    "artifact": {
+      "const": "exception-record"
+    },
+    "produced_by": {
+      "type": "string"
+    },
+    "reads": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 4
+    },
+    "origin_layer": {
+      "type": "string"
+    },
+    "failure_class": {
+      "type": "string"
+    },
+    "recovery": {
+      "enum": [
+        "retry",
+        "rollback",
+        "escalate",
+        "terminate"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

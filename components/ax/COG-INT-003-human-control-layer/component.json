@@ -1,5 +1,7 @@
 {
-  "component_id": "COG-INT-003-human-control-layer",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "COG-INT-003",
+  "slug": "human-control-layer",
+  "layer": "ax",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

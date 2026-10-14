@@ -1,5 +1,7 @@
 {
-  "component_id": "CMP-TRU-005-artifact-integrity-and-supply-chain",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "CMP-TRU-005",
+  "slug": "artifact-integrity-and-supply-chain",
+  "layer": "ac",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

@@ -1,2 +1,2 @@
-# Component: COG-CORE-003-memory-fabric
-Governed by ASF v1.2 specification[cite: 2].
+# COG-CORE-003 — Memory Fabric
+**Layer:** AX | **Status:** Core v1

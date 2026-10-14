@@ -1,5 +1,7 @@
 {
-  "component_id": "CMP-EXE-007-recovery-coordinator",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "CMP-EXE-007",
+  "slug": "recovery-coordinator",
+  "layer": "ac",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

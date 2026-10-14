@@ -1,2 +1,2 @@
-# Component: CMP-CTL-002-execution-gateway
-Governed by ASF v1.2 specification[cite: 2].
+# CMP-CTL-002 — Execution Gateway
+**Layer:** AC | **Status:** Core v1

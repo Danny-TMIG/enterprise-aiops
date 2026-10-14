@@ -1,2 +1,2 @@
-# Component: COG-CMP-003-cognitive-cell-runtime
-Governed by ASF v1.2 specification[cite: 2].
+# COG-CMP-003 — Cognitive Cell Runtime
+**Layer:** AX | **Status:** Core v1

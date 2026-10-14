@@ -1,2 +1,2 @@
-# Component: CMP-RES-001-topology-model
-Governed by ASF v1.2 specification[cite: 2].
+# CMP-RES-001 — Topology Model
+**Layer:** AC | **Status:** Core v1

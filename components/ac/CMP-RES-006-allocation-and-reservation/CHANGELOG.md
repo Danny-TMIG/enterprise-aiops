@@ -1,2 +1,4 @@
-# Changelog - CMP-RES-006-allocation-and-reservation
-- Initial release candidate under ASF v1.2[cite: 2].
+# Changelog - CMP-RES-006
+
+## [1.0.0] - 2026-10-06
+- Initial release candidate.

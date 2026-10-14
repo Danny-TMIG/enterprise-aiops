@@ -1,2 +1,2 @@
-# Component: GOV-ADM-002-health-observability-security-and-incident-interface
-Governed by ASF v1.2 specification[cite: 2].
+# GOV-ADM-002 — Health Observability Security And Incident Interface
+**Layer:** AG | **Status:** Core v1

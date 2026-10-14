@@ -1,5 +1,7 @@
 {
-  "component_id": "GOV-IAM-004-human-approval-and-escalation",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "GOV-IAM-004",
+  "slug": "human-approval-and-escalation",
+  "layer": "ag",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

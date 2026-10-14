@@ -1,2 +1,2 @@
-# Component: CMP-DAT-002-network-and-data-movement-controller
-Governed by ASF v1.2 specification[cite: 2].
+# CMP-DAT-002 — Network And Data Movement Controller
+**Layer:** AC | **Status:** Core v1

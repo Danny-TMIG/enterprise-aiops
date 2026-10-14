@@ -1,5 +1,7 @@
 {
-  "component_id": "CMP-CTL-004-node-agent",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "CMP-CTL-004",
+  "slug": "node-agent",
+  "layer": "ac",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

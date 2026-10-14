@@ -1,5 +1,7 @@
 {
-  "component_id": "CMP-RES-005-resource-resolver",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "CMP-RES-005",
+  "slug": "resource-resolver",
+  "layer": "ac",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

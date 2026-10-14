@@ -1,2 +1,2 @@
-# Component: CMP-TRU-003-trust-evaluation
-Governed by ASF v1.2 specification[cite: 2].
+# CMP-TRU-003 — Trust Evaluation
+**Layer:** AC | **Status:** Core v1

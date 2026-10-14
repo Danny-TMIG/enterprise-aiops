@@ -1,2 +1,2 @@
-# Component: COG-CORE-004-semantic-representation-layer
-Governed by ASF v1.2 specification[cite: 2].
+# COG-CORE-004 — Semantic Representation Layer
+**Layer:** AX | **Status:** Core v1

@@ -1,5 +1,7 @@
 {
-  "component_id": "GOV-ADM-001-govern-control-plane-and-configuration",
-  "status": "active",
-  "compliance": "ASF v1.2"
+  "component_id": "GOV-ADM-001",
+  "slug": "govern-control-plane-and-configuration",
+  "layer": "ag",
+  "status": "Core v1",
+  "governance": "ASF11-FR-001..017"
 }

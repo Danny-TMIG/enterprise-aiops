@@ -1,2 +1,4 @@
-# Changelog - GOV-INF-004-schema-and-data-contract-registry
-- Initial release candidate under ASF v1.2[cite: 2].
+# Changelog - GOV-INF-004
+
+## [1.0.0] - 2026-10-06
+- Initial release candidate.
