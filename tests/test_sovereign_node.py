@@ -15,7 +15,7 @@ sys.path.insert(0, str(ROOT))
 def isolated_ledger(tmp_path, monkeypatch):
     """Point the node at a fresh ledger for each test."""
     import sovereign.node as node_mod
-    from sovereign.ledger import Ledger
+    from ag.ledger import Ledger
     ledger = Ledger(tmp_path / "ledger.jsonl")
     monkeypatch.setattr(node_mod, "LEDGER", ledger)
     return ledger

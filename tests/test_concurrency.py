@@ -7,7 +7,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from sovereign.ledger import Ledger
+from ag.ledger import Ledger
 
 
 def test_concurrent_appends_are_serialized(tmp_path):
