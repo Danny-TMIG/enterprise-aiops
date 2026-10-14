@@ -1,41 +1,14 @@
-# Architecture
+# Architecture Documents
 
-Aether Fabric is organized into three constitutional layers.
+Files in this directory:
 
-## AX — Aether Cognition (21 components)
+| File | Purpose |
+|---|---|
+| `ARCHITECT_ONBOARDING.md` | Onboarding for a new architect; reading order, contracts, environment, open decisions |
+| `SPEC_TO_CODE.md` | Generated map from each FAS logical component to its directory in the tree |
+| `FILE_REFERENCE.md` | File-by-file reference for the repository, 250 words per entry |
+| `ASF_ENVIRONMENT_REQUIREMENTS.md` | Environment record — assertions, targets, limitations, assumptions |
 
-- Interface: COG-INT-*
-- Core: COG-CORE-*
-- Reasoning: COG-REA-*
-- Composition: COG-CMP-*
-- Assurance: COG-ASSUR-*
+Regenerate `SPEC_TO_CODE.md` with:
 
-## AG — Aether Govern (24 components)
-
-- Kernel: GOV-KRN-*
-- Identity: GOV-IAM-*
-- Policy: GOV-POL-*
-- Information: GOV-INF-*
-- Capability: GOV-CAP-*
-- Evidence: GOV-EVD-*
-- Administration: GOV-ADM-*
-- Federation: GOV-FED-*
-
-## AC — Aether Compute (30 components)
-
-- Control: CMP-CTL-*
-- Trust: CMP-TRU-*
-- Resources: CMP-RES-*
-- Execution: CMP-EXE-*
-- Data: CMP-DAT-*
-- Evidence: CMP-EVD-*
-- Economics: CMP-ECO-*
-
-## Flow
-
-1. Intent enters AX (COG-INT-001).
-2. AG evaluates: identity, policy, information flow, capability.
-3. AG issues a signed execution order (GOV-CAP-003).
-4. AC admits and executes.
-5. AG correlates and seals evidence.
-6. AX replays if needed (COG-ASSUR-002).
+    python3 tooling/validation/generate_spec_to_code.py
