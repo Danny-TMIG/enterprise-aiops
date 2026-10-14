@@ -21,7 +21,7 @@ import time
 from typing import Any, Awaitable, Callable
 
 from fastapi import FastAPI, Request, Response
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import JSONResponse, PlainTextResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from ag.metrics import Metrics
@@ -90,8 +90,13 @@ app.add_middleware(MetricsMiddleware)
 # Routes
 # ---------------------------------------------------------------------------
 @app.get("/healthz")
-def healthz() -> dict[str, Any]:
-    return {"status": "ok", "service": "aether-core-asgi"}
+def healthz() -> Response:
+    """Real subsystem probe. 200 if all ok, 503 if any down."""
+    from ag.health import check_all
+
+    code, body = check_all()
+    body["service"] = "aether-core-asgi"
+    return JSONResponse(body, status_code=code)
 
 
 @app.get("/metrics")

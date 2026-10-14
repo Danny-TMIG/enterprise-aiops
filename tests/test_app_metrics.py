@@ -14,13 +14,23 @@ from ac.app import app, metrics
 
 
 @pytest.fixture
-def client():
-    """Fresh Metrics instance per test so counters start at zero."""
+def client(monkeypatch):
+    """Fresh Metrics instance per test so counters start at zero.
+
+    Also sets SOVEREIGN_NODE_ID so the /healthz probe reports ok instead of
+    down. Any real deployment has this var; a bare pytest process does not.
+    """
     from ag.metrics import Metrics
+    from ag.settings import reset_settings_cache
+
+    monkeypatch.setenv("SOVEREIGN_NODE_ID", "test-node")
+    reset_settings_cache()
 
     app.state.metrics = Metrics(namespace="sovereign")
     with TestClient(app) as c:
         yield c
+
+    reset_settings_cache()
 
 
 def _scrape(client: TestClient) -> str:
