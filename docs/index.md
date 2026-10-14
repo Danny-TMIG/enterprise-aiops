@@ -1,6 +1,6 @@
 # Aether Layer Index
 
-Generated: 2026-10-14T06:32:50Z
+Generated: 2026-10-14T06:35:48Z
 
 ## Schemas
 
@@ -22,6 +22,7 @@ Generated: 2026-10-14T06:32:50Z
 - [schemas](./schemas.md) — [.ll](./schemas.ll) — [.llm.txt](./schemas.llm.txt)
 - [registries](./registries.md) — [.ll](./registries.ll) — [.llm.txt](./registries.llm.txt)
 - [examples](./examples.md) — [.ll](./examples.ll) — [.llm.txt](./examples.llm.txt)
+- [artifacts](./artifacts.md) — [.ll](./artifacts.ll) — [.llm.txt](./artifacts.llm.txt)
 
 ## Artifacts
 - [components](./components.md) — [.ll](./components.ll) — [.llm.txt](./components.llm.txt)
@@ -31,3 +32,4 @@ Generated: 2026-10-14T06:32:50Z
 - [manifest_schema](./manifest_schema.md) — [.ll](./manifest_schema.ll) — [.llm.txt](./manifest_schema.llm.txt)
 - [manifest_example](./manifest_example.md) — [.ll](./manifest_example.ll) — [.llm.txt](./manifest_example.llm.txt)
 - [registry_schema](./registry_schema.md) — [.ll](./registry_schema.ll) — [.llm.txt](./registry_schema.llm.txt)
+- [artifacts_index](./artifacts_index.md) — [.ll](./artifacts_index.ll) — [.llm.txt](./artifacts_index.llm.txt)

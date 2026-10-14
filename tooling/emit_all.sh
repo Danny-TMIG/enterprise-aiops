@@ -291,7 +291,7 @@ emit_tree() {
     echo "## Files"
     echo
     find "$dir" -type f \
-      ! -path '*/__pycache__/*' ! -path '*/.git/*' ! -path '*/.venv/*' ! -path './docs/*' ! -path './docs/*' \
+      ! -path '*/__pycache__/*' ! -path '*/.git/*' ! -path '*/.venv/*' ! -path './docs/*' ! -name 'CANONICAL.md' ! -path './docs/*' \
       | sort | sed 's/^/    /'
     echo
     echo "## Contents"
@@ -306,7 +306,7 @@ emit_tree() {
       sed -n '1,2000p' "$f"
       echo '```'
     done < <(find "$dir" -type f \
-      ! -path '*/__pycache__/*' ! -path '*/.git/*' ! -path '*/.venv/*' ! -path './docs/*' ! -path './docs/*' \
+      ! -path '*/__pycache__/*' ! -path '*/.git/*' ! -path '*/.venv/*' ! -path './docs/*' ! -name 'CANONICAL.md' ! -path './docs/*' \
       | sort)
   } > "$out_md"
 
@@ -321,7 +321,7 @@ emit_tree() {
       sed -n '1,2000p' "$f"
       echo "ENDFILE $f"
     done < <(find "$dir" -type f \
-      ! -path '*/__pycache__/*' ! -path '*/.git/*' ! -path '*/.venv/*' ! -path './docs/*' ! -path './docs/*' \
+      ! -path '*/__pycache__/*' ! -path '*/.git/*' ! -path '*/.venv/*' ! -path './docs/*' ! -name 'CANONICAL.md' ! -path './docs/*' \
       | sort)
   } > "$out_ll"
 
@@ -337,7 +337,7 @@ emit_tree() {
       sed -n '1,2000p' "$f"
       echo "----- end $f -----"
     done < <(find "$dir" -type f \
-      ! -path '*/__pycache__/*' ! -path '*/.git/*' ! -path '*/.venv/*' ! -path './docs/*' ! -path './docs/*' \
+      ! -path '*/__pycache__/*' ! -path '*/.git/*' ! -path '*/.venv/*' ! -path './docs/*' ! -name 'CANONICAL.md' ! -path './docs/*' \
       | sort)
   } > "$out_txt"
 
@@ -350,7 +350,7 @@ emit_tree() {
 
 echo
 echo "== emitting per-layer docs =="
-for layer in ac ag ax nature data sovereign schemas registries examples; do
+for layer in ac ag ax nature data sovereign schemas registries examples artifacts; do
   emit_tree "$layer" "$layer"
 done
 
@@ -402,7 +402,7 @@ done
   done
   echo
   echo "## Layers"
-  for layer in ac ag ax nature data sovereign schemas registries examples; do
+  for layer in ac ag ax nature data sovereign schemas registries examples artifacts; do
     [ -d "$layer" ] || continue
     echo "- [$layer](./$layer.md) — [.ll](./$layer.ll) — [.llm.txt](./$layer.llm.txt)"
   done
@@ -415,7 +415,8 @@ done
     "algorithms:data/algorithms.json" \
     "manifest_schema:schemas/manifest.schema.yaml" \
     "manifest_example:examples/auth/manifest.yaml" \
-    "registry_schema:registries/SCHEMA.md"
+    "registry_schema:registries/SCHEMA.md" \
+    "artifacts_index:artifacts/INDEX.md"
   do
     echo "- [${f%%:*}](./${f%%:*}.md) — [.ll](./${f%%:*}.ll) — [.llm.txt](./${f%%:*}.llm.txt)"
   done
