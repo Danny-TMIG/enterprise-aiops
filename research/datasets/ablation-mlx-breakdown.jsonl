@@ -1,0 +1,12 @@
+{"ablation": "A6-mlx-breakdown", "scale": "0.13M", "hidden": 256, "condition": "forward", "date": "2026-10-14T05:32:10+00:00", "seconds_per_step": 0.02392880916595459, "parameters": 131584}
+{"ablation": "A6-mlx-breakdown", "scale": "0.13M", "hidden": 256, "condition": "forward_backward", "date": "2026-10-14T05:32:10+00:00", "seconds_per_step": 0.0003105878829956055, "parameters": 131584}
+{"ablation": "A6-mlx-breakdown", "scale": "0.13M", "hidden": 256, "condition": "forward_backward_update", "date": "2026-10-14T05:32:10+00:00", "seconds_per_step": 0.0005107879638671875, "parameters": 131584}
+{"ablation": "A6-mlx-breakdown", "scale": "0.13M", "hidden": 256, "condition": "full", "date": "2026-10-14T05:32:10+00:00", "seconds_per_step": 0.0005099058151245117, "parameters": 131584}
+{"ablation": "A6-mlx-breakdown", "scale": "2.1M", "hidden": 1024, "condition": "forward", "date": "2026-10-14T05:32:10+00:00", "seconds_per_step": 0.00019869804382324218, "parameters": 2099200}
+{"ablation": "A6-mlx-breakdown", "scale": "2.1M", "hidden": 1024, "condition": "forward_backward", "date": "2026-10-14T05:32:10+00:00", "seconds_per_step": 0.00034501552581787107, "parameters": 2099200}
+{"ablation": "A6-mlx-breakdown", "scale": "2.1M", "hidden": 1024, "condition": "forward_backward_update", "date": "2026-10-14T05:32:10+00:00", "seconds_per_step": 0.000672602653503418, "parameters": 2099200}
+{"ablation": "A6-mlx-breakdown", "scale": "2.1M", "hidden": 1024, "condition": "full", "date": "2026-10-14T05:32:10+00:00", "seconds_per_step": 0.0006632804870605469, "parameters": 2099200}
+{"ablation": "A6-mlx-breakdown", "scale": "33.6M", "hidden": 4096, "condition": "forward", "date": "2026-10-14T05:32:10+00:00", "seconds_per_step": 0.000310516357421875, "parameters": 33562624}
+{"ablation": "A6-mlx-breakdown", "scale": "33.6M", "hidden": 4096, "condition": "forward_backward", "date": "2026-10-14T05:32:10+00:00", "seconds_per_step": 0.0007325172424316406, "parameters": 33562624}
+{"ablation": "A6-mlx-breakdown", "scale": "33.6M", "hidden": 4096, "condition": "forward_backward_update", "date": "2026-10-14T05:32:10+00:00", "seconds_per_step": 0.004941606521606445, "parameters": 33562624}
+{"ablation": "A6-mlx-breakdown", "scale": "33.6M", "hidden": 4096, "condition": "full", "date": "2026-10-14T05:32:10+00:00", "seconds_per_step": 0.004990816116333008, "parameters": 33562624}

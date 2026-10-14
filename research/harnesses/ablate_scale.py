@@ -56,7 +56,7 @@ def torch_run(hidden: int, dtype_name: str = "float32", steps: int = 10):
             "seconds_per_step": dt / steps,
             "steps": steps,
             "parameters": params,
-            "bytes_per_step": params * (4 if dtype_name == "float32" else 2) * 4,
+            "bytes_touched": params * (4 if dtype_name == "float32" else 2),
             "runtime_version": torch.__version__,
         }
     except Exception as e:
@@ -104,21 +104,22 @@ def mlx_run(hidden: int, dtype_name: str = "float16", steps: int = 10):
             opt.update(model, grads)
             mx.eval(model.parameters(), opt.state)
         dt = time.time() - t0
-        params = sum(p.size for _, p in mx.tree_flatten(model.parameters()))
+        from mlx.utils import tree_flatten
+        params = sum(p.size for _, p in tree_flatten(model.parameters()))
         return {
             "status": "ok",
             "wall_seconds": dt,
             "seconds_per_step": dt / steps,
             "steps": steps,
             "parameters": params,
-            "bytes_per_step": params * (4 if dtype_name == "float32" else 2) * 4,
+            "bytes_touched": params * (4 if dtype_name == "float32" else 2),
             "runtime_version": getattr(mx, "__version__", "unknown"),
         }
     except Exception as e:
         return {"status": "error", "reason": str(e)}
 
 
-SIZES = [(256, "1M"), (1024, "10M"), (4096, "100M")]
+SIZES = [(256, "0.13M"), (1024, "2.1M"), (4096, "33.6M")]
 
 rows = []
 for hidden, label in SIZES:
@@ -140,8 +141,8 @@ seen_scale = None
 for r in rows:
     if r.get("scale") == "100M" and r.get("status") == "ok":
         seen_scale = "100M"
-        bw = r["bytes_per_step"] / r["seconds_per_step"]
-        print(f"  {r['condition']:<20} {r['bytes_per_step']/1e6:.1f} MB/step  ~{bw/1e9:.2f} GB/s")
+        bw = r["bytes_touched"] / r["seconds_per_step"]
+        print(f"  {r['condition']:<20} {r['bytes_touched']/1e6:.1f} MB weights  ~{bw/1e9:.2f} GB/s touched")
 if not seen_scale:
     print("  100M scale unavailable — check scale column above")
 
