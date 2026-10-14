@@ -1,0 +1,5 @@
+{
+  "schema_version": "1.0",
+  "findings": [],
+  "note": "One entry per verified finding. Each must cite an experiment ID and a JSONL row."
+}

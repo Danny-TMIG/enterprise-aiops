@@ -18,7 +18,44 @@
         "G",
         "F"
       ],
-      "artifact": "execution-contract"
+      "artifact": "execution-contract",
+      "logic": "derive_from_request",
+      "params": {
+        "mapping": {
+          "unit": [
+            "unit",
+            "unknown"
+          ],
+          "quantity": [
+            "quantity",
+            1
+          ],
+          "quality_floor": [
+            "quality_bar",
+            "unstated"
+          ],
+          "deadline": [
+            "deadline",
+            "unknown"
+          ],
+          "risk_class": [
+            "risk_class",
+            "R3"
+          ],
+          "budget_ceiling_usd": [
+            "budget_ceiling_usd",
+            0.0
+          ],
+          "oversight_requirement": [
+            "oversight_requirement",
+            "none"
+          ]
+        },
+        "types": {
+          "quantity": "int",
+          "budget_ceiling_usd": "float"
+        }
+      }
     },
     {
       "letter": "B",
@@ -35,7 +72,28 @@
         "O",
         "K"
       ],
-      "artifact": "constraint-binding"
+      "artifact": "constraint-binding",
+      "logic": "bind_constraints",
+      "params": {
+        "sources": {
+          "quality": [
+            "A",
+            "quality_floor"
+          ],
+          "risk": [
+            "A",
+            "risk_class"
+          ],
+          "budget": [
+            "A",
+            "budget_ceiling_usd"
+          ],
+          "oversight": [
+            "A",
+            "oversight_requirement"
+          ]
+        }
+      }
     },
     {
       "letter": "C",
@@ -52,7 +110,11 @@
         "D",
         "V"
       ],
-      "artifact": "norm-curve"
+      "artifact": "norm-curve",
+      "logic": "compute_norm_curve",
+      "params": {
+        "samples_path": "input.norm_samples"
+      }
     },
     {
       "letter": "D",
@@ -71,7 +133,16 @@
         "S",
         "G"
       ],
-      "artifact": "allocation-decision"
+      "artifact": "allocation-decision",
+      "logic": "allocate_lowest_cost",
+      "params": {
+        "candidates_path": "A.candidates",
+        "budget_path": "B.budget.cap_usd",
+        "default_candidate": {
+          "name": "default",
+          "price": 0.0
+        }
+      }
     },
     {
       "letter": "E",
@@ -88,7 +159,12 @@
         "Z",
         "Y"
       ],
-      "artifact": "economic-receipt"
+      "artifact": "economic-receipt",
+      "logic": "compute_receipt",
+      "params": {
+        "baseline_path": "input.baseline_usd",
+        "actual_path": "D.price"
+      }
     },
     {
       "letter": "F",
@@ -123,7 +199,15 @@
         "Y",
         "Z"
       ],
-      "artifact": "common-envelope"
+      "artifact": "common-envelope",
+      "logic": "wrap_envelope",
+      "params": {
+        "wraps": [
+          "A",
+          "B"
+        ],
+        "classification_path": "input.classification"
+      }
     },
     {
       "letter": "G",
@@ -141,7 +225,15 @@
         "H",
         "S"
       ],
-      "artifact": "fidelity-score"
+      "artifact": "fidelity-score",
+      "logic": "score_fidelity",
+      "params": {
+        "artifacts": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
     },
     {
       "letter": "H",
@@ -160,7 +252,25 @@
         "O",
         "X"
       ],
-      "artifact": "gate-decision"
+      "artifact": "gate-decision",
+      "logic": "apply_gate_rules",
+      "params": {
+        "threshold": 0.75,
+        "rules": [
+          {
+            "name": "contract_present",
+            "check": "A is not empty"
+          },
+          {
+            "name": "constraint_present",
+            "check": "B is not empty"
+          },
+          {
+            "name": "fidelity_at_threshold",
+            "check": "G.score >= threshold"
+          }
+        ]
+      }
     },
     {
       "letter": "I",
@@ -176,7 +286,15 @@
         "K",
         "T"
       ],
-      "artifact": "identity-binding"
+      "artifact": "identity-binding",
+      "logic": "bind_identity",
+      "params": {
+        "subject_path": "input.requester_identity",
+        "action_path": "A.unit",
+        "object_path": "A.unit",
+        "purpose_path": "input.purpose",
+        "valid_until_path": "A.deadline"
+      }
     },
     {
       "letter": "J",
@@ -193,7 +311,13 @@
       "pollinates": [
         "M"
       ],
-      "artifact": "routing-handle"
+      "artifact": "routing-handle",
+      "logic": "route_by_gate",
+      "params": {
+        "gate_path": "H.decision",
+        "target_path": "D.selected",
+        "agent_path": "I.subject"
+      }
     },
     {
       "letter": "K",
@@ -210,7 +334,13 @@
         "R",
         "M"
       ],
-      "artifact": "jurisdiction-scope"
+      "artifact": "jurisdiction-scope",
+      "logic": "scope_jurisdiction",
+      "params": {
+        "domain_path": "input.sovereign_domain",
+        "residency_path": "input.residency",
+        "regimes_path": "input.regimes"
+      }
     },
     {
       "letter": "L",
@@ -227,7 +357,11 @@
         "C",
         "D"
       ],
-      "artifact": "work-kind"
+      "artifact": "work-kind",
+      "logic": "classify_kind",
+      "params": {
+        "kind_path": "input.kind"
+      }
     },
     {
       "letter": "M",
@@ -244,7 +378,11 @@
         "P",
         "T"
       ],
-      "artifact": "ledger-entry"
+      "artifact": "ledger-entry",
+      "logic": "build_ledger",
+      "params": {
+        "letters": "all_earlier"
+      }
     },
     {
       "letter": "N",
@@ -260,7 +398,17 @@
         "U",
         "E"
       ],
-      "artifact": "meter-reading"
+      "artifact": "meter-reading",
+      "logic": "read_meter",
+      "params": {
+        "telemetry_path": "input.telemetry",
+        "units": [
+          "tokens",
+          "minutes",
+          "units",
+          "cost_usd"
+        ]
+      }
     },
     {
       "letter": "O",
@@ -277,7 +425,11 @@
         "Q",
         "X"
       ],
-      "artifact": "oversight-plan"
+      "artifact": "oversight-plan",
+      "logic": "plan_oversight",
+      "params": {
+        "level_path": "B.oversight.level"
+      }
     },
     {
       "letter": "P",
@@ -293,7 +445,11 @@
         "T",
         "W"
       ],
-      "artifact": "provenance-chain"
+      "artifact": "provenance-chain",
+      "logic": "build_provenance",
+      "params": {
+        "letters": "all_earlier"
+      }
     },
     {
       "letter": "Q",
@@ -309,7 +465,11 @@
         "R",
         "Y"
       ],
-      "artifact": "quality-verdict"
+      "artifact": "quality-verdict",
+      "logic": "verdict_quality",
+      "params": {
+        "signals_path": "input.quality_signals"
+      }
     },
     {
       "letter": "R",
@@ -326,7 +486,12 @@
         "X",
         "Z"
       ],
-      "artifact": "risk-bound"
+      "artifact": "risk-bound",
+      "logic": "bound_risk",
+      "params": {
+        "ceiling_path": "input.risk_class",
+        "quality_path": "Q.verdict"
+      }
     },
     {
       "letter": "S",
@@ -343,7 +508,13 @@
         "H",
         "X"
       ],
-      "artifact": "shadow-proposal"
+      "artifact": "shadow-proposal",
+      "logic": "propose_shadow",
+      "params": {
+        "allocation_path": "D.selected",
+        "price_path": "D.price",
+        "quality_path": "G.score"
+      }
     },
     {
       "letter": "T",
@@ -361,7 +532,14 @@
         "E",
         "W"
       ],
-      "artifact": "attestation"
+      "artifact": "attestation",
+      "logic": "attest_artifacts",
+      "params": {
+        "sources": [
+          "M.entries",
+          "P.records"
+        ]
+      }
     },
     {
       "letter": "U",
@@ -377,7 +555,12 @@
         "V",
         "E"
       ],
-      "artifact": "usage-attribution"
+      "artifact": "usage-attribution",
+      "logic": "attribute_usage",
+      "params": {
+        "readings_path": "N.readings",
+        "account_path": "input.requester_identity"
+      }
     },
     {
       "letter": "V",
@@ -394,7 +577,13 @@
         "E",
         "Y"
       ],
-      "artifact": "variance-report"
+      "artifact": "variance-report",
+      "logic": "compute_variance",
+      "params": {
+        "norm_path": "C.median",
+        "usage_path": "U.attributions",
+        "unit": "cost_usd"
+      }
     },
     {
       "letter": "W",
@@ -411,7 +600,13 @@
       "pollinates": [
         "Z"
       ],
-      "artifact": "witness-verdict"
+      "artifact": "witness-verdict",
+      "logic": "witness_receipt",
+      "params": {
+        "receipt_path": "E",
+        "trust_path": "T.artifact_root",
+        "provenance_path": "P.chain_head"
+      }
     },
     {
       "letter": "X",
@@ -427,7 +622,11 @@
         "M",
         "Z"
       ],
-      "artifact": "exception-record"
+      "artifact": "exception-record",
+      "logic": "record_exception",
+      "params": {
+        "rejections_path": "ANY_REJECTION"
+      }
     },
     {
       "letter": "Y",
@@ -443,7 +642,12 @@
       "pollinates": [
         "Z"
       ],
-      "artifact": "yield-report"
+      "artifact": "yield-report",
+      "logic": "compute_yield",
+      "params": {
+        "quality_path": "Q.criteria",
+        "variance_path": "V.variances"
+      }
     },
     {
       "letter": "Z",
@@ -456,7 +660,11 @@
         "ZenithSeal"
       ],
       "pollinates": [],
-      "artifact": "zenith-seal"
+      "artifact": "zenith-seal",
+      "logic": "seal_zenith",
+      "params": {
+        "letters": "all_earlier"
+      }
     }
   ]
 }
