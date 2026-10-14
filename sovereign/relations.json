@@ -1,0 +1,132 @@
+{
+  "schema_version": "1.0",
+  "graph": "sovereign-node-relations",
+  "nodes": [
+    {
+      "id": "m4max",
+      "type": "hardware",
+      "properties": {
+        "chip": "Apple M4 Max",
+        "cores": 16,
+        "memory_gb": 128,
+        "arch": "arm64"
+      }
+    },
+    {
+      "id": "torch_measure",
+      "type": "measurement",
+      "properties": {
+        "seconds_per_step": 0.0034903764724731447,
+        "model": "tiny",
+        "steps": 10,
+        "torch": "2.14.1"
+      }
+    },
+    {
+      "id": "openai_schema",
+      "type": "wire_format",
+      "properties": {
+        "fields": [
+          "id",
+          "object",
+          "created",
+          "model",
+          "usage",
+          "choices"
+        ]
+      }
+    },
+    {
+      "id": "inference_server",
+      "type": "service",
+      "properties": {
+        "protocol": "openai-chat-completions"
+      }
+    },
+    {
+      "id": "mlx",
+      "type": "runtime",
+      "properties": {
+        "vendor": "apple"
+      }
+    },
+    {
+      "id": "ledger",
+      "type": "store",
+      "properties": {
+        "format": "jsonl",
+        "hash": "sha256"
+      }
+    },
+    {
+      "id": "sovereign_node",
+      "type": "system",
+      "properties": {
+        "runs_on": "m4max",
+        "local_only": true
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "torch_measure",
+      "predicate": "measured_on",
+      "target": "m4max"
+    },
+    {
+      "source": "torch_measure",
+      "predicate": "uses_backend",
+      "target": "mlx"
+    },
+    {
+      "source": "m4max",
+      "predicate": "has_memory_gb",
+      "target": "128"
+    },
+    {
+      "source": "m4max",
+      "predicate": "has_cores",
+      "target": "16"
+    },
+    {
+      "source": "inference_server",
+      "predicate": "speaks",
+      "target": "openai_schema"
+    },
+    {
+      "source": "inference_server",
+      "predicate": "can_run_on",
+      "target": "m4max"
+    },
+    {
+      "source": "sovereign_node",
+      "predicate": "runs_on",
+      "target": "m4max"
+    },
+    {
+      "source": "sovereign_node",
+      "predicate": "contains",
+      "target": "inference_server"
+    },
+    {
+      "source": "sovereign_node",
+      "predicate": "uses_runtime",
+      "target": "mlx"
+    },
+    {
+      "source": "sovereign_node",
+      "predicate": "writes_to",
+      "target": "ledger"
+    },
+    {
+      "source": "inference_server",
+      "predicate": "produces",
+      "target": "openai_schema"
+    },
+    {
+      "source": "ledger",
+      "predicate": "records",
+      "target": "inference_server"
+    }
+  ]
+}
