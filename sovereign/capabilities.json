@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "capabilities": {
+    "translate": {
+      "template": "sovereign/templates/translate.txt",
+      "description": "Translate text from one language to another."
+    },
+    "summarize": {
+      "template": "sovereign/templates/summarize.txt",
+      "description": "Condense long text into a shorter form."
+    },
+    "answer": {
+      "template": "sovereign/templates/answer.txt",
+      "description": "Answer questions directly."
+    },
+    "write": {
+      "template": "sovereign/templates/write.txt",
+      "description": "Assist with essays, stories, and other writing."
+    },
+    "code": {
+      "template": "sovereign/templates/code.txt",
+      "description": "Generate code in a requested language."
+    },
+    "factcheck": {
+      "template": "sovereign/templates/factcheck.txt",
+      "description": "Evaluate claims as supported, unsupported, or unverifiable."
+    },
+    "creative": {
+      "template": "sovereign/templates/creative.txt",
+      "description": "Produce poetry, stories, and creative work."
+    },
+    "research": {
+      "template": "sovereign/templates/research.txt",
+      "description": "Produce a structured overview of a topic."
+    },
+    "email": {
+      "template": "sovereign/templates/email.txt",
+      "description": "Draft professional emails and letters."
+    },
+    "chat": {
+      "template": "sovereign/templates/chat.txt",
+      "description": "Engage in open-ended conversation."
+    }
+  }
+}

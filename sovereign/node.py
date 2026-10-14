@@ -15,8 +15,8 @@ from typing import Any
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-from sovereign.ledger import Ledger
-from sovereign.model import generate as model_generate
+from ag.ledger import Ledger
+from ax.model import generate as model_generate
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -44,6 +44,36 @@ def _validate(req: ChatRequest) -> str | None:
     return None
 
 
+
+
+CAPABILITIES_PATH = ROOT / "sovereign" / "capabilities.json"
+CAPABILITY_CACHE: dict[str, str] = {}
+
+
+def _load_capabilities() -> dict[str, dict]:
+    if not CAPABILITIES_PATH.exists():
+        return {}
+    return json.loads(CAPABILITIES_PATH.read_text())["capabilities"]
+
+
+def _apply_capability(req: "ChatRequest") -> list[dict]:
+    """Return the message list with the capability template prepended.
+
+    The template is a system message. The user's messages follow. If no
+    capability is declared, the messages are returned unchanged.
+    """
+    messages = [m.model_dump() for m in req.messages]
+    if not req.capability:
+        return messages
+    caps = _load_capabilities()
+    if req.capability not in caps:
+        raise ValueError(f"unknown capability: {req.capability}")
+    tmpl_path = ROOT / caps[req.capability]["template"]
+    if not tmpl_path.exists():
+        raise ValueError(f"capability template missing: {tmpl_path}")
+    template = tmpl_path.read_text().strip()
+    return [{"role": "system", "content": template}] + messages
+
 app = FastAPI(title="Sovereign Node", version="1.0")
 
 
@@ -54,6 +84,7 @@ class Message(BaseModel):
 
 class ChatRequest(BaseModel):
     model: str = "tiny-local"
+    capability: str | None = None
     messages: list[Message]
     max_tokens: int = 256
     temperature: float = 0.0
@@ -108,7 +139,7 @@ def chat(req: ChatRequest) -> dict[str, Any]:
     try:
         content, prompt_tokens, completion_tokens = model_generate(
             MODEL_PATH,
-            [m.model_dump() for m in req.messages],
+            _apply_capability(req),
             max_tokens=req.max_tokens,
         )
     except Exception as e:

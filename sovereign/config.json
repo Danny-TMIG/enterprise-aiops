@@ -15,6 +15,9 @@
     "memory_gb": 128
   },
   "backends": {
-    "mlx-lm": {"dtype": "float16", "verified": true}
+    "mlx-lm": {
+      "dtype": "float16",
+      "verified": true
+    }
   }
 }
