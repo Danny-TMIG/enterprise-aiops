@@ -1,11 +1,13 @@
 name: release
+
 on:
   push:
     tags: ['v*']
+
 permissions:
   contents: write
   id-token: write
-  packages: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,18 +15,41 @@ jobs:
       hashes: ${{ steps.hash.outputs.hashes }}
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
-        with: { python-version: '3.12' }
-      - name: Build artifacts
-        run: |
-          python -m pip install build
-          python -m build --sdist --wheel
-      - name: Compute hashes
+        with:
+          python-version: '3.12'
+
+      - name: Install build tooling
+        run: python -m pip install --upgrade pip build
+
+      - name: Build sdist and wheel
+        run: python -m build --sdist --wheel
+
+      - name: Compute subject hashes
         id: hash
+        working-directory: dist
         run: |
-          cd dist && echo "hashes=$(sha256sum * | base64 -w0)" >> "$GITHUB_OUTPUT"
-      - uses: actions/upload-artifact@v4
-        with: { name: dist, path: dist/ }
+          set -euo pipefail
+          echo "hashes=$(sha256sum * | base64 -w0)" >> "$GITHUB_OUTPUT"
+
+      - name: Upload dist as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Attach dist to the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release view "${GITHUB_REF_NAME}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1 \
+            || gh release create "${GITHUB_REF_NAME}" --repo "${GITHUB_REPOSITORY}" --title "${GITHUB_REF_NAME}" --notes "Release ${GITHUB_REF_NAME}"
+          gh release upload "${GITHUB_REF_NAME}" dist/* \
+            --repo "${GITHUB_REPOSITORY}" \
+            --clobber
+
   provenance:
     needs: [build]
     permissions:
@@ -35,6 +60,7 @@ jobs:
     with:
       base64-subjects: ${{ needs.build.outputs.hashes }}
       upload-assets: true
+
   verify:
     needs: [provenance]
     runs-on: ubuntu-latest
@@ -42,26 +68,36 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist
+      - uses: actions/checkout@v4
+
       - uses: slsa-framework/slsa-verifier/actions/installer@v2.6.0
-      - name: Download provenance from release
+
+      - name: Download all release assets
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release download "${{ github.ref_name }}" \
-            --pattern "multiple.intoto.jsonl" \
-            --dir .
-      - name: Verify every artifact
+          set -euo pipefail
+          mkdir -p release-assets
+          gh release download "${GITHUB_REF_NAME}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --dir release-assets
+          ls -la release-assets
+
+      - name: Verify every built artifact against the provenance
         run: |
           set -euo pipefail
-          ls -la dist
-          ls -la multiple.intoto.jsonl
-          for f in dist/*; do
+          provenance=release-assets/multiple.intoto.jsonl
+          [ -f "$provenance" ] || { echo "provenance missing"; exit 1; }
+
+          shopt -s nullglob
+          artifacts=(release-assets/*.whl release-assets/*.tar.gz)
+          if [ ${#artifacts[@]} -eq 0 ]; then
+            echo "no artifacts found in release-assets"; exit 1
+          fi
+
+          for f in "${artifacts[@]}"; do
             echo "== verifying $f =="
             slsa-verifier verify-artifact "$f" \
-              --provenance-path multiple.intoto.jsonl \
-              --source-uri "github.com/${{ github.repository }}"
+              --provenance-path "$provenance" \
+              --source-uri "github.com/${GITHUB_REPOSITORY}"
           done
