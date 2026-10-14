@@ -24,6 +24,26 @@ CONFIG = json.loads((ROOT / "sovereign" / "config.json").read_text())
 LEDGER = Ledger(ROOT / CONFIG["ledger_path"])
 MODEL_PATH = ROOT / CONFIG["model_path"]
 
+
+
+def _validate(req: ChatRequest) -> str | None:
+    """Return error message or None if the request is valid."""
+    if not req.messages:
+        return "messages must not be empty"
+    for i, m in enumerate(req.messages):
+        if m.role not in ("user", "assistant", "system"):
+            return f"messages[{i}].role must be one of user, assistant, system"
+        if not isinstance(m.content, str):
+            return f"messages[{i}].content must be a string"
+        if not m.content.strip():
+            return f"messages[{i}].content must not be empty"
+    if req.max_tokens < 1 or req.max_tokens > 4096:
+        return "max_tokens must be between 1 and 4096"
+    if req.temperature < 0.0 or req.temperature > 2.0:
+        return "temperature must be between 0.0 and 2.0"
+    return None
+
+
 app = FastAPI(title="Sovereign Node", version="1.0")
 
 
@@ -53,6 +73,12 @@ def health() -> dict[str, Any]:
 
 @app.post("/v1/chat/completions")
 def chat(req: ChatRequest) -> dict[str, Any]:
+    err = _validate(req)
+    if err:
+        raise HTTPException(
+            status_code=400,
+            detail={"error": {"message": err, "type": "invalid_request_error"}},
+        )
     t0 = time.time()
     request_id = f"chatcmpl-{uuid.uuid4()}"
     try:
