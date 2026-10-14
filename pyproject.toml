@@ -53,13 +53,18 @@ dcs = ["standards/*.json"]
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--cov=app --cov-report=term-missing --cov-fail-under=0 -v"
+asyncio_mode = "auto"
+addopts = "-v"
 testpaths = ["tests"]
 
 [tool.coverage.run]
 omit = ["app/generated/*", "app/dispatchpatch/*"]
 branch = true
-source = ["app"]
+source = [
+    "components/ag/GOV-KRN-001-governance-object-model-and-registry/src/public",
+    "components/ag/GOV-KRN-002-governed-state-and-transition-engine/src/public",
+    "components/ag/GOV-KRN-003-decision-and-outcome-correlation/src/public",
+]
 
 [tool.coverage.report]
 exclude_lines = [
