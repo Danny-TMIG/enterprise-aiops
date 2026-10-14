@@ -1,3 +1,10 @@
+import sys
+if sys.version_info < (3, 11):
+    sys.exit(
+        f"ERROR: this repo requires Python >=3.11 (typing.Self). "
+        f"You are running {sys.version.split()[0]} at {sys.executable}. "
+        f"Activate .venv or reinstall with a newer interpreter."
+    )
 #!/usr/bin/env python3
 """
 Aether Master Orchestrator & State Ledger Pipeline
