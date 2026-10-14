@@ -61,13 +61,37 @@ class ChatRequest(BaseModel):
 
 @app.get("/health")
 def health() -> dict[str, Any]:
+    subsystems = {}
+
+    # config
+    backend_ok = CONFIG.get("backend") in CONFIG.get("backends", {})
+    subsystems["config"] = "ok" if backend_ok else "down"
+
+    # model
+    model_ok = MODEL_PATH.exists()
+    subsystems["model"] = "ok" if model_ok else "degraded"
+
+    # ledger
+    try:
+        ledger_ok = LEDGER.path.parent.exists()
+        subsystems["ledger"] = "ok" if ledger_ok else "down"
+    except Exception:
+        subsystems["ledger"] = "down"
+
+    if any(v == "down" for v in subsystems.values()):
+        top = "down"
+    elif any(v == "degraded" for v in subsystems.values()):
+        top = "degraded"
+    else:
+        top = "ok"
+
     return {
-        "status": "ok",
+        "status": top,
         "node_id": CONFIG["node_id"],
         "backend": CONFIG["backend"],
         "model": CONFIG["model"],
         "model_path": str(MODEL_PATH),
-        "model_available": MODEL_PATH.exists(),
+        "subsystems": subsystems,
     }
 
 
