@@ -219,3 +219,64 @@ def test_krn003_open_correlations_lists_open_only(krn003):
         reg.open("c2", ["d2"])
         reg.close_with_outcome("c1", "o1")
         assert reg.open_correlations() == ["c2"]
+
+
+# ---------------- Extra coverage for uncovered branches ----------------
+
+def test_krn001_expected_version_matches_is_allowed(krn001):
+    """Line 134: expected_version == current -> put proceeds."""
+    with krn001.GovernanceRegistry() as reg:
+        reg.put("o1", "policy", {"rule": "a"})
+        v = reg.put("o1", "policy", {"rule": "b"}, expected_version=1)
+        assert v.version == 2
+
+
+def test_krn001_verify_chain_unknown_raises(krn001):
+    """Line 152: verify_chain on unknown id raises."""
+    with krn001.GovernanceRegistry() as reg:
+        with pytest.raises(krn001.UnknownObjectError):
+            reg.verify_chain("nope")
+
+
+def test_krn002_envelope_not_a_mapping_raises(krn002):
+    """Line 53: envelope must be a mapping."""
+    with krn002.TransitionEngine() as eng:
+        with pytest.raises(krn002.EnvelopeError):
+            eng.record("s1", "NEW", "OPEN", "a", "r", ["not", "a", "dict"])
+
+
+def test_krn002_verify_chain_unknown_raises(krn002):
+    """Line 158: verify_chain on unknown subject raises."""
+    with krn002.TransitionEngine() as eng:
+        with pytest.raises(krn002.TransitionError):
+            eng.verify_chain("never")
+
+
+def test_krn003_get_returns_record(krn003):
+    """Lines 59-62: get() returns the record."""
+    with krn003.CorrelationRegistry() as reg:
+        reg.open("c1", ["d1"])
+        assert reg.get("c1").status == "OPEN"
+
+
+def test_krn003_get_unknown_raises(krn003):
+    """Lines 59-62 (raise path): get() on unknown id raises."""
+    with krn003.CorrelationRegistry() as reg:
+        with pytest.raises(krn003.UnknownCorrelationError):
+            reg.get("nope")
+
+
+def test_krn001_list_ids_without_kind_returns_all(krn001):
+    """Line 134: list_ids() with no kind returns every object id."""
+    with krn001.GovernanceRegistry() as reg:
+        reg.put("a", "policy", {})
+        reg.put("b", "role", {})
+        assert reg.list_ids() == ["a", "b"]
+
+
+def test_krn001_list_ids_without_kind_returns_all(krn001):
+    """Line 134: list_ids() with no kind returns every object id."""
+    with krn001.GovernanceRegistry() as reg:
+        reg.put("a", "policy", {})
+        reg.put("b", "role", {})
+        assert reg.list_ids() == ["a", "b"]
