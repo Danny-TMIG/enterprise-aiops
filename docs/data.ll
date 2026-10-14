@@ -1,0 +1,2957 @@
+;; layer: data
+;; dir:   data
+FILE data/algorithms.json
+{
+  "schema_version": "1.0",
+  "derived_from": "data/nature.txt",
+  "algorithms": [
+    {
+      "phenomenon": "levy_flight",
+      "algorithm": "levy_flight_step",
+      "params": [
+        "alpha",
+        "scale"
+      ],
+      "math": "x_{n+1} = x_n + s * L(alpha), s ~ heavy-tailed",
+      "reference": "Viswanathan 1999, Nature 401:911"
+    },
+    {
+      "phenomenon": "brownian_search",
+      "algorithm": "wiener_step",
+      "params": [
+        "sigma",
+        "dt"
+      ],
+      "math": "x_{n+1} = x_n + N(0, sigma^2 dt)",
+      "reference": "Einstein 1905, Ann. Phys. 17:549"
+    },
+    {
+      "phenomenon": "area_restricted",
+      "algorithm": "area_restricted_search",
+      "params": [
+        "step",
+        "radius"
+      ],
+      "math": "long steps + return-to-area kernel",
+      "reference": "Benhamou 2007, Ecology 88:1962"
+    },
+    {
+      "phenomenon": "albatross_forage",
+      "algorithm": "levy_with_gradient",
+      "params": [
+        "alpha",
+        "gradient_weight"
+      ],
+      "math": "levy step + k * grad(odor(x))",
+      "reference": "Viswanathan 1996, Nature 381:413"
+    },
+    {
+      "phenomenon": "bee_waggle",
+      "algorithm": "waggle_average",
+      "params": [
+        "n_dancers",
+        "noise"
+      ],
+      "math": "hive_vector = mean(dancer_vectors) + noise",
+      "reference": "von Frisch 1967"
+    },
+    {
+      "phenomenon": "ant_quorum",
+      "algorithm": "quorum_commit",
+      "params": [
+        "threshold",
+        "recruit_rate"
+      ],
+      "math": "commit when n_recruited >= threshold",
+      "reference": "Pratt 2002, PNAS 99:10421"
+    },
+    {
+      "phenomenon": "ant_colony",
+      "algorithm": "aco_pheromone",
+      "params": [
+        "evaporation",
+        "deposit",
+        "alpha",
+        "beta"
+      ],
+      "math": "tau_{ij} <- (1-rho)*tau_{ij} + sum d_tau",
+      "reference": "Dorigo 1992"
+    },
+    {
+      "phenomenon": "termite_mound",
+      "algorithm": "stigmergy_build",
+      "params": [
+        "deposit_rate",
+        "evaporation_rate"
+      ],
+      "math": "field[x] += deposit; field[x] *= (1 - evap)",
+      "reference": "Theraulaz 1995"
+    },
+    {
+      "phenomenon": "slime_mold",
+      "algorithm": "tube_reinforcement",
+      "params": [
+        "conductivity_rate",
+        "decay"
+      ],
+      "math": "D_{ij} += f(flux_{ij}); D_{ij} *= (1-decay)",
+      "reference": "Tero 2007"
+    },
+    {
+      "phenomenon": "boids",
+      "algorithm": "boids_rule",
+      "params": [
+        "separation",
+        "alignment",
+        "cohesion",
+        "r"
+      ],
+      "math": "v_i += w_s*sep + w_a*align + w_c*coh",
+      "reference": "Reynolds 1987"
+    },
+    {
+      "phenomenon": "starling_murmuration",
+      "algorithm": "topological_flock",
+      "params": [
+        "k_neighbours",
+        "w_sep",
+        "w_ali",
+        "w_coh"
+      ],
+      "math": "v_i <- mean(v of k nearest); k=7",
+      "reference": "Ballerini 2008"
+    },
+    {
+      "phenomenon": "murmuration_critical",
+      "algorithm": "critical_flock",
+      "params": [
+        "density",
+        "noise"
+      ],
+      "math": "order parameter peaks at critical density",
+      "reference": "Cavagna 2010"
+    },
+    {
+      "phenomenon": "fish_school",
+      "algorithm": "school_edge_follow",
+      "params": [
+        "edge_weight",
+        "predator_repulsion"
+      ],
+      "math": "v_i <- edge_direction + repulsion",
+      "reference": "Hemelrijk 2015"
+    },
+    {
+      "phenomenon": "locust_swarm",
+      "algorithm": "cannibal_band",
+      "params": [
+        "alignment",
+        "repulsion"
+      ],
+      "math": "v_i <- align + repel",
+      "reference": "Buhl 2006, Science 312:1402"
+    },
+    {
+      "phenomenon": "kuramoto",
+      "algorithm": "kuramoto_step",
+      "params": [
+        "K",
+        "omega",
+        "dt"
+      ],
+      "math": "dtheta_i/dt = omega_i + (K/N) sum sin(theta_j - theta_i)",
+      "reference": "Kuramoto 1975"
+    },
+    {
+      "phenomenon": "firefly_sync",
+      "algorithm": "pulse_coupled",
+      "params": [
+        "epsilon",
+        "period"
+      ],
+      "math": "on pulse: theta_j <- theta_j + epsilon",
+      "reference": "Mirollo & Strogatz 1990"
+    },
+    {
+      "phenomenon": "cricket_chorus",
+      "algorithm": "leader_coupling",
+      "params": [
+        "coupling",
+        "noise"
+      ],
+      "math": "strong coupling -> leader emerges",
+      "reference": "Greenfield 1994"
+    },
+    {
+      "phenomenon": "fitzhugh_nagumo",
+      "algorithm": "fn_integrate",
+      "params": [
+        "a",
+        "b",
+        "I",
+        "dt"
+      ],
+      "math": "dv/dt = v - v^3/3 - w + I; dw/dt = (v + a - b*w)/tau",
+      "reference": "FitzHugh 1961"
+    },
+    {
+      "phenomenon": "hodgkin_huxley",
+      "algorithm": "hh_integrate",
+      "params": [
+        "g_Na",
+        "g_K",
+        "g_L",
+        "C_m",
+        "dt"
+      ],
+      "math": "C dV/dt = I - sum(I_ion)",
+      "reference": "Hodgkin & Huxley 1952"
+    },
+    {
+      "phenomenon": "circadian_clock",
+      "algorithm": "goodwin_oscillator",
+      "params": [
+        "k1",
+        "k2",
+        "k3",
+        "n",
+        "dt"
+      ],
+      "math": "delayed negative feedback with Hill coefficient",
+      "reference": "Goodwin 1965"
+    },
+    {
+      "phenomenon": "turing_pattern",
+      "algorithm": "reaction_diffusion",
+      "params": [
+        "Du",
+        "Dv",
+        "f",
+        "k",
+        "dt"
+      ],
+      "math": "du/dt = Du lap(u) + u - u^3 - v",
+      "reference": "Turing 1952"
+    },
+    {
+      "phenomenon": "gray_scott",
+      "algorithm": "gray_scott_step",
+      "params": [
+        "Du",
+        "Dv",
+        "F",
+        "k",
+        "dt"
+      ],
+      "math": "du/dt = Du lap(u) - u v^2 + F(1-u)",
+      "reference": "Gray & Scott 1984"
+    },
+    {
+      "phenomenon": "belousov_zhabotinsky",
+      "algorithm": "bz_oregonator",
+      "params": [
+        "eps",
+        "q",
+        "f",
+        "dt"
+      ],
+      "math": "Oregonator equations",
+      "reference": "Field & Noyes 1974"
+    },
+    {
+      "phenomenon": "dla",
+      "algorithm": "diffusion_limited_aggregation",
+      "params": [
+        "N_particles",
+        "sticking_prob"
+      ],
+      "math": "random walk until attach",
+      "reference": "Witten & Sander 1981"
+    },
+    {
+      "phenomenon": "eden_growth",
+      "algorithm": "eden_model",
+      "params": [
+        "p",
+        "N"
+      ],
+      "math": "attach randomly to boundary",
+      "reference": "Eden 1961"
+    },
+    {
+      "phenomenon": "lichen_edge",
+      "algorithm": "boundary_expansion",
+      "params": [
+        "rate"
+      ],
+      "math": "slow boundary expansion",
+      "reference": "Watson 2014"
+    },
+    {
+      "phenomenon": "tree_branching",
+      "algorithm": "l_system",
+      "params": [
+        "axiom",
+        "rules",
+        "angle",
+        "iterations"
+      ],
+      "math": "L-system rewriting",
+      "reference": "Prusinkiewicz 1990"
+    },
+    {
+      "phenomenon": "elephant_walk",
+      "algorithm": "memory_walk",
+      "params": [
+        "step",
+        "memory",
+        "weight"
+      ],
+      "math": "next = weighted mix of past positions",
+      "reference": "Moorcroft 2006"
+    },
+    {
+      "phenomenon": "self_avoiding_walk",
+      "algorithm": "saw_walk",
+      "params": [
+        "N",
+        "lattice"
+      ],
+      "math": "grow path, reject revisits",
+      "reference": "Flory 1949"
+    },
+    {
+      "phenomenon": "persistent_walk",
+      "algorithm": "correlated_walk",
+      "params": [
+        "step",
+        "kappa",
+        "dt"
+      ],
+      "math": "theta_{n+1} = theta_n + N(0, kappa^2)",
+      "reference": "Kareiva 1983"
+    },
+    {
+      "phenomenon": "levy_walk_2d",
+      "algorithm": "levy_walk_2d",
+      "params": [
+        "alpha",
+        "scale"
+      ],
+      "math": "2D heavy-tail search",
+      "reference": "Viswanathan 1999"
+    },
+    {
+      "phenomenon": "quorum_sensing",
+      "algorithm": "density_gate",
+      "params": [
+        "threshold",
+        "signal"
+      ],
+      "math": "act if signal >= threshold",
+      "reference": "Miller & Bassler 2001"
+    },
+    {
+      "phenomenon": "all_or_none",
+      "algorithm": "sigmoid_response",
+      "params": [
+        "gain",
+        "threshold"
+      ],
+      "math": "y = 1 / (1 + exp(-gain(x - threshold)))",
+      "reference": "Hill 1910"
+    },
+    {
+      "phenomenon": "neuron_threshold",
+      "algorithm": "lif_neuron",
+      "params": [
+        "tau_m",
+        "V_th",
+        "V_reset",
+        "dt"
+      ],
+      "math": "tau_m dV/dt = -(V - V_rest) + R I",
+      "reference": "Lapicque 1907"
+    },
+    {
+      "phenomenon": "gene_switch",
+      "algorithm": "toggle_switch",
+      "params": [
+        "alpha1",
+        "alpha2",
+        "beta",
+        "n"
+      ],
+      "math": "bistable two mutually repressing genes",
+      "reference": "Gardner 2000"
+    },
+    {
+      "phenomenon": "phase_transition",
+      "algorithm": "ising_order",
+      "params": [
+        "J",
+        "T",
+        "N"
+      ],
+      "math": "m = tanh(J m / T)",
+      "reference": "Onsager 1944"
+    },
+    {
+      "phenomenon": "habituation",
+      "algorithm": "habituation_step",
+      "params": [
+        "rate",
+        "floor"
+      ],
+      "math": "response <- max(floor, response * (1 - rate))",
+      "reference": "Thompson & Spencer 1966"
+    },
+    {
+      "phenomenon": "sensitization",
+      "algorithm": "sensitization_step",
+      "params": [
+        "rate",
+        "ceiling"
+      ],
+      "math": "response <- min(ceiling, response * (1 + rate))",
+      "reference": "Groves & Thompson 1970"
+    },
+    {
+      "phenomenon": "hebbian",
+      "algorithm": "hebbian_update",
+      "params": [
+        "eta"
+      ],
+      "math": "dw_{ij} = eta * x_i * x_j",
+      "reference": "Hebb 1949"
+    },
+    {
+      "phenomenon": "stdp",
+      "algorithm": "stdp_update",
+      "params": [
+        "A_plus",
+        "A_minus",
+        "tau_plus",
+        "tau_minus"
+      ],
+      "math": "dw = A_plus exp(-dt/tau_plus)",
+      "reference": "Bi & Poo 1998"
+    },
+    {
+      "phenomenon": "homeostasis",
+      "algorithm": "negative_feedback",
+      "params": [
+        "setpoint",
+        "gain",
+        "dt"
+      ],
+      "math": "dx/dt = -gain * (x - setpoint)",
+      "reference": "Cannon 1932"
+    },
+    {
+      "phenomenon": "allostasis",
+      "algorithm": "predictive_control",
+      "params": [
+        "gain",
+        "horizon",
+        "dt"
+      ],
+      "math": "x_target = predict(future demand)",
+      "reference": "Sterling & Eyer 1988"
+    },
+    {
+      "phenomenon": "immune_affinity",
+      "algorithm": "clonal_selection",
+      "params": [
+        "mutation_rate",
+        "selection_pressure"
+      ],
+      "math": "clone + mutate; select by affinity",
+      "reference": "Burnet 1959"
+    },
+    {
+      "phenomenon": "bacterial_chemotaxis",
+      "algorithm": "run_and_tumble",
+      "params": [
+        "run_length",
+        "tumble_prob"
+      ],
+      "math": "run if gradient positive",
+      "reference": "Berg & Brown 1972"
+    },
+    {
+      "phenomenon": "lotka_volterra",
+      "algorithm": "lv_step",
+      "params": [
+        "alpha",
+        "beta",
+        "delta",
+        "gamma",
+        "dt"
+      ],
+      "math": "dx/dt = alpha x - beta x y; dy/dt = delta x y - gamma y",
+      "reference": "Lotka 1925"
+    },
+    {
+      "phenomenon": "logistic",
+      "algorithm": "logistic_growth",
+      "params": [
+        "r",
+        "K",
+        "dt"
+      ],
+      "math": "dx/dt = r x (1 - x/K)",
+      "reference": "Verhulst 1838"
+    },
+    {
+      "phenomenon": "gompertz",
+      "algorithm": "gompertz_growth",
+      "params": [
+        "a",
+        "b",
+        "dt"
+      ],
+      "math": "dx/dt = a x exp(-b t)",
+      "reference": "Gompertz 1825"
+    },
+    {
+      "phenomenon": "allee",
+      "algorithm": "allee_growth",
+      "params": [
+        "r",
+        "K",
+        "A",
+        "dt"
+      ],
+      "math": "dx/dt = r x (x/A - 1)(1 - x/K)",
+      "reference": "Allee 1931"
+    },
+    {
+      "phenomenon": "sir",
+      "algorithm": "sir_step",
+      "params": [
+        "beta",
+        "gamma",
+        "dt"
+      ],
+      "math": "dS/dt = -beta S I / N; dI/dt = beta S I / N - gamma I",
+      "reference": "Kermack & McKendrick 1927"
+    },
+    {
+      "phenomenon": "sirs",
+      "algorithm": "sirs_step",
+      "params": [
+        "beta",
+        "gamma",
+        "omega",
+        "dt"
+      ],
+      "math": "SIRS with waning immunity",
+      "reference": "Kermack & McKendrick 1932"
+    },
+    {
+      "phenomenon": "host_parasite",
+      "algorithm": "red_queen",
+      "params": [
+        "mutation",
+        "selection"
+      ],
+      "math": "coevolving genotype frequencies",
+      "reference": "Van Valen 1973"
+    },
+    {
+      "phenomenon": "predator_prey_spatial",
+      "algorithm": "spatial_lv",
+      "params": [
+        "alpha",
+        "beta",
+        "delta",
+        "gamma",
+        "Dx",
+        "Dy",
+        "dt"
+      ],
+      "math": "Turing-Holling on grid",
+      "reference": "Holling 1959"
+    },
+    {
+      "phenomenon": "fick",
+      "algorithm": "fick_flux",
+      "params": [
+        "D",
+        "dt"
+      ],
+      "math": "J = -D grad(c)",
+      "reference": "Fick 1855"
+    },
+    {
+      "phenomenon": "darcy",
+      "algorithm": "darcy_flow",
+      "params": [
+        "k",
+        "mu",
+        "dt"
+      ],
+      "math": "v = -(k/mu) grad(P)",
+      "reference": "Darcy 1856"
+    },
+    {
+      "phenomenon": "poiseuille",
+      "algorithm": "poiseuille_flow",
+      "params": [
+        "mu",
+        "R",
+        "L"
+      ],
+      "math": "Q = pi R^4 dP / (8 mu L)",
+      "reference": "Poiseuille 1840"
+    },
+    {
+      "phenomenon": "kirchhoff",
+      "algorithm": "conservation_law",
+      "params": [
+        "topology"
+      ],
+      "math": "sum of currents at node = 0",
+      "reference": "Kirchhoff 1845"
+    },
+    {
+      "phenomenon": "fourier",
+      "algorithm": "heat_conduction",
+      "params": [
+        "k",
+        "rho",
+        "c",
+        "dt"
+      ],
+      "math": "dT/dt = (k / (rho c)) lap(T)",
+      "reference": "Fourier 1822"
+    },
+    {
+      "phenomenon": "nernst",
+      "algorithm": "nernst_planck",
+      "params": [
+        "D",
+        "z",
+        "F",
+        "R",
+        "T",
+        "dt"
+      ],
+      "math": "J = -D grad(c) - (D z F c / R T) grad(phi)",
+      "reference": "Nernst 1888"
+    },
+    {
+      "phenomenon": "chemostat",
+      "algorithm": "chemostat_step",
+      "params": [
+        "D",
+        "c_in",
+        "mu_max",
+        "K_s",
+        "dt"
+      ],
+      "math": "dc/dt = D(c_in - c) - mu(c) x",
+      "reference": "Monod 1950"
+    },
+    {
+      "phenomenon": "osmosis",
+      "algorithm": "osmotic_flow",
+      "params": [
+        "A",
+        "P_osmotic",
+        "dt"
+      ],
+      "math": "J_v = A L_p (dP - dPi)",
+      "reference": "van 't Hoff 1887"
+    },
+    {
+      "phenomenon": "diffusion_limited",
+      "algorithm": "boundary_reaction",
+      "params": [
+        "D",
+        "k",
+        "dt"
+      ],
+      "math": "reaction at boundary",
+      "reference": "Rice 1985"
+    }
+  ]
+}ENDFILE data/algorithms.json
+FILE data/capabilities.json
+{
+  "schema": "aether.capabilities.v1",
+  "note": "Contracts for every family. status=declared until implemented; evidence list is empty by default.",
+  "capabilities": [
+    {
+      "id": "cap.hardware.001.registers",
+      "family_id": 1,
+      "group": "hardware",
+      "name": "Registers",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "general-purpose",
+        "floating-point",
+        "vector",
+        "instruction pointer",
+        "stack pointer",
+        "status",
+        "control",
+        "debug",
+        "device registers"
+      ]
+    },
+    {
+      "id": "cap.hardware.002.libraries",
+      "family_id": 2,
+      "group": "hardware",
+      "name": "Libraries",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "standard",
+        "runtime",
+        "static",
+        "shared",
+        "system",
+        "numerical",
+        "networking",
+        "cryptographic",
+        "application libraries"
+      ]
+    },
+    {
+      "id": "cap.hardware.003.registries",
+      "family_id": 3,
+      "group": "hardware",
+      "name": "Registries",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "package",
+        "service",
+        "schema",
+        "capability",
+        "device",
+        "container image",
+        "model",
+        "configuration registries"
+      ]
+    },
+    {
+      "id": "cap.hardware.004.logic_circuits",
+      "family_id": 4,
+      "group": "hardware",
+      "name": "Logic circuits",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "gates",
+        "combinational logic",
+        "flip-flops",
+        "counters",
+        "multiplexers",
+        "arithmetic circuits"
+      ]
+    },
+    {
+      "id": "cap.hardware.005.processors",
+      "family_id": 5,
+      "group": "hardware",
+      "name": "Processors",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "CPUs",
+        "cores",
+        "microcontrollers",
+        "GPUs",
+        "DSPs",
+        "specialized processors"
+      ]
+    },
+    {
+      "id": "cap.hardware.006.execution_units",
+      "family_id": 6,
+      "group": "hardware",
+      "name": "Execution units",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "arithmetic and logic units",
+        "floating-point units",
+        "vector units",
+        "load/store units"
+      ]
+    },
+    {
+      "id": "cap.hardware.007.processor_control",
+      "family_id": 7,
+      "group": "hardware",
+      "name": "Processor control",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "instruction decoding",
+        "pipelines",
+        "scheduling",
+        "branch prediction",
+        "retirement"
+      ]
+    },
+    {
+      "id": "cap.hardware.008.instruction_sets",
+      "family_id": 8,
+      "group": "hardware",
+      "name": "Instruction sets",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "opcodes",
+        "addressing modes",
+        "privilege levels",
+        "atomic operations",
+        "instruction encodings"
+      ]
+    },
+    {
+      "id": "cap.hardware.009.caches",
+      "family_id": 9,
+      "group": "hardware",
+      "name": "Caches",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "instruction",
+        "data",
+        "unified",
+        "translation",
+        "device caches",
+        "coherence mechanisms"
+      ]
+    },
+    {
+      "id": "cap.hardware.010.memory",
+      "family_id": 10,
+      "group": "hardware",
+      "name": "Memory",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "SRAM",
+        "DRAM",
+        "ROM",
+        "flash",
+        "persistent memory",
+        "device memory"
+      ]
+    },
+    {
+      "id": "cap.hardware.011.memory_management_hardware",
+      "family_id": 11,
+      "group": "hardware",
+      "name": "Memory management hardware",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "MMUs",
+        "TLBs",
+        "page-table walkers",
+        "memory protection units",
+        "IOMMUs"
+      ]
+    },
+    {
+      "id": "cap.hardware.012.interconnects_and_buses",
+      "family_id": 12,
+      "group": "hardware",
+      "name": "Interconnects and buses",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "memory buses",
+        "peripheral buses",
+        "chip interconnects",
+        "expansion links"
+      ]
+    },
+    {
+      "id": "cap.hardware.013.controllers",
+      "family_id": 13,
+      "group": "hardware",
+      "name": "Controllers",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "memory",
+        "storage",
+        "network",
+        "interrupt",
+        "DMA",
+        "peripheral controllers"
+      ]
+    },
+    {
+      "id": "cap.hardware.014.storage_devices",
+      "family_id": 14,
+      "group": "hardware",
+      "name": "Storage devices",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "SSDs",
+        "hard drives",
+        "removable media",
+        "optical media",
+        "tape"
+      ]
+    },
+    {
+      "id": "cap.hardware.015.input_and_output_devices",
+      "family_id": 15,
+      "group": "hardware",
+      "name": "Input and output devices",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "displays",
+        "keyboards",
+        "cameras",
+        "microphones",
+        "sensors",
+        "actuators"
+      ]
+    },
+    {
+      "id": "cap.hardware.016.physical_infrastructure",
+      "family_id": 16,
+      "group": "hardware",
+      "name": "Physical infrastructure",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "boards",
+        "sockets",
+        "connectors",
+        "power supplies",
+        "cooling",
+        "enclosures",
+        "cabling"
+      ]
+    },
+    {
+      "id": "cap.hardware.017.clocks_and_timing",
+      "family_id": 17,
+      "group": "hardware",
+      "name": "Clocks and timing",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "oscillators",
+        "timers",
+        "clock domains",
+        "synchronization",
+        "watchdog timers"
+      ]
+    },
+    {
+      "id": "cap.hardware.018.firmware",
+      "family_id": 18,
+      "group": "hardware",
+      "name": "Firmware",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "platform firmware",
+        "device firmware",
+        "microcode",
+        "embedded control software"
+      ]
+    },
+    {
+      "id": "cap.hardware.019.boot_components",
+      "family_id": 19,
+      "group": "hardware",
+      "name": "Boot components",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "boot ROMs",
+        "bootloaders",
+        "boot managers",
+        "boot configuration",
+        "recovery images"
+      ]
+    },
+    {
+      "id": "cap.hardware.020.hardware_description_and_configuration",
+      "family_id": 20,
+      "group": "hardware",
+      "name": "Hardware description and configuration",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "device trees",
+        "platform tables",
+        "hardware manifests",
+        "programmable logic bitstreams"
+      ]
+    },
+    {
+      "id": "cap.system.021.kernels",
+      "family_id": 21,
+      "group": "system",
+      "name": "Kernels",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "privilege management",
+        "resource control",
+        "scheduling",
+        "memory management"
+      ]
+    },
+    {
+      "id": "cap.system.022.device_drivers",
+      "family_id": 22,
+      "group": "system",
+      "name": "Device drivers",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "device initialization",
+        "control",
+        "interrupt handling",
+        "data transfer"
+      ]
+    },
+    {
+      "id": "cap.system.023.system_calls",
+      "family_id": 23,
+      "group": "system",
+      "name": "System calls",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "processes",
+        "files",
+        "memory",
+        "networking",
+        "devices"
+      ]
+    },
+    {
+      "id": "cap.system.024.processes",
+      "family_id": 24,
+      "group": "system",
+      "name": "Processes",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "address spaces",
+        "process identifiers",
+        "execution state",
+        "environments"
+      ]
+    },
+    {
+      "id": "cap.system.025.threads_and_tasks",
+      "family_id": 25,
+      "group": "system",
+      "name": "Threads and tasks",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "execution contexts",
+        "stacks",
+        "thread-local storage",
+        "task state"
+      ]
+    },
+    {
+      "id": "cap.system.026.schedulers",
+      "family_id": 26,
+      "group": "system",
+      "name": "Schedulers",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "CPU scheduling",
+        "task priorities",
+        "deadlines",
+        "work queues"
+      ]
+    },
+    {
+      "id": "cap.system.027.synchronization_primitives",
+      "family_id": 27,
+      "group": "system",
+      "name": "Synchronization primitives",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "mutexes",
+        "semaphores",
+        "condition variables",
+        "barriers",
+        "atomics"
+      ]
+    },
+    {
+      "id": "cap.system.028.interprocess_communication",
+      "family_id": 28,
+      "group": "system",
+      "name": "Interprocess communication",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "pipes",
+        "sockets",
+        "shared memory",
+        "signals",
+        "message passing"
+      ]
+    },
+    {
+      "id": "cap.system.029.virtual_memory",
+      "family_id": 29,
+      "group": "system",
+      "name": "Virtual memory",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "address spaces",
+        "pages",
+        "mappings",
+        "protection",
+        "swapping"
+      ]
+    },
+    {
+      "id": "cap.system.030.allocators",
+      "family_id": 30,
+      "group": "system",
+      "name": "Allocators",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "heap",
+        "pool",
+        "slab",
+        "arena",
+        "stack",
+        "device-memory allocation"
+      ]
+    },
+    {
+      "id": "cap.system.031.filesystems",
+      "family_id": 31,
+      "group": "system",
+      "name": "Filesystems",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "files",
+        "directories",
+        "metadata",
+        "permissions",
+        "journaling",
+        "mounts"
+      ]
+    },
+    {
+      "id": "cap.system.032.storage_management",
+      "family_id": 32,
+      "group": "system",
+      "name": "Storage management",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "partitions",
+        "volumes",
+        "block layers",
+        "redundancy",
+        "snapshots"
+      ]
+    },
+    {
+      "id": "cap.system.033.networking_stacks",
+      "family_id": 33,
+      "group": "system",
+      "name": "Networking stacks",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "addressing",
+        "routing",
+        "transport",
+        "sockets",
+        "packet processing"
+      ]
+    },
+    {
+      "id": "cap.system.034.system_services",
+      "family_id": 34,
+      "group": "system",
+      "name": "System services",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "service managers",
+        "background daemons",
+        "time services",
+        "logging services"
+      ]
+    },
+    {
+      "id": "cap.system.035.shells_and_command_environments",
+      "family_id": 35,
+      "group": "system",
+      "name": "Shells and command environments",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "command parsing",
+        "scripting",
+        "pipelines",
+        "sessions",
+        "environment variables"
+      ]
+    },
+    {
+      "id": "cap.system.036.isolation_mechanisms",
+      "family_id": 36,
+      "group": "system",
+      "name": "Isolation mechanisms",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "protection domains",
+        "namespaces",
+        "resource limits",
+        "sandboxes"
+      ]
+    },
+    {
+      "id": "cap.system.037.virtualization",
+      "family_id": 37,
+      "group": "system",
+      "name": "Virtualization",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "hypervisors",
+        "virtual machines",
+        "virtual devices",
+        "guest environments"
+      ]
+    },
+    {
+      "id": "cap.system.038.containers",
+      "family_id": 38,
+      "group": "system",
+      "name": "Containers",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "images",
+        "runtimes",
+        "filesystem layers",
+        "resource configuration"
+      ]
+    },
+    {
+      "id": "cap.system.039.emulators_and_simulators",
+      "family_id": 39,
+      "group": "system",
+      "name": "Emulators and simulators",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "instruction emulation",
+        "device models",
+        "behavioral models",
+        "simulated environments"
+      ]
+    },
+    {
+      "id": "cap.system.040.runtime_environments",
+      "family_id": 40,
+      "group": "system",
+      "name": "Runtime environments",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "virtual machines",
+        "interpreters",
+        "JIT execution",
+        "managed execution services"
+      ]
+    },
+    {
+      "id": "cap.system.041.language_runtime_services",
+      "family_id": 41,
+      "group": "system",
+      "name": "Language runtime services",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "garbage collection",
+        "exception handling",
+        "reflection",
+        "coroutine execution"
+      ]
+    },
+    {
+      "id": "cap.system.042.resource_accounting",
+      "family_id": 42,
+      "group": "system",
+      "name": "Resource accounting",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "CPU",
+        "memory",
+        "storage",
+        "network",
+        "accelerator usage and quotas"
+      ]
+    },
+    {
+      "id": "cap.program.043.symbols_and_identifiers",
+      "family_id": 43,
+      "group": "program",
+      "name": "Symbols and identifiers",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "names",
+        "labels",
+        "namespaces",
+        "symbol tables",
+        "scopes"
+      ]
+    },
+    {
+      "id": "cap.program.044.values_and_literals",
+      "family_id": 44,
+      "group": "program",
+      "name": "Values and literals",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "numbers",
+        "characters",
+        "strings",
+        "booleans",
+        "constants"
+      ]
+    },
+    {
+      "id": "cap.program.045.types",
+      "family_id": 45,
+      "group": "program",
+      "name": "Types",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "primitive",
+        "composite",
+        "algebraic",
+        "generic",
+        "reference",
+        "function types"
+      ]
+    },
+    {
+      "id": "cap.program.046.variables_and_bindings",
+      "family_id": 46,
+      "group": "program",
+      "name": "Variables and bindings",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "mutable variables",
+        "immutable bindings",
+        "references",
+        "lifetime rules"
+      ]
+    },
+    {
+      "id": "cap.program.047.expressions_and_operators",
+      "family_id": 47,
+      "group": "program",
+      "name": "Expressions and operators",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "arithmetic",
+        "comparison",
+        "logic",
+        "assignment",
+        "evaluation rules"
+      ]
+    },
+    {
+      "id": "cap.program.048.control_flow",
+      "family_id": 48,
+      "group": "program",
+      "name": "Control flow",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "branches",
+        "loops",
+        "pattern matching",
+        "jumps",
+        "exception paths"
+      ]
+    },
+    {
+      "id": "cap.program.049.functions_and_procedures",
+      "family_id": 49,
+      "group": "program",
+      "name": "Functions and procedures",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "parameters",
+        "return values",
+        "closures",
+        "callbacks",
+        "methods"
+      ]
+    },
+    {
+      "id": "cap.program.050.objects_and_abstractions",
+      "family_id": 50,
+      "group": "program",
+      "name": "Objects and abstractions",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "classes",
+        "interfaces",
+        "traits",
+        "prototypes",
+        "records"
+      ]
+    },
+    {
+      "id": "cap.program.051.modules_and_packages",
+      "family_id": 51,
+      "group": "program",
+      "name": "Modules and packages",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "imports",
+        "exports",
+        "visibility",
+        "package boundaries",
+        "dependencies"
+      ]
+    },
+    {
+      "id": "cap.program.052.data_structures",
+      "family_id": 52,
+      "group": "program",
+      "name": "Data structures",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "arrays",
+        "lists",
+        "maps",
+        "sets",
+        "trees",
+        "graphs",
+        "queues",
+        "heaps"
+      ]
+    },
+    {
+      "id": "cap.program.053.algorithms",
+      "family_id": 53,
+      "group": "program",
+      "name": "Algorithms",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "search",
+        "sorting",
+        "parsing",
+        "optimization",
+        "scheduling",
+        "numerical computation"
+      ]
+    },
+    {
+      "id": "cap.program.054.state_machines",
+      "family_id": 54,
+      "group": "program",
+      "name": "State machines",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "states",
+        "transitions",
+        "events",
+        "guards",
+        "actions"
+      ]
+    },
+    {
+      "id": "cap.program.055.concurrency_models",
+      "family_id": 55,
+      "group": "program",
+      "name": "Concurrency models",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "threads",
+        "actors",
+        "async tasks",
+        "futures",
+        "channels",
+        "event loops"
+      ]
+    },
+    {
+      "id": "cap.program.056.error_models",
+      "family_id": 56,
+      "group": "program",
+      "name": "Error models",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "exceptions",
+        "result types",
+        "error codes",
+        "cancellation",
+        "recovery"
+      ]
+    },
+    {
+      "id": "cap.program.057.resource_ownership_models",
+      "family_id": 57,
+      "group": "program",
+      "name": "Resource ownership models",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "ownership",
+        "borrowing",
+        "reference counting",
+        "scoped cleanup"
+      ]
+    },
+    {
+      "id": "cap.program.058.interfaces_and_contracts",
+      "family_id": 58,
+      "group": "program",
+      "name": "Interfaces and contracts",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "inputs",
+        "outputs",
+        "preconditions",
+        "postconditions",
+        "invariants",
+        "compatibility rules"
+      ]
+    },
+    {
+      "id": "cap.program.059.application_binary_interfaces",
+      "family_id": 59,
+      "group": "program",
+      "name": "Application binary interfaces",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "calling conventions",
+        "object layouts",
+        "symbol conventions",
+        "binary compatibility"
+      ]
+    },
+    {
+      "id": "cap.program.060.foreign-function_interfaces",
+      "family_id": 60,
+      "group": "program",
+      "name": "Foreign-function interfaces",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "cross-language calls",
+        "bindings",
+        "marshalling",
+        "native extensions"
+      ]
+    },
+    {
+      "id": "cap.program.061.frameworks",
+      "family_id": 61,
+      "group": "program",
+      "name": "Frameworks",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "application structure",
+        "lifecycle hooks",
+        "routing",
+        "extension points"
+      ]
+    },
+    {
+      "id": "cap.program.062.sdks_and_toolkits",
+      "family_id": 62,
+      "group": "program",
+      "name": "SDKs and toolkits",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "libraries",
+        "headers",
+        "tools",
+        "examples",
+        "integration documentation"
+      ]
+    },
+    {
+      "id": "cap.program.063.plugins_and_extensions",
+      "family_id": 63,
+      "group": "program",
+      "name": "Plugins and extensions",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "loadable modules",
+        "extension APIs",
+        "discovery",
+        "version compatibility"
+      ]
+    },
+    {
+      "id": "cap.program.064.configuration",
+      "family_id": 64,
+      "group": "program",
+      "name": "Configuration",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "settings",
+        "profiles",
+        "feature flags",
+        "policy parameters",
+        "environment configuration"
+      ]
+    },
+    {
+      "id": "cap.toolchain.065.languages_and_grammars",
+      "family_id": 65,
+      "group": "toolchain",
+      "name": "Languages and grammars",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "syntax",
+        "semantics",
+        "lexical rules",
+        "grammar definitions"
+      ]
+    },
+    {
+      "id": "cap.toolchain.066.lexers_and_parsers",
+      "family_id": 66,
+      "group": "toolchain",
+      "name": "Lexers and parsers",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "tokenization",
+        "syntax analysis",
+        "parse trees",
+        "syntax diagnostics"
+      ]
+    },
+    {
+      "id": "cap.toolchain.067.intermediate_representations",
+      "family_id": 67,
+      "group": "toolchain",
+      "name": "Intermediate representations",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "abstract syntax trees",
+        "control-flow graphs",
+        "intermediate code"
+      ]
+    },
+    {
+      "id": "cap.toolchain.068.compilers_and_interpreters",
+      "family_id": 68,
+      "group": "toolchain",
+      "name": "Compilers and interpreters",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "semantic analysis",
+        "type checking",
+        "optimization",
+        "code generation",
+        "evaluation"
+      ]
+    },
+    {
+      "id": "cap.toolchain.069.assemblers",
+      "family_id": 69,
+      "group": "toolchain",
+      "name": "Assemblers",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "assembly parsing",
+        "instruction encoding",
+        "object-file generation"
+      ]
+    },
+    {
+      "id": "cap.toolchain.070.linkers_and_loaders",
+      "family_id": 70,
+      "group": "toolchain",
+      "name": "Linkers and loaders",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "symbol resolution",
+        "relocation",
+        "executable loading",
+        "dynamic linking"
+      ]
+    },
+    {
+      "id": "cap.toolchain.071.build_systems",
+      "family_id": 71,
+      "group": "toolchain",
+      "name": "Build systems",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "dependency graphs",
+        "build rules",
+        "incremental builds",
+        "build caches"
+      ]
+    },
+    {
+      "id": "cap.toolchain.072.dependency_management",
+      "family_id": 72,
+      "group": "toolchain",
+      "name": "Dependency management",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+ENDFILE data/capabilities.json
+FILE data/components.json
+{
+  "schema": "aether.components.v1",
+  "description": "Component families from the Aether engineering taxonomy. Each family is a candidate for capability contracts.",
+  "families": [
+    {"id": 1, "group": "hardware", "name": "Registers", "includes": ["general-purpose","floating-point","vector","instruction pointer","stack pointer","status","control","debug","device registers"]},
+    {"id": 2, "group": "hardware", "name": "Libraries", "includes": ["standard","runtime","static","shared","system","numerical","networking","cryptographic","application libraries"]},
+    {"id": 3, "group": "hardware", "name": "Registries", "includes": ["package","service","schema","capability","device","container image","model","configuration registries"]},
+    {"id": 4, "group": "hardware", "name": "Logic circuits", "includes": ["gates","combinational logic","flip-flops","counters","multiplexers","arithmetic circuits"]},
+    {"id": 5, "group": "hardware", "name": "Processors", "includes": ["CPUs","cores","microcontrollers","GPUs","DSPs","specialized processors"]},
+    {"id": 6, "group": "hardware", "name": "Execution units", "includes": ["arithmetic and logic units","floating-point units","vector units","load/store units"]},
+    {"id": 7, "group": "hardware", "name": "Processor control", "includes": ["instruction decoding","pipelines","scheduling","branch prediction","retirement"]},
+    {"id": 8, "group": "hardware", "name": "Instruction sets", "includes": ["opcodes","addressing modes","privilege levels","atomic operations","instruction encodings"]},
+    {"id": 9, "group": "hardware", "name": "Caches", "includes": ["instruction","data","unified","translation","device caches","coherence mechanisms"]},
+    {"id": 10, "group": "hardware", "name": "Memory", "includes": ["SRAM","DRAM","ROM","flash","persistent memory","device memory"]},
+    {"id": 11, "group": "hardware", "name": "Memory management hardware", "includes": ["MMUs","TLBs","page-table walkers","memory protection units","IOMMUs"]},
+    {"id": 12, "group": "hardware", "name": "Interconnects and buses", "includes": ["memory buses","peripheral buses","chip interconnects","expansion links"]},
+    {"id": 13, "group": "hardware", "name": "Controllers", "includes": ["memory","storage","network","interrupt","DMA","peripheral controllers"]},
+    {"id": 14, "group": "hardware", "name": "Storage devices", "includes": ["SSDs","hard drives","removable media","optical media","tape"]},
+    {"id": 15, "group": "hardware", "name": "Input and output devices", "includes": ["displays","keyboards","cameras","microphones","sensors","actuators"]},
+    {"id": 16, "group": "hardware", "name": "Physical infrastructure", "includes": ["boards","sockets","connectors","power supplies","cooling","enclosures","cabling"]},
+    {"id": 17, "group": "hardware", "name": "Clocks and timing", "includes": ["oscillators","timers","clock domains","synchronization","watchdog timers"]},
+    {"id": 18, "group": "hardware", "name": "Firmware", "includes": ["platform firmware","device firmware","microcode","embedded control software"]},
+    {"id": 19, "group": "hardware", "name": "Boot components", "includes": ["boot ROMs","bootloaders","boot managers","boot configuration","recovery images"]},
+    {"id": 20, "group": "hardware", "name": "Hardware description and configuration", "includes": ["device trees","platform tables","hardware manifests","programmable logic bitstreams"]},
+    {"id": 21, "group": "system", "name": "Kernels", "includes": ["privilege management","resource control","scheduling","memory management"]},
+    {"id": 22, "group": "system", "name": "Device drivers", "includes": ["device initialization","control","interrupt handling","data transfer"]},
+    {"id": 23, "group": "system", "name": "System calls", "includes": ["processes","files","memory","networking","devices"]},
+    {"id": 24, "group": "system", "name": "Processes", "includes": ["address spaces","process identifiers","execution state","environments"]},
+    {"id": 25, "group": "system", "name": "Threads and tasks", "includes": ["execution contexts","stacks","thread-local storage","task state"]},
+    {"id": 26, "group": "system", "name": "Schedulers", "includes": ["CPU scheduling","task priorities","deadlines","work queues"]},
+    {"id": 27, "group": "system", "name": "Synchronization primitives", "includes": ["mutexes","semaphores","condition variables","barriers","atomics"]},
+    {"id": 28, "group": "system", "name": "Interprocess communication", "includes": ["pipes","sockets","shared memory","signals","message passing"]},
+    {"id": 29, "group": "system", "name": "Virtual memory", "includes": ["address spaces","pages","mappings","protection","swapping"]},
+    {"id": 30, "group": "system", "name": "Allocators", "includes": ["heap","pool","slab","arena","stack","device-memory allocation"]},
+    {"id": 31, "group": "system", "name": "Filesystems", "includes": ["files","directories","metadata","permissions","journaling","mounts"]},
+    {"id": 32, "group": "system", "name": "Storage management", "includes": ["partitions","volumes","block layers","redundancy","snapshots"]},
+    {"id": 33, "group": "system", "name": "Networking stacks", "includes": ["addressing","routing","transport","sockets","packet processing"]},
+    {"id": 34, "group": "system", "name": "System services", "includes": ["service managers","background daemons","time services","logging services"]},
+    {"id": 35, "group": "system", "name": "Shells and command environments", "includes": ["command parsing","scripting","pipelines","sessions","environment variables"]},
+    {"id": 36, "group": "system", "name": "Isolation mechanisms", "includes": ["protection domains","namespaces","resource limits","sandboxes"]},
+    {"id": 37, "group": "system", "name": "Virtualization", "includes": ["hypervisors","virtual machines","virtual devices","guest environments"]},
+    {"id": 38, "group": "system", "name": "Containers", "includes": ["images","runtimes","filesystem layers","resource configuration"]},
+    {"id": 39, "group": "system", "name": "Emulators and simulators", "includes": ["instruction emulation","device models","behavioral models","simulated environments"]},
+    {"id": 40, "group": "system", "name": "Runtime environments", "includes": ["virtual machines","interpreters","JIT execution","managed execution services"]},
+    {"id": 41, "group": "system", "name": "Language runtime services", "includes": ["garbage collection","exception handling","reflection","coroutine execution"]},
+    {"id": 42, "group": "system", "name": "Resource accounting", "includes": ["CPU","memory","storage","network","accelerator usage and quotas"]},
+    {"id": 43, "group": "program", "name": "Symbols and identifiers", "includes": ["names","labels","namespaces","symbol tables","scopes"]},
+    {"id": 44, "group": "program", "name": "Values and literals", "includes": ["numbers","characters","strings","booleans","constants"]},
+    {"id": 45, "group": "program", "name": "Types", "includes": ["primitive","composite","algebraic","generic","reference","function types"]},
+    {"id": 46, "group": "program", "name": "Variables and bindings", "includes": ["mutable variables","immutable bindings","references","lifetime rules"]},
+    {"id": 47, "group": "program", "name": "Expressions and operators", "includes": ["arithmetic","comparison","logic","assignment","evaluation rules"]},
+    {"id": 48, "group": "program", "name": "Control flow", "includes": ["branches","loops","pattern matching","jumps","exception paths"]},
+    {"id": 49, "group": "program", "name": "Functions and procedures", "includes": ["parameters","return values","closures","callbacks","methods"]},
+    {"id": 50, "group": "program", "name": "Objects and abstractions", "includes": ["classes","interfaces","traits","prototypes","records"]},
+    {"id": 51, "group": "program", "name": "Modules and packages", "includes": ["imports","exports","visibility","package boundaries","dependencies"]},
+    {"id": 52, "group": "program", "name": "Data structures", "includes": ["arrays","lists","maps","sets","trees","graphs","queues","heaps"]},
+    {"id": 53, "group": "program", "name": "Algorithms", "includes": ["search","sorting","parsing","optimization","scheduling","numerical computation"]},
+    {"id": 54, "group": "program", "name": "State machines", "includes": ["states","transitions","events","guards","actions"]},
+    {"id": 55, "group": "program", "name": "Concurrency models", "includes": ["threads","actors","async tasks","futures","channels","event loops"]},
+    {"id": 56, "group": "program", "name": "Error models", "includes": ["exceptions","result types","error codes","cancellation","recovery"]},
+    {"id": 57, "group": "program", "name": "Resource ownership models", "includes": ["ownership","borrowing","reference counting","scoped cleanup"]},
+    {"id": 58, "group": "program", "name": "Interfaces and contracts", "includes": ["inputs","outputs","preconditions","postconditions","invariants","compatibility rules"]},
+    {"id": 59, "group": "program", "name": "Application binary interfaces", "includes": ["calling conventions","object layouts","symbol conventions","binary compatibility"]},
+    {"id": 60, "group": "program", "name": "Foreign-function interfaces", "includes": ["cross-language calls","bindings","marshalling","native extensions"]},
+    {"id": 61, "group": "program", "name": "Frameworks", "includes": ["application structure","lifecycle hooks","routing","extension points"]},
+    {"id": 62, "group": "program", "name": "SDKs and toolkits", "includes": ["libraries","headers","tools","examples","integration documentation"]},
+    {"id": 63, "group": "program", "name": "Plugins and extensions", "includes": ["loadable modules","extension APIs","discovery","version compatibility"]},
+    {"id": 64, "group": "program", "name": "Configuration", "includes": ["settings","profiles","feature flags","policy parameters","environment configuration"]},
+    {"id": 65, "group": "toolchain", "name": "Languages and grammars", "includes": ["syntax","semantics","lexical rules","grammar definitions"]},
+    {"id": 66, "group": "toolchain", "name": "Lexers and parsers", "includes": ["tokenization","syntax analysis","parse trees","syntax diagnostics"]},
+    {"id": 67, "group": "toolchain", "name": "Intermediate representations", "includes": ["abstract syntax trees","control-flow graphs","intermediate code"]},
+    {"id": 68, "group": "toolchain", "name": "Compilers and interpreters", "includes": ["semantic analysis","type checking","optimization","code generation","evaluation"]},
+    {"id": 69, "group": "toolchain", "name": "Assemblers", "includes": ["assembly parsing","instruction encoding","object-file generation"]},
+    {"id": 70, "group": "toolchain", "name": "Linkers and loaders", "includes": ["symbol resolution","relocation","executable loading","dynamic linking"]},
+    {"id": 71, "group": "toolchain", "name": "Build systems", "includes": ["dependency graphs","build rules","incremental builds","build caches"]},
+    {"id": 72, "group": "toolchain", "name": "Dependency management", "includes": ["manifests","lockfiles","version resolution","integrity checks"]},
+    {"id": 73, "group": "toolchain", "name": "Code generation", "includes": ["interface bindings","schema-derived code","templates","generated clients"]},
+    {"id": 74, "group": "toolchain", "name": "Development environments", "includes": ["editors","IDEs","language servers","notebooks","interactive consoles"]},
+    {"id": 75, "group": "toolchain", "name": "Debugging tools", "includes": ["breakpoints","stack traces","memory inspection","crash dumps"]},
+    {"id": 76, "group": "toolchain", "name": "Performance tools", "includes": ["profilers","tracers","benchmarks","sampling","instrumentation"]},
+    {"id": 77, "group": "toolchain", "name": "Static analysis tools", "includes": ["linters","type analyzers","dependency analysis","security analyzers"]},
+    {"id": 78, "group": "toolchain", "name": "Binary and package formats", "includes": ["object files","executables","shared objects","archives","installable packages"]},
+    {"id": 79, "group": "toolchain", "name": "Source and artifact repositories", "includes": ["version history","branches","tags","releases","build artifacts"]},
+    {"id": 80, "group": "application", "name": "Data models and schemas", "includes": ["entities","relationships","constraints","field definitions","schema versions"]},
+    {"id": 81, "group": "application", "name": "Data formats and encodings", "includes": ["text","binary formats","character encodings","serialization"]},
+    {"id": 82, "group": "application", "name": "Databases", "includes": ["relational","document","key-value","graph","time-series","vector databases"]},
+    {"id": 83, "group": "application", "name": "Database engines", "includes": ["query planning","execution","indexing","transactions","concurrency control"]},
+    {"id": 84, "group": "application", "name": "Data storage services", "includes": ["object stores","file stores","block stores","archival stores"]},
+    {"id": 85, "group": "application", "name": "Caches and indexes", "includes": ["application caches","distributed caches","search indexes","materialized views"]},
+    {"id": 86, "group": "application", "name": "Data pipelines", "includes": ["ingestion","transformation","validation","batch processing","stream processing"]},
+    {"id": 87, "group": "application", "name": "Messaging systems", "includes": ["queues","brokers","topics","event buses","dead-letter handling"]},
+    {"id": 88, "group": "application", "name": "Protocols", "includes": ["message structures","interaction rules","ordering","negotiation","error handling"]},
+    {"id": 89, "group": "application", "name": "APIs", "includes": ["local APIs","HTTP APIs","RPC interfaces","streaming interfaces"]},
+    {"id": 90, "group": "application", "name": "Adapters and connectors", "includes": ["protocol conversion","data mapping","external-service integration"]},
+    {"id": 91, "group": "application", "name": "Middleware", "includes": ["request processing","authentication hooks","retries","routing","mediation"]},
+    {"id": 92, "group": "application", "name": "Gateways and proxies", "includes": ["API gateways","reverse proxies","traffic mediation","policy enforcement"]},
+    {"id": 93, "group": "application", "name": "Naming and discovery", "includes": ["DNS","service directories","endpoint discovery","resource naming"]},
+    {"id": 94, "group": "application", "name": "Traffic management", "includes": ["load balancing","rate limiting","admission control","backpressure"]},
+    {"id": 95, "group": "application", "name": "Distributed coordination", "includes": ["consensus","leader election","leases","distributed locks"]},
+    {"id": 96, "group": "application", "name": "Replication and consistency", "includes": ["replica management","consistency models","conflict resolution","reconciliation"]},
+    {"id": 97, "group": "application", "name": "Distributed workflows", "includes": ["orchestration","choreography","job execution","compensating actions"]},
+    {"id": 98, "group": "application", "name": "Failure-handling mechanisms", "includes": ["timeouts","retries","idempotency","circuit breakers","failover"]},
+    {"id": 99, "group": "application", "name": "Business and domain logic", "includes": ["rules","calculations","decisions","domain services"]},
+    {"id": 100, "group": "application", "name": "User interfaces", "includes": ["command-line","graphical","web","mobile","voice","device interfaces"]},
+    {"id": 101, "group": "application", "name": "Presentation systems", "includes": ["layout","rendering","styles","templates","graphics","animation"]},
+    {"id": 102, "group": "application", "name": "Interaction and accessibility", "includes": ["navigation","input handling","focus","assistive interfaces","localization"]},
+    {"id": 103, "group": "application", "name": "Session and application state", "includes": ["sessions","client state","server state","persistence","synchronization"]},
+    {"id": 104, "group": "application", "name": "Content and assets", "includes": ["documents","images","fonts","audio","video","localization resources"]},
+    {"id": 105, "group": "security", "name": "Identity", "includes": ["user","service","device","workload identities","credentials"]},
+    {"id": 106, "group": "security", "name": "Authentication", "includes": ["credential validation","multifactor authentication","federation"]},
+    {"id": 107, "group": "security", "name": "Authorization and capabilities", "includes": ["permissions","roles","attributes","capability grants","scope","revocation"]},
+    {"id": 108, "group": "security", "name": "Cryptographic components", "includes": ["hashing","encryption","signatures","key derivation","random-number generation"]},
+    {"id": 109, "group": "security", "name": "Key and secret management", "includes": ["key stores","secret stores","certificates","issuance","rotation"]},
+    {"id": 110, "group": "security", "name": "Trust and integrity mechanisms", "includes": ["trust anchors","signed artifacts","boot verification","attestation"]},
+    {"id": 111, "group": "security", "name": "Security controls", "includes": ["input validation","filtering","segmentation","isolation","policy enforcement"]},
+    {"id": 112, "group": "security", "name": "Privacy and data governance", "includes": ["classification","minimization","retention","access restrictions","deletion"]},
+    {"id": 113, "group": "lifecycle", "name": "Requirements and specifications", "includes": ["intended behavior","constraints","acceptance criteria","interfaces"]},
+    {"id": 114, "group": "lifecycle", "name": "Architecture and design artifacts", "includes": ["system boundaries","component models","dependency maps","decision records"]},
+    {"id": 115, "group": "lifecycle", "name": "Tests and test infrastructure", "includes": ["unit","integration","system","acceptance","regression tests","fixtures and harnesses"]},
+    {"id": 116, "group": "lifecycle", "name": "Adversarial and resilience testing", "includes": ["fuzzing","fault injection","load testing","chaos experiments"]},
+    {"id": 117, "group": "lifecycle", "name": "Formal methods", "includes": ["logical specifications","model checking","theorem proving","refinement checks"]},
+    {"id": 118, "group": "lifecycle", "name": "Verification evidence", "includes": ["test results","execution traces","provenance","artifact hashes","reproducibility records"]},
+    {"id": 119, "group": "lifecycle", "name": "Observability", "includes": ["logs","metrics","traces","profiles","health checks","dashboards"]},
+    {"id": 120, "group": "lifecycle", "name": "Operational detection and response", "includes": ["alerts","anomaly detection","incident handling","containment","recovery"]},
+    {"id": 121, "group": "lifecycle", "name": "Continuous integration and delivery", "includes": ["automated builds","validation gates","packaging","release workflows"]},
+    {"id": 122, "group": "lifecycle", "name": "Deployment systems", "includes": ["installers","provisioning","infrastructure definitions","rollout","rollback"]},
+    {"id": 123, "group": "lifecycle", "name": "Environment management", "includes": ["development","test","staging","production","configuration and dependency isolation"]},
+    {"id": 124, "group": "lifecycle", "name": "Backup and disaster recovery", "includes": ["backups","restore procedures","recovery objectives","recovery exercises"]},
+    {"id": 125, "group": "lifecycle", "name": "Capacity and efficiency management", "includes": ["sizing","quotas","scaling","utilization","cost and energy accounting"]},
+    {"id": 126, "group": "lifecycle", "name": "Supply-chain records", "includes": ["dependency inventories","software bills of materials","provenance","licenses"]},
+    {"id": 127, "group": "lifecycle", "name": "Maintenance and evolution", "includes": ["patches","upgrades","migrations","compatibility","vulnerability remediation"]},
+    {"id": 128, "group": "lifecycle", "name": "Lifecycle controls", "includes": ["versioning","deprecation","sunset","retirement","decommissioning"]},
+    {"id": 129, "group": "lifecycle", "name": "Documentation and operational knowledge", "includes": ["reference manuals","tutorials","runbooks","troubleshooting guides"]},
+    {"id": 130, "group": "lifecycle", "name": "Ownership and governance", "includes": ["maintainers","decision rights","support responsibilities","review and acceptance"]},
+    {"id": 131, "group": "specialized", "name": "AI and machine learning", "includes": ["datasets","tokenizers","models","weights","training","inference","evaluation","model serving"]},
+    {"id": 132, "group": "specialized", "name": "Agent systems", "includes": ["tool definitions","context","memory","planners","execution loops","bounded authority","monitoring"]},
+    {"id": 133, "group": "specialized", "name": "Scientific computing", "includes": ["solvers","meshes","numerical kernels","simulation models","uncertainty analysis"]},
+    {"id": 134, "group": "specialized", "name": "Graphics and media", "includes": ["scene graphs","shaders","renderers","codecs","compositors","media pipelines"]},
+    {"id": 135, "group": "specialized", "name": "Real-time and embedded systems", "includes": ["interrupt routines","deadline scheduling","control loops","board-support packages"]},
+    {"id": 136, "group": "specialized", "name": "Robotics and control", "includes": ["perception","localization","planning","feedback controllers","actuator interfaces"]},
+    {"id": 137, "group": "specialized", "name": "Programmable hardware", "includes": ["HDL modules","synthesis","placement","routing","timing constraints","bitstreams"]},
+    {"id": 138, "group": "specialized", "name": "Quantum computing", "includes": ["qubits","gates","circuits","compilation","control electronics","measurement","classical coordination"]},
+    {"id": 139, "group": "specialized", "name": "Distributed ledgers", "includes": ["transaction models","validation rules","consensus","execution engines","state storage"]},
+    {"id": 140, "group": "specialized", "name": "Geospatial systems", "includes": ["coordinate systems","geometry","spatial indexes","map layers","spatial processing"]}
+  ]
+}
+ENDFILE data/components.json
+FILE data/nature.txt
+# Source phenomena catalog
+# format: code | description
+# Derived algorithms live in data/algorithms.json
+# Each code here MUST have a matching "phenomenon" entry there.
+
+# --- stochastic search & diffusion ---
+levy_flight | Heavy-tailed random walk; step lengths drawn from a power-law distribution, producing rare long excursions between clusters of short moves. Optimal search strategy for sparse, randomly distributed targets (cf. foraging albatross, T cells).
+# BACKLOG (not yet derived): wiener | Continuous-time Brownian motion; increments are independent Gaussians with variance proportional to dt. The canonical null model for diffusive transport and noisy accumulation.
+
+# --- synchronization & collective dynamics ---
+kuramoto | Phase oscillators with all-to-all sinusoidal coupling; above a critical coupling strength a macroscopic mean field spontaneously synchronizes (fireflies, pacemaker cells, Josephson junctions).
+
+# --- population & ecological dynamics ---
+lotka_volterra | Coupled predator-prey ODEs; prey grow exponentially, predators consume prey at rate proportional to the product, predators decay without prey. Neutral cycles about a fixed point.
+logistic | Density-dependent growth with carrying capacity K; growth is linear at small x and vanishes at x = K. The simplest model of resource-limited reproduction.
+gompertz | Asymmetric sigmoid growth with exponentially decaying specific growth rate; used for tumor growth and mortality curves where decline is slower than rise.
+allee | Positive density dependence at low abundance: growth is negative below a critical threshold A (mate-finding, cooperative defense) and logistic above it.
+sir | Compartmental epidemic model (Susceptible-Infectious-Recovered) with mass-action transmission; gives the epidemic threshold R0 = beta/gamma.
+sirs | SIR extended with waning immunity, so recovered individuals return to the susceptible pool; supports endemic steady states.
+host_parasite | Coevolving host-parasite genotype frequencies under negative frequency-dependent selection; the classic Red Queen dynamic with no stable winner.
+predator_prey_spatial | Spatially extended predator-prey with Holling-type functional response and diffusion; admits Turing instabilities that break spatial symmetry into patches.
+bacterial_chemotaxis | Run-and-tumble motility biased by temporal gradient sensing; bacteria lengthen runs when moving up an attractant gradient.
+
+# --- transport & continuum mechanics ---
+fick | Linear constitutive law for diffusive flux: J = -D grad(c). The defining relation of molecular diffusion.
+darcy | Empirical law for flow through porous media: velocity is proportional to the pressure gradient divided by viscosity.
+poiseuille | Laminar viscous flow through a cylindrical pipe; volumetric flow scales with the fourth power of radius (Hagen-Poiseuille).
+kirchhoff | Conservation of current at a network node: the algebraic sum of currents entering equals zero. Underpins circuit analysis and network flow.
+fourier | Constitutive law of heat conduction: flux is proportional to the negative temperature gradient. Combined with energy conservation gives the heat equation.
+nernst | Nernst-Planck equation for ion transport: diffusive flux plus drift of charged species in an electric field.
+chemostat | Continuous culture with inflow of fresh medium and outflow of culture; microbial growth follows Monod kinetics, dilution sets steady-state density.
+osmosis | Solvent flow across a semipermeable membrane driven by the osmotic pressure difference; van 't Hoff relation for dilute solutes.
+diffusion_limited | Reaction at a boundary whose rate is set by how fast reactants diffuse to it; effective kinetics become first-order at low concentration (Smoluchowski / Rice).
+
+# --- pattern formation & excitable media ---
+gray_scott | Two-species reaction-diffusion system with cubic autocatalysis; produces spots, stripes, and self-replicating patterns. Standard model of morphogenesis.
+
+# --- neural & learning dynamics ---
+hebbian | Activity-dependent synaptic plasticity: weight change is proportional to the product of pre- and post-synaptic activity. The substrate of associative memory.
+
+# --- criticality, chaos & information ---
+# BACKLOG (not yet derived): percolation | Random occupation of lattice sites or bonds; a spanning cluster appears at a sharp threshold pc. Canonical model of connectivity and phase transitions.
+# BACKLOG (not yet derived): sandpile | Abelian sandpile / self-organized criticality: slow driving plus threshold toppling drives the system to a scale-free avalanche distribution.
+# BACKLOG (not yet derived): ising | Lattice spins with nearest-neighbor coupling; order-disorder transition at a critical temperature. The archetype of collective phase transitions.
+# BACKLOG (not yet derived): logistic_map | Quadratic iterated map r*x*(1-x); period-doubling route to chaos as r increases. Minimal discrete model of deterministic chaos.
+# BACKLOG (not yet derived): lyapunov | Largest Lyapunov exponent quantifies exponential divergence of nearby trajectories; positive value signals deterministic chaos.
+# BACKLOG (not yet derived): entropy | Shannon/Gibbs entropy of a distribution; monotone increase under coarse-graining and the informational measure of uncertainty.
+# BACKLOG (not yet derived): max_entropy | Maximum-entropy principle: among distributions consistent with constraints, choose the one with largest entropy (Jaynes).
+# BACKLOG (not yet derived): renormalization | Coarse-graining plus rescaling that leaves the partition function invariant; yields universal exponents at critical points.
+# BACKLOG (not yet derived): bifurcation | Qualitative change in attractor structure as a parameter crosses a critical value (saddle-node, Hopf, pitchfork).
+# BACKLOG (not yet derived): hysteresis | Path-dependent state: the response depends on the direction of parameter sweep, giving a loop between forward and reverse transitions.
+quorum_sensing | Density-dependent gene expression in bacteria: cells secrete autoinducers and switch phenotype only above a threshold population density.
+# BACKLOG (not yet derived): evolutionary_game | Replicator dynamics for strategy frequencies under payoff matrix; Nash equilibria appear as rest points.
+# BACKLOG (not yet derived): fitness_landscape | Genotype-phenotype map with a scalar fitness; adaptive walks climb to local peaks (Wright, Kauffman NK model).
+# BACKLOG (not yet derived): neutral_drift | Allele frequency changes by random sampling alone; fixation probability equals initial frequency (Kimura).
+# BACKLOG (not yet derived): mutation_selection | Balance between recurrent mutation and purifying selection; determines equilibrium allele frequency.
+# BACKLOG (not yet derived): hox_gradient | Morphogen gradient read out by threshold-responsive genes to specify positional identity along an axis (Wolpert's French flag).
+# BACKLOG (not yet derived): turing | Reaction-diffusion system where a homogeneous steady state is destabilized by differential diffusion, producing stationary spatial patterns.
+# BACKLOG (not yet derived): morphogen | Diffusible signaling molecule whose concentration field carries positional information during development.
+# BACKLOG (not yet derived): chemotaxis | Directed cell or organism migration up (or down) a chemical gradient; the general biased-random-walk mechanism.
+# BACKLOG (not yet derived): phototaxis | Directed movement in response to light; used by motile algae and bacteria to optimize photosynthetic exposure.
+# BACKLOG (not yet derived): gravitropism | Directional growth of plants in response to gravity; auxin redistribution bends shoots up and roots down.
+# BACKLOG (not yet derived): circadian | Endogenous ~24h oscillator entrained by light; core is a delayed negative-feedback loop (PER/CRY in mammals).
+# BACKLOG (not yet derived): hormesis | Biphasic dose-response: low-dose stimulation, high-dose inhibition. Common in toxins and radiation.
+# BACKLOG (not yet derived): predator_pit | Low-density prey refuge where predation pressure is relaxed, stabilizing coexistence.
+# BACKLOG (not yet derived): metapopulation | Network of local populations linked by migration; persistence depends on colonization-extinction balance (Levins).
+# BACKLOG (not yet derived): island_biogeography | Species richness on an island reflects immigration and extinction rates as functions of area and isolation (MacArthur & Wilson).
+# BACKLOG (not yet derived): niche_partitioning | Coexisting species divide limiting resources along one or more axes, reducing competition.
+# BACKLOG (not yet derived): competition_exclusion | Two species competing for a single limiting resource cannot coexist indefinitely; the better competitor excludes the other (Gause).
+# BACKLOG (not yet derived): mutualism | Interspecific interaction with net benefit to both partners; modeled by coupled logistic equations with positive cross-terms.
+# BACKLOG (not yet derived): symbiosis | Long-term physical association between species; ranges from mutualism to parasitism along a continuum.
+# BACKLOG (not yet derived): eusociality | Reproductive division of labor with overlapping generations and cooperative care of young (Hamilton's haplodiploidy, kin selection).
+# BACKLOG (not yet derived): kin_selection | Hamilton's rule: altruism spreads when rB > C, where r is relatedness, B benefit to recipient, C cost to actor.
+# BACKLOG (not yet derived): sexual_selection | Traits evolve because they increase mating success, sometimes against survival (Fisher runaway, Zahavi handicap).
+# BACKLOG (not yet derived): signaling | Costly signals evolve to be honest when the cost is negatively correlated with quality (Zahavi, Grafen).
+# BACKLOG (not yet derived): reciprocal_altruism | Cooperation sustained by repeated interaction and tit-for-tat-like strategies (Axelrod, Trivers).
+# BACKLOG (not yet derived): collective_motion | Flocking, schooling, and swarming emerge from local alignment and attraction rules (Vicsek, Boids).
+# BACKLOG (not yet derived): flocking | Aligned motion of self-propelled agents with local velocity matching; order-disorder transition at a critical noise level.
+# BACKLOG (not yet derived): swarming | Dense, coordinated motion without global alignment; driven by local attraction and repulsion.
+# BACKLOG (not yet derived): stigmergy | Indirect coordination through traces left in the environment (ant pheromone trails, termite mounds).
+ant_colony | Foraging and task allocation via pheromone-mediated positive feedback; shortest paths emerge from reinforcement.
+# BACKLOG (not yet derived): bee_foraging | Nectar collection with waggle-dance recruitment; colony-level allocation tracks profitability.
+termite_mound | Distributed construction with no central controller; ventilation and thermal regulation via mound architecture.
+# BACKLOG (not yet derived): coral_reef | Sessile colonial organisms building calcium carbonate structure; symbiosis with zooxanthellae drives primary production.
+# BACKLOG (not yet derived): mycorrhiza | Symbiotic association between plant roots and fungi; trades soil nutrients for photosynthate.
+# BACKLOG (not yet derived): lichen | Composite organism of fungus and alga/cyanobacterium; a model of obligate mutualism and desiccation tolerance.
+# BACKLOG (not yet derived): biofilm | Surface-attached microbial community encased in extracellular matrix; exhibits emergent antibiotic tolerance and quorum sensing.
+
+# --- added to close catalog/derived gap ---
+albatross_forage | Transoceanic foraging of wandering albatross; empirically power-law flight-time distribution with exponent near -1.5, matching a Lévy-flight search.
+all_or_none | Threshold all-or-none firing of an axon; responses below threshold decay passively, above threshold produce a fixed action potential (Bowditch 1871).
+allostasis | Stability through change: physiological setpoints shift predictively ahead of anticipated demand rather than being held fixed (Sterling & Eyer 1988).
+ant_quorum | Ants commit to a new nest site when the number of recruiters at a candidate exceeds a quorum; a distributed decision rule with positive feedback (Pratt 2002).
+area_restricted | Area-restricted search: after a prey encounter, a forager increases turning rate and slows, concentrating effort locally before resuming long-range movement (Benhamou 2007).
+bee_waggle | Honeybee waggle dance encodes direction and distance to a resource; recruits sample dancers and the colony allocates foragers by profitability (von Frisch 1967).
+belousov_zhabotinsky | Oscillating chemical reaction (bromate-malonic acid catalyst) producing travelling colour waves; the canonical excitable medium (Field, Kőrös & Noyes 1972).
+boids | Reynolds' three rules — separation, alignment, cohesion — produce lifelike flocking from purely local, agent-level interactions (Reynolds 1987).
+brownian_search | Random search with independent Gaussian increments; optimal when targets are dense and randomly placed (Einstein 1905; Viswanathan 1999).
+circadian_clock | Cell-autonomous ~24 h oscillator built on interlocked transcriptional-translational feedback loops (PER/CRY, CLOCK/BMAL1) in mammals.
+cricket_chorus | Male crickets adjust calling to neighbours' rhythm; small phase leads bias the population toward synchronous chorusing (Greenfield 1994).
+dla | Diffusion-limited aggregation: random-walking particles stick irreversibly on contact, yielding fractal clusters with dimension ≈ 1.71 in 2D (Witten & Sander 1981).
+eden_growth | Stochastic surface growth where a random perimeter site is added each step; produces a rough interface with KPZ-like scaling (Eden 1961).
+elephant_walk | Elephant movement shows memory-driven, directionally persistent paths rather than pure Brownian or Lévy walks (Moorcroft 2006).
+firefly_sync | Pulse-coupled oscillators: each firefly flashes, then resets its internal phase; large populations spontaneously synchronize (Mirollo & Strogatz 1990).
+fish_school | Schools form via edge-following and attraction to neighbours, giving polarized, cohesive groups with emergent startle waves (Hemelrijk 2015).
+fitzhugh_nagumo | Two-variable reduction of the Hodgkin-Huxley model; a fast activator and slow inhibitor produce excitable spikes and relaxation oscillations (FitzHugh 1961).
+gene_switch | Bistable toggle switch built from two mutually repressing genes; the classic synthetic-biology memory element (Gardner, Cantor & Collins 2000).
+habituation | Repeated neutral stimuli produce a decrementing response; the simplest form of non-associative learning (Thompson & Spencer 1966).
+hodgkin_huxley | Quantitative model of the action potential from voltage-gated Na+ and K+ conductances; the founding biophysical model of excitability (Hodgkin & Huxley 1952).
+homeostasis | Negative-feedback regulation holds internal variables near setpoints (Cannon 1932); error signal drives corrective action.
+immune_affinity | Clonal selection: lymphocytes whose receptors match an antigen proliferate and differentiate; affinity maturation sharpens the response (Burnet 1959).
+levy_walk_2d | Two-dimensional Lévy walk: step lengths power-law distributed, direction isotropic; optimal random search for sparse targets (Viswanathan 1999).
+lichen_edge | Slow boundary expansion of crustose lichens; radial growth rate is roughly constant, making lichens a dating tool (Watson 2014).
+locust_swarm | Dense marching bands form because locusts cannibalize the individual in front; local repulsion plus forward attraction produce coherent motion (Buhl 2006).
+murmuration_critical | Starling murmurations show scale-free correlations and maximal susceptibility — evidence the flock operates near a critical point (Cavagna 2010).
+neuron_threshold | Leaky integrate-and-fire: membrane potential integrates input and emits a spike when it crosses threshold, then resets (Lapicque 1907).
+persistent_walk | Correlated random walk: heading is autocorrelated across steps, interpolating between ballistic and diffusive motion (Kareiva 1983).
+phase_transition | Order parameter changes qualitatively as a control parameter crosses a critical value; Ising spins are the canonical example (Onsager 1944).
+self_avoiding_walk | Random walk on a lattice that never revisits a site; models polymer conformation and gives the Flory exponent ν ≈ 3/4 in 2D (Flory 1949).
+sensitization | Strong or noxious stimuli amplify subsequent responses; the mirror of habituation in non-associative learning (Groves & Thompson 1970).
+slime_mold | Physarum forages by reinforcing tubes that carry more flux and pruning the rest, solving shortest-path problems without a nervous system (Tero 2007).
+starling_murmuration | Topological (not metric) interaction: each bird tracks a fixed number of nearest neighbours regardless of distance, giving scale-free flocks (Ballerini 2008).
+stdp | Spike-timing-dependent plasticity: synapses strengthen when pre precedes post within tens of ms and weaken in the reverse order (Bi & Poo 1998).
+tree_branching | L-system rewriting rules generate self-similar branching structures that match real tree architecture and light capture (Prusinkiewicz 1990).
+turing_pattern | Reaction-diffusion with differential diffusivity destabilizes a uniform state into stationary spots or stripes; morphogen basis of animal markings (Turing 1952).
+ENDFILE data/nature.txt

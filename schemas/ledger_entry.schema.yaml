@@ -1,0 +1,13 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://aether.local/schemas/ledger_entry.schema.yaml"
+title: LedgerEntry
+description: One line in the WORM ledger. Append-only.
+type: object
+required: [payload, receipt, request_id]
+properties:
+  payload: {}
+  receipt: {}
+  request_id: {type: string}
+  ts: {type: string, format: date-time}
+  prev_hash: {type: [string, "null"]}
+  hash: {type: string}

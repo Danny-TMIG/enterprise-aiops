@@ -1,0 +1,19 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://aether.local/schemas/algorithms.schema.yaml"
+title: DerivedAlgorithms
+description: Algorithms derived from the source phenomenon catalog.
+type: object
+required: [algorithms]
+properties:
+  derived_from: {type: string}
+  algorithms:
+    type: array
+    items:
+      type: object
+      required: [phenomenon, algorithm, params, math, reference]
+      properties:
+        phenomenon: {type: string, minLength: 1}
+        algorithm: {type: string, minLength: 1}
+        params: {type: array, items: {type: string}}
+        math: {type: string}
+        reference: {type: string, minLength: 1}

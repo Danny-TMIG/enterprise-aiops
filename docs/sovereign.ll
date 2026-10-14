@@ -1,0 +1,533 @@
+;; layer: sovereign
+;; dir:   sovereign
+FILE sovereign/capabilities.json
+{
+  "schema_version": "1.0",
+  "capabilities": {
+    "translate": {
+      "template": "sovereign/templates/translate.txt",
+      "description": "Translate text from one language to another."
+    },
+    "summarize": {
+      "template": "sovereign/templates/summarize.txt",
+      "description": "Condense long text into a shorter form."
+    },
+    "answer": {
+      "template": "sovereign/templates/answer.txt",
+      "description": "Answer questions directly."
+    },
+    "write": {
+      "template": "sovereign/templates/write.txt",
+      "description": "Assist with essays, stories, and other writing."
+    },
+    "code": {
+      "template": "sovereign/templates/code.txt",
+      "description": "Generate code in a requested language."
+    },
+    "factcheck": {
+      "template": "sovereign/templates/factcheck.txt",
+      "description": "Evaluate claims as supported, unsupported, or unverifiable."
+    },
+    "creative": {
+      "template": "sovereign/templates/creative.txt",
+      "description": "Produce poetry, stories, and creative work."
+    },
+    "research": {
+      "template": "sovereign/templates/research.txt",
+      "description": "Produce a structured overview of a topic."
+    },
+    "email": {
+      "template": "sovereign/templates/email.txt",
+      "description": "Draft professional emails and letters."
+    },
+    "chat": {
+      "template": "sovereign/templates/chat.txt",
+      "description": "Engage in open-ended conversation."
+    }
+  }
+}ENDFILE sovereign/capabilities.json
+FILE sovereign/config.json
+{
+  "schema_version": "1.1",
+  "node_id": "sovereign-01",
+  "host": "127.0.0.1",
+  "port": 8080,
+  "backend": "mlx-lm",
+  "model": "tiny-local",
+  "model_path": "models/tiny",
+  "max_concurrency": 4,
+  "ledger_path": "sovereign/ledger.jsonl",
+  "ledger_max_bytes": 10485760,
+  "hardware": {
+    "chip": "Apple M4 Max",
+    "cores": 16,
+    "memory_gb": 128
+  },
+  "backends": {
+    "mlx-lm": {
+      "dtype": "float16",
+      "verified": true
+    }
+  }
+}ENDFILE sovereign/config.json
+FILE sovereign/graph.py
+"""Typed relation graph for the sovereign node."""
+from __future__ import annotations
+import json
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any
+
+ROOT = Path(__file__).resolve().parent
+
+
+@dataclass
+class Node:
+    id: str
+    type: str
+    properties: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
+class Edge:
+    source: str
+    predicate: str
+    target: str
+
+
+@dataclass
+class Graph:
+    nodes: dict[str, Node] = field(default_factory=dict)
+    edges: list[Edge] = field(default_factory=list)
+
+    @classmethod
+    def load(cls, path: Path | None = None) -> "Graph":
+        data = json.loads((path or ROOT / "relations.json").read_text())
+        nodes = {n["id"]: Node(n["id"], n["type"], n.get("properties", {})) for n in data["nodes"]}
+        edges = [Edge(e["source"], e["predicate"], e["target"]) for e in data["edges"]]
+        return cls(nodes=nodes, edges=edges)
+
+    def out_edges(self, node_id: str) -> list[Edge]:
+        return [e for e in self.edges if e.source == node_id]
+
+    def in_edges(self, node_id: str) -> list[Edge]:
+        return [e for e in self.edges if e.target == node_id]
+
+    def walk(self, start: str, predicate: str) -> list[str]:
+        return [e.target for e in self.out_edges(start) if e.predicate == predicate]
+
+    def validate(self) -> list[str]:
+        errs = []
+        for e in self.edges:
+            if e.source not in self.nodes:
+                errs.append(f"edge source missing: {e.source}")
+            if e.target not in self.nodes and not e.target.isdigit():
+                errs.append(f"edge target missing: {e.target}")
+        return errs
+
+
+if __name__ == "__main__":
+    g = Graph.load()
+    print(f"nodes: {len(g.nodes)}  edges: {len(g.edges)}")
+    errs = g.validate()
+    print(f"validation errors: {len(errs)}")
+    for e in errs:
+        print(" ", e)
+    print()
+    for n in sorted(g.nodes):
+        outs = g.out_edges(n)
+        if outs:
+            print(f"{n}:")
+            for e in outs:
+                print(f"  --{e.predicate}--> {e.target}")
+ENDFILE sovereign/graph.py
+FILE sovereign/ledger.jsonl
+{"request_id": "chatcmpl-945a3a6a-d7e4-4792-9f84-b69d1924f4fd", "timestamp": "2026-10-14T05:21:26.975+00:00", "model": "tiny-local", "backend": "torch-mps", "prompt_tokens": 35, "completion_tokens": 8, "wall_ms": 2031.5735340118408, "request_hash": "0c3a0895f6da853f98535a479de5a56e8746fed28499ec55362cb863ff14ae0d", "response_hash": "698a92f7e10677e7092fba969a2df59d5473c6c2a3f3964a769ff82b60a43106", "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000", "row_hash": "3ee6c218aeb8f1ca5bedef1effb320b9edbbbe5f7aa55709709d99b80a94623f"}
+{"request_id": "chatcmpl-2ef930e4-070d-410c-992c-c1524145f9c3", "timestamp": "2026-10-14T05:40:53.953+00:00", "model": "tiny-local", "backend": "torch-mps", "prompt_tokens": 33, "completion_tokens": 16, "wall_ms": 99.04098510742188, "request_hash": "10895bb859dc3943b9364d63815fc7b9910a496b849d43f0231764501c7ea2f6", "response_hash": "190aa5868d68e589282d47fa191b2842c6585eae0a85c4aecf3035c9b016eee1", "prev_hash": "3ee6c218aeb8f1ca5bedef1effb320b9edbbbe5f7aa55709709d99b80a94623f", "row_hash": "0d4a0c91680c3a749784fd29c2f7d68512af57b09e009e420191431f97204a5d"}
+{"request_id": "bench-1791956453", "timestamp": "2026-10-14T05:40:53.961+00:00", "model": "unknown", "backend": "unknown", "prompt_tokens": 0, "completion_tokens": 0, "wall_ms": 0.0, "request_hash": "36a3ad480ad8a17778a3f43777ee69213ee43aba7e84617616e386f0c3541fa2", "response_hash": "4e32e98e1c5d4a1ec5f4ec313b63c2156e144ecaf206edf2cd31e83eeeb3d857", "prev_hash": "0d4a0c91680c3a749784fd29c2f7d68512af57b09e009e420191431f97204a5d", "row_hash": "7f22cb6fb4a35084ac2e9ecc8130b7c725b54b98d6509dd0dd925d039966e67a"}
+{"request_id": "chatcmpl-1a8eeb52-c979-430c-9d67-a3d5c765e8d7", "timestamp": "2026-10-14T05:42:14.822+00:00", "model": "tiny-local", "backend": "torch-mps", "prompt_tokens": 30, "completion_tokens": 4, "wall_ms": 36.386966705322266, "request_hash": "490403d783f9f0585e81fd0925cff1a370631cd1e706e698752448b6fcfbe48c", "response_hash": "db55692c6358759052a8d11eeddf03ce096c58b2725d6edb6257fc4c87cd557c", "prev_hash": "7f22cb6fb4a35084ac2e9ecc8130b7c725b54b98d6509dd0dd925d039966e67a", "row_hash": "669f9c4715f89479b8714052a0a9c84f7b69ca6a9509d5257160a193c97a6e1f"}
+{"request_id": "heal-1791956534", "timestamp": "2026-10-14T05:42:14.859+00:00", "model": "unknown", "backend": "unknown", "prompt_tokens": 0, "completion_tokens": 0, "wall_ms": 0.0, "request_hash": "3b837a723ddb7938cae2f47122b111ff2f7f067586b3c5de07ab96d3e6add323", "response_hash": "a419f689dc39684c9d524ed9188489cfe075f8dcd83d9b707f2f9a1bf5c6b5f2", "prev_hash": "669f9c4715f89479b8714052a0a9c84f7b69ca6a9509d5257160a193c97a6e1f", "row_hash": "92cad555adef0a64f3f572bb3b33d0944da9a2817857dad68dda5f4b61f3a1d6"}
+{"request_id": "chatcmpl-eaf9e412-ab3a-4938-ac96-d946f3ca20f6", "timestamp": "2026-10-14T05:42:16.917+00:00", "model": "tiny-local", "backend": "torch-mps", "prompt_tokens": 30, "completion_tokens": 4, "wall_ms": 42.14119911193848, "request_hash": "490403d783f9f0585e81fd0925cff1a370631cd1e706e698752448b6fcfbe48c", "response_hash": "78cace0936b4ed72aebdffbc4ecb399f26de3df35b88e0511cc3c82c4af9c759", "prev_hash": "92cad555adef0a64f3f572bb3b33d0944da9a2817857dad68dda5f4b61f3a1d6", "row_hash": "87748f905c7b83d0df6619d84d030fca99cca030dd17f05486447cae8e9665aa"}
+{"request_id": "heal-1791956536", "timestamp": "2026-10-14T05:42:16.925+00:00", "model": "unknown", "backend": "unknown", "prompt_tokens": 0, "completion_tokens": 0, "wall_ms": 0.0, "request_hash": "3b837a723ddb7938cae2f47122b111ff2f7f067586b3c5de07ab96d3e6add323", "response_hash": "a419f689dc39684c9d524ed9188489cfe075f8dcd83d9b707f2f9a1bf5c6b5f2", "prev_hash": "87748f905c7b83d0df6619d84d030fca99cca030dd17f05486447cae8e9665aa", "row_hash": "1632bd819f960ea2d8d49f7838ce3f7e94829408906dcf900900da1d2971d5e1"}
+{"request_id": "chatcmpl-6599b083-a9fd-4e95-bd87-1493fff663c7", "timestamp": "2026-10-14T05:42:18.983+00:00", "model": "tiny-local", "backend": "torch-mps", "prompt_tokens": 30, "completion_tokens": 4, "wall_ms": 40.60697555541992, "request_hash": "490403d783f9f0585e81fd0925cff1a370631cd1e706e698752448b6fcfbe48c", "response_hash": "68add4fb88efb21eaff077e6cc985bfb53148fed02caa6dbd8891391470f2c69", "prev_hash": "1632bd819f960ea2d8d49f7838ce3f7e94829408906dcf900900da1d2971d5e1", "row_hash": "aef497c9b0fe5588f00ed6d397960ea18fc07a8198eabde8fe709b8e71f533a7"}
+{"request_id": "heal-1791956538", "timestamp": "2026-10-14T05:42:18.991+00:00", "model": "unknown", "backend": "unknown", "prompt_tokens": 0, "completion_tokens": 0, "wall_ms": 0.0, "request_hash": "3b837a723ddb7938cae2f47122b111ff2f7f067586b3c5de07ab96d3e6add323", "response_hash": "a419f689dc39684c9d524ed9188489cfe075f8dcd83d9b707f2f9a1bf5c6b5f2", "prev_hash": "aef497c9b0fe5588f00ed6d397960ea18fc07a8198eabde8fe709b8e71f533a7", "row_hash": "3873884e604190d40a6d6335b337318d380f912befd3d315c1dbf3728ae34ef5"}
+{"request_id": "chatcmpl-25d64f0b-e40a-40ea-a661-f6348bec89c4", "timestamp": "2026-10-14T05:49:23.012+00:00", "model": "tiny-local", "backend": "torch-mps", "prompt_tokens": 33, "completion_tokens": 16, "wall_ms": 55.6490421295166, "request_hash": "10895bb859dc3943b9364d63815fc7b9910a496b849d43f0231764501c7ea2f6", "response_hash": "e5d6e4522f767a1bcaab3d2621d08d583a5833e3a8bdbd0f43f0690440bbd32e", "prev_hash": "3873884e604190d40a6d6335b337318d380f912befd3d315c1dbf3728ae34ef5", "row_hash": "3d9a07e955fe7065a7277dc8a0c01a89c69b150bf444b22255c81f784f2c8044"}
+{"request_id": "bench-1791956963", "timestamp": "2026-10-14T05:49:23.018+00:00", "model": "unknown", "backend": "unknown", "prompt_tokens": 0, "completion_tokens": 0, "wall_ms": 0.0, "request_hash": "471b8b645a8744a7b9ebedcc64f58290797f0a0205afdfd631d63c8aed28cae8", "response_hash": "4e32e98e1c5d4a1ec5f4ec313b63c2156e144ecaf206edf2cd31e83eeeb3d857", "prev_hash": "3d9a07e955fe7065a7277dc8a0c01a89c69b150bf444b22255c81f784f2c8044", "row_hash": "d16008faaf51431bbb050c4e071d7b37bc9fcaf2141fe92e38848189a3736323"}
+{"request_id": "chatcmpl-0e36e9a7-2dc3-4891-a587-7ef55f73719d", "timestamp": "2026-10-14T05:50:11.013+00:00", "model": "tiny-local", "backend": "torch-mps", "prompt_tokens": 33, "completion_tokens": 16, "wall_ms": 57.66797065734863, "request_hash": "10895bb859dc3943b9364d63815fc7b9910a496b849d43f0231764501c7ea2f6", "response_hash": "760527d4cb6d35a4ba7e27f2e3fd90c0560a3feb0a77f2598fe747a63f4c2c7f", "prev_hash": "d16008faaf51431bbb050c4e071d7b37bc9fcaf2141fe92e38848189a3736323", "row_hash": "31fdaae444779f807537fb6fc2ca1c87ab16b5f96f837f2836b12657f0c591a2"}
+{"request_id": "bench-1791957011", "timestamp": "2026-10-14T05:50:11.019+00:00", "model": "unknown", "backend": "unknown", "prompt_tokens": 0, "completion_tokens": 0, "wall_ms": 0.0, "request_hash": "be4b54c40999a5f5681fce76a031893ade757b41d103a45ac493731c2805a350", "response_hash": "4e32e98e1c5d4a1ec5f4ec313b63c2156e144ecaf206edf2cd31e83eeeb3d857", "prev_hash": "31fdaae444779f807537fb6fc2ca1c87ab16b5f96f837f2836b12657f0c591a2", "row_hash": "3304a4e62bf399859dba3a8ee852b9fde8779dbf448391672c329abd22546f62"}
+{"request_id": "chatcmpl-0cd95870-2922-433a-86dd-af8768032d81", "timestamp": "2026-10-14T05:51:28.289+00:00", "model": "tiny-local", "backend": "torch-mps", "prompt_tokens": 33, "completion_tokens": 16, "wall_ms": 56.921958923339844, "request_hash": "10895bb859dc3943b9364d63815fc7b9910a496b849d43f0231764501c7ea2f6", "response_hash": "4d9543317faed2c5e9da32e875a22d8be69491a5300ae3fe9cefd4877fdc25ca", "prev_hash": "3304a4e62bf399859dba3a8ee852b9fde8779dbf448391672c329abd22546f62", "row_hash": "ca9cbecae168d6bca3525881b3464ce6bd78524186313480fcfee701726cdfea"}
+{"request_id": "bench-1791957088", "timestamp": "2026-10-14T05:51:28.295+00:00", "model": "unknown", "backend": "unknown", "prompt_tokens": 0, "completion_tokens": 0, "wall_ms": 0.0, "request_hash": "5bdac9b4949a6a9a8942925f8d30b09e91cd25a3f6b21eb8deaa728847ebe37c", "response_hash": "4e32e98e1c5d4a1ec5f4ec313b63c2156e144ecaf206edf2cd31e83eeeb3d857", "prev_hash": "ca9cbecae168d6bca3525881b3464ce6bd78524186313480fcfee701726cdfea", "row_hash": "4837daa18c543cfb2355b5d0efe87d0ab8a74ff3b64e3d68719fc5f45bf16f72"}
+{"request_id": "chatcmpl-a712f35e-b432-48a2-bac4-2abd1da4399e", "timestamp": "2026-10-14T05:51:46.188+00:00", "model": "tiny-local", "backend": "torch-mps", "prompt_tokens": 33, "completion_tokens": 16, "wall_ms": 72.9529857635498, "request_hash": "10895bb859dc3943b9364d63815fc7b9910a496b849d43f0231764501c7ea2f6", "response_hash": "3e37060898163874fe17ea9eec91010cb70f0bd3b12013301ec69e5ca11f12a1", "prev_hash": "4837daa18c543cfb2355b5d0efe87d0ab8a74ff3b64e3d68719fc5f45bf16f72", "row_hash": "3e1573027f680d336c978a814594f71580bba2f336a802b40b37497f589700f8"}
+{"request_id": "bench-1791957106", "timestamp": "2026-10-14T05:51:46.194+00:00", "model": "unknown", "backend": "unknown", "prompt_tokens": 0, "completion_tokens": 0, "wall_ms": 0.0, "request_hash": "be09b048f24d8b4284240a6b7f8e22588ce7d9056d37a013e796902ded63ad5c", "response_hash": "e85f2f60662943411407a64a509fedf75b83f69c7347de6a0b11a32e30bcb13c", "prev_hash": "3e1573027f680d336c978a814594f71580bba2f336a802b40b37497f589700f8", "row_hash": "dfb2a75fcc20eeed9ce993969aae8bea635204cd0197f69e48c6b7ed1284471b"}
+{"request_id": "chatcmpl-cd85ec81-00ab-408a-9bd7-e10253778951", "timestamp": "2026-10-14T05:52:34.053+00:00", "model": "mlx-community/Qwen2.5-7B-Instruct-4bit", "backend": "torch-mps", "prompt_tokens": 35, "completion_tokens": 73, "wall_ms": 166.6421890258789, "request_hash": "5a945d71f5b0182e55688c6014c669b4598c83bac86a859a8b99bd994f0469e6", "response_hash": "c27c5e9c01315cbe774e065197775a147b5f5a717590018d37cd8275667db333", "prev_hash": "dfb2a75fcc20eeed9ce993969aae8bea635204cd0197f69e48c6b7ed1284471b", "row_hash": "27a7fbfa2e0e81f939698b2a80c5f1645625659bd616481ba9c0faf18f5572f7"}
+{"request_id": "chatcmpl-b9a94bdd-5d17-4df4-86ee-0fbfc86db6ac", "timestamp": "2026-10-14T05:53:55.865+00:00", "model": "mlx-community/Qwen2.5-7B-Instruct-4bit", "backend": "torch-mps", "prompt_tokens": 68, "completion_tokens": 200, "wall_ms": 395.65110206604004, "request_hash": "92317b7564f1b709a27f3a8563df0941039581bf1db7c9c190bd8a5fb556d743", "response_hash": "ab01c59b1db8e0421320fba2b8a1ffa37b9bcc5e27e950322ae231bd4dcc6c4e", "prev_hash": "27a7fbfa2e0e81f939698b2a80c5f1645625659bd616481ba9c0faf18f5572f7", "row_hash": "403dbda8e34d37321a4cadcbb6b608f0041883f5b19676c647610d60650ddafc"}
+{"request_id": "chatcmpl-7f39e9ce-7e9d-44f3-8ef3-1a6d3e4cbd06", "timestamp": "2026-10-14T05:55:35.514+00:00", "model": "mlx-community/Qwen2.5-7B-Instruct-4bit", "backend": "torch-mps", "prompt_tokens": 114, "completion_tokens": 301, "wall_ms": 583.3408832550049, "request_hash": "6738f1dadab88001b667f51e4513daef7b560899d8896b2f9b4b6d2e70bfd3da", "response_hash": "d650be92ecf13bcb17b3eb9f74d39e48c076709f1a4aabf6e436df4423d44a3b", "prev_hash": "403dbda8e34d37321a4cadcbb6b608f0041883f5b19676c647610d60650ddafc", "row_hash": "4d2d1ec377e8d2db7b3844fcd416f87cd7795806a78cef9698a1129a56432e6b"}
+{"request_id": "chatcmpl-d65441ed-fef3-45cb-a13e-32ddbb1e1044", "timestamp": "2026-10-14T05:56:12.545+00:00", "model": "tiny-local", "backend": "torch-mps", "prompt_tokens": 33, "completion_tokens": 16, "wall_ms": 60.23097038269043, "request_hash": "10895bb859dc3943b9364d63815fc7b9910a496b849d43f0231764501c7ea2f6", "response_hash": "9ec34074d4810c0524346c3c0e5e29acc09fd9cff4a25dc14988cf807c8ee012", "prev_hash": "4d2d1ec377e8d2db7b3844fcd416f87cd7795806a78cef9698a1129a56432e6b", "row_hash": "d6506d1ad0f3980588d5a7039ab13f2860b7582a3657ea83439ea6e8021ce721"}
+{"request_id": "bench-1791957372", "timestamp": "2026-10-14T05:56:12.550+00:00", "model": "unknown", "backend": "unknown", "prompt_tokens": 0, "completion_tokens": 0, "wall_ms": 0.0, "request_hash": "b4775e9f9f470781383a071e54448bf6d376cafa627017601a231a9e171489cc", "response_hash": "4e32e98e1c5d4a1ec5f4ec313b63c2156e144ecaf206edf2cd31e83eeeb3d857", "prev_hash": "d6506d1ad0f3980588d5a7039ab13f2860b7582a3657ea83439ea6e8021ce721", "row_hash": "efdda862c20215cecaf414c8020922d0c78c7914e53b5f7b3c4fb6b6c2855838"}
+ENDFILE sovereign/ledger.jsonl
+FILE sovereign/node.py
+#!/usr/bin/env python3
+"""Sovereign node — OpenAI-compatible local inference server with evidence ledger.
+
+Runs on one machine. No cloud. Every request is written to a
+tamper-evident ledger before the response is returned.
+"""
+from __future__ import annotations
+
+import json
+import time
+import uuid
+from pathlib import Path
+from typing import Any
+
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+
+from ag.ledger import Ledger
+from ax.model import generate as model_generate
+
+
+ROOT = Path(__file__).resolve().parents[1]
+CONFIG = json.loads((ROOT / "sovereign" / "config.json").read_text())
+LEDGER = Ledger(ROOT / CONFIG["ledger_path"])
+MODEL_PATH = ROOT / CONFIG["model_path"]
+
+
+
+def _validate(req: ChatRequest) -> str | None:
+    """Return error message or None if the request is valid."""
+    if not req.messages:
+        return "messages must not be empty"
+    for i, m in enumerate(req.messages):
+        if m.role not in ("user", "assistant", "system"):
+            return f"messages[{i}].role must be one of user, assistant, system"
+        if not isinstance(m.content, str):
+            return f"messages[{i}].content must be a string"
+        if not m.content.strip():
+            return f"messages[{i}].content must not be empty"
+    if req.max_tokens < 1 or req.max_tokens > 4096:
+        return "max_tokens must be between 1 and 4096"
+    if req.temperature < 0.0 or req.temperature > 2.0:
+        return "temperature must be between 0.0 and 2.0"
+    return None
+
+
+
+
+CAPABILITIES_PATH = ROOT / "sovereign" / "capabilities.json"
+CAPABILITY_CACHE: dict[str, str] = {}
+
+
+def _load_capabilities() -> dict[str, dict]:
+    if not CAPABILITIES_PATH.exists():
+        return {}
+    return json.loads(CAPABILITIES_PATH.read_text())["capabilities"]
+
+
+def _apply_capability(req: "ChatRequest") -> list[dict]:
+    """Return the message list with the capability template prepended.
+
+    The template is a system message. The user's messages follow. If no
+    capability is declared, the messages are returned unchanged.
+    """
+    messages = [m.model_dump() for m in req.messages]
+    if not req.capability:
+        return messages
+    caps = _load_capabilities()
+    if req.capability not in caps:
+        raise ValueError(f"unknown capability: {req.capability}")
+    tmpl_path = ROOT / caps[req.capability]["template"]
+    if not tmpl_path.exists():
+        raise ValueError(f"capability template missing: {tmpl_path}")
+    template = tmpl_path.read_text().strip()
+    return [{"role": "system", "content": template}] + messages
+
+app = FastAPI(title="Sovereign Node", version="1.0")
+
+
+class Message(BaseModel):
+    role: str
+    content: str
+
+
+class ChatRequest(BaseModel):
+    model: str = "tiny-local"
+    capability: str | None = None
+    messages: list[Message]
+    max_tokens: int = 256
+    temperature: float = 0.0
+
+
+@app.get("/health")
+def health() -> dict[str, Any]:
+    subsystems = {}
+
+    # config
+    backend_ok = CONFIG.get("backend") in CONFIG.get("backends", {})
+    subsystems["config"] = "ok" if backend_ok else "down"
+
+    # model
+    model_ok = MODEL_PATH.exists()
+    subsystems["model"] = "ok" if model_ok else "degraded"
+
+    # ledger
+    try:
+        ledger_ok = LEDGER.path.parent.exists()
+        subsystems["ledger"] = "ok" if ledger_ok else "down"
+    except Exception:
+        subsystems["ledger"] = "down"
+
+    if any(v == "down" for v in subsystems.values()):
+        top = "down"
+    elif any(v == "degraded" for v in subsystems.values()):
+        top = "degraded"
+    else:
+        top = "ok"
+
+    return {
+        "status": top,
+        "node_id": CONFIG["node_id"],
+        "backend": CONFIG["backend"],
+        "model": CONFIG["model"],
+        "model_path": str(MODEL_PATH),
+        "subsystems": subsystems,
+    }
+
+
+@app.post("/v1/chat/completions")
+def chat(req: ChatRequest) -> dict[str, Any]:
+    err = _validate(req)
+    if err:
+        raise HTTPException(
+            status_code=400,
+            detail={"error": {"message": err, "type": "invalid_request_error"}},
+        )
+    t0 = time.time()
+    request_id = f"chatcmpl-{uuid.uuid4()}"
+    try:
+        content, prompt_tokens, completion_tokens = model_generate(
+            MODEL_PATH,
+            _apply_capability(req),
+            max_tokens=req.max_tokens,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    wall_ms = (time.time() - t0) * 1000.0
+    response_body = {
+        "id": request_id,
+        "object": "chat.completion",
+        "created": int(time.time()),
+        "model": req.model,
+        "usage": {
+            "prompt_tokens": prompt_tokens,
+            "completion_tokens": completion_tokens,
+            "total_tokens": prompt_tokens + completion_tokens,
+            "completion_tokens_details": {
+                "reasoning_tokens": 0,
+                "accepted_prediction_tokens": 0,
+                "rejected_prediction_tokens": 0,
+            },
+        },
+        "choices": [{
+            "message": {"role": "assistant", "content": content},
+            "logprobs": None,
+            "finish_reason": "stop",
+            "index": 0,
+        }],
+    }
+
+    LEDGER.append(
+        request=req.model_dump(),
+        response=response_body,
+        meta={
+            "request_id": request_id,
+            "model": req.model,
+            "backend": CONFIG["backend"],
+            "prompt_tokens": prompt_tokens,
+            "completion_tokens": completion_tokens,
+            "wall_ms": wall_ms,
+        },
+    )
+    return response_body
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(
+        "sovereign.node:app",
+        host=CONFIG["host"],
+        port=CONFIG["port"],
+        reload=False,
+    )
+ENDFILE sovereign/node.py
+FILE sovereign/nodes.json
+{
+  "default": {"url": "http://127.0.0.1:8080"},
+  "sovereign-01": {"url": "http://127.0.0.1:8080"}
+}
+ENDFILE sovereign/nodes.json
+FILE sovereign/relations.json
+{
+  "schema_version": "1.0",
+  "graph": "sovereign-node-relations",
+  "nodes": [
+    {
+      "id": "m4max",
+      "type": "hardware",
+      "properties": {
+        "chip": "Apple M4 Max",
+        "cores": 16,
+        "memory_gb": 128,
+        "arch": "arm64"
+      }
+    },
+    {
+      "id": "torch_measure",
+      "type": "measurement",
+      "properties": {
+        "seconds_per_step": 0.0034903764724731447,
+        "model": "tiny",
+        "steps": 10,
+        "torch": "2.14.1"
+      }
+    },
+    {
+      "id": "openai_schema",
+      "type": "wire_format",
+      "properties": {
+        "fields": [
+          "id",
+          "object",
+          "created",
+          "model",
+          "usage",
+          "choices"
+        ]
+      }
+    },
+    {
+      "id": "inference_server",
+      "type": "service",
+      "properties": {
+        "protocol": "openai-chat-completions"
+      }
+    },
+    {
+      "id": "mlx",
+      "type": "runtime",
+      "properties": {
+        "vendor": "apple"
+      }
+    },
+    {
+      "id": "ledger",
+      "type": "store",
+      "properties": {
+        "format": "jsonl",
+        "hash": "sha256"
+      }
+    },
+    {
+      "id": "sovereign_node",
+      "type": "system",
+      "properties": {
+        "runs_on": "m4max",
+        "local_only": true
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "torch_measure",
+      "predicate": "measured_on",
+      "target": "m4max"
+    },
+    {
+      "source": "torch_measure",
+      "predicate": "uses_backend",
+      "target": "mlx"
+    },
+    {
+      "source": "m4max",
+      "predicate": "has_memory_gb",
+      "target": "128"
+    },
+    {
+      "source": "m4max",
+      "predicate": "has_cores",
+      "target": "16"
+    },
+    {
+      "source": "inference_server",
+      "predicate": "speaks",
+      "target": "openai_schema"
+    },
+    {
+      "source": "inference_server",
+      "predicate": "can_run_on",
+      "target": "m4max"
+    },
+    {
+      "source": "sovereign_node",
+      "predicate": "runs_on",
+      "target": "m4max"
+    },
+    {
+      "source": "sovereign_node",
+      "predicate": "contains",
+      "target": "inference_server"
+    },
+    {
+      "source": "sovereign_node",
+      "predicate": "uses_runtime",
+      "target": "mlx"
+    },
+    {
+      "source": "sovereign_node",
+      "predicate": "writes_to",
+      "target": "ledger"
+    },
+    {
+      "source": "inference_server",
+      "predicate": "produces",
+      "target": "openai_schema"
+    },
+    {
+      "source": "ledger",
+      "predicate": "records",
+      "target": "inference_server"
+    }
+  ]
+}
+ENDFILE sovereign/relations.json
+FILE sovereign/templates/answer.txt
+You are a question answerer. Answer the user's question directly. If you do not know, say so. If the question assumes something false, say so. Do not pad. Do not hedge unless the uncertainty is real.
+ENDFILE sovereign/templates/answer.txt
+FILE sovereign/templates/chat.txt
+You are a conversation partner. Engage with the user's message directly. Do not preface. Do not repeat the user's message back. Answer, ask, or respond as the message requires.
+ENDFILE sovereign/templates/chat.txt
+FILE sovereign/templates/code.txt
+You are a code writer. Produce code that solves the user's stated problem in the language they name. Include only the code and a one-line usage note. Do not explain at length. If the request is underspecified, ask for the missing parameter.
+ENDFILE sovereign/templates/code.txt
+FILE sovereign/templates/creative.txt
+You are a creative writer. Produce the poem, story, or creative piece the user requests. Match the requested form, voice, and length. Do not explain the piece. Output only the piece.
+ENDFILE sovereign/templates/creative.txt
+FILE sovereign/templates/email.txt
+You are an email drafter. Produce the email the user describes. Match the register they specify: formal, professional, or casual. Include a subject line. Do not add pleasantries the user did not request. Output only the email.
+ENDFILE sovereign/templates/email.txt
+FILE sovereign/templates/factcheck.txt
+You are a fact checker. For each claim in the user's text, state whether it is supported, unsupported, or unverifiable, and why. You do not have external tools; say so when the check requires evidence you cannot access. Never assert certainty you do not have.
+ENDFILE sovereign/templates/factcheck.txt
+FILE sovereign/templates/research.txt
+You are a research assistant. Given the user's topic, produce a structured overview: what is known, what is disputed, what is open. Cite reasoning, not sources you cannot verify. State your limitations explicitly.
+ENDFILE sovereign/templates/research.txt
+FILE sovereign/templates/summarize.txt
+You are a summarizer. Condense the user's text to its essential claims. Preserve names, numbers, and causal relationships. Do not add information not present. Do not editorialize. Output only the summary.
+ENDFILE sovereign/templates/summarize.txt
+FILE sovereign/templates/translate.txt
+You are a translator. Translate the user's text into the target language they name. Preserve tone, register, and any formatting. If no target language is named, ask which one. Output only the translation, nothing else.
+ENDFILE sovereign/templates/translate.txt
+FILE sovereign/templates/write.txt
+You are a writing assistant. Help the user with the writing task they describe. Match the requested form, audience, and length. If the request is ambiguous, ask one clarifying question and stop.
+ENDFILE sovereign/templates/write.txt

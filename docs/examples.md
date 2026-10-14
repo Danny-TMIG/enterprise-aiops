@@ -1,0 +1,86 @@
+# Layer: examples
+
+Directory: `examples`
+
+## Files
+
+    examples/auth/manifest.yaml
+    examples/README.md
+    examples/request.json
+    examples/synthetic-fixtures/README.md
+
+## Contents
+
+### `examples/auth/manifest.yaml`
+
+```
+library: acme/auth
+version: 2.3.1
+entries:
+  code:       code://acme/auth@2.3.1
+  types:      types://acme/auth@2.3.1
+  operators:  operators://acme/auth-ops@2.3.1
+  specs:      specs://acme/auth-spec@2.3.1
+  gates:      gates://acme/auth-gates@2.3.1
+  evidence:   evidence://acme/auth-soc2@2.3.1
+  provenance: provenance://acme/auth-slsa@2.3.1
+faces:
+  - spec: SPEC-0001
+  - spec: SPEC-0002
+  - gate_bundle: GATE-ASVS
+  - gate_bundle: GATE-AISVS
+integrity:
+  iec_61508: SIL-1
+  iso_26262: ASIL-A
+regulations: [gdpr-32, owasp-aisvs-l2]
+```
+### `examples/README.md`
+
+```
+# Examples
+
+Synthetic fixtures used in tests and demos. Not referenced by production code.
+```
+### `examples/request.json`
+
+```
+{
+  "unit": "one-ticket",
+  "quantity": 1,
+  "quality_bar": "first-time-fix >= 0.85",
+  "deadline": "2026-10-20T00:00:00Z",
+  "risk_class": "R2",
+  "budget_ceiling_usd": 4.5,
+  "oversight_requirement": "L2",
+  "requester_identity": "alice@example",
+  "domain": "bpo",
+  "description": "Customer reports login timeout after password reset."
+}
+```
+### `examples/synthetic-fixtures/README.md`
+
+```
+# examples/synthetic-fixtures/
+
+## What is here
+
+Small, hand-written fixtures that illustrate what real boundary objects
+look like.
+
+## What belongs here
+
+Concrete examples of every Common Envelope-carrying object — orders,
+decisions, evidence records, knowledge results. Each fixture is small
+enough to read in full and correct enough to pass schema validation.
+
+## Rules
+
+- No sensitive data. Ever.
+- No generated fixtures. Hand-written only.
+- Kept in sync with `contracts/canonical/` — if a canonical schema changes,
+  the fixtures here must change with it.
+
+## Current state
+
+Empty. Populate alongside canonical schema authoring.
+```

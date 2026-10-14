@@ -1,0 +1,3913 @@
+ARTIFACT capabilities
+PATH data/capabilities.json
+
+{
+  "schema": "aether.capabilities.v1",
+  "note": "Contracts for every family. status=declared until implemented; evidence list is empty by default.",
+  "capabilities": [
+    {
+      "id": "cap.hardware.001.registers",
+      "family_id": 1,
+      "group": "hardware",
+      "name": "Registers",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "general-purpose",
+        "floating-point",
+        "vector",
+        "instruction pointer",
+        "stack pointer",
+        "status",
+        "control",
+        "debug",
+        "device registers"
+      ]
+    },
+    {
+      "id": "cap.hardware.002.libraries",
+      "family_id": 2,
+      "group": "hardware",
+      "name": "Libraries",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "standard",
+        "runtime",
+        "static",
+        "shared",
+        "system",
+        "numerical",
+        "networking",
+        "cryptographic",
+        "application libraries"
+      ]
+    },
+    {
+      "id": "cap.hardware.003.registries",
+      "family_id": 3,
+      "group": "hardware",
+      "name": "Registries",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "package",
+        "service",
+        "schema",
+        "capability",
+        "device",
+        "container image",
+        "model",
+        "configuration registries"
+      ]
+    },
+    {
+      "id": "cap.hardware.004.logic_circuits",
+      "family_id": 4,
+      "group": "hardware",
+      "name": "Logic circuits",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "gates",
+        "combinational logic",
+        "flip-flops",
+        "counters",
+        "multiplexers",
+        "arithmetic circuits"
+      ]
+    },
+    {
+      "id": "cap.hardware.005.processors",
+      "family_id": 5,
+      "group": "hardware",
+      "name": "Processors",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "CPUs",
+        "cores",
+        "microcontrollers",
+        "GPUs",
+        "DSPs",
+        "specialized processors"
+      ]
+    },
+    {
+      "id": "cap.hardware.006.execution_units",
+      "family_id": 6,
+      "group": "hardware",
+      "name": "Execution units",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "arithmetic and logic units",
+        "floating-point units",
+        "vector units",
+        "load/store units"
+      ]
+    },
+    {
+      "id": "cap.hardware.007.processor_control",
+      "family_id": 7,
+      "group": "hardware",
+      "name": "Processor control",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "instruction decoding",
+        "pipelines",
+        "scheduling",
+        "branch prediction",
+        "retirement"
+      ]
+    },
+    {
+      "id": "cap.hardware.008.instruction_sets",
+      "family_id": 8,
+      "group": "hardware",
+      "name": "Instruction sets",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "opcodes",
+        "addressing modes",
+        "privilege levels",
+        "atomic operations",
+        "instruction encodings"
+      ]
+    },
+    {
+      "id": "cap.hardware.009.caches",
+      "family_id": 9,
+      "group": "hardware",
+      "name": "Caches",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "instruction",
+        "data",
+        "unified",
+        "translation",
+        "device caches",
+        "coherence mechanisms"
+      ]
+    },
+    {
+      "id": "cap.hardware.010.memory",
+      "family_id": 10,
+      "group": "hardware",
+      "name": "Memory",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "SRAM",
+        "DRAM",
+        "ROM",
+        "flash",
+        "persistent memory",
+        "device memory"
+      ]
+    },
+    {
+      "id": "cap.hardware.011.memory_management_hardware",
+      "family_id": 11,
+      "group": "hardware",
+      "name": "Memory management hardware",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "MMUs",
+        "TLBs",
+        "page-table walkers",
+        "memory protection units",
+        "IOMMUs"
+      ]
+    },
+    {
+      "id": "cap.hardware.012.interconnects_and_buses",
+      "family_id": 12,
+      "group": "hardware",
+      "name": "Interconnects and buses",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "memory buses",
+        "peripheral buses",
+        "chip interconnects",
+        "expansion links"
+      ]
+    },
+    {
+      "id": "cap.hardware.013.controllers",
+      "family_id": 13,
+      "group": "hardware",
+      "name": "Controllers",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "memory",
+        "storage",
+        "network",
+        "interrupt",
+        "DMA",
+        "peripheral controllers"
+      ]
+    },
+    {
+      "id": "cap.hardware.014.storage_devices",
+      "family_id": 14,
+      "group": "hardware",
+      "name": "Storage devices",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "SSDs",
+        "hard drives",
+        "removable media",
+        "optical media",
+        "tape"
+      ]
+    },
+    {
+      "id": "cap.hardware.015.input_and_output_devices",
+      "family_id": 15,
+      "group": "hardware",
+      "name": "Input and output devices",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "displays",
+        "keyboards",
+        "cameras",
+        "microphones",
+        "sensors",
+        "actuators"
+      ]
+    },
+    {
+      "id": "cap.hardware.016.physical_infrastructure",
+      "family_id": 16,
+      "group": "hardware",
+      "name": "Physical infrastructure",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "boards",
+        "sockets",
+        "connectors",
+        "power supplies",
+        "cooling",
+        "enclosures",
+        "cabling"
+      ]
+    },
+    {
+      "id": "cap.hardware.017.clocks_and_timing",
+      "family_id": 17,
+      "group": "hardware",
+      "name": "Clocks and timing",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "oscillators",
+        "timers",
+        "clock domains",
+        "synchronization",
+        "watchdog timers"
+      ]
+    },
+    {
+      "id": "cap.hardware.018.firmware",
+      "family_id": 18,
+      "group": "hardware",
+      "name": "Firmware",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "platform firmware",
+        "device firmware",
+        "microcode",
+        "embedded control software"
+      ]
+    },
+    {
+      "id": "cap.hardware.019.boot_components",
+      "family_id": 19,
+      "group": "hardware",
+      "name": "Boot components",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "boot ROMs",
+        "bootloaders",
+        "boot managers",
+        "boot configuration",
+        "recovery images"
+      ]
+    },
+    {
+      "id": "cap.hardware.020.hardware_description_and_configuration",
+      "family_id": 20,
+      "group": "hardware",
+      "name": "Hardware description and configuration",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "device trees",
+        "platform tables",
+        "hardware manifests",
+        "programmable logic bitstreams"
+      ]
+    },
+    {
+      "id": "cap.system.021.kernels",
+      "family_id": 21,
+      "group": "system",
+      "name": "Kernels",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "privilege management",
+        "resource control",
+        "scheduling",
+        "memory management"
+      ]
+    },
+    {
+      "id": "cap.system.022.device_drivers",
+      "family_id": 22,
+      "group": "system",
+      "name": "Device drivers",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "device initialization",
+        "control",
+        "interrupt handling",
+        "data transfer"
+      ]
+    },
+    {
+      "id": "cap.system.023.system_calls",
+      "family_id": 23,
+      "group": "system",
+      "name": "System calls",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "processes",
+        "files",
+        "memory",
+        "networking",
+        "devices"
+      ]
+    },
+    {
+      "id": "cap.system.024.processes",
+      "family_id": 24,
+      "group": "system",
+      "name": "Processes",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "address spaces",
+        "process identifiers",
+        "execution state",
+        "environments"
+      ]
+    },
+    {
+      "id": "cap.system.025.threads_and_tasks",
+      "family_id": 25,
+      "group": "system",
+      "name": "Threads and tasks",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "execution contexts",
+        "stacks",
+        "thread-local storage",
+        "task state"
+      ]
+    },
+    {
+      "id": "cap.system.026.schedulers",
+      "family_id": 26,
+      "group": "system",
+      "name": "Schedulers",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "CPU scheduling",
+        "task priorities",
+        "deadlines",
+        "work queues"
+      ]
+    },
+    {
+      "id": "cap.system.027.synchronization_primitives",
+      "family_id": 27,
+      "group": "system",
+      "name": "Synchronization primitives",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "mutexes",
+        "semaphores",
+        "condition variables",
+        "barriers",
+        "atomics"
+      ]
+    },
+    {
+      "id": "cap.system.028.interprocess_communication",
+      "family_id": 28,
+      "group": "system",
+      "name": "Interprocess communication",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "pipes",
+        "sockets",
+        "shared memory",
+        "signals",
+        "message passing"
+      ]
+    },
+    {
+      "id": "cap.system.029.virtual_memory",
+      "family_id": 29,
+      "group": "system",
+      "name": "Virtual memory",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "address spaces",
+        "pages",
+        "mappings",
+        "protection",
+        "swapping"
+      ]
+    },
+    {
+      "id": "cap.system.030.allocators",
+      "family_id": 30,
+      "group": "system",
+      "name": "Allocators",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "heap",
+        "pool",
+        "slab",
+        "arena",
+        "stack",
+        "device-memory allocation"
+      ]
+    },
+    {
+      "id": "cap.system.031.filesystems",
+      "family_id": 31,
+      "group": "system",
+      "name": "Filesystems",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "files",
+        "directories",
+        "metadata",
+        "permissions",
+        "journaling",
+        "mounts"
+      ]
+    },
+    {
+      "id": "cap.system.032.storage_management",
+      "family_id": 32,
+      "group": "system",
+      "name": "Storage management",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "partitions",
+        "volumes",
+        "block layers",
+        "redundancy",
+        "snapshots"
+      ]
+    },
+    {
+      "id": "cap.system.033.networking_stacks",
+      "family_id": 33,
+      "group": "system",
+      "name": "Networking stacks",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "addressing",
+        "routing",
+        "transport",
+        "sockets",
+        "packet processing"
+      ]
+    },
+    {
+      "id": "cap.system.034.system_services",
+      "family_id": 34,
+      "group": "system",
+      "name": "System services",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "service managers",
+        "background daemons",
+        "time services",
+        "logging services"
+      ]
+    },
+    {
+      "id": "cap.system.035.shells_and_command_environments",
+      "family_id": 35,
+      "group": "system",
+      "name": "Shells and command environments",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "command parsing",
+        "scripting",
+        "pipelines",
+        "sessions",
+        "environment variables"
+      ]
+    },
+    {
+      "id": "cap.system.036.isolation_mechanisms",
+      "family_id": 36,
+      "group": "system",
+      "name": "Isolation mechanisms",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "protection domains",
+        "namespaces",
+        "resource limits",
+        "sandboxes"
+      ]
+    },
+    {
+      "id": "cap.system.037.virtualization",
+      "family_id": 37,
+      "group": "system",
+      "name": "Virtualization",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "hypervisors",
+        "virtual machines",
+        "virtual devices",
+        "guest environments"
+      ]
+    },
+    {
+      "id": "cap.system.038.containers",
+      "family_id": 38,
+      "group": "system",
+      "name": "Containers",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "images",
+        "runtimes",
+        "filesystem layers",
+        "resource configuration"
+      ]
+    },
+    {
+      "id": "cap.system.039.emulators_and_simulators",
+      "family_id": 39,
+      "group": "system",
+      "name": "Emulators and simulators",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "instruction emulation",
+        "device models",
+        "behavioral models",
+        "simulated environments"
+      ]
+    },
+    {
+      "id": "cap.system.040.runtime_environments",
+      "family_id": 40,
+      "group": "system",
+      "name": "Runtime environments",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "virtual machines",
+        "interpreters",
+        "JIT execution",
+        "managed execution services"
+      ]
+    },
+    {
+      "id": "cap.system.041.language_runtime_services",
+      "family_id": 41,
+      "group": "system",
+      "name": "Language runtime services",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "garbage collection",
+        "exception handling",
+        "reflection",
+        "coroutine execution"
+      ]
+    },
+    {
+      "id": "cap.system.042.resource_accounting",
+      "family_id": 42,
+      "group": "system",
+      "name": "Resource accounting",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "CPU",
+        "memory",
+        "storage",
+        "network",
+        "accelerator usage and quotas"
+      ]
+    },
+    {
+      "id": "cap.program.043.symbols_and_identifiers",
+      "family_id": 43,
+      "group": "program",
+      "name": "Symbols and identifiers",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "names",
+        "labels",
+        "namespaces",
+        "symbol tables",
+        "scopes"
+      ]
+    },
+    {
+      "id": "cap.program.044.values_and_literals",
+      "family_id": 44,
+      "group": "program",
+      "name": "Values and literals",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "numbers",
+        "characters",
+        "strings",
+        "booleans",
+        "constants"
+      ]
+    },
+    {
+      "id": "cap.program.045.types",
+      "family_id": 45,
+      "group": "program",
+      "name": "Types",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "primitive",
+        "composite",
+        "algebraic",
+        "generic",
+        "reference",
+        "function types"
+      ]
+    },
+    {
+      "id": "cap.program.046.variables_and_bindings",
+      "family_id": 46,
+      "group": "program",
+      "name": "Variables and bindings",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "mutable variables",
+        "immutable bindings",
+        "references",
+        "lifetime rules"
+      ]
+    },
+    {
+      "id": "cap.program.047.expressions_and_operators",
+      "family_id": 47,
+      "group": "program",
+      "name": "Expressions and operators",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "arithmetic",
+        "comparison",
+        "logic",
+        "assignment",
+        "evaluation rules"
+      ]
+    },
+    {
+      "id": "cap.program.048.control_flow",
+      "family_id": 48,
+      "group": "program",
+      "name": "Control flow",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "branches",
+        "loops",
+        "pattern matching",
+        "jumps",
+        "exception paths"
+      ]
+    },
+    {
+      "id": "cap.program.049.functions_and_procedures",
+      "family_id": 49,
+      "group": "program",
+      "name": "Functions and procedures",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "parameters",
+        "return values",
+        "closures",
+        "callbacks",
+        "methods"
+      ]
+    },
+    {
+      "id": "cap.program.050.objects_and_abstractions",
+      "family_id": 50,
+      "group": "program",
+      "name": "Objects and abstractions",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "classes",
+        "interfaces",
+        "traits",
+        "prototypes",
+        "records"
+      ]
+    },
+    {
+      "id": "cap.program.051.modules_and_packages",
+      "family_id": 51,
+      "group": "program",
+      "name": "Modules and packages",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "imports",
+        "exports",
+        "visibility",
+        "package boundaries",
+        "dependencies"
+      ]
+    },
+    {
+      "id": "cap.program.052.data_structures",
+      "family_id": 52,
+      "group": "program",
+      "name": "Data structures",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "arrays",
+        "lists",
+        "maps",
+        "sets",
+        "trees",
+        "graphs",
+        "queues",
+        "heaps"
+      ]
+    },
+    {
+      "id": "cap.program.053.algorithms",
+      "family_id": 53,
+      "group": "program",
+      "name": "Algorithms",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "search",
+        "sorting",
+        "parsing",
+        "optimization",
+        "scheduling",
+        "numerical computation"
+      ]
+    },
+    {
+      "id": "cap.program.054.state_machines",
+      "family_id": 54,
+      "group": "program",
+      "name": "State machines",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "states",
+        "transitions",
+        "events",
+        "guards",
+        "actions"
+      ]
+    },
+    {
+      "id": "cap.program.055.concurrency_models",
+      "family_id": 55,
+      "group": "program",
+      "name": "Concurrency models",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "threads",
+        "actors",
+        "async tasks",
+        "futures",
+        "channels",
+        "event loops"
+      ]
+    },
+    {
+      "id": "cap.program.056.error_models",
+      "family_id": 56,
+      "group": "program",
+      "name": "Error models",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "exceptions",
+        "result types",
+        "error codes",
+        "cancellation",
+        "recovery"
+      ]
+    },
+    {
+      "id": "cap.program.057.resource_ownership_models",
+      "family_id": 57,
+      "group": "program",
+      "name": "Resource ownership models",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "ownership",
+        "borrowing",
+        "reference counting",
+        "scoped cleanup"
+      ]
+    },
+    {
+      "id": "cap.program.058.interfaces_and_contracts",
+      "family_id": 58,
+      "group": "program",
+      "name": "Interfaces and contracts",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "inputs",
+        "outputs",
+        "preconditions",
+        "postconditions",
+        "invariants",
+        "compatibility rules"
+      ]
+    },
+    {
+      "id": "cap.program.059.application_binary_interfaces",
+      "family_id": 59,
+      "group": "program",
+      "name": "Application binary interfaces",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "calling conventions",
+        "object layouts",
+        "symbol conventions",
+        "binary compatibility"
+      ]
+    },
+    {
+      "id": "cap.program.060.foreign-function_interfaces",
+      "family_id": 60,
+      "group": "program",
+      "name": "Foreign-function interfaces",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "cross-language calls",
+        "bindings",
+        "marshalling",
+        "native extensions"
+      ]
+    },
+    {
+      "id": "cap.program.061.frameworks",
+      "family_id": 61,
+      "group": "program",
+      "name": "Frameworks",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "application structure",
+        "lifecycle hooks",
+        "routing",
+        "extension points"
+      ]
+    },
+    {
+      "id": "cap.program.062.sdks_and_toolkits",
+      "family_id": 62,
+      "group": "program",
+      "name": "SDKs and toolkits",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "libraries",
+        "headers",
+        "tools",
+        "examples",
+        "integration documentation"
+      ]
+    },
+    {
+      "id": "cap.program.063.plugins_and_extensions",
+      "family_id": 63,
+      "group": "program",
+      "name": "Plugins and extensions",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "loadable modules",
+        "extension APIs",
+        "discovery",
+        "version compatibility"
+      ]
+    },
+    {
+      "id": "cap.program.064.configuration",
+      "family_id": 64,
+      "group": "program",
+      "name": "Configuration",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "settings",
+        "profiles",
+        "feature flags",
+        "policy parameters",
+        "environment configuration"
+      ]
+    },
+    {
+      "id": "cap.toolchain.065.languages_and_grammars",
+      "family_id": 65,
+      "group": "toolchain",
+      "name": "Languages and grammars",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "syntax",
+        "semantics",
+        "lexical rules",
+        "grammar definitions"
+      ]
+    },
+    {
+      "id": "cap.toolchain.066.lexers_and_parsers",
+      "family_id": 66,
+      "group": "toolchain",
+      "name": "Lexers and parsers",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "tokenization",
+        "syntax analysis",
+        "parse trees",
+        "syntax diagnostics"
+      ]
+    },
+    {
+      "id": "cap.toolchain.067.intermediate_representations",
+      "family_id": 67,
+      "group": "toolchain",
+      "name": "Intermediate representations",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "abstract syntax trees",
+        "control-flow graphs",
+        "intermediate code"
+      ]
+    },
+    {
+      "id": "cap.toolchain.068.compilers_and_interpreters",
+      "family_id": 68,
+      "group": "toolchain",
+      "name": "Compilers and interpreters",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "semantic analysis",
+        "type checking",
+        "optimization",
+        "code generation",
+        "evaluation"
+      ]
+    },
+    {
+      "id": "cap.toolchain.069.assemblers",
+      "family_id": 69,
+      "group": "toolchain",
+      "name": "Assemblers",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "assembly parsing",
+        "instruction encoding",
+        "object-file generation"
+      ]
+    },
+    {
+      "id": "cap.toolchain.070.linkers_and_loaders",
+      "family_id": 70,
+      "group": "toolchain",
+      "name": "Linkers and loaders",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "symbol resolution",
+        "relocation",
+        "executable loading",
+        "dynamic linking"
+      ]
+    },
+    {
+      "id": "cap.toolchain.071.build_systems",
+      "family_id": 71,
+      "group": "toolchain",
+      "name": "Build systems",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "dependency graphs",
+        "build rules",
+        "incremental builds",
+        "build caches"
+      ]
+    },
+    {
+      "id": "cap.toolchain.072.dependency_management",
+      "family_id": 72,
+      "group": "toolchain",
+      "name": "Dependency management",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "manifests",
+        "lockfiles",
+        "version resolution",
+        "integrity checks"
+      ]
+    },
+    {
+      "id": "cap.toolchain.073.code_generation",
+      "family_id": 73,
+      "group": "toolchain",
+      "name": "Code generation",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "interface bindings",
+        "schema-derived code",
+        "templates",
+        "generated clients"
+      ]
+    },
+    {
+      "id": "cap.toolchain.074.development_environments",
+      "family_id": 74,
+      "group": "toolchain",
+      "name": "Development environments",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "editors",
+        "IDEs",
+        "language servers",
+        "notebooks",
+        "interactive consoles"
+      ]
+    },
+    {
+      "id": "cap.toolchain.075.debugging_tools",
+      "family_id": 75,
+      "group": "toolchain",
+      "name": "Debugging tools",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "breakpoints",
+        "stack traces",
+        "memory inspection",
+        "crash dumps"
+      ]
+    },
+    {
+      "id": "cap.toolchain.076.performance_tools",
+      "family_id": 76,
+      "group": "toolchain",
+      "name": "Performance tools",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "profilers",
+        "tracers",
+        "benchmarks",
+        "sampling",
+        "instrumentation"
+      ]
+    },
+    {
+      "id": "cap.toolchain.077.static_analysis_tools",
+      "family_id": 77,
+      "group": "toolchain",
+      "name": "Static analysis tools",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "linters",
+        "type analyzers",
+        "dependency analysis",
+        "security analyzers"
+      ]
+    },
+    {
+      "id": "cap.toolchain.078.binary_and_package_formats",
+      "family_id": 78,
+      "group": "toolchain",
+      "name": "Binary and package formats",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "object files",
+        "executables",
+        "shared objects",
+        "archives",
+        "installable packages"
+      ]
+    },
+    {
+      "id": "cap.toolchain.079.source_and_artifact_repositories",
+      "family_id": 79,
+      "group": "toolchain",
+      "name": "Source and artifact repositories",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "version history",
+        "branches",
+        "tags",
+        "releases",
+        "build artifacts"
+      ]
+    },
+    {
+      "id": "cap.application.080.data_models_and_schemas",
+      "family_id": 80,
+      "group": "application",
+      "name": "Data models and schemas",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "entities",
+        "relationships",
+        "constraints",
+        "field definitions",
+        "schema versions"
+      ]
+    },
+    {
+      "id": "cap.application.081.data_formats_and_encodings",
+      "family_id": 81,
+      "group": "application",
+      "name": "Data formats and encodings",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "text",
+        "binary formats",
+        "character encodings",
+        "serialization"
+      ]
+    },
+    {
+      "id": "cap.application.082.databases",
+      "family_id": 82,
+      "group": "application",
+      "name": "Databases",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "relational",
+        "document",
+        "key-value",
+        "graph",
+        "time-series",
+        "vector databases"
+      ]
+    },
+    {
+      "id": "cap.application.083.database_engines",
+      "family_id": 83,
+      "group": "application",
+      "name": "Database engines",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "query planning",
+        "execution",
+        "indexing",
+        "transactions",
+        "concurrency control"
+      ]
+    },
+    {
+      "id": "cap.application.084.data_storage_services",
+      "family_id": 84,
+      "group": "application",
+      "name": "Data storage services",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "object stores",
+        "file stores",
+        "block stores",
+        "archival stores"
+      ]
+    },
+    {
+      "id": "cap.application.085.caches_and_indexes",
+      "family_id": 85,
+      "group": "application",
+      "name": "Caches and indexes",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "application caches",
+        "distributed caches",
+        "search indexes",
+        "materialized views"
+      ]
+    },
+    {
+      "id": "cap.application.086.data_pipelines",
+      "family_id": 86,
+      "group": "application",
+      "name": "Data pipelines",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "ingestion",
+        "transformation",
+        "validation",
+        "batch processing",
+        "stream processing"
+      ]
+    },
+    {
+      "id": "cap.application.087.messaging_systems",
+      "family_id": 87,
+      "group": "application",
+      "name": "Messaging systems",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "queues",
+        "brokers",
+        "topics",
+        "event buses",
+        "dead-letter handling"
+      ]
+    },
+    {
+      "id": "cap.application.088.protocols",
+      "family_id": 88,
+      "group": "application",
+      "name": "Protocols",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "message structures",
+        "interaction rules",
+        "ordering",
+        "negotiation",
+        "error handling"
+      ]
+    },
+    {
+      "id": "cap.application.089.apis",
+      "family_id": 89,
+      "group": "application",
+      "name": "APIs",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "local APIs",
+        "HTTP APIs",
+        "RPC interfaces",
+        "streaming interfaces"
+      ]
+    },
+    {
+      "id": "cap.application.090.adapters_and_connectors",
+      "family_id": 90,
+      "group": "application",
+      "name": "Adapters and connectors",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "protocol conversion",
+        "data mapping",
+        "external-service integration"
+      ]
+    },
+    {
+      "id": "cap.application.091.middleware",
+      "family_id": 91,
+      "group": "application",
+      "name": "Middleware",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "request processing",
+        "authentication hooks",
+        "retries",
+        "routing",
+        "mediation"
+      ]
+    },
+    {
+      "id": "cap.application.092.gateways_and_proxies",
+      "family_id": 92,
+      "group": "application",
+      "name": "Gateways and proxies",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "API gateways",
+        "reverse proxies",
+        "traffic mediation",
+        "policy enforcement"
+      ]
+    },
+    {
+      "id": "cap.application.093.naming_and_discovery",
+      "family_id": 93,
+      "group": "application",
+      "name": "Naming and discovery",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "DNS",
+        "service directories",
+        "endpoint discovery",
+        "resource naming"
+      ]
+    },
+    {
+      "id": "cap.application.094.traffic_management",
+      "family_id": 94,
+      "group": "application",
+      "name": "Traffic management",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "load balancing",
+        "rate limiting",
+        "admission control",
+        "backpressure"
+      ]
+    },
+    {
+      "id": "cap.application.095.distributed_coordination",
+      "family_id": 95,
+      "group": "application",
+      "name": "Distributed coordination",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "consensus",
+        "leader election",
+        "leases",
+        "distributed locks"
+      ]
+    },
+    {
+      "id": "cap.application.096.replication_and_consistency",
+      "family_id": 96,
+      "group": "application",
+      "name": "Replication and consistency",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "replica management",
+        "consistency models",
+        "conflict resolution",
+        "reconciliation"
+      ]
+    },
+    {
+      "id": "cap.application.097.distributed_workflows",
+      "family_id": 97,
+      "group": "application",
+      "name": "Distributed workflows",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "orchestration",
+        "choreography",
+        "job execution",
+        "compensating actions"
+      ]
+    },
+    {
+      "id": "cap.application.098.failure-handling_mechanisms",
+      "family_id": 98,
+      "group": "application",
+      "name": "Failure-handling mechanisms",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "timeouts",
+        "retries",
+        "idempotency",
+        "circuit breakers",
+        "failover"
+      ]
+    },
+    {
+      "id": "cap.application.099.business_and_domain_logic",
+      "family_id": 99,
+      "group": "application",
+      "name": "Business and domain logic",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "rules",
+        "calculations",
+        "decisions",
+        "domain services"
+      ]
+    },
+    {
+      "id": "cap.application.100.user_interfaces",
+      "family_id": 100,
+      "group": "application",
+      "name": "User interfaces",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "command-line",
+        "graphical",
+        "web",
+        "mobile",
+        "voice",
+        "device interfaces"
+      ]
+    },
+    {
+      "id": "cap.application.101.presentation_systems",
+      "family_id": 101,
+      "group": "application",
+      "name": "Presentation systems",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "layout",
+        "rendering",
+        "styles",
+        "templates",
+        "graphics",
+        "animation"
+      ]
+    },
+    {
+      "id": "cap.application.102.interaction_and_accessibility",
+      "family_id": 102,
+      "group": "application",
+      "name": "Interaction and accessibility",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "navigation",
+        "input handling",
+        "focus",
+        "assistive interfaces",
+        "localization"
+      ]
+    },
+    {
+      "id": "cap.application.103.session_and_application_state",
+      "family_id": 103,
+      "group": "application",
+      "name": "Session and application state",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "sessions",
+        "client state",
+        "server state",
+        "persistence",
+        "synchronization"
+      ]
+    },
+    {
+      "id": "cap.application.104.content_and_assets",
+      "family_id": 104,
+      "group": "application",
+      "name": "Content and assets",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "documents",
+        "images",
+        "fonts",
+        "audio",
+        "video",
+        "localization resources"
+      ]
+    },
+    {
+      "id": "cap.security.105.identity",
+      "family_id": 105,
+      "group": "security",
+      "name": "Identity",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "user",
+        "service",
+        "device",
+        "workload identities",
+        "credentials"
+      ]
+    },
+    {
+      "id": "cap.security.106.authentication",
+      "family_id": 106,
+      "group": "security",
+      "name": "Authentication",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "credential validation",
+        "multifactor authentication",
+        "federation"
+      ]
+    },
+    {
+      "id": "cap.security.107.authorization_and_capabilities",
+      "family_id": 107,
+      "group": "security",
+      "name": "Authorization and capabilities",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "permissions",
+        "roles",
+        "attributes",
+        "capability grants",
+        "scope",
+        "revocation"
+      ]
+    },
+    {
+      "id": "cap.security.108.cryptographic_components",
+      "family_id": 108,
+      "group": "security",
+      "name": "Cryptographic components",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "hashing",
+        "encryption",
+        "signatures",
+        "key derivation",
+        "random-number generation"
+      ]
+    },
+    {
+      "id": "cap.security.109.key_and_secret_management",
+      "family_id": 109,
+      "group": "security",
+      "name": "Key and secret management",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "key stores",
+        "secret stores",
+        "certificates",
+        "issuance",
+        "rotation"
+      ]
+    },
+    {
+      "id": "cap.security.110.trust_and_integrity_mechanisms",
+      "family_id": 110,
+      "group": "security",
+      "name": "Trust and integrity mechanisms",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "trust anchors",
+        "signed artifacts",
+        "boot verification",
+        "attestation"
+      ]
+    },
+    {
+      "id": "cap.security.111.security_controls",
+      "family_id": 111,
+      "group": "security",
+      "name": "Security controls",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "input validation",
+        "filtering",
+        "segmentation",
+        "isolation",
+        "policy enforcement"
+      ]
+    },
+    {
+      "id": "cap.security.112.privacy_and_data_governance",
+      "family_id": 112,
+      "group": "security",
+      "name": "Privacy and data governance",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "classification",
+        "minimization",
+        "retention",
+        "access restrictions",
+        "deletion"
+      ]
+    },
+    {
+      "id": "cap.lifecycle.113.requirements_and_specifications",
+      "family_id": 113,
+      "group": "lifecycle",
+      "name": "Requirements and specifications",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "intended behavior",
+        "constraints",
+        "acceptance criteria",
+        "interfaces"
+      ]
+    },
+    {
+      "id": "cap.lifecycle.114.architecture_and_design_artifacts",
+      "family_id": 114,
+      "group": "lifecycle",
+      "name": "Architecture and design artifacts",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "system boundaries",
+        "component models",
+        "dependency maps",
+        "decision records"
+      ]
+    },
+    {
+      "id": "cap.lifecycle.115.tests_and_test_infrastructure",
+      "family_id": 115,
+      "group": "lifecycle",
+      "name": "Tests and test infrastructure",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "unit",
+        "integration",
+        "system",
+        "acceptance",
+        "regression tests",
+        "fixtures and harnesses"
+      ]
+    },
+    {
+      "id": "cap.lifecycle.116.adversarial_and_resilience_testing",
+      "family_id": 116,
+      "group": "lifecycle",
+      "name": "Adversarial and resilience testing",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "fuzzing",
+        "fault injection",
+        "load testing",
+        "chaos experiments"
+      ]
+    },
+    {
+      "id": "cap.lifecycle.117.formal_methods",
+      "family_id": 117,
+      "group": "lifecycle",
+      "name": "Formal methods",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "logical specifications",
+        "model checking",
+        "theorem proving",
+        "refinement checks"
+      ]
+    },
+    {
+      "id": "cap.lifecycle.118.verification_evidence",
+      "family_id": 118,
+      "group": "lifecycle",
+      "name": "Verification evidence",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "test results",
+        "execution traces",
+        "provenance",
+        "artifact hashes",
+        "reproducibility records"
+      ]
+    },
+    {
+      "id": "cap.lifecycle.119.observability",
+      "family_id": 119,
+      "group": "lifecycle",
+      "name": "Observability",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "logs",
+        "metrics",
+        "traces",
+        "profiles",
+        "health checks",
+        "dashboards"
+      ]
+    },
+    {
+      "id": "cap.lifecycle.120.operational_detection_and_response",
+      "family_id": 120,
+      "group": "lifecycle",
+      "name": "Operational detection and response",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "alerts",
+        "anomaly detection",
+        "incident handling",
+        "containment",
+        "recovery"
+      ]
+    },
+    {
+      "id": "cap.lifecycle.121.continuous_integration_and_delivery",
+      "family_id": 121,
+      "group": "lifecycle",
+      "name": "Continuous integration and delivery",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "automated builds",
+        "validation gates",
+        "packaging",
+        "release workflows"
+      ]
+    },
+    {
+      "id": "cap.lifecycle.122.deployment_systems",
+      "family_id": 122,
+      "group": "lifecycle",
+      "name": "Deployment systems",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "installers",
+        "provisioning",
+        "infrastructure definitions",
+        "rollout",
+        "rollback"
+      ]
+    },
+    {
+      "id": "cap.lifecycle.123.environment_management",
+      "family_id": 123,
+      "group": "lifecycle",
+      "name": "Environment management",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "development",
+        "test",
+        "staging",
+        "production",
+        "configuration and dependency isolation"
+      ]
+    },
+    {
+      "id": "cap.lifecycle.124.backup_and_disaster_recovery",
+      "family_id": 124,
+      "group": "lifecycle",
+      "name": "Backup and disaster recovery",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "backups",
+        "restore procedures",
+        "recovery objectives",
+        "recovery exercises"
+      ]
+    },
+    {
+      "id": "cap.lifecycle.125.capacity_and_efficiency_management",
+      "family_id": 125,
+      "group": "lifecycle",
+      "name": "Capacity and efficiency management",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "sizing",
+        "quotas",
+        "scaling",
+        "utilization",
+        "cost and energy accounting"
+      ]
+    },
+    {
+      "id": "cap.lifecycle.126.supply-chain_records",
+      "family_id": 126,
+      "group": "lifecycle",
+      "name": "Supply-chain records",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "dependency inventories",
+        "software bills of materials",
+        "provenance",
+        "licenses"
+      ]
+    },
+    {
+      "id": "cap.lifecycle.127.maintenance_and_evolution",
+      "family_id": 127,
+      "group": "lifecycle",
+      "name": "Maintenance and evolution",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "patches",
+        "upgrades",
+        "migrations",
+        "compatibility",
+        "vulnerability remediation"
+      ]
+    },
+    {
+      "id": "cap.lifecycle.128.lifecycle_controls",
+      "family_id": 128,
+      "group": "lifecycle",
+      "name": "Lifecycle controls",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "versioning",
+        "deprecation",
+        "sunset",
+        "retirement",
+        "decommissioning"
+      ]
+    },
+    {
+      "id": "cap.lifecycle.129.documentation_and_operational_knowledge",
+      "family_id": 129,
+      "group": "lifecycle",
+      "name": "Documentation and operational knowledge",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "reference manuals",
+        "tutorials",
+        "runbooks",
+        "troubleshooting guides"
+      ]
+    },
+    {
+      "id": "cap.lifecycle.130.ownership_and_governance",
+      "family_id": 130,
+      "group": "lifecycle",
+      "name": "Ownership and governance",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "maintainers",
+        "decision rights",
+        "support responsibilities",
+        "review and acceptance"
+      ]
+    },
+    {
+      "id": "cap.specialized.131.ai_and_machine_learning",
+      "family_id": 131,
+      "group": "specialized",
+      "name": "AI and machine learning",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "datasets",
+        "tokenizers",
+        "models",
+        "weights",
+        "training",
+        "inference",
+        "evaluation",
+        "model serving"
+      ]
+    },
+    {
+      "id": "cap.specialized.132.agent_systems",
+      "family_id": 132,
+      "group": "specialized",
+      "name": "Agent systems",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "tool definitions",
+        "context",
+        "memory",
+        "planners",
+        "execution loops",
+        "bounded authority",
+        "monitoring"
+      ]
+    },
+    {
+      "id": "cap.specialized.133.scientific_computing",
+      "family_id": 133,
+      "group": "specialized",
+      "name": "Scientific computing",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "solvers",
+        "meshes",
+        "numerical kernels",
+        "simulation models",
+        "uncertainty analysis"
+      ]
+    },
+    {
+      "id": "cap.specialized.134.graphics_and_media",
+      "family_id": 134,
+      "group": "specialized",
+      "name": "Graphics and media",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "scene graphs",
+        "shaders",
+        "renderers",
+        "codecs",
+        "compositors",
+        "media pipelines"
+      ]
+    },
+    {
+      "id": "cap.specialized.135.real-time_and_embedded_systems",
+      "family_id": 135,
+      "group": "specialized",
+      "name": "Real-time and embedded systems",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "interrupt routines",
+        "deadline scheduling",
+        "control loops",
+        "board-support packages"
+      ]
+    },
+    {
+      "id": "cap.specialized.136.robotics_and_control",
+      "family_id": 136,
+      "group": "specialized",
+      "name": "Robotics and control",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "perception",
+        "localization",
+        "planning",
+        "feedback controllers",
+        "actuator interfaces"
+      ]
+    },
+    {
+      "id": "cap.specialized.137.programmable_hardware",
+      "family_id": 137,
+      "group": "specialized",
+      "name": "Programmable hardware",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "HDL modules",
+        "synthesis",
+        "placement",
+        "routing",
+        "timing constraints",
+        "bitstreams"
+      ]
+    },
+    {
+      "id": "cap.specialized.138.quantum_computing",
+      "family_id": 138,
+      "group": "specialized",
+      "name": "Quantum computing",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "qubits",
+        "gates",
+        "circuits",
+        "compilation",
+        "control electronics",
+        "measurement",
+        "classical coordination"
+      ]
+    },
+    {
+      "id": "cap.specialized.139.distributed_ledgers",
+      "family_id": 139,
+      "group": "specialized",
+      "name": "Distributed ledgers",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "transaction models",
+        "validation rules",
+        "consensus",
+        "execution engines",
+        "state storage"
+      ]
+    },
+    {
+      "id": "cap.specialized.140.geospatial_systems",
+      "family_id": 140,
+      "group": "specialized",
+      "name": "Geospatial systems",
+      "inputs": [],
+      "limits": {
+        "max_concurrency": 1,
+        "max_seconds": 60
+      },
+      "permissions": [],
+      "evidence_required": [
+        "test result",
+        "execution trace"
+      ],
+      "implementation": {
+        "status": "declared",
+        "module": null,
+        "entrypoint": null
+      },
+      "includes": [
+        "coordinate systems",
+        "geometry",
+        "spatial indexes",
+        "map layers",
+        "spatial processing"
+      ]
+    }
+  ]
+}

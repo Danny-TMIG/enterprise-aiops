@@ -1,0 +1,25 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://aether.local/schemas/components.schema.yaml"
+title: ComponentRegistry
+description: 140-family taxonomy of computer / program / system components.
+type: object
+required: [schema, families]
+properties:
+  schema: {type: string, const: "aether.components.v1"}
+  description: {type: string}
+  families:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required: [id, group, name, includes]
+      properties:
+        id: {type: integer, minimum: 1}
+        group:
+          type: string
+          enum: [hardware, system, program, toolchain, application, security, lifecycle, specialized]
+        name: {type: string, minLength: 1}
+        includes:
+          type: array
+          items: {type: string, minLength: 1}
+          minItems: 1
