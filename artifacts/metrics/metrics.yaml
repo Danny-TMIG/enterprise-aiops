@@ -1,4 +1,0 @@
-metrics:
-  - name: request_total
-    type: counter
-    help: Total requests

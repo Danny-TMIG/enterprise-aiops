@@ -1,6 +1,0 @@
-id: cap.example.001.example
-inputs: []
-limits: {max_concurrency: 1, max_seconds: 60}
-permissions: []
-evidence_required: [test]
-implementation: {status: declared}
