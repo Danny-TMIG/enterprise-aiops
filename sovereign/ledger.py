@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import time
 from dataclasses import dataclass, asdict
 from datetime import datetime, timezone
@@ -57,6 +58,12 @@ class Ledger:
             return "0" * 64
 
     def append(self, request: Any, response: Any, meta: dict) -> LedgerRow:
+        """Write the row before the caller returns the response.
+
+        Durability contract: if this method returns without raising, the row
+        is on disk with fsync completed. If it raises, no row exists and the
+        caller must not return a response to the client.
+        """
         prev = self._last_hash()
         request_hash = _hash(request)
         response_hash = _hash(response)
@@ -75,6 +82,8 @@ class Ledger:
         row["row_hash"] = _hash(row)
         with self.path.open("a") as f:
             f.write(json.dumps(row) + "\n")
+            f.flush()
+            os.fsync(f.fileno())
         return LedgerRow(**row)
 
     def verify(self) -> tuple[int, int, list[str]]:
