@@ -15,39 +15,19 @@ else
 fi
 
 step "2. settings"
-if SOVEREIGN_NODE_ID=verify python -c "from ag.settings import get_settings; get_settings()" 2>/dev/null; then
-  ok ag.settings
-else
-  bad ag.settings
-fi
+if SOVEREIGN_NODE_ID=verify python -c "from ag.settings import get_settings; get_settings()" 2>/dev/null; then ok ag.settings; else bad ag.settings; fi
 
 step "3. metrics"
-if python -c "from ag.metrics import Metrics; m=Metrics(namespace='verify'); m.record(method='GET',path='/x',status_code=200,duration_seconds=0.01); assert b'verify_requests_total' in m.render()" 2>/dev/null; then
-  ok ag.metrics
-else
-  bad ag.metrics
-fi
+if python -c "from ag.metrics import Metrics; m=Metrics(namespace='verify'); m.record(method='GET',path='/x',status_code=200,duration_seconds=0.01); assert b'verify_requests_total' in m.render()" 2>/dev/null; then ok ag.metrics; else bad ag.metrics; fi
 
 step "4. health"
-if SOVEREIGN_NODE_ID=verify python -c "from ag.health import check_all; c,b=check_all(); assert set(b['subsystems'])=={'settings','ledger','model','disk'}" 2>/dev/null; then
-  ok ag.health
-else
-  bad ag.health
-fi
+if SOVEREIGN_NODE_ID=verify python -c "from ag.health import check_all; c,b=check_all(); assert set(b['subsystems'])=={'settings','ledger','model','disk'}" 2>/dev/null; then ok ag.health; else bad ag.health; fi
 
 step "5. tracing"
-if python -c "from ag.tracing import init_tracing, shutdown_tracing; assert init_tracing('verify', endpoint=None, console=True) is True; shutdown_tracing(force_flush_timeout_ms=100)" 2>/dev/null; then
-  ok ag.tracing
-else
-  bad ag.tracing
-fi
+if python -c "from ag.tracing import init_tracing, shutdown_tracing; assert init_tracing('verify', endpoint=None, console=True) is True; shutdown_tracing(force_flush_timeout_ms=100)" 2>/dev/null; then ok ag.tracing; else bad ag.tracing; fi
 
 step "6. tracing fails safe"
-if python -c "from ag.tracing import init_tracing, shutdown_tracing; assert init_tracing('verify', endpoint='http://127.0.0.1:59999') is False; shutdown_tracing(force_flush_timeout_ms=100)" 2>/dev/null; then
-  ok "ag.tracing fails safe"
-else
-  bad "ag.tracing fails safe"
-fi
+if python -c "from ag.tracing import init_tracing, shutdown_tracing; assert init_tracing('verify', endpoint='http://127.0.0.1:59999') is False; shutdown_tracing(force_flush_timeout_ms=100)" 2>/dev/null; then ok "ag.tracing fails safe"; else bad "ag.tracing fails safe"; fi
 
 step "7. license audit"
 if command -v cyclonedx-py >/dev/null 2>&1; then
