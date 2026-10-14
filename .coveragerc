@@ -1,21 +1,16 @@
 [run]
 branch = True
+source =
+    src
+    components
+    tooling
+    integration
 
 [report]
-include =
-    dcs/verify.py
-    dcs/verify_intoto.py
-    dcs/verify_evidence.py
-    dcs/coherence.py
-    dcs/bisim.py
-    dcs/conform.py
-    dcs/equivalence.py
-    dcs/mesh/behavior.py
-    dcs/self.py
-    dcs/crosscut/interop.py
-    dcs/crosscut/semver.py
-    dcs/evidence_chain.py
-    dcs/qualify_evidence.py
-    dcs/sdlc_engine.py
-omit =
-    dcs/__main__.py
+show_missing = True
+skip_covered = False
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.:
+    raise NotImplementedError
+    if TYPE_CHECKING:
