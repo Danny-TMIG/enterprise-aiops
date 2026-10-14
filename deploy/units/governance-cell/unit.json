@@ -1,0 +1,31 @@
+{
+  "unit_id": "governance-cell",
+  "owner": "govern-team",
+  "description": "Enterprise governance authority — object model registry, state/transition engine, decision/outcome correlation.",
+  "constituent_components": ["GOV-KRN-001-governance-object-model-and-registry","GOV-KRN-002-governed-state-and-transition-engine","GOV-KRN-003-decision-and-outcome-correlation"],
+  "artifact": {
+    "coordinates": "local://governance-cell",
+    "digest": null,
+    "status": "declared-not-built"
+  },
+  "contract_versions": {
+    "common-envelope": "asf.common.envelope.v1",
+    "execution-order": "asf.gov.execution_order.v1",
+    "execution-result": "asf.cmp.execution_result.v1"
+  },
+  "state_owners": ["GOV-KRN-001-governance-object-model-and-registry"],
+  "dependencies": [],
+  "placement": "enterprise-multidepartment",
+  "rollout_policy": "staged",
+  "profile_bindings": ["enterprise-multidepartment"],
+  "health_checks": {
+    "readiness": "/healthz",
+    "liveness": "/livez"
+  },
+  "resource_limits": {
+    "cpu_cores": 2,
+    "memory_gb": 4
+  },
+  "secrets": [],
+  "migrations": []
+}

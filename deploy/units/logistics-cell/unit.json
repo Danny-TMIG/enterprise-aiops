@@ -1,0 +1,31 @@
+{
+  "unit_id": "logistics-cell",
+  "owner": "logistics-team",
+  "description": "Logistics departmental cell — compute contract kernel, execution gateway, data staging and result collection.",
+  "constituent_components": ["CMP-CTL-001-compute-contract-kernel","CMP-CTL-002-execution-gateway","CMP-DAT-001-data-staging-and-result-collection"],
+  "artifact": {
+    "coordinates": "local://logistics-cell",
+    "digest": null,
+    "status": "declared-not-built"
+  },
+  "contract_versions": {
+    "common-envelope": "asf.common.envelope.v1",
+    "execution-order": "asf.gov.execution_order.v1",
+    "execution-result": "asf.cmp.execution_result.v1"
+  },
+  "state_owners": ["GOV-KRN-001-governance-object-model-and-registry","GOV-INF-005-ingestion-governance-and-lineage-coordinator"],
+  "dependencies": ["governance-cell"],
+  "placement": "departmental-cpu",
+  "rollout_policy": "staged",
+  "profile_bindings": ["enterprise-multidepartment"],
+  "health_checks": {
+    "readiness": "/healthz",
+    "liveness": "/livez"
+  },
+  "resource_limits": {
+    "cpu_cores": 2,
+    "memory_gb": 4
+  },
+  "secrets": [],
+  "migrations": []
+}
