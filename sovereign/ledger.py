@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import threading
 import time
 from dataclasses import dataclass, asdict
 from datetime import datetime, timezone
@@ -40,6 +41,7 @@ class Ledger:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         if not self.path.exists():
             self.path.touch()
+        self._lock = threading.Lock()
 
     def _last_hash(self) -> str:
         if self.path.stat().st_size == 0:
@@ -58,6 +60,10 @@ class Ledger:
             return "0" * 64
 
     def append(self, request: Any, response: Any, meta: dict) -> LedgerRow:
+        with self._lock:
+            return self._append_locked(request, response, meta)
+
+    def _append_locked(self, request: Any, response: Any, meta: dict) -> LedgerRow:
         """Write the row before the caller returns the response.
 
         Durability contract: if this method returns without raising, the row
