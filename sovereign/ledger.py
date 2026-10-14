@@ -63,6 +63,37 @@ class Ledger:
         with self._lock:
             return self._append_locked(request, response, meta)
 
+
+
+    def _rotate_if_needed(self) -> None:
+        max_bytes = int(json.loads((Path(__file__).resolve().parents[1] / "sovereign" / "config.json").read_text()).get("ledger_max_bytes", 10485760))
+        if self.path.stat().st_size < max_bytes:
+            return
+        # close current file, open a new one with the same prev chain
+        last_hash = self._last_hash()
+        ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
+        new_path = self.path.with_name(f"{self.path.stem}-{ts}{self.path.suffix}")
+        self.path.rename(new_path)
+        self.path.touch()
+        # write a bridge row so the chain continues
+        bridge = {
+            "request_id": f"rotate-{ts}",
+            "timestamp": datetime.now(timezone.utc).isoformat(timespec="milliseconds"),
+            "model": "rotation",
+            "backend": "rotation",
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "wall_ms": 0.0,
+            "request_hash": "rotation",
+            "response_hash": "rotation",
+            "prev_hash": last_hash,
+        }
+        bridge["row_hash"] = _hash(bridge)
+        with self.path.open("a") as f:
+            f.write(json.dumps(bridge) + "\n")
+            f.flush()
+            os.fsync(f.fileno())
+
     def _append_locked(self, request: Any, response: Any, meta: dict) -> LedgerRow:
         """Write the row before the caller returns the response.
 
@@ -70,6 +101,7 @@ class Ledger:
         is on disk with fsync completed. If it raises, no row exists and the
         caller must not return a response to the client.
         """
+        self._rotate_if_needed()
         prev = self._last_hash()
         request_hash = _hash(request)
         response_hash = _hash(response)
