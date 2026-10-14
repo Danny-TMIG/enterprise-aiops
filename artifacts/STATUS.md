@@ -1,6 +1,6 @@
 # Artifact Status
 
-## Implemented
+## Implemented (in-repo code)
 
 | Family | Location | Tests |
 |---|---|---|
@@ -18,11 +18,38 @@
 | CI workflow | `.github/workflows/ci.yml` | n/a |
 | Env template | `.env.example` | n/a |
 
-## Absent — infrastructure not present
+Total: 286 tests passing.
 
-1. OPA policy enforcement — needs OPA server
-2. cosign / sigstore signing — needs keypair + OIDC
-3. SLSA provenance — needs isolated builder
-4. Secret vault / KMS — needs Vault or cloud KMS
-5. Container registry — needs image pipeline
-6. Certificate management — needs a CA
+## Running locally (Colima + Docker)
+
+| Component | Endpoint | Reproduce with |
+|---|---|---|
+| OPA | http://localhost:8181 | docker run -d --name opa -p 8181:8181 openpolicyagent/opa:latest run --server --addr 0.0.0.0:8181 |
+| Vault (dev mode) | http://localhost:8200 | docker run -d --name vault -p 8200:8200 -e VAULT_DEV_ROOT_TOKEN_ID=dev-only-token hashicorp/vault:latest server -dev |
+| OCI registry | http://localhost:5000 | docker run -d -p 5000:5000 --restart always --name registry registry:2 |
+| Grafana | http://localhost:3000 | pre-existing container |
+| Thanos querier | http://localhost:10902 | pre-existing container |
+| Loki | http://localhost:3100 | docker run -d --name asf-loki -p 3100:3100 -v ~/aether/ops/loki/loki-config.yaml:/etc/loki/loki-config.yaml:ro grafana/loki:latest -config.file=/etc/loki/loki-config.yaml |
+
+### Cosign keypair
+
+Generated at ~/aether/cosign.key and ~/aether/cosign.pub. The private key is
+gitignored. Keyless signing (OIDC + Fulcio + Rekor) requires a CI environment
+with id-token: write.
+
+## Vault secrets engine
+
+    export VAULT_ADDR=http://127.0.0.1:8200
+    export VAULT_TOKEN=dev-only-token
+    vault secrets enable -path=shared -version=2 kv
+    vault kv put -mount=shared kv/creds username=opsuser password=p@ssw0rd
+
+## Still absent - infrastructure not present
+
+1. SLSA provenance - requires a GitHub Actions runner with id-token: write.
+   A laptop cannot produce SLSA level 3 provenance honestly. Add
+   .github/workflows/release.yml using slsa-framework/slsa-github-generator.
+
+2. Certificate management (cert-manager) - requires a Kubernetes cluster.
+   cert-manager has no standalone macOS binary. To run it locally, install
+   k3d and create a cluster, then kubectl apply -f the cert-manager manifest.
