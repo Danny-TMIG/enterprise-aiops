@@ -45,3 +45,4 @@ web/dist/
 playwright-report/
 test-results/
 cosign.key
+cosign.key
