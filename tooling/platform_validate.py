@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""platform_validate.py — validate platform/ on macOS. Parse + lint only."""
+"""platform_validate.py — validate platform/ on macOS (parse + lint only)."""
 from __future__ import annotations
 import json, shutil, subprocess, sys
 from pathlib import Path
@@ -8,12 +8,10 @@ ROOT = Path(__file__).resolve().parents[1]
 PLATFORM = ROOT / "platform"
 errors: list[str] = []
 
-REQUIRED_TOOLS = ["yamllint", "shellcheck"]
-MISSING = [t for t in REQUIRED_TOOLS if not shutil.which(t)]
-if MISSING:
-    print(f"missing tools: {MISSING}", file=sys.stderr)
-    print("  install: brew install yamllint shellcheck", file=sys.stderr)
-    sys.exit(2)
+for t in ("yamllint", "shellcheck"):
+    if not shutil.which(t):
+        print(f"missing tool: {t}  (brew install {t})", file=sys.stderr)
+        sys.exit(2)
 
 for p in sorted(PLATFORM.rglob("*.json")):
     try:
@@ -25,8 +23,13 @@ for p in sorted(PLATFORM.rglob("*.json")):
         errors.append(f"{p.relative_to(ROOT)}: declared_only must be true")
 
 yaml_files = sorted(list(PLATFORM.rglob("*.yml")) + list(PLATFORM.rglob("*.yaml")))
+yamllint_cfg = PLATFORM / ".yamllint"
 for y in yaml_files:
-    r = subprocess.run(["yamllint", "-f", "parsable", str(y)], capture_output=True, text=True)
+    cmd = ["yamllint", "-f", "parsable"]
+    if yamllint_cfg.exists():
+        cmd += ["-c", str(yamllint_cfg)]
+    cmd.append(str(y))
+    r = subprocess.run(cmd, capture_output=True, text=True)
     for line in r.stdout.splitlines():
         if line.strip():
             errors.append(f"yamllint {y.relative_to(ROOT)}: {line}")
@@ -38,8 +41,7 @@ for sh in sorted(PLATFORM.rglob("*.sh")):
             errors.append(f"shellcheck {sh.relative_to(ROOT)}: {line}")
 
 for ks in sorted(PLATFORM.rglob("*.ks")):
-    src = ks.read_text()
-    if "$(" in src:
+    if "$(" in ks.read_text():
         errors.append(f"{ks.relative_to(ROOT)}: unquoted command substitution in kickstart")
 
 limits = PLATFORM / "LIMITS.md"
@@ -52,8 +54,7 @@ else:
             errors.append(f"LIMITS.md does not mention platform/{sub}")
 
 for sub in sorted(p for p in PLATFORM.iterdir() if p.is_dir()):
-    files = [f for f in sub.rglob("*") if f.is_file()]
-    if not files:
+    if not [f for f in sub.rglob("*") if f.is_file()]:
         errors.append(f"platform/{sub.name} is empty")
 
 if errors:

@@ -5,18 +5,20 @@
   roles:
     - asf-common
   tasks:
-    - name: Ensure /opt/asf/units exists
+    - name: Ensure unit dir
       ansible.builtin.file:
-        path: /opt/asf/units/{{ asf_unit_id }}
+        path: "/opt/asf/units/{{ asf_unit_id }}"
         state: directory
         mode: "0755"
     - name: Place unit.json
       ansible.builtin.copy:
-        src: "{{ playbook_dir }}/../../../deploy/units/{{ asf_unit_id }}/unit.json"  # yamllint disable-line rule:line-length
-        dest: /opt/asf/units/{{ asf_unit_id }}/unit.json
+        src: >-
+          {{ playbook_dir }}/../../../deploy/units/{{ asf_unit_id }}/unit.json
+        dest: "/opt/asf/units/{{ asf_unit_id }}/unit.json"
         mode: "0644"
-    - name: Place runbook.md
+    - name: Place runbook
       ansible.builtin.copy:
-        src: "{{ playbook_dir }}/../../../deploy/units/{{ asf_unit_id }}/runbook.md"  # yamllint disable-line rule:line-length
-        dest: /opt/asf/units/{{ asf_unit_id }}/runbook.md
+        src: >-
+          {{ playbook_dir }}/../../../deploy/units/{{ asf_unit_id }}/runbook.md
+        dest: "/opt/asf/units/{{ asf_unit_id }}/runbook.md"
         mode: "0644"

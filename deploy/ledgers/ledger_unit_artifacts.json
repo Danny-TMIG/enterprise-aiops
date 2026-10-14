@@ -1,0 +1,26 @@
+{
+  "ledger": "unit_artifacts",
+  "sealed_at": 1791943869.828088,
+  "units": {
+    "finance-cell": {
+      "digest": "sha256:cf65f9e43ab8673936baec7e7f6a2758f02661aee3d576a77fcad14336e5d5da",
+      "status": "built",
+      "wheel": "deploy/units/finance-cell/build/dist/asf_finance_cell-0.1.0-py3-none-any.whl"
+    },
+    "governance-cell": {
+      "digest": "sha256:fb28806b637173fa50482140daba7668ffdc37402120104ddb1f33eb7ee1662f",
+      "status": "built",
+      "wheel": "deploy/units/governance-cell/build/dist/asf_governance_cell-0.1.0-py3-none-any.whl"
+    },
+    "logistics-cell": {
+      "digest": "sha256:9c8007dc8decdbb470a91e547977e795aaa1663f2d54ac8a95315c5c12879904",
+      "status": "built",
+      "wheel": "deploy/units/logistics-cell/build/dist/asf_logistics_cell-0.1.0-py3-none-any.whl"
+    },
+    "operations-cell": {
+      "digest": "sha256:1bf6b02d7dfb48ea1cd7dfa012b67e8a12988aaedbe26bba58b4f7c432163927",
+      "status": "built",
+      "wheel": "deploy/units/operations-cell/build/dist/asf_operations_cell-0.1.0-py3-none-any.whl"
+    }
+  }
+}

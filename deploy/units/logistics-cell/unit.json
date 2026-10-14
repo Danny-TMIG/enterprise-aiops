@@ -8,9 +8,9 @@
     "CMP-DAT-001-data-staging-and-result-collection"
   ],
   "artifact": {
-    "coordinates": "local://logistics-cell",
-    "digest": null,
-    "status": "declared-not-built"
+    "coordinates": "deploy/units/logistics-cell/build/dist/asf_logistics_cell-0.1.0-py3-none-any.whl",
+    "digest": "sha256:9c8007dc8decdbb470a91e547977e795aaa1663f2d54ac8a95315c5c12879904",
+    "status": "built"
   },
   "contract_versions": {
     "common-envelope": "asf.common.envelope.v1",

@@ -8,9 +8,9 @@
     "CMP-RES-007-admission-quota-and-lease-manager"
   ],
   "artifact": {
-    "coordinates": "local://finance-cell",
-    "digest": null,
-    "status": "declared-not-built"
+    "coordinates": "deploy/units/finance-cell/build/dist/asf_finance_cell-0.1.0-py3-none-any.whl",
+    "digest": "sha256:cf65f9e43ab8673936baec7e7f6a2758f02661aee3d576a77fcad14336e5d5da",
+    "status": "built"
   },
   "contract_versions": {
     "common-envelope": "asf.common.envelope.v1",

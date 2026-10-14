@@ -5,11 +5,13 @@
       - ansible_distribution == "RedHat"
       - ansible_distribution_major_version is version('10', '>=')
     fail_msg: "ASF units require RHEL 10 or later"
+
 - name: Ensure Podman is present
   ansible.builtin.package:
     name: podman
     state: present
-- name: Enable container_manage_cgroup (systemd-in-container on SELinux)
+
+- name: Enable container_manage_cgroup
   ansible.posix.seboolean:
     name: container_manage_cgroup
     state: true

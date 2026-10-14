@@ -18,5 +18,5 @@
       "ops_review": null
     }
   },
-  "reason_still_blocked": "Per ASF v1.2, GOV-FED-001 is Deferred. Production federation requires a named owner, a component contract version, and an approved runbook, none of which exist."
+  "reason_still_blocked": "Per ASF v1.2, GOV-FED-001 is Deferred. Production federation requires a named owner, a component contract version, and an approved runbook."
 }

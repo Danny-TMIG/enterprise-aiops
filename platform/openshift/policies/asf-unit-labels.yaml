@@ -6,8 +6,10 @@ metadata:
 spec:
   match:
     kinds:
-      - apiGroups: [""]
-        kinds: ["Pod"]
+      - apiGroups:
+          - ""
+        kinds:
+          - Pod
   parameters:
     labels:
       - key: asf.unit.id

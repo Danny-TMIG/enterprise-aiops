@@ -1,0 +1,6 @@
+{
+  "ledger": "platform_declaration",
+  "sealed_at": 1791943869.827779,
+  "sha256": "eab9d57277c479b7c1ce06a51f6e4a0fb7f1d791b1b72f8b0cfdfc345d4e7860",
+  "note": "Declaration tree only \u2014 oscap/oc/cosign not executed on this host."
+}

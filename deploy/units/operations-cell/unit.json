@@ -8,9 +8,9 @@
     "CMP-EXE-004-scheduler"
   ],
   "artifact": {
-    "coordinates": "local://operations-cell",
-    "digest": null,
-    "status": "declared-not-built"
+    "coordinates": "deploy/units/operations-cell/build/dist/asf_operations_cell-0.1.0-py3-none-any.whl",
+    "digest": "sha256:1bf6b02d7dfb48ea1cd7dfa012b67e8a12988aaedbe26bba58b4f7c432163927",
+    "status": "built"
   },
   "contract_versions": {
     "common-envelope": "asf.common.envelope.v1",

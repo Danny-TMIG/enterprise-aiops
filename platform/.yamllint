@@ -1,0 +1,26 @@
+---
+extends: default
+
+rules:
+  # The ASF style allows a bit more room than the 80-char default,
+  # but we still enforce the fundamentals that caught real bugs.
+  line-length:
+    max: 120
+    level: error
+  document-start:
+    present: true
+    level: error
+  braces:
+    min-spaces-inside: 0
+    max-spaces-inside: 0
+    level: error
+  colons:
+    max-spaces-after: 1
+    level: error
+  indentation:
+    spaces: 2
+    indent-sequences: consistent
+    level: error
+  truthy:
+    allowed-values: ['true', 'false']
+    check-keys: false

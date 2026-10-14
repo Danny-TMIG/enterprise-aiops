@@ -9,7 +9,7 @@
   ],
   "artifact": {
     "coordinates": "deploy/units/governance-cell/build/dist/asf_governance_cell-0.1.0-py3-none-any.whl",
-    "digest": "sha256:0d5b87ca998c05eb827060d39edd8f065fe579c99ecaa1259c6fb95b0d1e5aef",
+    "digest": "sha256:fb28806b637173fa50482140daba7668ffdc37402120104ddb1f33eb7ee1662f",
     "status": "built"
   },
   "contract_versions": {
