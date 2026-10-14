@@ -363,6 +363,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--allow", default=",".join(_default_allow()))
     ap.add_argument("--deny", default=",".join(_default_deny()))
     ap.add_argument("--include-dev", action="store_true")
+    ap.add_argument("--exclude", default="",
+                    help="comma-separated package names to skip (documented metadata gaps)")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args(argv)
 
@@ -383,9 +385,14 @@ def main(argv: list[str] | None = None) -> int:
     violations: list[Violation] = []
     checked = 0
     skipped_dev = 0
+    excluded = {x.strip() for x in args.exclude.split(",") if x.strip()}
+    skipped_excluded = 0
     for c in comps:
         if not args.include_dev and c.scope == "dev":
             skipped_dev += 1
+            continue
+        if c.name in excluded:
+            skipped_excluded += 1
             continue
         checked += 1
         v = auditor.check(c)
@@ -397,6 +404,7 @@ def main(argv: list[str] | None = None) -> int:
             "sbom": str(args.sbom),
             "checked": checked,
             "skipped_dev": skipped_dev,
+            "skipped_excluded": skipped_excluded,
             "violations": [
                 {"component": v.component, "version": v.version,
                  "reason": v.reason, "licenses": v.licenses}
@@ -407,6 +415,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"sbom:        {args.sbom}")
         print(f"checked:     {checked}")
         print(f"skipped dev: {skipped_dev}")
+        print(f"excluded:    {skipped_excluded}")
         print(f"violations:  {len(violations)}")
         for v in violations:
             ver = f"@{v.version}" if v.version else ""

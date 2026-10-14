@@ -196,3 +196,26 @@ def test_cli_json_output(tmp_path, capsys):
     assert rc == 2
     data = json.loads(out)
     assert data["violations"][0]["component"] == "bad"
+
+
+def test_cli_exclude_skips_named_packages(tmp_path, capsys):
+    """--exclude removes packages from the audit by name."""
+    from ag.licenses import main as cli_main
+    p = tmp_path / "sbom.json"
+    p.write_text(json.dumps({"components": [
+        {"name": "good", "version": "1",
+         "licenses": [{"license": {"id": "MIT"}}]},
+        {"name": "no-metadata", "version": "1",
+         "licenses": []},
+    ]}))
+    # Without exclude: 1 violation
+    rc = cli_main([str(p)])
+    out = capsys.readouterr().out
+    assert rc == 2
+    assert "violations:  1" in out
+    # With exclude: 0 violations
+    rc = cli_main([str(p), "--exclude", "no-metadata"])
+    out = capsys.readouterr().out
+    assert rc == 0
+    assert "violations:  0" in out
+    assert "excluded:    1" in out

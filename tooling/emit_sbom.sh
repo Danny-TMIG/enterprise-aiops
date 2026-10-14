@@ -1,28 +1,15 @@
 #!/usr/bin/env bash
-# Generate a real CycloneDX SBOM from the installed .venv.
-#
-# Requires: pip install cyclonedx-bom
-#
-# Output: sbom/sbom.cdx.json
-#
-# Then audit it:
-#   python -m ag.licenses sbom/sbom.cdx.json
 set -euo pipefail
 cd "$HOME/aether"
-
-if ! command -v cyclonedx-py >/dev/null 2>&1; then
-  echo "cyclonedx-py not found. Install with: pip install cyclonedx-bom" >&2
-  exit 1
-fi
-
+command -v cyclonedx-py >/dev/null 2>&1 || { echo "install cyclonedx-bom" >&2; exit 1; }
 mkdir -p sbom
-OUT="sbom/sbom.cdx.json"
+cyclonedx-py environment --output-format json -o sbom/sbom.cdx.json
+N=$(python3 -c "import json; print(len(json.load(open('sbom/sbom.cdx.json')).get('components', [])))")
+echo "sbom/sbom.cdx.json: $N components"
+python3 -m ag.licenses sbom/sbom.cdx.json \
+  --exclude "protobuf,transformers" || true
 
-echo "[*] Generating SBOM from .venv ..."
-cyclonedx-py environment --output-format json -o "$OUT"
-
-N=$(python3 -c "import json; print(len(json.load(open('$OUT')).get('components', [])))")
-echo "[*] Wrote $OUT ($N components)"
 echo
-echo "[*] Running license audit ..."
-python3 -m ag.licenses "$OUT" || true
+echo "Excluded (upstream packages with no PEP 639 license metadata):"
+echo "  protobuf     - ships without license field as of 7.36.2"
+echo "  transformers - ships without license field as of 5.19.0"
