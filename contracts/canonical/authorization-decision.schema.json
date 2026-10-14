@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asf.gov.authorization_decision.v1",
+  "title": "AuthorizationDecision",
+  "type": "object",
+  "required": [
+    "envelope",
+    "outcome",
+    "effective_authority_ref",
+    "validity"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "envelope": {
+      "$ref": "common-envelope.schema.json"
+    },
+    "outcome": {
+      "type": "string",
+      "enum": [
+        "ALLOW",
+        "DENY",
+        "CONDITIONAL",
+        "ESCALATE",
+        "INDETERMINATE"
+      ]
+    },
+    "effective_authority_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "obligations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "validity": {
+      "type": "object",
+      "properties": {
+        "not_before": {
+          "type": "string"
+        },
+        "not_after": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

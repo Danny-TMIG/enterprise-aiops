@@ -1,0 +1,29 @@
+{
+  "decision_id": "GOV-DEC-009",
+  "status": "OPEN",
+  "title": "SLOs, scale envelope, RTO, and RPO",
+  "question": "What availability, scale, and durability targets does v1 promise per interface?",
+  "options": [
+    {
+      "id": "A",
+      "summary": "Declare required at acceptance; numbers at product",
+      "tradeoffs": "Honest; blocks acceptance"
+    },
+    {
+      "id": "B",
+      "summary": "Fix numbers in spec",
+      "tradeoffs": "Testable; may stale"
+    }
+  ],
+  "selected": "UNDECIDED",
+  "rationale": "UNDECIDED",
+  "closed_by": "UNDECIDED",
+  "closed_at": "UNDECIDED",
+  "gates_components": [
+    "GOV-ADM-001",
+    "GOV-ADM-002"
+  ],
+  "record_seal": "1ecea6954b5de579c96cb1acb6ba5aed5a756afe0d486f6efbbcc93dccf97463",
+  "recommendation": "A",
+  "recommendation_reasoning": "FAS leaves these open."
+}

@@ -1,0 +1,29 @@
+{
+  "decision_id": "COG-DEC-009",
+  "status": "OPEN",
+  "title": "Adaptation deployment, rollback, and observation model",
+  "question": "How are adaptation proposals evaluated, staged, observed, and rolled back?",
+  "options": [
+    {
+      "id": "A",
+      "summary": "Staged rollout with per-stage ApprovalRequest and rollback record",
+      "tradeoffs": "Conformant"
+    },
+    {
+      "id": "B",
+      "summary": "Automatic staged rollout within approved bounds",
+      "tradeoffs": "Risks human-approval requirement"
+    }
+  ],
+  "selected": "UNDECIDED",
+  "rationale": "UNDECIDED",
+  "closed_by": "UNDECIDED",
+  "closed_at": "UNDECIDED",
+  "gates_components": [
+    "COG-CMP-003",
+    "COG-CMP-005"
+  ],
+  "record_seal": "d0dc9af6e3d361492aa196aa3234e4be2cd60693327c8b1ac62efd7bcd7fee5a",
+  "recommendation": "A",
+  "recommendation_reasoning": "FAS says adaptation requires Govern approval and rollback."
+}

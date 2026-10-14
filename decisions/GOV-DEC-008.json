@@ -1,0 +1,28 @@
+{
+  "decision_id": "GOV-DEC-008",
+  "status": "OPEN",
+  "title": "Revocation latency objectives and partition behavior",
+  "question": "What revocation propagation latency is required, and what happens under partition?",
+  "options": [
+    {
+      "id": "A",
+      "summary": "Fail-closed under partition",
+      "tradeoffs": "Safe; can block work"
+    },
+    {
+      "id": "B",
+      "summary": "Short-lived authorization during partition",
+      "tradeoffs": "Availability; risk acceptance"
+    }
+  ],
+  "selected": "UNDECIDED",
+  "rationale": "UNDECIDED",
+  "closed_by": "UNDECIDED",
+  "closed_at": "UNDECIDED",
+  "gates_components": [
+    "GOV-IAM-002"
+  ],
+  "record_seal": "aa8d8c73e55b55ef27cd971cfc3334076464d95a13005b703c0a29bc1f1f8ee7",
+  "recommendation": "A",
+  "recommendation_reasoning": "GOV-INV-008 requires fail-closed on missing dependencies."
+}

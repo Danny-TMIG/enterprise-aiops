@@ -1,0 +1,93 @@
+[
+  {
+    "objectID": "slo/availability_latency.html",
+    "href": "slo/availability_latency.html",
+    "title": "Service Level Objectives (SLOs)",
+    "section": "",
+    "text": "Target: 99.9% uptime over a rolling 30-day window.\nMeasurement: Successful HTTP responses (status &lt; 500) divided by total valid requests.\n\n\n\n\n\nTarget: 95% of API requests complete in under 250ms.\nMeasurement: Histogram distribution of http_request_duration_seconds."
+  },
+  {
+    "objectID": "slo/availability_latency.html#availability",
+    "href": "slo/availability_latency.html#availability",
+    "title": "Service Level Objectives (SLOs)",
+    "section": "",
+    "text": "Target: 99.9% uptime over a rolling 30-day window.\nMeasurement: Successful HTTP responses (status &lt; 500) divided by total valid requests."
+  },
+  {
+    "objectID": "slo/availability_latency.html#latency",
+    "href": "slo/availability_latency.html#latency",
+    "title": "Service Level Objectives (SLOs)",
+    "section": "",
+    "text": "Target: 95% of API requests complete in under 250ms.\nMeasurement: Histogram distribution of http_request_duration_seconds."
+  },
+  {
+    "objectID": "runbooks/high_error_rate.html",
+    "href": "runbooks/high_error_rate.html",
+    "title": "Incident Response & Runbook: High Error Rate",
+    "section": "",
+    "text": "This runbook outlines the steps to diagnose and remediate high 5xx error rates in the Enterprise AIOps Orchestrator.\n\n\n\n\nCheck Health Probes:\n\nVerify /health/live and /health/ready endpoints.\n\nInspect Container Logs:\n\nRun docker logs -f &lt;container_id&gt; to check for unhandled exceptions.\n\nVerify Metrics:\n\nAccess Prometheus metrics at /metrics to identify spiking endpoints or latency bottlenecks."
+  },
+  {
+    "objectID": "runbooks/high_error_rate.html#overview",
+    "href": "runbooks/high_error_rate.html#overview",
+    "title": "Incident Response & Runbook: High Error Rate",
+    "section": "",
+    "text": "This runbook outlines the steps to diagnose and remediate high 5xx error rates in the Enterprise AIOps Orchestrator."
+  },
+  {
+    "objectID": "runbooks/high_error_rate.html#triage-steps",
+    "href": "runbooks/high_error_rate.html#triage-steps",
+    "title": "Incident Response & Runbook: High Error Rate",
+    "section": "",
+    "text": "Check Health Probes:\n\nVerify /health/live and /health/ready endpoints.\n\nInspect Container Logs:\n\nRun docker logs -f &lt;container_id&gt; to check for unhandled exceptions.\n\nVerify Metrics:\n\nAccess Prometheus metrics at /metrics to identify spiking endpoints or latency bottlenecks."
+  },
+  {
+    "objectID": "operations.html",
+    "href": "operations.html",
+    "title": "Operations",
+    "section": "",
+    "text": "Operations\nStart:\npython3 -m aiops_platform.app.asgi\nKill port 8000:\nlsof -ti:8000 | xargs -r kill -9"
+  },
+  {
+    "objectID": "ledgers.html",
+    "href": "ledgers.html",
+    "title": "Cryptographic Ledgers & State Seals",
+    "section": "",
+    "text": "This section documents the immutable Write-Once-Read-Many (WORM) state ledgers and SHA-256 Omega seals governing the Aether Sovereign Fabric.\n\n\nAll cross-layer state transitions between Cognition (AX), Govern (AG), and Compute (AC) are cryptographically recorded and sealed.\n\nMaster Pipeline Verification Seal: 43f516b07d896c982d99cf64adf14e8716334285fb8cd7cbef3d13a2ad319cb9\nLocation: deploy/ledgers/"
+  },
+  {
+    "objectID": "ledgers.html#ledger-overview",
+    "href": "ledgers.html#ledger-overview",
+    "title": "Cryptographic Ledgers & State Seals",
+    "section": "",
+    "text": "All cross-layer state transitions between Cognition (AX), Govern (AG), and Compute (AC) are cryptographically recorded and sealed.\n\nMaster Pipeline Verification Seal: 43f516b07d896c982d99cf64adf14e8716334285fb8cd7cbef3d13a2ad319cb9\nLocation: deploy/ledgers/"
+  },
+  {
+    "objectID": "architecture.html",
+    "href": "architecture.html",
+    "title": "Architecture",
+    "section": "",
+    "text": "Architecture\nFastAPI app wired in aiops_platform/app/asgi.py. Router in app/api. Patch primitive in app/core/engine_patch.py. SQLite in app/db."
+  },
+  {
+    "objectID": "api.html",
+    "href": "api.html",
+    "title": "API",
+    "section": "",
+    "text": "API\nGET /health -&gt; liveness\nGET /version -&gt; package version\nGET / -&gt; service metadata and Merkle root"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Aether Sovereign Fabric",
+    "section": "",
+    "text": "Welcome to the official documentation for the The Mark Intelligence Group (TMIG) Aether Sovereign AIOps platform running on native Apple Silicon M4 Max hardware.\n\n\n\nAether Cognition (AX): Local MLX inference and runtime pipelines.\nAether Govern (AG): WORM state ledgers, IAM, and policy enforcement.\nAether Compute (AC): Low-level telemetry and execution gateways."
+  },
+  {
+    "objectID": "index.html#architecture",
+    "href": "index.html#architecture",
+    "title": "Aether Sovereign Fabric",
+    "section": "",
+    "text": "Aether Cognition (AX): Local MLX inference and runtime pipelines.\nAether Govern (AG): WORM state ledgers, IAM, and policy enforcement.\nAether Compute (AC): Low-level telemetry and execution gateways."
+  }
+]

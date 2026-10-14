@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asf.gov.cognitive_state_update_directive.v1",
+  "title": "CognitiveStateUpdateDirective",
+  "type": "object",
+  "required": [
+    "envelope",
+    "target_state_ref",
+    "directive"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "envelope": {
+      "$ref": "common-envelope.schema.json"
+    },
+    "target_state_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "directive": {
+      "type": "object"
+    },
+    "authorized_by": {
+      "type": "string"
+    }
+  }
+}

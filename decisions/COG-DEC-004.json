@@ -1,0 +1,33 @@
+{
+  "decision_id": "COG-DEC-004",
+  "status": "OPEN",
+  "title": "Memory consolidation semantics",
+  "question": "What rules govern consolidation of episodic into semantic memory?",
+  "options": [
+    {
+      "id": "A",
+      "summary": "Rule-based thresholds",
+      "tradeoffs": "Explainable; needs calibration"
+    },
+    {
+      "id": "B",
+      "summary": "Learned consolidation scoring",
+      "tradeoffs": "Adaptive; unvalidated"
+    },
+    {
+      "id": "C",
+      "summary": "Manual consolidation",
+      "tradeoffs": "Explainable; low coverage"
+    }
+  ],
+  "selected": "UNDECIDED",
+  "rationale": "UNDECIDED",
+  "closed_by": "UNDECIDED",
+  "closed_at": "UNDECIDED",
+  "gates_components": [
+    "COG-CORE-003"
+  ],
+  "record_seal": "f50bdff7a180c3a57d00bb65d43ff9046d05d66c5f2b3bca8e3b8d5b0960d5db",
+  "recommendation": "A",
+  "recommendation_reasoning": "Rule-based matches FAS quarantine of unvalidated mechanisms."
+}

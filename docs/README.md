@@ -1,11 +1,9 @@
-# docs
+# The Mark Intelligence Group (TMIG) — DocSys Registry
+Architecture: Aether Sovereign Fabric (ASF v1.2)
+Substrate: Apple Silicon M4 Max
 
-Cross-project documentation. Narrative and reference material for the
-monorepo and its packages.
-
-## Files
-
-- index.md         landing page; links to architecture, api, operations
-- architecture.md  layer diagram, module responsibilities
-- api.md           endpoint reference for aiops_platform
-- operations.md    start/stop, port conflicts, database reset, logging
+## System Structure
+- /components/ax/: Aether Cognition (21 components)
+- /components/ag/: Aether Govern (24 components)
+- /components/ac/: Aether Compute (30 components)
+- /deploy/ledgers/: Immutable WORM State Ledgers

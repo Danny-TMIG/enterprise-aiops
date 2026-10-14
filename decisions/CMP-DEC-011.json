@@ -1,0 +1,31 @@
+{
+  "decision_id": "CMP-DEC-011",
+  "status": "OPEN",
+  "title": "Storage, staging, network, data-transfer technologies",
+  "question": "What technologies implement staging, movement, and network control?",
+  "options": [
+    {
+      "id": "A",
+      "summary": "S3-compatible staging; mTLS; default-deny policy",
+      "tradeoffs": "Portable"
+    },
+    {
+      "id": "B",
+      "summary": "Custom transfer daemon",
+      "tradeoffs": "Full control; more code"
+    }
+  ],
+  "selected": "UNDECIDED",
+  "rationale": "UNDECIDED",
+  "closed_by": "UNDECIDED",
+  "closed_at": "UNDECIDED",
+  "gates_components": [
+    "CMP-DAT-001",
+    "CMP-DAT-002",
+    "CMP-RES-003",
+    "CMP-RES-004"
+  ],
+  "record_seal": "cc034b7d448ad33a5f4991b73bf0350666dfda6ea169ef146ae7f9626f157082",
+  "recommendation": "A",
+  "recommendation_reasoning": "Matches FAS default-deny and authorized-reference staging."
+}

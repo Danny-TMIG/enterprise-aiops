@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asf.gov.execution_order.v1",
+  "title": "ExecutionOrder",
+  "type": "object",
+  "required": [
+    "envelope",
+    "order_id",
+    "authorized_action",
+    "capability_ref",
+    "bounded_inputs",
+    "constraints",
+    "evidence_obligations"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "envelope": {
+      "$ref": "common-envelope.schema.json"
+    },
+    "order_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authorized_action": {
+      "type": "string",
+      "minLength": 1
+    },
+    "capability_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "bounded_inputs": {
+      "type": "object"
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence_obligations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "validity": {
+      "type": "object",
+      "properties": {
+        "not_before": {
+          "type": "string"
+        },
+        "not_after": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

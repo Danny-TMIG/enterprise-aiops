@@ -1,0 +1,76 @@
+"""Core grammar types for the origami synthesizer.
+
+  Symbol          — a name plus kind ("nt" non-terminal / "t" terminal)
+  Production      — lhs -> rhs with weight + payload metadata
+  WeightedGrammar — bag of productions, keyed by lhs
+  LoadedGrammar   — subclass used as the "compiled" form
+
+The module also exports the shorthand constructors ``_n`` and ``_t``
+that ``app/origami/library.py`` uses to build grammars tersely.
+"""
+from __future__ import annotations
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional, Tuple
+
+
+@dataclass(frozen=True)
+class Symbol:
+    name: str
+    kind: str = "nt"  # "nt" | "t"
+
+    def __repr__(self) -> str:  # pragma: no cover
+        return f"<{self.kind}:{self.name}>"
+
+
+@dataclass
+class Production:
+    lhs: str
+    rhs: Tuple[Symbol, ...] = ()
+    weight: float = 1.0
+    payload_prompt: str = ""
+    payload_kind: str = "text"
+    tag: str = ""
+
+    def __iter__(self):
+        return iter(self.rhs)
+
+    def __len__(self) -> int:
+        return len(self.rhs)
+
+
+def _n(name: str) -> Symbol:
+    """Non-terminal symbol."""
+    return Symbol(name, "nt")
+
+
+def _t(name: str) -> Symbol:
+    """Terminal symbol (a leaf the model is asked to fill)."""
+    return Symbol(name, "t")
+
+
+class WeightedGrammar:
+    def __init__(self, start: str = "Start", name: str = ""):
+        self.start = start
+        self.name = name
+        self.productions: Dict[str, List[Production]] = {}
+
+    def add(self, prod: Production) -> None:
+        self.productions.setdefault(prod.lhs, []).append(prod)
+
+    def rules_for(self, nt: str) -> List[Production]:
+        return list(self.productions.get(nt, []))
+
+    def nonterminals(self) -> List[str]:
+        return list(self.productions.keys())
+
+    def __repr__(self) -> str:  # pragma: no cover
+        return f"<{self.__class__.__name__} {self.name!r} start={self.start!r}>"
+
+
+class LoadedGrammar(WeightedGrammar):
+    """A grammar that has been fully built and can be dispatched."""
+
+
+__all__ = [
+    "Symbol", "Production", "WeightedGrammar", "LoadedGrammar", "_n", "_t",
+]

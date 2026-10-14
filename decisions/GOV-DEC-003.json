@@ -1,0 +1,35 @@
+{
+  "decision_id": "GOV-DEC-003",
+  "status": "OPEN",
+  "title": "Credential formats, trust anchors, and recovery ceremony",
+  "question": "What credential format and trust anchors establish principal identity, and what is the recovery ceremony?",
+  "options": [
+    {
+      "id": "A",
+      "summary": "X.509 from internal CA; dual-control recovery",
+      "tradeoffs": "Standard; heavier"
+    },
+    {
+      "id": "B",
+      "summary": "Ed25519 with split-key recovery",
+      "tradeoffs": "Lightweight; new tooling"
+    },
+    {
+      "id": "C",
+      "summary": "External IdP with Govern-side binding",
+      "tradeoffs": "Offload; external dependency"
+    }
+  ],
+  "selected": "UNDECIDED",
+  "rationale": "UNDECIDED",
+  "closed_by": "UNDECIDED",
+  "closed_at": "UNDECIDED",
+  "gates_components": [
+    "GOV-EVD-003",
+    "GOV-IAM-001",
+    "GOV-IAM-002"
+  ],
+  "record_seal": "fa203c0e7ed6d896b20bd97be0fe8f9eed637365e2a32bb011a2813f1b9cb4d0",
+  "recommendation": "A",
+  "recommendation_reasoning": "Standard format; dual-control recovery maps to Govern evidence."
+}

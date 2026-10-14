@@ -1,0 +1,13 @@
+{
+  "catalog": {
+    "organization": "The Mark Intelligence Group",
+    "standard": "ASF v1.2",
+    "total_components": 75,
+    "layers": {
+      "AX_Cognition": 21,
+      "AG_Govern": 24,
+      "AC_Compute": 30
+    }
+  },
+  "omega_seal": "f25695ba0c2833ed7c063e068bb646f52656f75f3392f46a29fb9ae1c4275943"
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asf.cog.human_decision_submission.v1",
+  "title": "HumanDecisionSubmission",
+  "type": "object",
+  "required": [
+    "envelope",
+    "presentation_ref",
+    "decision"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "envelope": {
+      "$ref": "common-envelope.schema.json"
+    },
+    "presentation_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "decision": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "string"
+    }
+  }
+}

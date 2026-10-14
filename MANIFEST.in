@@ -1,0 +1,22 @@
+include README.md
+include LICENSE
+include CHANGELOG.md
+recursive-include components *.py *.json *.md
+recursive-include contracts *.json *.md
+recursive-include libraries *.py *.md
+recursive-include deploy *.json *.md *.yml *.yaml
+recursive-include integration *.py *.json *.md
+recursive-include tooling *.py *.md
+recursive-include docs *.md *.tla
+recursive-include catalog *.json *.md
+exclude *.bak.*
+exclude *.pyc
+exclude .DS_Store
+prune .venv
+prune .venv312
+prune .lanes
+prune web/node_modules
+prune web/.next
+prune __pycache__
+prune dist
+prune build

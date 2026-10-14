@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asf.error.v1",
+  "title": "ASF Error",
+  "type": "object",
+  "required": [
+    "code",
+    "category",
+    "correlation_id",
+    "retryable"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "type": "string",
+      "minLength": 1
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "retryable": {
+      "type": "boolean"
+    },
+    "safe_detail": {
+      "type": "string"
+    },
+    "evidence_ref": {
+      "type": "string"
+    },
+    "envelope": {
+      "$ref": "common-envelope.schema.json"
+    }
+  }
+}

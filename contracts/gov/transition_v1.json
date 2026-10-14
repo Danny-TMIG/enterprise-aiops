@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GovernedStateTransition",
+  "type": "object",
+  "required": [
+    "transition_id",
+    "object_id",
+    "from_state",
+    "to_state",
+    "actor",
+    "timestamp"
+  ],
+  "properties": {
+    "transition_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "object_id": {
+      "type": "string"
+    },
+    "from_state": {
+      "type": "string"
+    },
+    "to_state": {
+      "type": "string"
+    },
+    "actor": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "evidence_ref": {
+      "type": "string"
+    },
+    "veto_check": {
+      "type": "boolean",
+      "description": "Indicates whether C-suite active veto circuit breakers cleared."
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "component_id": "CMP-TRU-003",
+  "title": "Trust Evaluation",
+  "layer": "ac",
+  "group": "Trust and Security",
+  "release": "Core v1",
+  "parent_specifications": [
+    "ASF-COG-FAS-001 v1.0",
+    "ASF-GOV-FAS-001 v1.0",
+    "ASF-CMP-FAS-001 v1.0"
+  ],
+  "requirements": [],
+  "provided_contracts": [],
+  "consumed_contracts": [],
+  "state_ownership": "UNDECIDED",
+  "dependencies": {
+    "build": [],
+    "runtime": [],
+    "authority": [],
+    "state": [],
+    "optional_deferred": []
+  },
+  "modules": [],
+  "deployment_mapping": {
+    "unit": "UNDECIDED",
+    "profile": "UNDECIDED"
+  },
+  "open_decisions": [
+    "CMP-DEC-007"
+  ],
+  "invariants": [
+    "CMP-INV-001 Aether Compute executes only a valid, current, attributable order issued through Aether Govern.",
+    "CMP-INV-002 Compute cannot broaden authority, relax policy, alter information-flow permission, or substitute a capability outside the governed set.",
+    "CMP-INV-003 Mandatory authorization, policy, flow, capability, trust, attestation, topology, artifact, and resource conditions are conjunctive.",
+    "CMP-INV-004 Economic optimization and preference ranking operate only within the eligible set.",
+    "CMP-INV-005 Every executing workload is bound to one order, workload identity, package version, reservation, node identity, and evidence context.",
+    "CMP-INV-006 No node or workload participates after its required identity, attestation, trust, lease, artifact, or order validity expires.",
+    "CMP-INV-007 Cancellation and revocation dominate new dispatch and trigger explicit in-flight handling.",
+    "CMP-INV-008 Retries, recovery, migration, and projection changes cannot duplicate non-idempotent effects or erase causal history.",
+    "CMP-INV-009 Protected inputs, outputs, secrets, network flows, and checkpoints remain within their authorized classification, purpose, residency, and retention envelope.",
+    "CMP-INV-010 Every terminal execution state has sufficient typed evidence to show what was attempted, where, with what artifacts, and with which assurance limits.",
+    "CMP-INV-011 Missing or contradictory mandatory evidence prevents a verified-complete claim.",
+    "CMP-INV-012 Unvalidated topology, trust, arity, security, ledger, quantum, or economic mechanisms are never represented as production guarantees."
+  ],
+  "boundary_contracts": {
+    "command": "Aether Compute receives ExecutionOrder. ExecutionRequest is an internal normalized projection.",
+    "return": "ExecutionStatus, ExecutionResult, and ExecutionEvidence are returned to Govern with correlation and integrity context.",
+    "envelope": "All cross-layer objects use the ASF Common Envelope.",
+    "control": "CancellationRevocationDirective must interrupt admission, placement, execution, recovery, and result publication.",
+    "failure": "ASFError is the cross-layer error contract."
+  },
+  "boundary_invariants": [
+    "Every boundary object carries schema version, correlation, causation, sovereign-domain, purpose, classification, integrity, and evidence context.",
+    "Every retry uses a stable idempotency key; duplicate delivery may not duplicate authority, state mutation, execution, or evidence commitment.",
+    "Expired, revoked, malformed, unsupported, unsigned, or context-inconsistent objects fail closed for consequential action.",
+    "Cancellation and revocation remain observable state transitions and cannot be represented as ordinary execution failure.",
+    "The producer owns semantic validity at emission; the consumer independently validates before acting."
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "decision_id": "CMP-DEC-012",
+  "status": "OPEN",
+  "title": "Quota hierarchy, scheduling classes, fairness, preemption, reserve",
+  "question": "What quota and scheduling model applies?",
+  "options": [
+    {
+      "id": "A",
+      "summary": "Hierarchical quota; non-preemptive default",
+      "tradeoffs": "Predictable"
+    },
+    {
+      "id": "B",
+      "summary": "Preemptive priority classes",
+      "tradeoffs": "Higher utilization; harder to verify"
+    }
+  ],
+  "selected": "UNDECIDED",
+  "rationale": "UNDECIDED",
+  "closed_by": "UNDECIDED",
+  "closed_at": "UNDECIDED",
+  "gates_components": [
+    "CMP-EXE-004",
+    "CMP-RES-006",
+    "CMP-RES-007"
+  ],
+  "record_seal": "5e0928c4513d96c98e1121726b5d3ad07080cf8f83612dfc71ba4371b98d0afc",
+  "recommendation": "A",
+  "recommendation_reasoning": "MATH-015 preemption safety is heavy; non-preemptive default is minimal conformant."
+}

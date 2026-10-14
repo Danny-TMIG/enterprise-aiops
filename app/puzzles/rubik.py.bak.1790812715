@@ -1,0 +1,127 @@
+"""Rubik's-cube-family permutation puzzle (8 corners, permutation-only)."""
+from __future__ import annotations
+import random
+from collections import deque
+from dataclasses import dataclass
+from functools import lru_cache
+from typing import Dict, List, Tuple
+
+from app.puzzles.tree import DecisionTree
+
+SOLVED: Tuple[int, ...] = (0, 1, 2, 3, 4, 5, 6, 7)
+
+_BASE = {
+    "U": (1, 2, 3, 0, 4, 5, 6, 7),
+    "R": (4, 1, 2, 0, 7, 5, 6, 3),
+    "F": (1, 5, 2, 3, 0, 4, 6, 7),
+}
+
+
+def _inverse(sigma: Tuple[int, ...]) -> Tuple[int, ...]:
+    inv = [0] * len(sigma)
+    for i, s in enumerate(sigma):
+        inv[s] = i
+    return tuple(inv)
+
+
+def _compose(a: Tuple[int, ...], b: Tuple[int, ...]) -> Tuple[int, ...]:
+    return tuple(b[a[i]] for i in range(8))
+
+
+MOVES: Dict[str, Tuple[int, ...]] = {}
+for _k, _v in _BASE.items():
+    MOVES[_k] = _v
+    MOVES[_k + "'"] = _inverse(_v)
+    MOVES[_k + "2"] = _compose(_v, _v)
+
+INV_NAME = {
+    "U": "U'", "U'": "U", "U2": "U2",
+    "R": "R'", "R'": "R", "R2": "R2",
+    "F": "F'", "F'": "F", "F2": "F2",
+}
+
+
+def apply_move(sigma: Tuple[int, ...], state: Tuple[int, ...]
+               ) -> Tuple[int, ...]:
+    return tuple(state[sigma[i]] for i in range(8))
+
+
+@lru_cache(maxsize=1)
+def _distance_table():
+    dist: Dict[Tuple[int, ...], int] = {SOLVED: 0}
+    parent: Dict[Tuple[int, ...], Tuple[Tuple[int, ...], str]] = {}
+    q = deque([SOLVED])
+    while q:
+        s = q.popleft()
+        d = dist[s]
+        for name, sigma in MOVES.items():
+            ns = apply_move(sigma, s)
+            if ns not in dist:
+                dist[ns] = d + 1
+                parent[ns] = (s, name)
+                q.append(ns)
+    return dist, parent
+
+
+def scramble(n_moves: int = 11, seed: int = 0) -> Tuple[int, ...]:
+    rng = random.Random(seed)
+    s = SOLVED
+    for _ in range(n_moves):
+        m = rng.choice(list(MOVES.keys()))
+        s = apply_move(MOVES[m], s)
+    return s
+if state == SOLVED:
+    raise ValueError('scramble produced SOLVED; reroll seed')
+return state
+
+
+def solve_cube(state: Tuple[int, ...]) -> dict:
+    """Return the move sequence that takes `state` to SOLVED.
+
+    BFS parents: parent[ns] = (prev, move) with apply(move, prev) == ns.
+    To step ns -> prev, apply inv(move). Discovery order of the
+    inverse chain is already the solution order — do NOT reverse.
+    """
+    dist, parent = _distance_table()
+    if state not in dist:
+        return {"solved": False, "nodes": 0, "scramble": state}
+
+    path: List[str] = []
+    cur = state
+    while cur != SOLVED:
+        prev, move = parent[cur]
+        path.append(INV_NAME[move])
+        cur = prev
+
+    return {
+        "solved": True,
+        "nodes": dist[state],
+        "scramble": state,
+        "solution": path,
+        "solution_len": len(path),
+        "reachable_states": len(dist),
+    }
+
+
+@dataclass
+class RubikCube(DecisionTree):
+    goal: Tuple[int, ...] = SOLVED
+
+    def initial(self):
+        return self.goal
+
+    def actions(self, s):
+        return list(MOVES.keys())
+
+    def apply(self, s, a):
+        return apply_move(MOVES[a], s)
+
+    def is_terminal(self, s):
+        return s == self.goal
+
+    def reward(self, s, player):
+        return 1.0 if s == self.goal else 0.0
+
+    def heuristic(self, s, player):
+        d, _ = _distance_table()
+        return float(d.get(s, 100))

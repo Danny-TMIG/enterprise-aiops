@@ -1,0 +1,69 @@
+{
+  "repository": "aether",
+  "version": "1.2",
+  "issued": "2026-10-06",
+  "organization": "The Mark Intelligence Group, LLC",
+  "description": "ASF v1.2 engineering handoff repository organization and component baseline.",
+  "layers": {
+    "AX": {
+      "name": "Aether Cognition",
+      "root": "components/ax/",
+      "components": 21
+    },
+    "AG": {
+      "name": "Aether Govern",
+      "root": "components/ag/",
+      "components": 24
+    },
+    "AC": {
+      "name": "Aether Compute",
+      "root": "components/ac/",
+      "components": 30
+    }
+  },
+  "total_components": 75
+}
+```[cite: 18, 20]
+
+#### 2. Validation Harness (`tooling/validate_catalog.py`)
+```python
+#!/usr/bin/env python3
+"""
+Aether Repository Tooling - Validation and Build Harness
+"""
+import json
+from pathlib import Path
+
+def validate_catalog():
+    print("[*] Validating Aether component catalog & contracts...")
+    repo_root = Path(__file__).resolve().parents[1]
+    manifest = repo_root / "catalog" / "repository_manifest.json"
+    if manifest.exists():
+        data = json.loads(manifest.read_text())
+        print(f"[+] Loaded repository manifest: {data['repository']} v{data['version']}")
+        print(f"[+] Total managed components: {data['total_components']}")
+    else:
+        print("[-] Manifest not found.")
+
+if __name__ == "__main__":
+    validate_catalog()
+```[cite: 18, 20]
+
+#### 3. GitHub Pull Request Template (`.github/pull_request_template.md`)
+```markdown
+## Description
+
+Link parent requirement IDs (e.g., ASF11-FR-...) and component IDs.
+
+- [ ] Component owner review
+- [ ] Contract compatibility check
+- [ ] Authority & security review
+```[cite: 18]
+
+---
+
+### Engineering Governance & Compliance Summary
+
+* **Layer Mapping & Naming**: Preserves exact stable component IDs (`COG-*`, `GOV-*`, `CMP-*`) while mapping file paths cleanly to `components/ax/`, `components/ag/`, and `components/ac/` respectively[cite: 18].
+* **Deferred & Research Components**: Components such as `COG-CMP-004` (Swarm Coordinator) and `GOV-FED-001` (Federation Gateway) retain their metadata and contract definitions in the catalog while production runtime execution remains gated or deferred[cite: 18].
+* **Build & CI Behavior**: Changes are validated through affected-work routing. Contract changes, state migrations, and authority modifications trigger comprehensive cross-layer integration suites and mandatory peer/security reviews[cite: 18].

@@ -1,19 +1,8 @@
-# enterprise_aiops documentation
+# Aether Sovereign Fabric
 
-## Packages
+Welcome to the official documentation for the **The Mark Intelligence Group (TMIG)** Aether Sovereign AIOps platform running on native Apple Silicon M4 Max hardware.
 
-- aiops_platform   primary installable package
-- universal_platform   legacy package
-
-## Reference
-
-- architecture.md  system diagram and module map
-- api.md           HTTP API for aiops_platform
-- operations.md    runtime procedures
-
-## Conventions
-
-- MIT licensed
-- Python >= 3.11
-- Ruff for lint, mypy for types, pytest for tests
-- No stdlib-shadowing package names
+## Architecture
+- **Aether Cognition (AX):** Local MLX inference and runtime pipelines.
+- **Aether Govern (AG):** WORM state ledgers, IAM, and policy enforcement.
+- **Aether Compute (AC):** Low-level telemetry and execution gateways.

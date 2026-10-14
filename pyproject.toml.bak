@@ -1,0 +1,18 @@
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--cov=app --cov-report=term-missing --cov-fail-under=100 -v"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["app"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if __debug__:",
+    "if 0:",
+    "if __name__ == '__main__':",
+]

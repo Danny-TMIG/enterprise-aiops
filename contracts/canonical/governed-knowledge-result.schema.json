@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asf.gov.governed_knowledge_result.v1",
+  "title": "GovernedKnowledgeResult",
+  "type": "object",
+  "required": [
+    "envelope",
+    "representation",
+    "references"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "envelope": {
+      "$ref": "common-envelope.schema.json"
+    },
+    "representation": {
+      "type": "string",
+      "enum": [
+        "DENIED",
+        "METADATA_ONLY",
+        "PROVENANCE_ONLY",
+        "AGGREGATED",
+        "REDACTED",
+        "ANONYMIZED",
+        "ABSTRACTED",
+        "DERIVED",
+        "FULL"
+      ]
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "provenance": {
+      "type": "object"
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

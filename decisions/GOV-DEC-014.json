@@ -1,0 +1,29 @@
+{
+  "decision_id": "GOV-DEC-014",
+  "status": "OPEN",
+  "title": "Decision and verification determinism requirements",
+  "question": "What determinism is required of authorization and policy decisions?",
+  "options": [
+    {
+      "id": "A",
+      "summary": "Same inputs and policy version produce identical decisions",
+      "tradeoffs": "Strict"
+    },
+    {
+      "id": "B",
+      "summary": "Bounded nondeterminism",
+      "tradeoffs": "Flexible; complicates MATH-013"
+    }
+  ],
+  "selected": "UNDECIDED",
+  "rationale": "UNDECIDED",
+  "closed_by": "UNDECIDED",
+  "closed_at": "UNDECIDED",
+  "gates_components": [
+    "GOV-IAM-003",
+    "GOV-POL-002"
+  ],
+  "record_seal": "a58e79f376786ea16d7dec319d7777529a609f941719a0b6ab3f284b915c01cc",
+  "recommendation": "A",
+  "recommendation_reasoning": "Determinism makes decisions reconstructible."
+}

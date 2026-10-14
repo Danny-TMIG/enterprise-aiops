@@ -1,31 +1,25 @@
-.PHONY: help install dev test lint type fmt serve clean
+.PHONY: all validate test orchestrate decisions-init decisions-report clean
 
-help:
-	@echo "install dev test lint type fmt serve clean"
+all: validate test
 
-install:
-	pip install -r requirements.txt
-
-dev:
-	pip install -r requirements-dev.txt
-	pip install -e .
+validate:
+	@echo "== running monorepo linter =="
+	python3 tooling/validate_tree.py
 
 test:
-	pytest -q
+	@echo "== running full-stack diagnostic =="
+	python3 integration/test_full_stack_diagnostic.py
 
-lint:
-	ruff check .
+orchestrate:
+	@echo "== running master pipeline =="
+	python3 tooling/master_orchestrator.py
 
-type:
-	mypy aiops_platform
+decisions-init:
+	@python3 tooling/decisions/init_workbook.py
 
-fmt:
-	ruff format .
-
-serve:
-	python3 -m aiops_platform.app.asgi
+decisions-report:
+	@python3 tooling/decisions/closure.py
 
 clean:
-	rm -rf build dist *.egg-info
-	find . -type d -name __pycache__ -prune -exec rm -rf {} +
-	find . -name "*.pyc" -delete
+	find . -type d -name "__pycache__" -exec rm -rf {} +
+	rm -rf build/ dist/ *.egg-info .pytest_cache/

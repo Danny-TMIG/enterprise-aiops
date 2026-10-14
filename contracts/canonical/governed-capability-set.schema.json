@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asf.gov.governed_capability_set.v1",
+  "title": "GovernedCapabilitySet",
+  "type": "object",
+  "required": [
+    "envelope",
+    "candidates"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "envelope": {
+      "$ref": "common-envelope.schema.json"
+    },
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "capability_id",
+          "provider_version"
+        ],
+        "properties": {
+          "capability_id": {
+            "type": "string"
+          },
+          "provider_version": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "unsatisfied_constraints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

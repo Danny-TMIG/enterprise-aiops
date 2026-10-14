@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asf.gov.representation_request.v1",
+  "title": "RepresentationRequest",
+  "type": "object",
+  "required": [
+    "envelope",
+    "representation_class",
+    "transformation_plan"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "envelope": {
+      "$ref": "common-envelope.schema.json"
+    },
+    "representation_class": {
+      "type": "string",
+      "enum": [
+        "DENIED",
+        "METADATA_ONLY",
+        "PROVENANCE_ONLY",
+        "AGGREGATED",
+        "REDACTED",
+        "ANONYMIZED",
+        "ABSTRACTED",
+        "DERIVED",
+        "FULL"
+      ]
+    },
+    "transformation_plan": {
+      "type": "object"
+    },
+    "verification": {
+      "type": "object"
+    },
+    "release_conditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "decision_id": "GOV-DEC-011",
+  "status": "OPEN",
+  "title": "Global ASF federation wire protocol",
+  "question": "What is the production cross-domain wire protocol and trust negotiation?",
+  "options": [
+    {
+      "id": "A",
+      "summary": "Defer; v1 preserves contract compatibility",
+      "tradeoffs": "Keeps v1 shippable"
+    },
+    {
+      "id": "B",
+      "summary": "Design now under MATH-002",
+      "tradeoffs": "Adds scope"
+    }
+  ],
+  "selected": "UNDECIDED",
+  "rationale": "UNDECIDED",
+  "closed_by": "UNDECIDED",
+  "closed_at": "UNDECIDED",
+  "gates_components": [
+    "COG-REA-001",
+    "GOV-FED-001"
+  ],
+  "record_seal": "ea10bfb22459c5885c63639141c441d8bde570464893d4560fad1653cc099d48",
+  "recommendation": "A",
+  "recommendation_reasoning": "FAS marks Deferred."
+}

@@ -1,0 +1,101 @@
+"""LoadedGrammar library. Includes rich_module: 15+ leaves, one
+function per context rule."""
+from __future__ import annotations
+
+from app.origami.grammar import Symbol, Production, LoadedGrammar
+
+
+def _t(x: str) -> Symbol:
+    return Symbol.t(x)
+
+
+def _n(x: str) -> Symbol:
+    return Symbol.nt(x)
+
+
+def rich_module() -> LoadedGrammar:
+    g = LoadedGrammar(start="Module", name="rich_module")
+
+    # Module -> Header Body Tests
+    g.add(Production("Module",
+        (_n("ModDoc"), _n("Imports"), _n("Body"), _n("Tests")),
+        weight=1.0))
+
+    g.add(Production("ModDoc", (_t("<MOD_DOC>"),), weight=1.0,
+        payload_prompt="Write a one-sentence module docstring. Plain text only.",
+        payload_kind="text", tag="mod_doc"))
+
+    g.add(Production("Imports", (_t("<IMPORTS>"),), weight=1.0,
+        payload_prompt="Return Python import lines, one per line, no fences.",
+        payload_kind="code", tag="imports"))
+
+    # Body -> 1..3 Functions
+    g.add(Production("Body", (_n("Function"),), weight=0.4))
+    g.add(Production("Body", (_n("Function"), _n("Function")), weight=1.0))
+    g.add(Production("Body",
+        (_n("Function"), _n("Function"), _n("Function")), weight=0.6))
+
+    g.add(Production("Function",
+        (_n("FuncName"), _n("Params"), _n("Ret"), _n("FDoc"), _n("FBody")),
+        weight=1.0))
+
+    g.add(Production("FuncName", (_t("<NAME>"),), weight=1.0,
+        payload_prompt="Return one snake_case Python function name. Nothing else.",
+        payload_kind="identifier", tag="func_name"))
+
+    g.add(Production("Params", (_t("<PARAMS>"),), weight=1.0,
+        payload_prompt="Return a Python parameter list like 'x: int, y: str'. Nothing else.",
+        payload_kind="identifier", tag="params"))
+
+    g.add(Production("Ret", (_t("<RET>"),), weight=1.0,
+        payload_prompt="Return a Python return type annotation (one name).",
+        payload_kind="identifier", tag="ret"))
+
+    g.add(Production("FDoc", (_t("<FDOC>"),), weight=1.0,
+        payload_prompt="Write a one-sentence docstring for the function. Plain text.",
+        payload_kind="text", tag="fdoc"))
+
+    g.add(Production("FBody", (_t("<FBODY>"),), weight=1.0,
+        payload_prompt="Write the function body (indented lines only, no def, no fences).",
+        payload_kind="code", tag="fbody"))
+
+    g.add(Production("Tests", (_n("Test"),), weight=0.6))
+    g.add(Production("Tests", (_n("Test"), _n("Test")), weight=1.0))
+
+    g.add(Production("Test", (_n("TName"), _n("TBody")), weight=1.0))
+
+    g.add(Production("TName", (_t("<TNAME>"),), weight=1.0,
+        payload_prompt="Return one snake_case test name starting with test_. Nothing else.",
+        payload_kind="identifier", tag="test_name"))
+
+    g.add(Production("TBody", (_t("<TBODY>"),), weight=1.0,
+        payload_prompt="Write one assert statement testing the function. No def, no fences.",
+        payload_kind="code", tag="test_body"))
+
+    return g
+
+
+def code_artifact() -> LoadedGrammar:
+    return rich_module()
+
+
+def review() -> LoadedGrammar:
+    g = LoadedGrammar(start="Review", name="review")
+    g.add(Production("Review", (_t("<REVIEW>"),), weight=1.0,
+        payload_prompt="Write a one-line review of the module. Plain text.",
+        payload_kind="text", tag="review"))
+    return g
+
+
+SHIPPED = {"rich_module": rich_module, "code_artifact": code_artifact,
+           "review": review}
+
+
+def get(name: str) -> LoadedGrammar:
+    if name not in SHIPPED:
+        raise KeyError(f"unknown grammar: {name}")
+    return SHIPPED[name]()
+
+
+def list_shipped() -> list:
+    return sorted(SHIPPED)

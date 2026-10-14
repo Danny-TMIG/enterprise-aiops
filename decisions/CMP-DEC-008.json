@@ -1,0 +1,28 @@
+{
+  "decision_id": "CMP-DEC-008",
+  "status": "OPEN",
+  "title": "Confidential-compute profiles and required assurances",
+  "question": "Which confidential-compute profiles are required?",
+  "options": [
+    {
+      "id": "A",
+      "summary": "Optional at v1",
+      "tradeoffs": "Broad support"
+    },
+    {
+      "id": "B",
+      "summary": "Require one specific profile",
+      "tradeoffs": "Narrow hardware"
+    }
+  ],
+  "selected": "UNDECIDED",
+  "rationale": "UNDECIDED",
+  "closed_by": "UNDECIDED",
+  "closed_at": "UNDECIDED",
+  "gates_components": [
+    "CMP-TRU-004"
+  ],
+  "record_seal": "6c06365c1d76b5ef1671509b36b0ff738276cf6750af3188006c4f86bdde0b99",
+  "recommendation": "A",
+  "recommendation_reasoning": "v1 slice does not require confidential compute."
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asf.control.cancellation_revocation.v1",
+  "title": "CancellationRevocationDirective",
+  "type": "object",
+  "required": [
+    "envelope",
+    "target",
+    "reason",
+    "authority_ref",
+    "effective_time"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "envelope": {
+      "$ref": "common-envelope.schema.json"
+    },
+    "target": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authority_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "effective_time": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requires_acknowledgement": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "organization": "The Mark Intelligence Group",
+  "standard": "ASF v1.2",
+  "architecture": "Aether Sovereign Fabric",
+  "topology": "Criss-Cross Trans-Ledger Cross-Layer Mesh",
+  "components_governed": 75,
+  "layers": [
+    "AX",
+    "AG",
+    "AC"
+  ],
+  "node_substrate": "Apple Silicon M4 Max",
+  "state": "IMMUTABLY_SEALED",
+  "omega_seal": "f9b3d4ad11873a45cb3fc59a4ec90b7697ec77f9ccc90668256e39dd97227830"
+}

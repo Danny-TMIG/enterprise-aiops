@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asf.gov.information_flow_request.v1",
+  "title": "InformationFlowRequest",
+  "type": "object",
+  "required": [
+    "envelope",
+    "source",
+    "destination",
+    "purpose",
+    "labels"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "envelope": {
+      "$ref": "common-envelope.schema.json"
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "destination": {
+      "type": "string",
+      "minLength": 1
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "disclosure_budget": {
+      "type": "string"
+    },
+    "transform_obligations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

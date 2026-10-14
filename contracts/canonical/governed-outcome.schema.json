@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asf.gov.governed_outcome.v1",
+  "title": "GovernedOutcome",
+  "type": "object",
+  "required": [
+    "envelope",
+    "verified_status",
+    "evidence_ref"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "envelope": {
+      "$ref": "common-envelope.schema.json"
+    },
+    "verified_status": {
+      "type": "string",
+      "enum": [
+        "UNVERIFIED",
+        "VERIFIED-BOUNDED",
+        "INCOMPLETE",
+        "CONTRADICTED",
+        "EXPIRED",
+        "REVOKED"
+      ]
+    },
+    "permitted_representation": {
+      "type": "string",
+      "enum": [
+        "DENIED",
+        "METADATA_ONLY",
+        "PROVENANCE_ONLY",
+        "AGGREGATED",
+        "REDACTED",
+        "ANONYMIZED",
+        "ABSTRACTED",
+        "DERIVED",
+        "FULL"
+      ]
+    },
+    "evidence_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

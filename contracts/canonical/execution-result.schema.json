@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asf.cmp.execution_result.v1",
+  "title": "ExecutionResult",
+  "type": "object",
+  "required": [
+    "envelope",
+    "order_ref",
+    "terminal_status"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "envelope": {
+      "$ref": "common-envelope.schema.json"
+    },
+    "order_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "terminal_status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "outputs": {
+      "type": "object"
+    },
+    "failure_ref": {
+      "type": "string"
+    },
+    "recovery_ref": {
+      "type": "string"
+    }
+  }
+}

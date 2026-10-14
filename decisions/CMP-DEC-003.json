@@ -1,0 +1,28 @@
+{
+  "decision_id": "CMP-DEC-003",
+  "status": "OPEN",
+  "title": "Reference v1 deployment topology and scale envelope",
+  "question": "What is the reference v1 topology and scale envelope?",
+  "options": [
+    {
+      "id": "A",
+      "summary": "Single-domain CPU-only cluster per profile",
+      "tradeoffs": "Matches departmental profile"
+    },
+    {
+      "id": "B",
+      "summary": "Large-scale envelope now",
+      "tradeoffs": "Premature"
+    }
+  ],
+  "selected": "UNDECIDED",
+  "rationale": "UNDECIDED",
+  "closed_by": "UNDECIDED",
+  "closed_at": "UNDECIDED",
+  "gates_components": [
+    "CMP-RES-005"
+  ],
+  "record_seal": "b0f87a1cba858a484b1680ec4c24dd05e0902e59cfc8ae010ffcbcd5d8e7494a",
+  "recommendation": "A",
+  "recommendation_reasoning": "FAS names departmental CPU as first profile."
+}

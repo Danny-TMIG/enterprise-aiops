@@ -1,0 +1,58 @@
+{
+  "component_id": "GOV-FED-001",
+  "title": "Federation Gateway and Domain Exchange Coordinator",
+  "layer": "ag",
+  "group": "Federation and Domain Exchange",
+  "release": "Deferred",
+  "parent_specifications": [
+    "ASF-COG-FAS-001 v1.0",
+    "ASF-GOV-FAS-001 v1.0",
+    "ASF-CMP-FAS-001 v1.0"
+  ],
+  "requirements": [],
+  "provided_contracts": [],
+  "consumed_contracts": [],
+  "state_ownership": "UNDECIDED",
+  "dependencies": {
+    "build": [],
+    "runtime": [],
+    "authority": [],
+    "state": [],
+    "optional_deferred": []
+  },
+  "modules": [],
+  "deployment_mapping": {
+    "unit": "UNDECIDED",
+    "profile": "UNDECIDED"
+  },
+  "open_decisions": [
+    "GOV-DEC-011"
+  ],
+  "invariants": [
+    "GOV-INV-001 Cognition cannot authorize its own consequential action.",
+    "GOV-INV-002 Govern cannot execute a physical workload or represent scheduling as authority.",
+    "GOV-INV-003 Compute cannot broaden an execution order, select an unauthorized capability, or reinterpret policy.",
+    "GOV-INV-004 Authority, delegation, consent, and approval are bounded, attributable, time-aware, and revocable.",
+    "GOV-INV-005 Information movement and release require an explicit decision; transformation cannot increase authority.",
+    "GOV-INV-006 Mandatory constraints determine eligibility before optimization or convenience.",
+    "GOV-INV-007 Every consequential terminal outcome has an immutable, reconstructible evidence chain.",
+    "GOV-INV-008 Missing identity, authority, policy, classification, integrity, or evidence dependencies fail closed.",
+    "GOV-INV-009 Historical state and policy are corrected by supersession, not silent mutation.",
+    "GOV-INV-010 Unvalidated mathematics or research mechanisms are never represented as implemented guarantees."
+  ],
+  "boundary_contracts": {
+    "authority": "AuthorizationRequest and AuthorizationDecision are the sole cross-layer authority-decision contracts.",
+    "information": "InformationFlowRequest and InformationFlowDecision govern disclosure; GovernedKnowledgeResult carries the released representation.",
+    "capabilities": "CapabilityRequest is resolved to GovernedCapabilitySet under authority and policy.",
+    "execution": "ExecutionOrder is the sole Govern-to-Compute boundary command; Govern consumes ExecutionStatus, ExecutionResult, and ExecutionEvidence.",
+    "closure": "Govern emits GovernedOutcome and CognitiveStateUpdateDirective only after evidence reconciliation.",
+    "control": "Approval, cancellation, revocation, common envelope, and ASFError contracts apply consistently across boundaries."
+  },
+  "boundary_invariants": [
+    "Every boundary object carries schema version, correlation, causation, sovereign-domain, purpose, classification, integrity, and evidence context.",
+    "Every retry uses a stable idempotency key; duplicate delivery may not duplicate authority, state mutation, execution, or evidence commitment.",
+    "Expired, revoked, malformed, unsupported, unsigned, or context-inconsistent objects fail closed for consequential action.",
+    "Cancellation and revocation remain observable state transitions and cannot be represented as ordinary execution failure.",
+    "The producer owns semantic validity at emission; the consumer independently validates before acting."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "timestamp": "\2026-\09-\29T\23:\37:\26Z",
+  "architecture": "Apple M4 Max / Nested Universal ASM",
+  "compilations": {
+    "nasm_compile_ms": 20,
+    "yasm_compile_ms": 20,
+    "wasm_compile_ms": 37,
+    "qwasm_eval_ms": 33,
+    "nested_packaging_ms": 40
+  }
+}

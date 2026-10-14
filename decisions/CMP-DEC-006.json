@@ -1,0 +1,29 @@
+{
+  "decision_id": "CMP-DEC-006",
+  "status": "OPEN",
+  "title": "Topology representation beyond conventional labels",
+  "question": "Is any representation beyond conventional labels/graphs adopted?",
+  "options": [
+    {
+      "id": "A",
+      "summary": "Conventional graph only",
+      "tradeoffs": "Safe"
+    },
+    {
+      "id": "B",
+      "summary": "Adopt 48-D now",
+      "tradeoffs": "Rejected by FAS"
+    }
+  ],
+  "selected": "UNDECIDED",
+  "rationale": "UNDECIDED",
+  "closed_by": "UNDECIDED",
+  "closed_at": "UNDECIDED",
+  "gates_components": [
+    "CMP-RES-001",
+    "CMP-RES-002"
+  ],
+  "record_seal": "d350c74203aa26f3816085ce40e45f056d756a8dbbbc4b64f81508d784f1b6ce",
+  "recommendation": "A",
+  "recommendation_reasoning": "FAS: no 48-D dependency until CMP-MATH-004 meets its gate."
+}

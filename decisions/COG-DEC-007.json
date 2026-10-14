@@ -1,0 +1,28 @@
+{
+  "decision_id": "COG-DEC-007",
+  "status": "OPEN",
+  "title": "Evaluation criteria and calibration record format",
+  "question": "What schema records evaluation criteria, result, and calibration?",
+  "options": [
+    {
+      "id": "A",
+      "summary": "Typed EvaluationResult with criteria/outcome/uncertainty/verification",
+      "tradeoffs": "Matches boundary contracts"
+    },
+    {
+      "id": "B",
+      "summary": "Free-form structured result",
+      "tradeoffs": "Flexible; weak traceability"
+    }
+  ],
+  "selected": "UNDECIDED",
+  "rationale": "UNDECIDED",
+  "closed_by": "UNDECIDED",
+  "closed_at": "UNDECIDED",
+  "gates_components": [
+    "COG-REA-005"
+  ],
+  "record_seal": "564180e2954ed990147abf264a5d6c90216830c30e68ea1036c7493800cf2a4c",
+  "recommendation": "A",
+  "recommendation_reasoning": "FAS says evaluation records criteria and evidence."
+}

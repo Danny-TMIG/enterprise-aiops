@@ -1,0 +1,33 @@
+{
+  "standard": "ASF v1.2",
+  "source": [
+    "ASF-COG-FAS-001 v1.0 boundary contract alignment",
+    "ASF-GOV-FAS-001 v1.0 boundary contract alignment",
+    "ASF-CMP-FAS-001 v1.0 boundary contract alignment"
+  ],
+  "schemas": [
+    "common-envelope.schema.json",
+    "asf-error.schema.json",
+    "cancellation-revocation-directive.schema.json",
+    "authorization-request.schema.json",
+    "authorization-decision.schema.json",
+    "information-flow-request.schema.json",
+    "information-flow-decision.schema.json",
+    "representation-request.schema.json",
+    "capability-request.schema.json",
+    "governed-capability-set.schema.json",
+    "approval-request.schema.json",
+    "approval-decision.schema.json",
+    "human-control-presentation.schema.json",
+    "human-decision-submission.schema.json",
+    "execution-order.schema.json",
+    "execution-status.schema.json",
+    "execution-result.schema.json",
+    "execution-evidence.schema.json",
+    "governed-outcome.schema.json",
+    "cognitive-state-update-directive.schema.json",
+    "knowledge-access-request.schema.json",
+    "governed-knowledge-result.schema.json"
+  ],
+  "omega_seal": "b319df8060ed10ecdccab549d729f35a6b5448f5fd0df67cc1a5850af96c50ca"
+}

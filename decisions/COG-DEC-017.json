@@ -1,0 +1,28 @@
+{
+  "decision_id": "COG-DEC-017",
+  "status": "OPEN",
+  "title": "Cognitive quality and calibration numeric targets",
+  "question": "What measurable targets define cognitive quality and calibration per profile?",
+  "options": [
+    {
+      "id": "A",
+      "summary": "Declare required per profile; numbers at acceptance",
+      "tradeoffs": "Honest"
+    },
+    {
+      "id": "B",
+      "summary": "Fix numbers in spec",
+      "tradeoffs": "Testable; may stale"
+    }
+  ],
+  "selected": "UNDECIDED",
+  "rationale": "UNDECIDED",
+  "closed_by": "UNDECIDED",
+  "closed_at": "UNDECIDED",
+  "gates_components": [
+    "COG-ASSUR-003"
+  ],
+  "record_seal": "936874e33ea3d047de60289b64d70f38863f20e58b6bcac241c3173297953c9c",
+  "recommendation": "A",
+  "recommendation_reasoning": "FAS leaves numeric targets open."
+}

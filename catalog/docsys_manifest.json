@@ -1,0 +1,12 @@
+{
+  "system": "TMIG DocSys Mastery",
+  "standard": "ASF v1.2",
+  "nodes_indexed": 75,
+  "directories": [
+    "docs/",
+    "catalog/",
+    "deploy/ledgers/"
+  ],
+  "status": "TAXONOMY_VERIFIED",
+  "docsys_omega_seal": "4173745c47cd86edcf1aea2cb50270c6f3edf80fe5c22a0f7450b984411c19a1"
+}

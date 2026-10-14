@@ -1,0 +1,30 @@
+{
+  "decision_id": "CMP-DEC-014",
+  "status": "OPEN",
+  "title": "Evidence retention, provenance store, CAPSTONE role",
+  "question": "Where is evidence stored and what role does CAPSTONE or another ledger play?",
+  "options": [
+    {
+      "id": "A",
+      "summary": "Compute-owned store; ledger optional sealed projections",
+      "tradeoffs": "FAS-conformant"
+    },
+    {
+      "id": "B",
+      "summary": "Ledger authoritative",
+      "tradeoffs": "Rejected by FAS"
+    }
+  ],
+  "selected": "UNDECIDED",
+  "rationale": "UNDECIDED",
+  "closed_by": "UNDECIDED",
+  "closed_at": "UNDECIDED",
+  "gates_components": [
+    "CMP-EVD-001",
+    "CMP-EVD-002",
+    "CMP-EVD-003"
+  ],
+  "record_seal": "26bc7b96bb89d3bc99d8b2f26fa805c746207a886624333c016447ba163100d9",
+  "recommendation": "A",
+  "recommendation_reasoning": "FAS: Compute retains authoritative local evidence."
+}

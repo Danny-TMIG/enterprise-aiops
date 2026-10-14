@@ -1,0 +1,20 @@
+project:
+  type: website
+  output-dir: site_output
+
+website:
+  title: "Aether Sovereign Fabric (ASF v1.2)"
+  navbar:
+    left:
+      - href: index.md
+        text: Overview
+      - href: architecture.md
+        text: Architecture & 75 Components
+      - href: ledgers.md
+        text: Cryptographic Ledgers
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true

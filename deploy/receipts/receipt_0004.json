@@ -1,0 +1,29 @@
+{
+  "cycle": 4,
+  "timestamp": "2026-10-14T00:23:52Z",
+  "metrics": {
+    "node_id": "dannys-macbook-m4max",
+    "timestamp": 1791937432.526248,
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "metrics": {
+      "cpu_load_percent": 14.22,
+      "load_avg_1m": 2.2744140625,
+      "load_avg_5m": 1.88232421875,
+      "load_avg_15m": 1.92333984375,
+      "memory_used_percent": 20.9,
+      "memory_total_gb": 128.0
+    }
+  },
+  "governance_txn": {
+    "object_id": "GOV-DAEMON-CYCLE-4",
+    "from_state": "MONITORING",
+    "to_state": "EVALUATED",
+    "actor": "watchdog-daemon",
+    "timestamp": 1791937432.526273,
+    "veto_check": true,
+    "status": "AUTHORIZED_AND_SEALED",
+    "transition_seal": "43ba986701ebcac89ec9d75d2a41dc4b3acfc6c4ef1629644d10558173aedd91"
+  },
+  "cognitive_output": "[mlx-community/Qwen2.5-7B-Instruct-4bit | LOCAL-MLX]: Cognitive analysis complete. Evaluated input parameter successfully. System state is nominal with zero external telemetry leakage.",
+  "omega_seal": "99c4c7c75094982867bbe7df35b07fd9d55323a9ecea89b760d5211d17526637"
+}

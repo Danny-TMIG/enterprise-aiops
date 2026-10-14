@@ -1,0 +1,30 @@
+{
+  "decision_id": "CMP-DEC-013",
+  "status": "OPEN",
+  "title": "Checkpoint portability, migration guarantees, non-idempotent recovery",
+  "question": "What guarantees do checkpoint, migration, and recovery provide?",
+  "options": [
+    {
+      "id": "A",
+      "summary": "Workload-declared semantics; migration best-effort",
+      "tradeoffs": "Honest"
+    },
+    {
+      "id": "B",
+      "summary": "Guarantee portability for all workloads",
+      "tradeoffs": "Not generally achievable"
+    }
+  ],
+  "selected": "UNDECIDED",
+  "rationale": "UNDECIDED",
+  "closed_by": "UNDECIDED",
+  "closed_at": "UNDECIDED",
+  "gates_components": [
+    "CMP-EXE-005",
+    "CMP-EXE-006",
+    "CMP-EXE-007"
+  ],
+  "record_seal": "240e59cddac0d08215b5b89900a5aad413cdd844b455b49884d9c5ac6c27829f",
+  "recommendation": "A",
+  "recommendation_reasoning": "CMP-INV-008 requires workload-declared semantics."
+}

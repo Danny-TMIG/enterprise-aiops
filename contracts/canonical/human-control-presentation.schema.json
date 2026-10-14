@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asf.cog.human_control_presentation.v1",
+  "title": "HumanControlPresentation",
+  "type": "object",
+  "required": [
+    "envelope",
+    "presentation_id",
+    "subject"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "envelope": {
+      "$ref": "common-envelope.schema.json"
+    },
+    "presentation_id": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asf.common.envelope.v1",
+  "title": "ASF Common Envelope",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "object_id",
+    "correlation_id",
+    "sovereign_domain",
+    "issuer",
+    "purpose",
+    "classification",
+    "event_time",
+    "integrity"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "object_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "causation_id": {
+      "type": "string"
+    },
+    "cognitive_identity_ref": {
+      "type": "string"
+    },
+    "workspace_ref": {
+      "type": "string"
+    },
+    "sovereign_domain": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tenant_context": {
+      "type": "string"
+    },
+    "issuer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1
+    },
+    "classification": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_time": {
+      "type": "string",
+      "minLength": 1
+    },
+    "validity": {
+      "type": "object",
+      "properties": {
+        "not_before": {
+          "type": "string"
+        },
+        "not_after": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object"
+    },
+    "integrity": {
+      "type": "object",
+      "required": [
+        "algorithm",
+        "digest"
+      ],
+      "properties": {
+        "algorithm": {
+          "type": "string"
+        },
+        "digest": {
+          "type": "string"
+        },
+        "key_id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "idempotency_key": {
+      "type": "string"
+    }
+  }
+}

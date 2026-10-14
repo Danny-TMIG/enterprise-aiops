@@ -1,0 +1,12 @@
+{
+  "timestamp": "\2026-\09-\29T\23:\37:\24Z",
+  "hardware": "Apple M4 Max / Unified Memory",
+  "compilations": {
+    "python_bytecode_ms": 76,
+    "cython_extension_ms": 417,
+    "javascript_bundle_ms": 613,
+    "wasm_compilation_ms": 156,
+    "mlx_graph_compilation_ms": 108,
+    "docker_image_compile_ms": 179
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "decision_id": "CMP-DEC-010",
+  "status": "OPEN",
+  "title": "Secret provider interface and workload identity",
+  "question": "What secret provider interface and workload identity mechanism are used?",
+  "options": [
+    {
+      "id": "A",
+      "summary": "SPIFFE/SPIRE; Vault-compatible; short-lived leases",
+      "tradeoffs": "Standard"
+    },
+    {
+      "id": "B",
+      "summary": "Node-local identity with OS keystore",
+      "tradeoffs": "Self-contained"
+    }
+  ],
+  "selected": "UNDECIDED",
+  "rationale": "UNDECIDED",
+  "closed_by": "UNDECIDED",
+  "closed_at": "UNDECIDED",
+  "gates_components": [
+    "CMP-CTL-004",
+    "CMP-TRU-006"
+  ],
+  "record_seal": "91c285b0752d072cc0dd676665965d51da6b898defad2a5572d18d51c10b15d6",
+  "recommendation": "A",
+  "recommendation_reasoning": "SPIFFE identity and short-lived leases match CMP-INV-005/006."
+}

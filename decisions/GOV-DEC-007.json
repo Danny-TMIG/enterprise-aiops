@@ -1,0 +1,33 @@
+{
+  "decision_id": "GOV-DEC-007",
+  "status": "OPEN",
+  "title": "Evidence storage, retention, redaction, external-ledger role",
+  "question": "Where is evidence stored and what role does an external ledger play?",
+  "options": [
+    {
+      "id": "A",
+      "summary": "Govern-owned store; external ledger optional projections",
+      "tradeoffs": "FAS-conformant"
+    },
+    {
+      "id": "B",
+      "summary": "External ledger authoritative",
+      "tradeoffs": "FAS excludes"
+    }
+  ],
+  "selected": "UNDECIDED",
+  "rationale": "UNDECIDED",
+  "closed_by": "UNDECIDED",
+  "closed_at": "UNDECIDED",
+  "gates_components": [
+    "GOV-EVD-001",
+    "GOV-EVD-002",
+    "GOV-EVD-003",
+    "GOV-INF-005",
+    "GOV-POL-001",
+    "GOV-POL-003"
+  ],
+  "record_seal": "61e2ab628aef40cd977722bc9687a2464301ffaec6b94e2caa5cf03484989793",
+  "recommendation": "A",
+  "recommendation_reasoning": "FAS: Compute retains authoritative local evidence."
+}
