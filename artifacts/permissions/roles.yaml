@@ -1,0 +1,5 @@
+roles:
+  - name: reader
+    permissions: [read]
+  - name: writer
+    permissions: [read, write]

@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package aether;
+
+message Request { string id = 1; }
+message Response { string id = 1; bool ok = 2; }
+service Greeter { rpc Hello (Request) returns (Response); }

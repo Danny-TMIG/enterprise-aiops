@@ -1,0 +1,10 @@
+library: example/example
+version: 0.0.1
+entries:
+  code: code://example/example@0.0.1
+  types: types://example/example@0.0.1
+  operators: operators://example/example@0.0.1
+  specs: specs://example/example@0.0.1
+  gates: gates://example/example@0.0.1
+  evidence: evidence://example/example@0.0.1
+  provenance: provenance://example/example@0.0.1

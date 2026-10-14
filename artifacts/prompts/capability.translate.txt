@@ -1,0 +1,3 @@
+Translate the following into {target_language}:
+
+{input}

@@ -1,0 +1,64 @@
+# Artifact Sets
+
+Total sets: 60
+
+- [`artifacts/code`](./code) — `code` — Executable implementation in any language.
+- [`artifacts/scripts`](./scripts) — `script` — Operational / one-off scripts.
+- [`artifacts/notebooks`](./notebooks) — `notebook` — Exploratory and analysis notebooks.
+- [`artifacts/types`](./types) — `types` — Type definitions, constructors, refinements.
+- [`artifacts/interfaces`](./interfaces) — `interface` — Formal interface declarations.
+- [`artifacts/operators`](./operators) — `operator` — AST operators and grammar extensions.
+- [`artifacts/specs`](./specs) — `spec` — Requirements and behavioural specs.
+- [`artifacts/contracts`](./contracts) — `contract` — Pre/postconditions and invariants.
+- [`artifacts/predicates`](./predicates) — `predicate` — Checkable logical predicates.
+- [`artifacts/schemas`](./schemas) — `schema` — Data and config schemas.
+- [`artifacts/data`](./data) — `data` — Datasets, fixtures, seed data.
+- [`artifacts/models`](./models) — `model` — Model manifests and cards.
+- [`artifacts/config`](./config) — `config` — Runtime and build configuration.
+- [`artifacts/flags`](./flags) — `flag` — Feature flags.
+- [`artifacts/profiles`](./profiles) — `profile` — Configuration profiles.
+- [`artifacts/policies`](./policies) — `policy` — Policy definitions (OPA/Rego or YAML).
+- [`artifacts/permissions`](./permissions) — `permission` — Permission and role definitions.
+- [`artifacts/capabilities`](./capabilities) — `capability` — Capability contracts.
+- [`artifacts/registries/code`](./registries/code) — `registry` — Code registry entries.
+- [`artifacts/registries/types`](./registries/types) — `registry` — Type registry entries.
+- [`artifacts/registries/operators`](./registries/operators) — `registry` — Operator registry entries.
+- [`artifacts/registries/specs`](./registries/specs) — `registry` — Spec registry entries.
+- [`artifacts/registries/gates`](./registries/gates) — `registry` — Gate registry entries.
+- [`artifacts/registries/evidence`](./registries/evidence) — `registry` — Evidence registry entries.
+- [`artifacts/registries/manifold`](./registries/manifold) — `registry` — Manifold registry entries.
+- [`artifacts/registries/provenance`](./registries/provenance) — `registry` — Provenance registry entries.
+- [`artifacts/manifests`](./manifests) — `manifest` — Library manifests tying the seven faces.
+- [`artifacts/lockfiles`](./lockfiles) — `lockfile` — Locked dependency graphs.
+- [`artifacts/prompts`](./prompts) — `prompt` — Prompt templates for models and agents.
+- [`artifacts/templates`](./templates) — `template` — Scaffolding and code-gen templates.
+- [`artifacts/evidence`](./evidence) — `evidence` — Compliance and verification evidence.
+- [`artifacts/provenance`](./provenance) — `provenance` — Chain-of-custody records.
+- [`artifacts/sbom`](./sbom) — `sbom` — Software bills of materials.
+- [`artifacts/licenses`](./licenses) — `license` — License and notice files.
+- [`artifacts/tests/unit`](./tests/unit) — `test` — Unit tests.
+- [`artifacts/tests/integration`](./tests/integration) — `test` — Integration tests.
+- [`artifacts/tests/property`](./tests/property) — `test` — Property-based tests.
+- [`artifacts/tests/fuzz`](./tests/fuzz) — `test` — Fuzz targets.
+- [`artifacts/tests/fixtures`](./tests/fixtures) — `fixture` — Shared test fixtures.
+- [`artifacts/metrics`](./metrics) — `metric` — Metric definitions.
+- [`artifacts/logs`](./logs) — `log` — Log schema definitions.
+- [`artifacts/traces`](./traces) — `trace` — Trace schema and spans.
+- [`artifacts/alerts`](./alerts) — `alert` — Alert rules.
+- [`artifacts/dashboards`](./dashboards) — `dashboard` — Dashboard definitions.
+- [`artifacts/ci`](./ci) — `ci` — Continuous integration workflows.
+- [`artifacts/release`](./release) — `release` — Release workflows and notes.
+- [`artifacts/deploy`](./deploy) — `deploy` — Deployment definitions.
+- [`artifacts/docs/reference`](./docs/reference) — `doc` — Reference docs.
+- [`artifacts/docs/tutorials`](./docs/tutorials) — `doc` — Tutorials.
+- [`artifacts/docs/runbooks`](./docs/runbooks) — `doc` — Operational runbooks.
+- [`artifacts/docs/decisions`](./docs/decisions) — `adr` — Architecture decision records.
+- [`artifacts/taxonomies`](./taxonomies) — `taxonomy` — Component and capability taxonomies.
+- [`artifacts/catalogs`](./catalogs) — `catalog` — Flat catalogs of known things.
+- [`artifacts/ledgers`](./ledgers) — `ledger` — Append-only ledgers.
+- [`artifacts/journals`](./journals) — `journal` — Decision and change journals.
+- [`artifacts/handoff`](./handoff) — `handoff` — Handoff notes between owners.
+- [`artifacts/oncall`](./oncall) — `oncall` — On-call rotations and escalation.
+- [`artifacts/keys`](./keys) — `key` — Public keys and key metadata.
+- [`artifacts/certs`](./certs) — `cert` — Certificates.
+- [`artifacts/secrets`](./secrets) — `secret` — Secret templates (never real secrets).
