@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # One-shot delivery: reconcile nature catalog, verify ac/ag/ax refactor,
-# snapshot ledger, run full suite, commit + push only if green.
+# snapshot ledger, materialize the 140-family component taxonomy as a
+# capability registry, run full suite, commit + push only if green.
 set -uo pipefail
 
 REPO="$HOME/aether"
@@ -10,9 +11,8 @@ FAIL=0
 note() { printf "\n\033[1;36m== %s ==\033[0m\n" "$*"; }
 ok()   { printf "  \033[32m✓\033[0m %s\n" "$*"; }
 bad()  { printf "  \033[31m✗\033[0m %s\n" "$*"; FAIL=1; }
-skip() { printf "  \033[33m•\033[0m %s\n" "$*"; }
 
-# ---------------------------------------------------------------- 0. strip trailing whitespace
+# ---------------------------------------------------------------- 0. whitespace
 note "0. strip trailing whitespace in tracked .py/.sh"
 changed=0
 while IFS= read -r f; do
@@ -31,70 +31,237 @@ PY
 done < <(git ls-files '*.py' '*.sh' 2>/dev/null)
 ok "cleaned $changed files"
 
-# ---------------------------------------------------------------- 1. reconcile nature.txt <-> algorithms.json
+# ---------------------------------------------------------------- 1. reconcile nature catalog
 note "1. reconcile data/nature.txt with data/algorithms.json"
 python3 - <<'PY'
 import json
 from pathlib import Path
-
 DERIVED = Path("data/algorithms.json")
 CATALOG = Path("data/nature.txt")
 if not DERIVED.is_file():
     raise SystemExit("missing data/algorithms.json")
 if not CATALOG.is_file():
     CATALOG.write_text("# Source phenomena catalog\n# format: code | description\n\n")
-
 derived = json.loads(DERIVED.read_text())
 mapped = {a["phenomenon"] for a in derived["algorithms"]}
-
 lines = CATALOG.read_text().splitlines()
 active, out, demoted = set(), [], 0
 for line in lines:
     s = line.strip()
     if not s or s.startswith("#"):
-        out.append(line)
-        continue
+        out.append(line); continue
     code = s.split("|")[0].strip()
     if code in mapped:
-        active.add(code)
-        out.append(line)
+        active.add(code); out.append(line)
     else:
-        out.append("# BACKLOG (not yet derived): " + line)
-        demoted += 1
-
+        out.append("# BACKLOG (not yet derived): " + line); demoted += 1
 missing = sorted(mapped - active)
 if missing:
     out += ["", "# --- added to close catalog/derived gap ---"]
     for code in missing:
         out.append(f"{code} | source phenomenon (see data/algorithms.json)")
-
 CATALOG.write_text("\n".join(out) + "\n")
 print(f"  active={len(active)} mapped={len(mapped)} demoted={demoted} appended={len(missing)}")
 PY
-if [ $? -eq 0 ]; then ok "catalog reconciled"; else bad "reconcile failed"; fi
+[ $? -eq 0 ] && ok "catalog reconciled" || bad "reconcile failed"
 
 # ---------------------------------------------------------------- 2. placeholder check
 note "2. nature.txt placeholder check"
 n=$(grep -c "see data/algorithms.json" data/nature.txt 2>/dev/null | tr -d '\n' || true); n=${n:-0}
 active=$(grep -v '^[[:space:]]*#' data/nature.txt 2>/dev/null | grep -c '|' | tr -d '\n' || true); active=${active:-0}
-if [ "$n" -eq 0 ]; then ok "0 placeholders"; else bad "$n placeholders remain"; fi
+[ "$n" -eq 0 ] && ok "0 placeholders" || bad "$n placeholders remain"
 ok "active curated entries: $active"
 
-# ---------------------------------------------------------------- 3. ledger snapshot
-note "3. ledger snapshot"
-if [ -s sovereign/ledger.jsonl ]; then
-  snap="research/datasets/ledger-snapshot-$(date +%Y%m%d).jsonl"
-  mkdir -p research/datasets
-  cp sovereign/ledger.jsonl "$snap"
-  rows=$(wc -l < "$snap" | tr -d ' ')
-  ok "wrote $snap ($rows rows)"
-else
-  bad "sovereign/ledger.jsonl missing or empty"
-fi
+# ---------------------------------------------------------------- 3. materialize component registry
+note "3. materialize 140-family component taxonomy"
+mkdir -p data
+cat > data/components.json <<'JSON'
+{
+  "schema": "aether.components.v1",
+  "description": "Component families from the Aether engineering taxonomy. Each family is a candidate for capability contracts.",
+  "families": [
+    {"id": 1, "group": "hardware", "name": "Registers", "includes": ["general-purpose","floating-point","vector","instruction pointer","stack pointer","status","control","debug","device registers"]},
+    {"id": 2, "group": "hardware", "name": "Libraries", "includes": ["standard","runtime","static","shared","system","numerical","networking","cryptographic","application libraries"]},
+    {"id": 3, "group": "hardware", "name": "Registries", "includes": ["package","service","schema","capability","device","container image","model","configuration registries"]},
+    {"id": 4, "group": "hardware", "name": "Logic circuits", "includes": ["gates","combinational logic","flip-flops","counters","multiplexers","arithmetic circuits"]},
+    {"id": 5, "group": "hardware", "name": "Processors", "includes": ["CPUs","cores","microcontrollers","GPUs","DSPs","specialized processors"]},
+    {"id": 6, "group": "hardware", "name": "Execution units", "includes": ["arithmetic and logic units","floating-point units","vector units","load/store units"]},
+    {"id": 7, "group": "hardware", "name": "Processor control", "includes": ["instruction decoding","pipelines","scheduling","branch prediction","retirement"]},
+    {"id": 8, "group": "hardware", "name": "Instruction sets", "includes": ["opcodes","addressing modes","privilege levels","atomic operations","instruction encodings"]},
+    {"id": 9, "group": "hardware", "name": "Caches", "includes": ["instruction","data","unified","translation","device caches","coherence mechanisms"]},
+    {"id": 10, "group": "hardware", "name": "Memory", "includes": ["SRAM","DRAM","ROM","flash","persistent memory","device memory"]},
+    {"id": 11, "group": "hardware", "name": "Memory management hardware", "includes": ["MMUs","TLBs","page-table walkers","memory protection units","IOMMUs"]},
+    {"id": 12, "group": "hardware", "name": "Interconnects and buses", "includes": ["memory buses","peripheral buses","chip interconnects","expansion links"]},
+    {"id": 13, "group": "hardware", "name": "Controllers", "includes": ["memory","storage","network","interrupt","DMA","peripheral controllers"]},
+    {"id": 14, "group": "hardware", "name": "Storage devices", "includes": ["SSDs","hard drives","removable media","optical media","tape"]},
+    {"id": 15, "group": "hardware", "name": "Input and output devices", "includes": ["displays","keyboards","cameras","microphones","sensors","actuators"]},
+    {"id": 16, "group": "hardware", "name": "Physical infrastructure", "includes": ["boards","sockets","connectors","power supplies","cooling","enclosures","cabling"]},
+    {"id": 17, "group": "hardware", "name": "Clocks and timing", "includes": ["oscillators","timers","clock domains","synchronization","watchdog timers"]},
+    {"id": 18, "group": "hardware", "name": "Firmware", "includes": ["platform firmware","device firmware","microcode","embedded control software"]},
+    {"id": 19, "group": "hardware", "name": "Boot components", "includes": ["boot ROMs","bootloaders","boot managers","boot configuration","recovery images"]},
+    {"id": 20, "group": "hardware", "name": "Hardware description and configuration", "includes": ["device trees","platform tables","hardware manifests","programmable logic bitstreams"]},
+    {"id": 21, "group": "system", "name": "Kernels", "includes": ["privilege management","resource control","scheduling","memory management"]},
+    {"id": 22, "group": "system", "name": "Device drivers", "includes": ["device initialization","control","interrupt handling","data transfer"]},
+    {"id": 23, "group": "system", "name": "System calls", "includes": ["processes","files","memory","networking","devices"]},
+    {"id": 24, "group": "system", "name": "Processes", "includes": ["address spaces","process identifiers","execution state","environments"]},
+    {"id": 25, "group": "system", "name": "Threads and tasks", "includes": ["execution contexts","stacks","thread-local storage","task state"]},
+    {"id": 26, "group": "system", "name": "Schedulers", "includes": ["CPU scheduling","task priorities","deadlines","work queues"]},
+    {"id": 27, "group": "system", "name": "Synchronization primitives", "includes": ["mutexes","semaphores","condition variables","barriers","atomics"]},
+    {"id": 28, "group": "system", "name": "Interprocess communication", "includes": ["pipes","sockets","shared memory","signals","message passing"]},
+    {"id": 29, "group": "system", "name": "Virtual memory", "includes": ["address spaces","pages","mappings","protection","swapping"]},
+    {"id": 30, "group": "system", "name": "Allocators", "includes": ["heap","pool","slab","arena","stack","device-memory allocation"]},
+    {"id": 31, "group": "system", "name": "Filesystems", "includes": ["files","directories","metadata","permissions","journaling","mounts"]},
+    {"id": 32, "group": "system", "name": "Storage management", "includes": ["partitions","volumes","block layers","redundancy","snapshots"]},
+    {"id": 33, "group": "system", "name": "Networking stacks", "includes": ["addressing","routing","transport","sockets","packet processing"]},
+    {"id": 34, "group": "system", "name": "System services", "includes": ["service managers","background daemons","time services","logging services"]},
+    {"id": 35, "group": "system", "name": "Shells and command environments", "includes": ["command parsing","scripting","pipelines","sessions","environment variables"]},
+    {"id": 36, "group": "system", "name": "Isolation mechanisms", "includes": ["protection domains","namespaces","resource limits","sandboxes"]},
+    {"id": 37, "group": "system", "name": "Virtualization", "includes": ["hypervisors","virtual machines","virtual devices","guest environments"]},
+    {"id": 38, "group": "system", "name": "Containers", "includes": ["images","runtimes","filesystem layers","resource configuration"]},
+    {"id": 39, "group": "system", "name": "Emulators and simulators", "includes": ["instruction emulation","device models","behavioral models","simulated environments"]},
+    {"id": 40, "group": "system", "name": "Runtime environments", "includes": ["virtual machines","interpreters","JIT execution","managed execution services"]},
+    {"id": 41, "group": "system", "name": "Language runtime services", "includes": ["garbage collection","exception handling","reflection","coroutine execution"]},
+    {"id": 42, "group": "system", "name": "Resource accounting", "includes": ["CPU","memory","storage","network","accelerator usage and quotas"]},
+    {"id": 43, "group": "program", "name": "Symbols and identifiers", "includes": ["names","labels","namespaces","symbol tables","scopes"]},
+    {"id": 44, "group": "program", "name": "Values and literals", "includes": ["numbers","characters","strings","booleans","constants"]},
+    {"id": 45, "group": "program", "name": "Types", "includes": ["primitive","composite","algebraic","generic","reference","function types"]},
+    {"id": 46, "group": "program", "name": "Variables and bindings", "includes": ["mutable variables","immutable bindings","references","lifetime rules"]},
+    {"id": 47, "group": "program", "name": "Expressions and operators", "includes": ["arithmetic","comparison","logic","assignment","evaluation rules"]},
+    {"id": 48, "group": "program", "name": "Control flow", "includes": ["branches","loops","pattern matching","jumps","exception paths"]},
+    {"id": 49, "group": "program", "name": "Functions and procedures", "includes": ["parameters","return values","closures","callbacks","methods"]},
+    {"id": 50, "group": "program", "name": "Objects and abstractions", "includes": ["classes","interfaces","traits","prototypes","records"]},
+    {"id": 51, "group": "program", "name": "Modules and packages", "includes": ["imports","exports","visibility","package boundaries","dependencies"]},
+    {"id": 52, "group": "program", "name": "Data structures", "includes": ["arrays","lists","maps","sets","trees","graphs","queues","heaps"]},
+    {"id": 53, "group": "program", "name": "Algorithms", "includes": ["search","sorting","parsing","optimization","scheduling","numerical computation"]},
+    {"id": 54, "group": "program", "name": "State machines", "includes": ["states","transitions","events","guards","actions"]},
+    {"id": 55, "group": "program", "name": "Concurrency models", "includes": ["threads","actors","async tasks","futures","channels","event loops"]},
+    {"id": 56, "group": "program", "name": "Error models", "includes": ["exceptions","result types","error codes","cancellation","recovery"]},
+    {"id": 57, "group": "program", "name": "Resource ownership models", "includes": ["ownership","borrowing","reference counting","scoped cleanup"]},
+    {"id": 58, "group": "program", "name": "Interfaces and contracts", "includes": ["inputs","outputs","preconditions","postconditions","invariants","compatibility rules"]},
+    {"id": 59, "group": "program", "name": "Application binary interfaces", "includes": ["calling conventions","object layouts","symbol conventions","binary compatibility"]},
+    {"id": 60, "group": "program", "name": "Foreign-function interfaces", "includes": ["cross-language calls","bindings","marshalling","native extensions"]},
+    {"id": 61, "group": "program", "name": "Frameworks", "includes": ["application structure","lifecycle hooks","routing","extension points"]},
+    {"id": 62, "group": "program", "name": "SDKs and toolkits", "includes": ["libraries","headers","tools","examples","integration documentation"]},
+    {"id": 63, "group": "program", "name": "Plugins and extensions", "includes": ["loadable modules","extension APIs","discovery","version compatibility"]},
+    {"id": 64, "group": "program", "name": "Configuration", "includes": ["settings","profiles","feature flags","policy parameters","environment configuration"]},
+    {"id": 65, "group": "toolchain", "name": "Languages and grammars", "includes": ["syntax","semantics","lexical rules","grammar definitions"]},
+    {"id": 66, "group": "toolchain", "name": "Lexers and parsers", "includes": ["tokenization","syntax analysis","parse trees","syntax diagnostics"]},
+    {"id": 67, "group": "toolchain", "name": "Intermediate representations", "includes": ["abstract syntax trees","control-flow graphs","intermediate code"]},
+    {"id": 68, "group": "toolchain", "name": "Compilers and interpreters", "includes": ["semantic analysis","type checking","optimization","code generation","evaluation"]},
+    {"id": 69, "group": "toolchain", "name": "Assemblers", "includes": ["assembly parsing","instruction encoding","object-file generation"]},
+    {"id": 70, "group": "toolchain", "name": "Linkers and loaders", "includes": ["symbol resolution","relocation","executable loading","dynamic linking"]},
+    {"id": 71, "group": "toolchain", "name": "Build systems", "includes": ["dependency graphs","build rules","incremental builds","build caches"]},
+    {"id": 72, "group": "toolchain", "name": "Dependency management", "includes": ["manifests","lockfiles","version resolution","integrity checks"]},
+    {"id": 73, "group": "toolchain", "name": "Code generation", "includes": ["interface bindings","schema-derived code","templates","generated clients"]},
+    {"id": 74, "group": "toolchain", "name": "Development environments", "includes": ["editors","IDEs","language servers","notebooks","interactive consoles"]},
+    {"id": 75, "group": "toolchain", "name": "Debugging tools", "includes": ["breakpoints","stack traces","memory inspection","crash dumps"]},
+    {"id": 76, "group": "toolchain", "name": "Performance tools", "includes": ["profilers","tracers","benchmarks","sampling","instrumentation"]},
+    {"id": 77, "group": "toolchain", "name": "Static analysis tools", "includes": ["linters","type analyzers","dependency analysis","security analyzers"]},
+    {"id": 78, "group": "toolchain", "name": "Binary and package formats", "includes": ["object files","executables","shared objects","archives","installable packages"]},
+    {"id": 79, "group": "toolchain", "name": "Source and artifact repositories", "includes": ["version history","branches","tags","releases","build artifacts"]},
+    {"id": 80, "group": "application", "name": "Data models and schemas", "includes": ["entities","relationships","constraints","field definitions","schema versions"]},
+    {"id": 81, "group": "application", "name": "Data formats and encodings", "includes": ["text","binary formats","character encodings","serialization"]},
+    {"id": 82, "group": "application", "name": "Databases", "includes": ["relational","document","key-value","graph","time-series","vector databases"]},
+    {"id": 83, "group": "application", "name": "Database engines", "includes": ["query planning","execution","indexing","transactions","concurrency control"]},
+    {"id": 84, "group": "application", "name": "Data storage services", "includes": ["object stores","file stores","block stores","archival stores"]},
+    {"id": 85, "group": "application", "name": "Caches and indexes", "includes": ["application caches","distributed caches","search indexes","materialized views"]},
+    {"id": 86, "group": "application", "name": "Data pipelines", "includes": ["ingestion","transformation","validation","batch processing","stream processing"]},
+    {"id": 87, "group": "application", "name": "Messaging systems", "includes": ["queues","brokers","topics","event buses","dead-letter handling"]},
+    {"id": 88, "group": "application", "name": "Protocols", "includes": ["message structures","interaction rules","ordering","negotiation","error handling"]},
+    {"id": 89, "group": "application", "name": "APIs", "includes": ["local APIs","HTTP APIs","RPC interfaces","streaming interfaces"]},
+    {"id": 90, "group": "application", "name": "Adapters and connectors", "includes": ["protocol conversion","data mapping","external-service integration"]},
+    {"id": 91, "group": "application", "name": "Middleware", "includes": ["request processing","authentication hooks","retries","routing","mediation"]},
+    {"id": 92, "group": "application", "name": "Gateways and proxies", "includes": ["API gateways","reverse proxies","traffic mediation","policy enforcement"]},
+    {"id": 93, "group": "application", "name": "Naming and discovery", "includes": ["DNS","service directories","endpoint discovery","resource naming"]},
+    {"id": 94, "group": "application", "name": "Traffic management", "includes": ["load balancing","rate limiting","admission control","backpressure"]},
+    {"id": 95, "group": "application", "name": "Distributed coordination", "includes": ["consensus","leader election","leases","distributed locks"]},
+    {"id": 96, "group": "application", "name": "Replication and consistency", "includes": ["replica management","consistency models","conflict resolution","reconciliation"]},
+    {"id": 97, "group": "application", "name": "Distributed workflows", "includes": ["orchestration","choreography","job execution","compensating actions"]},
+    {"id": 98, "group": "application", "name": "Failure-handling mechanisms", "includes": ["timeouts","retries","idempotency","circuit breakers","failover"]},
+    {"id": 99, "group": "application", "name": "Business and domain logic", "includes": ["rules","calculations","decisions","domain services"]},
+    {"id": 100, "group": "application", "name": "User interfaces", "includes": ["command-line","graphical","web","mobile","voice","device interfaces"]},
+    {"id": 101, "group": "application", "name": "Presentation systems", "includes": ["layout","rendering","styles","templates","graphics","animation"]},
+    {"id": 102, "group": "application", "name": "Interaction and accessibility", "includes": ["navigation","input handling","focus","assistive interfaces","localization"]},
+    {"id": 103, "group": "application", "name": "Session and application state", "includes": ["sessions","client state","server state","persistence","synchronization"]},
+    {"id": 104, "group": "application", "name": "Content and assets", "includes": ["documents","images","fonts","audio","video","localization resources"]},
+    {"id": 105, "group": "security", "name": "Identity", "includes": ["user","service","device","workload identities","credentials"]},
+    {"id": 106, "group": "security", "name": "Authentication", "includes": ["credential validation","multifactor authentication","federation"]},
+    {"id": 107, "group": "security", "name": "Authorization and capabilities", "includes": ["permissions","roles","attributes","capability grants","scope","revocation"]},
+    {"id": 108, "group": "security", "name": "Cryptographic components", "includes": ["hashing","encryption","signatures","key derivation","random-number generation"]},
+    {"id": 109, "group": "security", "name": "Key and secret management", "includes": ["key stores","secret stores","certificates","issuance","rotation"]},
+    {"id": 110, "group": "security", "name": "Trust and integrity mechanisms", "includes": ["trust anchors","signed artifacts","boot verification","attestation"]},
+    {"id": 111, "group": "security", "name": "Security controls", "includes": ["input validation","filtering","segmentation","isolation","policy enforcement"]},
+    {"id": 112, "group": "security", "name": "Privacy and data governance", "includes": ["classification","minimization","retention","access restrictions","deletion"]},
+    {"id": 113, "group": "lifecycle", "name": "Requirements and specifications", "includes": ["intended behavior","constraints","acceptance criteria","interfaces"]},
+    {"id": 114, "group": "lifecycle", "name": "Architecture and design artifacts", "includes": ["system boundaries","component models","dependency maps","decision records"]},
+    {"id": 115, "group": "lifecycle", "name": "Tests and test infrastructure", "includes": ["unit","integration","system","acceptance","regression tests","fixtures and harnesses"]},
+    {"id": 116, "group": "lifecycle", "name": "Adversarial and resilience testing", "includes": ["fuzzing","fault injection","load testing","chaos experiments"]},
+    {"id": 117, "group": "lifecycle", "name": "Formal methods", "includes": ["logical specifications","model checking","theorem proving","refinement checks"]},
+    {"id": 118, "group": "lifecycle", "name": "Verification evidence", "includes": ["test results","execution traces","provenance","artifact hashes","reproducibility records"]},
+    {"id": 119, "group": "lifecycle", "name": "Observability", "includes": ["logs","metrics","traces","profiles","health checks","dashboards"]},
+    {"id": 120, "group": "lifecycle", "name": "Operational detection and response", "includes": ["alerts","anomaly detection","incident handling","containment","recovery"]},
+    {"id": 121, "group": "lifecycle", "name": "Continuous integration and delivery", "includes": ["automated builds","validation gates","packaging","release workflows"]},
+    {"id": 122, "group": "lifecycle", "name": "Deployment systems", "includes": ["installers","provisioning","infrastructure definitions","rollout","rollback"]},
+    {"id": 123, "group": "lifecycle", "name": "Environment management", "includes": ["development","test","staging","production","configuration and dependency isolation"]},
+    {"id": 124, "group": "lifecycle", "name": "Backup and disaster recovery", "includes": ["backups","restore procedures","recovery objectives","recovery exercises"]},
+    {"id": 125, "group": "lifecycle", "name": "Capacity and efficiency management", "includes": ["sizing","quotas","scaling","utilization","cost and energy accounting"]},
+    {"id": 126, "group": "lifecycle", "name": "Supply-chain records", "includes": ["dependency inventories","software bills of materials","provenance","licenses"]},
+    {"id": 127, "group": "lifecycle", "name": "Maintenance and evolution", "includes": ["patches","upgrades","migrations","compatibility","vulnerability remediation"]},
+    {"id": 128, "group": "lifecycle", "name": "Lifecycle controls", "includes": ["versioning","deprecation","sunset","retirement","decommissioning"]},
+    {"id": 129, "group": "lifecycle", "name": "Documentation and operational knowledge", "includes": ["reference manuals","tutorials","runbooks","troubleshooting guides"]},
+    {"id": 130, "group": "lifecycle", "name": "Ownership and governance", "includes": ["maintainers","decision rights","support responsibilities","review and acceptance"]},
+    {"id": 131, "group": "specialized", "name": "AI and machine learning", "includes": ["datasets","tokenizers","models","weights","training","inference","evaluation","model serving"]},
+    {"id": 132, "group": "specialized", "name": "Agent systems", "includes": ["tool definitions","context","memory","planners","execution loops","bounded authority","monitoring"]},
+    {"id": 133, "group": "specialized", "name": "Scientific computing", "includes": ["solvers","meshes","numerical kernels","simulation models","uncertainty analysis"]},
+    {"id": 134, "group": "specialized", "name": "Graphics and media", "includes": ["scene graphs","shaders","renderers","codecs","compositors","media pipelines"]},
+    {"id": 135, "group": "specialized", "name": "Real-time and embedded systems", "includes": ["interrupt routines","deadline scheduling","control loops","board-support packages"]},
+    {"id": 136, "group": "specialized", "name": "Robotics and control", "includes": ["perception","localization","planning","feedback controllers","actuator interfaces"]},
+    {"id": 137, "group": "specialized", "name": "Programmable hardware", "includes": ["HDL modules","synthesis","placement","routing","timing constraints","bitstreams"]},
+    {"id": 138, "group": "specialized", "name": "Quantum computing", "includes": ["qubits","gates","circuits","compilation","control electronics","measurement","classical coordination"]},
+    {"id": 139, "group": "specialized", "name": "Distributed ledgers", "includes": ["transaction models","validation rules","consensus","execution engines","state storage"]},
+    {"id": 140, "group": "specialized", "name": "Geospatial systems", "includes": ["coordinate systems","geometry","spatial indexes","map layers","spatial processing"]}
+  ]
+}
+JSON
+python3 -c "
+import json
+d = json.load(open('data/components.json'))
+print(f'  families={len(d[\"families\"])} groups={sorted({f[\"group\"] for f in d[\"families\"]})}')
+"
+ok "wrote data/components.json"
 
-# ---------------------------------------------------------------- 4. CLI entrypoints
-note "4. CLI entrypoints from new paths"
-if python -m ag.verify >/dev/null 2>&1; then ok "python -m ag.verify"; else bad "python -m ag.verify"; fi
+# ---------------------------------------------------------------- 4. generate capability contract template
+note "4. generate capability contract template per family"
+python3 - <<'PY'
+import json
+from pathlib import Path
+
+d = json.loads(Path("data/components.json").read_text())
+out = {"schema": "aether.capabilities.v1",
+       "note": "Contracts for every family. status=declared until implemented; evidence list is empty by default.",
+       "capabilities": []}
+for f in d["families"]:
+    cid = f"cap.{f['group']}.{f['id']:03d}.{f['name'].lower().replace(' ', '_').replace('/', '_')}"
+    out["capabilities"].append({
+        "id": cid,
+        "family_id": f["id"],
+        "group": f["group"],
+        "name": f["name"],
+        "inputs": [],
+        "limits": {"max_concurrency": 1, "max_seconds": 60},
+        "permissions": [],
+        "evidence_required": ["test result", "execution trace"],
+        "implementation": {"status": "declared", "module": None, "entrypoint": None},
+        "includes": f["includes"],
+    })
+Path("data/capabilities.json").write_text(json.dumps(out, indent=2) + "\n")
+print(f"  capabilities={len(out['capabilities'])}")
+PY
+ok "wrote data/capabilities.json"
+
+# ---------------------------------------------------------------- 5. CLI entrypoints
+note "5. CLI entrypoints from new paths"
+python -m ag.verify >/dev/null 2>&1 && ok "python -m ag.verify" || bad "python -m ag.verify"
 if python -m ax.harnesses.ablate_scale >/dev/null 2>&1; then
   ok "python -m ax.harnesses.ablate_scale"
 elif python -m ax.harnesses.ablate_scale 2>&1 | head -1 | grep -q .; then
@@ -103,30 +270,19 @@ else
   bad "python -m ax.harnesses.ablate_scale"
 fi
 
-# ---------------------------------------------------------------- 5. stale imports (fatal)
-note "5. stale module imports (fatal)"
+# ---------------------------------------------------------------- 6. stale imports (fatal)
+note "6. stale module imports (fatal)"
 stale_imports=$(grep -rIn --exclude-dir=.git --exclude-dir=.venv --exclude-dir=__pycache__ \
   -E "(from|import) +(sovereign\.(verify|model|healer)|control_plane\.integration|research\.harnesses)" \
   --include="*.py" . 2>/dev/null || true)
-if [ -z "$stale_imports" ]; then ok "no stale module imports"
-else echo "$stale_imports" | sed 's/^/    /'; bad "stale imports found"; fi
-
-# ---------------------------------------------------------------- 6. informational old-path mentions
-note "6. old-path mentions in strings/docs (informational)"
-mentions=$(grep -rIn --exclude-dir=.git --exclude-dir=.venv --exclude-dir=__pycache__ \
-  --exclude-dir=dist --exclude="post_refactor_check.sh" --exclude="deliver_all.sh" \
-  --exclude="bootstrap*.sh" --exclude="install_real_generate.sh" \
-  -e "sovereign/verify" -e "control_plane/integration" -e "research/harnesses" \
-  --include="*.py" --include="*.md" --include="*.json" . 2>/dev/null || true)
-if [ -z "$mentions" ]; then ok "no old-path mentions"
-else ok "$(echo "$mentions" | wc -l | tr -d ' ') mentions (non-blocking)"; fi
+[ -z "$stale_imports" ] && ok "no stale module imports" || { echo "$stale_imports" | sed 's/^/    /'; bad "stale imports found"; }
 
 # ---------------------------------------------------------------- 7. tracked & not ignored
 note "7. key artifacts tracked and not ignored"
-for f in data/nature.txt data/algorithms.json nature/algorithms.py tests/test_nature_algorithms.py; do
+for f in data/nature.txt data/algorithms.json data/components.json data/capabilities.json nature/algorithms.py tests/test_nature_algorithms.py; do
   if git check-ignore -q "$f"; then bad "$f is git-ignored"
   elif git ls-files --error-unmatch "$f" >/dev/null 2>&1; then ok "$f tracked"
-  else bad "$f untracked"; fi
+  else printf "  \033[33m•\033[0m %s (will be added on commit)\n" "$f"; fi
 done
 
 # ---------------------------------------------------------------- 8. full suite
@@ -141,7 +297,7 @@ if [ "$FAIL" -eq 0 ]; then
   ok "all checks green"
   if [ -n "$(git status --porcelain)" ]; then
     git add -A
-    git commit -s -m "chore(delivery): reconcile nature catalog, verify ac/ag/ax, snapshot ledger"
+    git commit -s -m "feat(taxonomy): materialize 140-family component registry and capability contracts"
     git push origin main
     git log --oneline -1
   else
