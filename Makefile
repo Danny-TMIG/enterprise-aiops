@@ -4,11 +4,11 @@ all: validate test
 
 validate: validate-profiles
 	@echo "== running monorepo linter =="
-	python3 tooling/validate_tree.py
+	python3 tooling/validation/validate_tree.py
 
 test:
 	@echo "== running full-stack diagnostic =="
-	python3 integration/test_full_stack_diagnostic.py
+	python3 integration/e2e/test_full_stack_diagnostic.py
 
 orchestrate:
 	@echo "== running master pipeline =="
@@ -28,7 +28,7 @@ web-gen:
 	python3 tooling/frontend/gen_frontend.py
 
 web-validate: web-gen
-	python3 tooling/validate_frontend.py
+	python3 tooling/release/validate_frontend.py
 
 web-install: web-validate
 	npm install --no-audit --no-fund
@@ -38,16 +38,15 @@ web-test: web-install
 
 web-build: web-test
 	npm run build
-	python3 tooling/seal_frontend.py
+	python3 tooling/release/seal_frontend.py
 
 validate-profiles:
-	python3 tooling/validate_profiles.py
+	python3 tooling/validation/validate_profiles.py
 
-validate: validate-profiles
 
 platform-validate:
-	python3 tooling/platform_validate.py
+	python3 tooling/validation/platform_validate.py
 
 
 federation-gate:
-	python3 tooling/check_federation_gate.py
+	python3 tooling/validation/check_federation_gate.py

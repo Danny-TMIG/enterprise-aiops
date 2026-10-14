@@ -1,3 +1,2 @@
-from .gateway import FederationGatewayError, flow_decision, validate_against_schema
-
-__all__ = ["FederationGatewayError", "flow_decision", "validate_against_schema"]
+# GOV-FED-001 bare-ID compatibility package.
+# Real implementation lives in GOV-FED-001-federation-gateway-and-domain-exchange-coordinator.

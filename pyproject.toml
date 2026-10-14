@@ -17,6 +17,16 @@ classifiers = [
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.4",
+]
+observability = [
+    "structlog>=24.1",
+]
+
 [tool.ruff]
 line-length = 100
 exclude = [
