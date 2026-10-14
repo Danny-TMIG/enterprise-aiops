@@ -1,0 +1,25 @@
+name: Aether Sovereign CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+    - name: Run Pipeline & Tests
+      run: |
+        python -m venv .venv
+        source .venv/bin/activate
+        pip install --upgrade pip
+        pip install -e .
+        pip install fastapi uvicorn pydantic pytest cryptography
+        python3 tooling/master_orchestrator.py
+        pytest -v

@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "unit_id": "core-runtime-unit",
+  "status": "draft",
+  "components": [],
+  "profiles_supported": ["L", "S"],
+  "external_dependencies": [],
+  "build_entrypoint": "build/",
+  "config_path": "config/",
+  "manifests_path": "manifests/",
+  "runbook": "runbook.md"
+}

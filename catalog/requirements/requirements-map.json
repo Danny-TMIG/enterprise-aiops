@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0",
+  "status": "draft",
+  "generated_from": "components/*/*/docs/requirements.md",
+  "note": "Regenerate from component docs; do not hand-edit.",
+  "requirements": []
+}

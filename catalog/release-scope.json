@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "status": "draft",
+  "release": "v1.2.0",
+  "core_v1": [],
+  "deferred": [
+    "COG-CMP-004",
+    "GOV-FED-001",
+    "CMP-DEC-017",
+    "CMP-DEC-018"
+  ],
+  "validation_gated": [
+    "CMP-ECO-001"
+  ],
+  "research_quarantined": [
+    "GOV-DEC-013",
+    "CMP-DEC-006",
+    "CMP-DEC-007",
+    "CMP-DEC-019"
+  ]
+}
