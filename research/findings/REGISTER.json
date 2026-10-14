@@ -1,5 +1,14 @@
 {
   "schema_version": "1.0",
-  "findings": [],
+  "findings": [
+    {
+      "id": "A1-runtime",
+      "date": "2026-10-14",
+      "hypothesis": "MLX faster than torch-MPS at small sizes",
+      "result": "refuted at 1M params; torch-MPS fp32 fastest",
+      "dataset": "research/datasets/ablation-runtime.jsonl",
+      "next": "A3 scale ablation"
+    }
+  ],
   "note": "One entry per verified finding. Each must cite an experiment ID and a JSONL row."
 }

@@ -16,11 +16,13 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 from sovereign.ledger import Ledger
+from sovereign.model import generate as model_generate
 
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = json.loads((ROOT / "sovereign" / "config.json").read_text())
 LEDGER = Ledger(ROOT / CONFIG["ledger_path"])
+MODEL_PATH = ROOT / CONFIG["model_path"]
 
 app = FastAPI(title="Sovereign Node", version="1.0")
 
@@ -33,28 +35,8 @@ class Message(BaseModel):
 class ChatRequest(BaseModel):
     model: str = "tiny-local"
     messages: list[Message]
-    max_tokens: int = 128
+    max_tokens: int = 256
     temperature: float = 0.0
-
-
-def _count_tokens(text: str) -> int:
-    # Rough estimate: 1 token ~ 4 characters. Real backends use a tokenizer.
-    return max(1, len(text) // 4)
-
-
-def _generate(request: ChatRequest) -> tuple[str, int, int]:
-    """Deterministic placeholder that proves the pipeline.
-
-    Replace with a real backend call (mlx_lm or transformers) when a model
-    is available at config["model_path"]. The pipeline — ledger, wire format,
-    hashing — is identical either way.
-    """
-    prompt_text = " ".join(m.content for m in request.messages)
-    prompt_tokens = _count_tokens(prompt_text)
-    # Echo-style response so the pipeline is observable end to end.
-    response = f"[sovereign] received {len(request.messages)} message(s) for model {request.model}"
-    completion_tokens = _count_tokens(response)
-    return response, prompt_tokens, completion_tokens
 
 
 @app.get("/health")
@@ -64,6 +46,8 @@ def health() -> dict[str, Any]:
         "node_id": CONFIG["node_id"],
         "backend": CONFIG["backend"],
         "model": CONFIG["model"],
+        "model_path": str(MODEL_PATH),
+        "model_available": MODEL_PATH.exists(),
     }
 
 
@@ -72,7 +56,11 @@ def chat(req: ChatRequest) -> dict[str, Any]:
     t0 = time.time()
     request_id = f"chatcmpl-{uuid.uuid4()}"
     try:
-        content, prompt_tokens, completion_tokens = _generate(req)
+        content, prompt_tokens, completion_tokens = model_generate(
+            MODEL_PATH,
+            [m.model_dump() for m in req.messages],
+            max_tokens=req.max_tokens,
+        )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -112,7 +100,6 @@ def chat(req: ChatRequest) -> dict[str, Any]:
             "wall_ms": wall_ms,
         },
     )
-
     return response_body
 
 

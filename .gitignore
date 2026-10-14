@@ -33,3 +33,14 @@ public/dist/
 deploy/units/*/build/dist/
 deploy/units/*/build/*.egg-info/
 deploy/units/*/build/build/
+models/
+*.safetensors
+*.gguf
+*.bin
+sovereign/ledger.jsonl
+.coverage
+coverage.xml
+web/node_modules/
+web/dist/
+playwright-report/
+test-results/

@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
 """Independent verification of the sovereign ledger."""
 from __future__ import annotations
+
 import argparse
 import sys
 from pathlib import Path
+
+# Make this script runnable as `python3 sovereign/verify.py` without
+# requiring the repo root on PYTHONPATH.
+_ROOT = Path(__file__).resolve().parents[1]
+if str(_ROOT) not in sys.path:
+    sys.path.insert(0, str(_ROOT))
 
 from sovereign.ledger import Ledger
 
