@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+SKIP_DIRS = {"__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache"}
+
 import hashlib
 import json
 import sys
