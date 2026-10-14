@@ -1,3 +1,3 @@
-from .002 import Tru002, Tru002Error
+from .mod002 import Tru002, Tru002Error
 
-__all__ = ['Tru002', Tru002Error.__name__!r]
+__all__ = ["Tru002", "Tru002Error"]

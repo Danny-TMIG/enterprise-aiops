@@ -1,4 +1,5 @@
 """Convergence validator for mesh subsystem probes."""
+
 from __future__ import annotations
 
 import asyncio
@@ -30,21 +31,22 @@ class ConvergenceMetrics:
 
 
 class MeshConvergenceValidator:
-    def __init__(self, default_timeout: float = 5.0,
-                 poll_interval: float = 0.05,
-                 tolerance: float = 1e-9):
+    def __init__(
+        self, default_timeout: float = 5.0, poll_interval: float = 0.05, tolerance: float = 1e-9
+    ):
         self.default_timeout = float(default_timeout)
         self.poll_interval = float(poll_interval)
         self.tolerance = float(tolerance)
 
-    async def assert_converges(self, probe_fn: Callable,
-                                expected: float = 1.0,
-                                subsystem: str = "unknown",
-                                timeout: float | None = None
-                                ) -> ConvergenceMetrics:
+    async def assert_converges(
+        self,
+        probe_fn: Callable,
+        expected: float = 1.0,
+        subsystem: str = "unknown",
+        timeout: float | None = None,
+    ) -> ConvergenceMetrics:
         t0 = time.time()
-        deadline = t0 + (timeout if timeout is not None
-                         else self.default_timeout)
+        deadline = t0 + (timeout if timeout is not None else self.default_timeout)
         history: list = []
         attempts = 0
         value = 0.0
@@ -60,15 +62,21 @@ class MeshConvergenceValidator:
             history.append(value)
             if abs(value - expected) <= self.tolerance:
                 return ConvergenceMetrics(
-                    achieved_value=value, expected=expected,
-                    subsystem=subsystem, converged=True,
-                    attempts=attempts, elapsed_s=time.time() - t0,
+                    achieved_value=value,
+                    expected=expected,
+                    subsystem=subsystem,
+                    converged=True,
+                    attempts=attempts,
+                    elapsed_s=time.time() - t0,
                     history=history,
                 )
             await asyncio.sleep(self.poll_interval)
         return ConvergenceMetrics(
-            achieved_value=value, expected=expected,
-            subsystem=subsystem, converged=False,
-            attempts=attempts, elapsed_s=time.time() - t0,
+            achieved_value=value,
+            expected=expected,
+            subsystem=subsystem,
+            converged=False,
+            attempts=attempts,
+            elapsed_s=time.time() - t0,
             history=history,
         )

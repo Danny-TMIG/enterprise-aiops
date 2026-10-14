@@ -5,6 +5,7 @@ Split an octet graph into sub-graphs by connected component of
 recursive: sub-graphs that still have active pairs are decomposed
 again until each fragment is either reduced or stuck.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -69,16 +70,19 @@ class HyperDecomposer:
         comps = _components(g)
         for comp in comps:
             if len(comp.nodes) <= 1:
-                self.fragments.append(Fragment(
-                    depth=depth, graph=comp, steps=0,
-                    terminated=True, trace=["trivial"],
-                ))
+                self.fragments.append(
+                    Fragment(
+                        depth=depth,
+                        graph=comp,
+                        steps=0,
+                        terminated=True,
+                        trace=["trivial"],
+                    )
+                )
                 continue
-            ng, n, trace = normalise(comp.copy(),
-                                     max_steps=self.max_steps)
+            ng, n, trace = normalise(comp.copy(), max_steps=self.max_steps)
             terminated = (trace and trace[-1] != "stuck") or len(ng.nodes) <= 1
-            frag = Fragment(depth=depth, graph=ng, steps=n,
-                            terminated=terminated, trace=trace)
+            frag = Fragment(depth=depth, graph=ng, steps=n, terminated=terminated, trace=trace)
             self.fragments.append(frag)
             # recurse into a fragment that is not a single component
             if depth < self.max_depth and len(_components(ng)) > 1:

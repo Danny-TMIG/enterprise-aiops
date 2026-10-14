@@ -1,6 +1,3 @@
-import sys
-import time
-
 def render_tui():
     print("\033[2J\033[H", end="")
     print("==================================================================")
@@ -15,6 +12,7 @@ def render_tui():
     print("------------------------------------------------------------------")
     print(" Mesh Status: SECURE | Invariant: Zero Undocumented Paths Enforced")
     print("==================================================================")
+
 
 if __name__ == "__main__":
     render_tui()

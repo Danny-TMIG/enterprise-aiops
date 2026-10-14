@@ -1,5 +1,5 @@
-import pytest
 from src.public.service import GovInf002Service
+
 
 def test_gov_inf_002_service():
     svc = GovInf002Service()

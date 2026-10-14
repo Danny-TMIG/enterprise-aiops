@@ -3,6 +3,7 @@
 Returns a dict describing the fabric's database state. Read-only.
 Never raises — a down database is a health finding, not an exception.
 """
+
 from __future__ import annotations
 
 import sqlite3
@@ -26,16 +27,19 @@ def db_health(path: Path | None = None) -> dict[str, Any]:
     try:
         con = sqlite3.connect(p)
         out["integrity"] = con.execute("PRAGMA integrity_check").fetchone()[0]
-        tables = [r[0] for r in con.execute(
-            "SELECT name FROM sqlite_master WHERE type='table' "
-            "AND name NOT LIKE 'sqlite_%' ORDER BY name")]
+        tables = [
+            r[0]
+            for r in con.execute(
+                "SELECT name FROM sqlite_master WHERE type='table' "
+                "AND name NOT LIKE 'sqlite_%' ORDER BY name"
+            )
+        ]
         out["tables"] = len(tables)
         out["events"] = 0
         if "events" in tables:
-            out["events"] = con.execute(
-                "SELECT COUNT(*) FROM events").fetchone()[0]
+            out["events"] = con.execute("SELECT COUNT(*) FROM events").fetchone()[0]
         con.close()
-        out["ok"] = (out["integrity"] == "ok")
+        out["ok"] = out["integrity"] == "ok"
     except Exception as e:
         out["ok"] = False
         out["reason"] = f"{type(e).__name__}: {e}"

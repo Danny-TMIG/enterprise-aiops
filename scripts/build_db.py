@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Build the full schema. Real SQLite file. Survives restart."""
+
 from __future__ import annotations
 
 import hashlib
@@ -34,8 +35,14 @@ def build() -> dict:
             f"INSERT OR IGNORE INTO {slug} "
             f"(code, label, status, source, meta, hash) "
             f"VALUES (?,?,?,?,?,?)",
-            (code, desc, "open", f"gap-register:{section}.{ordinal}",
-             json.dumps({"section": section, "ordinal": ordinal}), h),
+            (
+                code,
+                desc,
+                "open",
+                f"gap-register:{section}.{ordinal}",
+                json.dumps({"section": section, "ordinal": ordinal}),
+                h,
+            ),
         )
 
     # seed ontology
@@ -59,8 +66,14 @@ def build() -> dict:
         "INSERT OR IGNORE INTO registry_entries "
         "(domain, name, key, path, ordinal, first_class) "
         "VALUES (?,?,?,?,?,?)",
-        ("Ontological", "Registry", "Ontological::Registry",
-         json.dumps(["Ontological", "Registry"]), 0, 1),
+        (
+            "Ontological",
+            "Registry",
+            "Ontological::Registry",
+            json.dumps(["Ontological", "Registry"]),
+            0,
+            1,
+        ),
     )
     for r in con.execute("SELECT domain, name, code, index_global FROM ontology"):
         con.execute(
@@ -83,9 +96,9 @@ def build() -> dict:
 
 def verify() -> dict:
     con = sqlite3.connect(DB)
-    tables = [r[0] for r in con.execute(
-        "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"
-    )]
+    tables = [
+        r[0] for r in con.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name")
+    ]
     total_rows = 0
     for t in tables:
         total_rows += con.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
@@ -101,9 +114,15 @@ if __name__ == "__main__":
     print(f"  tables      {len(counts)}")
     print(f"  rows total  {sum(counts.values())}")
     print("  selected:")
-    for k in ("ontology", "registry_entries",
-              "runtime_solver_binaries", "data_evidence_graph",
-              "gov_named_authorities", "reg_gdpr", "x_mesh_sec_bridge"):
+    for k in (
+        "ontology",
+        "registry_entries",
+        "runtime_solver_binaries",
+        "data_evidence_graph",
+        "gov_named_authorities",
+        "reg_gdpr",
+        "x_mesh_sec_bridge",
+    ):
         if k in counts:
             print(f"    {k:<28} {counts[k]}")
 

@@ -5,6 +5,7 @@ Same 8 grounded claims as pycheck.py, but proven by executing the
 real code and inspecting real outputs. No AST walking. No mocks.
 The system runs, and the claim either holds or doesn't.
 """
+
 from __future__ import annotations
 
 import json
@@ -43,7 +44,7 @@ def check_aligned() -> list:
     for i, e in enumerate(chain.entries):
         if e.layer != rogue.HAT_INDEX[e.hat]["layer"]:
             bad.append(f"entry {i} layer {e.layer} != {rogue.HAT_INDEX[e.hat]['layer']}")
-        if e.prev_hash != (chain.entries[i-1].digest() if i else rogue.Chain.GENESIS):
+        if e.prev_hash != (chain.entries[i - 1].digest() if i else rogue.Chain.GENESIS):
             bad.append(f"entry {i} prev_hash mismatch")
     return bad
 
@@ -55,15 +56,14 @@ def check_safe() -> list:
     bad = []
     chain = rogue.Chain(KEY)
     for i, (code, layer, verb, output, anchor) in enumerate(rogue.HATS):
-        chain.append(f"{code}-{i:03d}", code,
-                     {"verb": verb, "output": output}, anchor)
+        chain.append(f"{code}-{i:03d}", code, {"verb": verb, "output": output}, anchor)
     detection_clean = rogue.detect_rogue(chain, KEY)
     if detection_clean["rogue"]:
         bad.append("clean chain flagged as rogue")
 
-    chain.append("ROGUE-001", "SO",
-                 {"verb": "attack", "output": "exploit"},
-                 anchor="Nonexistent Standard")
+    chain.append(
+        "ROGUE-001", "SO", {"verb": "attack", "output": "exploit"}, anchor="Nonexistent Standard"
+    )
     detection_rogue = rogue.detect_rogue(chain, KEY)
     if not detection_rogue["rogue"]:
         bad.append("rogue action not detected")
@@ -99,8 +99,7 @@ def check_prevention() -> list:
     bad = []
     chain = rogue.Chain(KEY)
     for i, (code, layer, verb, output, anchor) in enumerate(rogue.HATS):
-        chain.append(f"{code}-{i:03d}", code,
-                     {"verb": verb, "output": output}, anchor)
+        chain.append(f"{code}-{i:03d}", code, {"verb": verb, "output": output}, anchor)
     # determinism
     r1 = rogue.detect_rogue(chain, KEY)
     r2 = rogue.detect_rogue(chain, KEY)
@@ -147,8 +146,7 @@ def check_forgeable() -> list:
     bad = []
     chain = rogue.Chain(KEY)
     for i, (code, layer, verb, output, anchor) in enumerate(rogue.HATS[:5]):
-        chain.append(f"{code}-{i:03d}", code,
-                     {"verb": verb, "output": output}, anchor)
+        chain.append(f"{code}-{i:03d}", code, {"verb": verb, "output": output}, anchor)
     # mutate body of entry 2 → signature must fail
     chain.entries[2].payload["verb"] = "tampered"
     detection = rogue.detect_rogue(chain, KEY)
@@ -194,9 +192,11 @@ def check_externally_verifiable() -> list:
     def _no_network(*args, **kwargs):
         raise RuntimeError("network access attempted during verification")
 
-    with patch.object(socket, "socket", _no_network), \
-         patch.object(socket, "create_connection", _no_network), \
-         patch("urllib.request.urlopen", _no_network, create=True):
+    with (
+        patch.object(socket, "socket", _no_network),
+        patch.object(socket, "create_connection", _no_network),
+        patch("urllib.request.urlopen", _no_network, create=True),
+    ):
         v = verify_license(cert, KEY)
     if v["verdict"] != "PASS":
         bad.append(f"offline verification failed: {v['verdict']}")
@@ -237,15 +237,15 @@ def check_tamper_dynamic() -> list:
 
 
 CHECKS = [
-    ("1_aligned",               check_aligned,               "runtime chain integrity"),
-    ("2_safe",                  check_safe,                  "rogue detected at runtime"),
-    ("3_complete",              check_complete,              "hats cover all layers"),
-    ("4_prevention",            check_prevention,            "detection deterministic"),
-    ("5_finite",                check_finite,                "Belnap verdict total"),
-    ("6_forgeable_evidence",    check_forgeable,             "tampering detected"),
-    ("7_anchored",              check_anchored,              "license anchors real"),
+    ("1_aligned", check_aligned, "runtime chain integrity"),
+    ("2_safe", check_safe, "rogue detected at runtime"),
+    ("3_complete", check_complete, "hats cover all layers"),
+    ("4_prevention", check_prevention, "detection deterministic"),
+    ("5_finite", check_finite, "Belnap verdict total"),
+    ("6_forgeable_evidence", check_forgeable, "tampering detected"),
+    ("7_anchored", check_anchored, "license anchors real"),
     ("8_externally_verifiable", check_externally_verifiable, "offline verification"),
-    ("9_tamper_dynamic",        check_tamper_dynamic,        "CT log tamper FAIL"),
+    ("9_tamper_dynamic", check_tamper_dynamic, "CT log tamper FAIL"),
 ]
 
 

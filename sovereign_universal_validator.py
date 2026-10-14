@@ -3,18 +3,21 @@
 # SOVEREIGN UNIVERSAL VALIDATION HARNESS (SIK-v5)
 # Target Hardware: Mac16,5 - Apple M4 Max (128 GB Unified Memory)
 # ==============================================================================
-
-import sys
-import os
-import json
-import time
 import hashlib
-import platform
+import json
+import sys
+import time
+from pathlib import Path
 
-LEDGER_DIR = Path("state/universal_validator") if 'Path' in globals() else None
+LEDGER_DIR = Path("state/universal_validator") if "Path" in globals() else None
 # Using standard pathlib or os paths
-LEDGER_PATH = Path("state/universal_validator/universal_validation_ledger.jsonl") if 'Path' in globals() else __import__('pathlib').Path("state/universal_validator/universal_validation_ledger.jsonl")
-ROOT_PROOF_PATH = __import__('pathlib').Path("state/universal_validator/universal_root_proof.json")
+LEDGER_PATH = (
+    Path("state/universal_validator/universal_validation_ledger.jsonl")
+    if "Path" in globals()
+    else __import__("pathlib").Path("state/universal_validator/universal_validation_ledger.jsonl")
+)
+ROOT_PROOF_PATH = __import__("pathlib").Path("state/universal_validator/universal_root_proof.json")
+
 
 class UniversalValidationHarness:
     def __init__(self):
@@ -49,17 +52,15 @@ class UniversalValidationHarness:
             "node_id": self.node_id,
             "stage": stage,
             "parent_hash": self.merkle_head,
-            "payload": payload
+            "payload": payload,
         }
         canonical = json.dumps(record, sort_keys=True)
         rolling_hash = hashlib.sha256(canonical.encode()).hexdigest()
-        omega_seal = hashlib.sha256((rolling_hash + self.node_id + stage + "PASSED").encode()).hexdigest()
+        omega_seal = hashlib.sha256(
+            (rolling_hash + self.node_id + stage + "PASSED").encode()
+        ).hexdigest()
 
-        sealed_record = {
-            **record,
-            "rolling_hash": rolling_hash,
-            "omega_seal": omega_seal
-        }
+        sealed_record = {**record, "rolling_hash": rolling_hash, "omega_seal": omega_seal}
         self.merkle_head = rolling_hash
 
         with open(LEDGER_PATH, "a") as f:
@@ -79,7 +80,7 @@ class UniversalValidationHarness:
                 "hardware_profile": "Mac16,5 - Apple M4 Max (128 GB Unified Memory)",
                 "validated_stack": self.layers_validated,
                 "final_merkle_head": self.merkle_head,
-                "ledger_path": str(LEDGER_PATH.absolute())
+                "ledger_path": str(LEDGER_PATH.absolute()),
             }
 
             ROOT_PROOF_PATH.write_text(json.dumps(summary, indent=4))
@@ -90,15 +91,14 @@ class UniversalValidationHarness:
             print("=" * 72)
             return 0
         except Exception as e:
-            print(f"  [Validation Failure] {str(e)}")
+            print(f"  [Validation Failure] {e!s}")
             return 1
+
 
 def main() -> int:
     harness = UniversalValidationHarness()
     return harness.execute_validation()
 
+
 if __name__ == "__main__":
     sys.exit(main())
-EOF
-chmod +x sovereign_universal_validator.py
-python3 sovereign_universal_validator.py

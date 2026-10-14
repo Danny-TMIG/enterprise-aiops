@@ -1,4 +1,5 @@
 """Apply the distilled math to the live stack."""
+
 from __future__ import annotations
 
 import argparse
@@ -14,6 +15,7 @@ from app.math.catalog import active, by_target
 
 def run_mesh() -> None:
     from app.mesh.runtime import get_mesh
+
     m = get_mesh()
     nodes = list(m.graph.nodes.values())
     edges = list(m.graph.edges)
@@ -26,31 +28,50 @@ def run_mesh() -> None:
 
 def run_flock(n: int = 12, ticks: int = 40) -> None:
     from app.murmur.flock import Flock
+
     print("── flock math ──")
     flock = Flock(n=n)
     snapshots = []
     for _ in range(ticks):
         flock.tick(dt=0.05)
-        snapshots.append(pmath.phases_from_positions(
-            [a.state.position.get("signal", 0.0) for a in flock.agents]))
+        snapshots.append(
+            pmath.phases_from_positions([a.state.position.get("signal", 0.0) for a in flock.agents])
+        )
     print(f"  kuramoto_R   {pmath.kuramoto_R(snapshots[-1])}")
     if len(flock.agents) >= 2:
         print(f"  plv(first,last) {pmath.plv(snapshots[-1], snapshots[0])}")
     positions = [a.state.position.get("signal", 0.0) for a in flock.agents]
-    upd = smath.som_update(positions, target=0.0,
-                            learning_rate=0.3, sigma=1.5)
+    upd = smath.som_update(positions, target=0.0, learning_rate=0.3, sigma=1.5)
     mb = sum(positions) / len(positions)
     ma = sum(upd["updated"]) / len(upd["updated"])
-    print(f"  som_update   c={upd['c']} "
-          f"mean_before={mb:.4f} mean_after={ma:.4f}")
+    print(f"  som_update   c={upd['c']} mean_before={mb:.4f} mean_after={ma:.4f}")
 
 
 def run_stats() -> None:
     print("── stats math ──")
     print(f"  bonferroni   {stmath.bonferroni(alpha=0.05, m=20)}")
-    ps = [0.001, 0.008, 0.039, 0.041, 0.042, 0.06, 0.074,
-          0.205, 0.212, 0.216, 0.222, 0.251, 0.269, 0.275,
-          0.34, 0.341, 0.384, 0.569, 0.594, 0.696]
+    ps = [
+        0.001,
+        0.008,
+        0.039,
+        0.041,
+        0.042,
+        0.06,
+        0.074,
+        0.205,
+        0.212,
+        0.216,
+        0.222,
+        0.251,
+        0.269,
+        0.275,
+        0.34,
+        0.341,
+        0.384,
+        0.569,
+        0.594,
+        0.696,
+    ]
     bh = stmath.benjamini_hochberg(ps, alpha=0.05)
     print(f"  BH rejected  {bh['rejected']} of {bh['m']}")
 
@@ -71,11 +92,14 @@ def main(argv=None) -> int:
 
     ran = False
     if a.mesh:
-        run_mesh(); ran = True
+        run_mesh()
+        ran = True
     if a.flock:
-        run_flock(); ran = True
+        run_flock()
+        ran = True
     if a.stats:
-        run_stats(); ran = True
+        run_stats()
+        ran = True
     if not ran:
         run_stats()
     return 0

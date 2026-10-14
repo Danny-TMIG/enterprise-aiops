@@ -9,7 +9,7 @@ class ProprietaryRegistry:
             "servicenow": {"type": "itsm", "active": True},
             "google": {"type": "cloud", "active": True},
             "codacy": {"type": "qa", "active": True},
-            "leandojo": {"type": "theorem", "active": True}
+            "leandojo": {"type": "theorem", "active": True},
         }
 
     def reality_score(self) -> float:
@@ -19,7 +19,7 @@ class ProprietaryRegistry:
         return {
             "registered_objects": list(self.objects.keys()),
             "status": "operational",
-            "objects": self.objects
+            "objects": self.objects,
         }
 
     def invoke(self, name: str, payload: dict[str, Any]) -> dict[str, Any]:
@@ -27,11 +27,7 @@ class ProprietaryRegistry:
             raise KeyError(f"Object '{name}' not found.")
         if name == "nope":
             raise KeyError("nope not found")
-        return {
-            "target": name,
-            "payload_received": payload,
-            "execution": "success"
-        }
+        return {"target": name, "payload_received": payload, "execution": "success"}
 
 
 # ── self-registration as capability `registry` ───────────────────────

@@ -7,6 +7,7 @@ payloads. Composition priority order is LIVRPS:
 
 No `pxr` required for the model layer.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -22,8 +23,8 @@ class Attr:
 
 @dataclass
 class Prim:
-    path: str                    # "/World/Chair"
-    type_name: str = ""          # "Xform" | "Mesh" | ...
+    path: str  # "/World/Chair"
+    type_name: str = ""  # "Xform" | "Mesh" | ...
     attrs: dict[str, Attr] = field(default_factory=dict)
     children: dict[str, Prim] = field(default_factory=dict)
     active: bool = True
@@ -76,6 +77,7 @@ class Stage:
     def sublayer_order(self, top: str) -> list[str]:
         """Flatten sublayers depth-first, deepest first (weakest)."""
         seen: list[str] = []
+
         def walk(ident: str) -> None:
             lyr = self.layers.get(ident)
             if not lyr:
@@ -83,6 +85,7 @@ class Stage:
             for s in lyr.sublayers:
                 walk(s)
             seen.append(ident)
+
         walk(top)
         return seen
 
@@ -90,6 +93,7 @@ class Stage:
 def runtime_available() -> tuple[bool, str]:
     try:
         from pxr import Usd  # noqa: F401
+
         return True, "pxr (USD) installed"
     except Exception:
         return False, "pxr not installed; model layer only"
@@ -100,15 +104,29 @@ def describe() -> dict[str, Any]:
     s = Stage()
     base = Layer("base.usda")
     override = Layer("override.usda")
-    base.define(Prim("/World/Chair", type_name="Xform",
-                     attrs={"size": Attr("size", "float", 1.0)}))
-    override.define(Prim("/World/Chair", type_name="Xform",
-                         attrs={"size": Attr("size", "float", 1.4),
-                                "color": Attr("color", "color3f", (0.2, 0.1, 0.9))}))
-    s.open(base); s.open(override)
+    base.define(Prim("/World/Chair", type_name="Xform", attrs={"size": Attr("size", "float", 1.0)}))
+    override.define(
+        Prim(
+            "/World/Chair",
+            type_name="Xform",
+            attrs={
+                "size": Attr("size", "float", 1.4),
+                "color": Attr("color", "color3f", (0.2, 0.1, 0.9)),
+            },
+        )
+    )
+    s.open(base)
+    s.open(override)
     return {
         "model": "usd",
-        "composition_order": ["Local", "Inherits", "Variants", "References", "Payloads", "Specializes"],
+        "composition_order": [
+            "Local",
+            "Inherits",
+            "Variants",
+            "References",
+            "Payloads",
+            "Specializes",
+        ],
         "runtime_available": ok,
         "runtime_reason": why,
         "sample_compose": s.compose("/World/Chair"),

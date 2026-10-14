@@ -4,6 +4,7 @@ Emit only if the teacher's output passes the SAME verifier the
 compiler uses, and the student's output fails the same verifier.
 We re-run the verifier here; we do not trust the probe's cache.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -34,6 +35,4 @@ def filter_delta(d: Delta, workload) -> FilterDecision:
     if v_student.passed:
         return FilterDecision(False, "student unexpectedly passes")
 
-    return FilterDecision(True,
-                          f"teacher={v_teacher.state} "
-                          f"student={v_student.state}")
+    return FilterDecision(True, f"teacher={v_teacher.state} student={v_student.state}")

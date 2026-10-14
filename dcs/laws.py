@@ -6,6 +6,7 @@ executable assertion. `dcs laws` runs them all. Failure names the law.
 
 from __future__ import annotations  # pragma: no cover
 
+import itertools
 from collections.abc import Callable  # pragma: no cover
 from dataclasses import dataclass  # pragma: no cover
 
@@ -293,7 +294,7 @@ def _():  # pragma: no cover
     for _ in range(5):
         stamps.append(c.now())
         c.advance(1)
-    assert all(b >= a for a, b in zip(stamps, stamps[1:]))
+    assert all(b >= a for a, b in itertools.pairwise(stamps))
 
 
 @law("PRIVACY-REDACTS", "PII patterns removed", "crosscut")

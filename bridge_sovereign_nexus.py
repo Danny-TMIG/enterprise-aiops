@@ -4,13 +4,12 @@
 # Target Hardware: Mac16,5 - Apple M4 Max (128 GB Unified Memory)
 # ==============================================================================
 
-import sys
-import os
-import json
-import time
 import hashlib
+import json
 import sqlite3
+import time
 from pathlib import Path
+
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
@@ -23,10 +22,12 @@ ROOT_PROOF_PATH = BRIDGE_DIR / "nexus_root_proof.json"
 
 app = FastAPI(title="Sovereign Nexus Bridge & Mastery Daemon", version="2.1.0")
 
+
 class NexusTaskRequest(BaseModel):
     action: str
     payload: dict
     approval_granted: bool = True
+
 
 class SovereignNexusBridge:
     def __init__(self):
@@ -59,7 +60,7 @@ class SovereignNexusBridge:
             return "0000000000000000000000000000000000000000000000000000000000000000"
         try:
             last_record = json.loads(lines[-1])
-            return last_record.get("rolling_hash", "0"*64)
+            return last_record.get("rolling_hash", "0" * 64)
         except Exception:
             return "0000000000000000000000000000000000000000000000000000000000000000"
 
@@ -85,7 +86,7 @@ class SovereignNexusBridge:
             "backend": "APPLE_MLX_UNIFIED",
             "active_megabytes": 128.0,
             "peak_megabytes": 128.0,
-            "hardware_profile": "Mac16,5 - Apple M4 Max (128 GB Unified Memory)"
+            "hardware_profile": "Mac16,5 - Apple M4 Max (128 GB Unified Memory)",
         }
 
         timestamp = time.time()
@@ -96,23 +97,19 @@ class SovereignNexusBridge:
             "parent_hash": self.merkle_head,
             "payload": payload,
             "governance_clearances": clearances,
-            "tensor_metrics": tensor_metrics
+            "tensor_metrics": tensor_metrics,
         }
 
         canonical = json.dumps(record_data, sort_keys=True)
         rolling_hash = hashlib.sha256(canonical.encode()).hexdigest()
         omega_seal = hashlib.sha256((rolling_hash + self.node_id + action).encode()).hexdigest()
 
-        sealed_record = {
-            **record_data,
-            "rolling_hash": rolling_hash,
-            "omega_seal": omega_seal
-        }
+        sealed_record = {**record_data, "rolling_hash": rolling_hash, "omega_seal": omega_seal}
 
         conn = sqlite3.connect(SQLITE_DB_PATH)
         conn.execute(
             "INSERT INTO bridge_transactions (timestamp, action, payload_json, merkle_hash, omega_seal) VALUES (?, ?, ?, ?, ?)",
-            (timestamp, action, json.dumps(payload), rolling_hash, omega_seal)
+            (timestamp, action, json.dumps(payload), rolling_hash, omega_seal),
         )
         conn.commit()
         conn.close()
@@ -122,6 +119,7 @@ class SovereignNexusBridge:
 
         self.merkle_head = rolling_hash
         return sealed_record
+
 
 bridge = SovereignNexusBridge()
 
@@ -152,28 +150,28 @@ MASTERY_HTML = """<!DOCTYPE html>
         header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem; margin-bottom: 2rem; }
         h1 { font-size: 1.5rem; color: var(--accent-cyan); letter-spacing: -0.05em; }
         .badge { background: rgba(0, 255, 204, 0.1); color: var(--accent-cyan); border: 1px solid var(--accent-cyan); padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.75rem; }
-        
+
         .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
         @media(max-width: 1024px) { .grid-container { grid-template-columns: 1fr; } }
-        
+
         .panel { background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
         h2 { font-size: 1rem; color: var(--accent-blue); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-        
+
         .stat-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px dashed var(--border-color); font-size: 0.85rem; }
         .stat-row:last-child { border-bottom: none; }
         .stat-val { color: var(--accent-cyan); word-break: break-all; text-align: right; max-width: 60%; }
-        
+
         form { display: flex; flex-direction: column; gap: 1rem; }
         label { font-size: 0.8rem; color: var(--text-muted); }
         input, textarea { background: #04060a; border: 1px solid var(--border-color); color: var(--text-main); padding: 0.75rem; border-radius: 4px; font-size: 0.9rem; }
         input:focus, textarea:focus { outline: none; border-color: var(--accent-cyan); }
         button { background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue)); color: #000; font-weight: bold; border: none; padding: 0.75rem; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; }
         button:hover { opacity: 0.9; }
-        
+
         .ledger-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.8rem; }
         .ledger-table th, .ledger-table td { text-align: left; padding: 0.5rem; border-bottom: 1px solid var(--border-color); }
         .ledger-table th { color: var(--text-muted); font-weight: 600; }
-        
+
         pre { background: #04060a; padding: 1rem; border-radius: 4px; border: 1px solid var(--border-color); font-size: 0.75rem; overflow-x: auto; color: #38bdf8; max-height: 250px; }
     </style>
 </head>
@@ -327,9 +325,11 @@ MASTERY_HTML = """<!DOCTYPE html>
 </html>
 """
 
+
 @app.get("/", response_class=HTMLResponse)
 def serve_mastery_dashboard():
     return MASTERY_HTML
+
 
 @app.get("/health")
 def health_check():
@@ -338,33 +338,37 @@ def health_check():
         "hardware": "Apple M4 Max (16 Cores, 128GB Unified Memory)",
         "merkle_head": bridge.merkle_head,
         "sqlite_ledger": str(SQLITE_DB_PATH.absolute()),
-        "worm_ledger": str(WORM_LEDGER_PATH.absolute())
+        "worm_ledger": str(WORM_LEDGER_PATH.absolute()),
     }
+
 
 @app.get("/v1/nexus/ledger")
 def get_ledger_stream():
     return {"records": bridge.get_ledger_history(20)}
 
+
 @app.post("/v1/nexus/execute")
 def execute_nexus_task(req: NexusTaskRequest):
     if not req.approval_granted:
         raise HTTPException(status_code=403, detail="Execution halted: approval not granted.")
-    
+
     receipt = bridge.execute_bridge_cycle(req.action, req.payload)
-    
+
     root_proof = {
         "status": "NEXUS_MASTERY_SYNCHRONIZED",
         "current_merkle_head": bridge.merkle_head,
         "sqlite_path": str(SQLITE_DB_PATH.absolute()),
         "worm_path": str(WORM_LEDGER_PATH.absolute()),
-        "timestamp": time.time()
+        "timestamp": time.time(),
     }
     ROOT_PROOF_PATH.write_text(json.dumps(root_proof, indent=4))
-    
+
     return receipt
+
 
 if __name__ == "__main__":
     import uvicorn
+
     print("=" * 72)
     print("  Launching Sovereign Nexus Bridge & HTML CSS JS Mastery Dashboard...")
     print("  Access at: http://127.0.0.1:8001")

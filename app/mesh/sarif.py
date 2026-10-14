@@ -1,4 +1,5 @@
 """Parse CodeQL SARIF into mesh nodes."""
+
 from __future__ import annotations
 
 import json
@@ -31,12 +32,14 @@ def parse_sarif(path: str) -> list[dict]:
             kind = parts[0].strip() or rule.rsplit("/", 1)[-1]
             name = parts[1].strip() if len(parts) > 1 else ""
             extra = [p.strip() for p in parts[2:] if p.strip()]
-            out.append({
-                "kind": kind,
-                "name": name,
-                "file": file,
-                "line": line,
-                "extra": extra,
-                "rule": rule,
-            })
+            out.append(
+                {
+                    "kind": kind,
+                    "name": name,
+                    "file": file,
+                    "line": line,
+                    "extra": extra,
+                    "rule": rule,
+                }
+            )
     return out

@@ -21,7 +21,7 @@ VARIABLES state, locked, verified_corpus, epoch
 
 vars == <<state, locked, verified_corpus, epoch>>
 
-Init == 
+Init ==
     /\ state = "Idle"
     /\ locked = FALSE
     /\ verified_corpus = FALSE
@@ -49,7 +49,7 @@ SyncConsensus ==
     /\ verified_corpus' = FALSE
     /\ state' = "Idle"
 
-Next == 
+Next ==
     \/ AcquireLock
     \/ VerifyCorpus
     \/ SyncConsensus
@@ -97,7 +97,7 @@ class P2PGossipNode:
                     logger.info(f"Updated local epoch to {self.state['epoch']}")
             except Exception as e:
                 logger.error(f"Failed to parse peer state payload: {e}")
-        
+
         response = json.dumps(self.state).encode("utf-8")
         writer.write(response)
         await writer.drain()
@@ -121,7 +121,7 @@ class P2PGossipNode:
                     reader, writer = await asyncio.open_connection("127.0.0.1", p_port)
                     writer.write(json.dumps(self.state).encode("utf-8"))
                     await writer.drain()
-                    
+
                     data = await reader.read(4096)
                     writer.close()
                     await writer.wait_closed()

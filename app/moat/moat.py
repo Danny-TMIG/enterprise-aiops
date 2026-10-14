@@ -4,6 +4,7 @@
 
 Each factor is computed from on-disk state. Nothing is stubbed.
 """
+
 from __future__ import annotations
 
 import json
@@ -43,16 +44,21 @@ class MoatEquation:
         k_g = min(1.0, (n_runs + n_hist) / 5.0) if (n_runs + n_hist) else 0.5
         x_h = 1.0 if n_runs > 0 else 0.0
         return {
-            "C_g": c_g, "S_g": s_g, "E_g": e_g, "P_g": p_g,
-            "Q_g": q_g, "K_g": k_g, "X_h": x_h,
-            "n_py": float(n_py), "n_runs": float(n_runs),
+            "C_g": c_g,
+            "S_g": s_g,
+            "E_g": e_g,
+            "P_g": p_g,
+            "Q_g": q_g,
+            "K_g": k_g,
+            "X_h": x_h,
+            "n_py": float(n_py),
+            "n_runs": float(n_runs),
             "n_sarif": float(n_sarif),
         }
 
 
 class MoatMesh:
-    def __init__(self, axes: dict[str, float] | None = None,
-                 root: str | None = None):
+    def __init__(self, axes: dict[str, float] | None = None, root: str | None = None):
         self.axes: dict[str, float] = dict(axes or {})
         self.root = Path(root) if root else Path.cwd()
         self.equation = MoatEquation(self.root)
@@ -71,8 +77,7 @@ class MoatMesh:
     def score_all(self, scope: str | None = None) -> dict[str, Any]:
         out = dict(self.axes)
         if "Q_g" not in out or out.get("Q_g", 0.0) <= 0.0:
-            vals = [v for k, v in out.items()
-                    if k.endswith("_g") or k.endswith("_h")]
+            vals = [v for k, v in out.items() if k.endswith(("_g", "_h"))]
             out["Q_g"] = (sum(vals) / len(vals)) if vals else 0.0
         if scope:
             out["scope"] = scope

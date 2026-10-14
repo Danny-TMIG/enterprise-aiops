@@ -1,4 +1,5 @@
 """Full coverage for dcs.triad.*"""
+
 import hashlib
 import json
 import tempfile
@@ -38,10 +39,10 @@ from dcs.triad.lattice import (
 
 
 def test_vstate_names():
-    assert VState(0,0).name == "UNKNOWN"
-    assert VState(1,0).name == "PASS"
-    assert VState(0,1).name == "FAIL"
-    assert VState(1,1).name == "CONFLICT"
+    assert VState(0, 0).name == "UNKNOWN"
+    assert VState(1, 0).name == "PASS"
+    assert VState(0, 1).name == "FAIL"
+    assert VState(1, 1).name == "CONFLICT"
 
 
 def test_vstate_repr():
@@ -116,7 +117,7 @@ def test_coherence_equivalence():
 
 
 def test_coherence_equivalence_raises():
-    assert coherence.equivalence(1, 2, eq=lambda a, b: 1/0) == UNKNOWN
+    assert coherence.equivalence(1, 2, eq=lambda a, b: 1 / 0) == UNKNOWN
 
 
 def test_coherence_refinement():
@@ -125,7 +126,7 @@ def test_coherence_refinement():
 
 
 def test_coherence_refinement_raises():
-    assert coherence.refinement(1, 2, implies=lambda a, b: 1/0) == UNKNOWN
+    assert coherence.refinement(1, 2, implies=lambda a, b: 1 / 0) == UNKNOWN
 
 
 def test_coherence_incompatible():
@@ -134,14 +135,14 @@ def test_coherence_incompatible():
 
 
 def test_coherence_incompatible_raises():
-    assert coherence.incompatible(1, 2, disjoint=lambda a, b: 1/0) == UNKNOWN
+    assert coherence.incompatible(1, 2, disjoint=lambda a, b: 1 / 0) == UNKNOWN
 
 
 def test_coherence_relation():
     assert coherence.relation(1, 2, rel=lambda a, b: True) == PASS
     assert coherence.relation(1, 2, rel=lambda a, b: False) == FAIL
     assert coherence.relation(1, 2, rel=lambda a, b: None) == UNKNOWN
-    assert coherence.relation(1, 2, rel=lambda a, b: 1/0) == UNKNOWN
+    assert coherence.relation(1, 2, rel=lambda a, b: 1 / 0) == UNKNOWN
 
 
 def test_coherence_combine():
@@ -160,7 +161,7 @@ def test_conformance_resolve_compare():
 
 
 def test_conformance_resolve_raises():
-    assert conformance.resolve(1, 2, compare=lambda a, b: 1/0) == UNKNOWN
+    assert conformance.resolve(1, 2, compare=lambda a, b: 1 / 0) == UNKNOWN
 
 
 def test_conformance_schema():
@@ -180,7 +181,7 @@ def test_conformance_behavioral():
 def test_conformance_certificate():
     assert conformance.certificate({}, {}, verifier=lambda c, x: True) == PASS
     assert conformance.certificate({}, {}, verifier=lambda c, x: False) == FAIL
-    assert conformance.certificate({}, {}, verifier=lambda c, x: 1/0) == UNKNOWN
+    assert conformance.certificate({}, {}, verifier=lambda c, x: 1 / 0) == UNKNOWN
 
 
 def test_coordination_merge():
@@ -227,7 +228,8 @@ def test_triad_to_dict():
     assert t.to_dict() == {
         "conformance": PASS.to_dict(),
         "coherence": FAIL.to_dict(),
-        "coordination": UNKNOWN.to_dict()}
+        "coordination": UNKNOWN.to_dict(),
+    }
 
 
 def test_triad_verdict_fail():
@@ -247,24 +249,33 @@ def test_triad_verdict_conflict():
 
 
 def test_triad_conjunction():
-    a = Triad(PASS, PASS, PASS); b = Triad(FAIL, PASS, PASS)
+    a = Triad(PASS, PASS, PASS)
+    b = Triad(FAIL, PASS, PASS)
     assert a.conjunction(b).conformance == meet_truth(PASS, FAIL)
 
 
 def test_triad_disjunction():
-    a = Triad(PASS, PASS, PASS); b = Triad(FAIL, FAIL, FAIL)
+    a = Triad(PASS, PASS, PASS)
+    b = Triad(FAIL, FAIL, FAIL)
     assert a.disjunction(b).conformance == join_truth(PASS, FAIL)
 
 
 def test_triad_merge():
-    a = Triad(PASS, PASS, PASS); b = Triad(FAIL, FAIL, FAIL)
+    a = Triad(PASS, PASS, PASS)
+    b = Triad(FAIL, FAIL, FAIL)
     assert a.merge(b).conformance == join_know(PASS, FAIL)
 
 
 def test_receipt_to_dict():
-    t = Triad(PASS, PASS, PASS); r = Receipt(t, (), "d", "s", "v")
-    assert r.to_dict() == {"triad": t.to_dict(), "derivation": [],
-                            "digest": "d", "signature": "s", "kernel_version": "v"}
+    t = Triad(PASS, PASS, PASS)
+    r = Receipt(t, (), "d", "s", "v")
+    assert r.to_dict() == {
+        "triad": t.to_dict(),
+        "derivation": [],
+        "digest": "d",
+        "signature": "s",
+        "kernel_version": "v",
+    }
 
 
 def test_canon():
@@ -338,22 +349,28 @@ def test_kernel_verify_coordination_only():
 
 
 def test_kernel_receipt_and_check():
-    k = Kernel(); r = k.receipt(Triad(PASS, PASS, PASS), derivation=[{"step": "test"}])
+    k = Kernel()
+    r = k.receipt(Triad(PASS, PASS, PASS), derivation=[{"step": "test"}])
     assert k.check(r) is True
 
 
 def test_kernel_check_wrong_version():
-    k = Kernel(); r = k.receipt(Triad(PASS, PASS, PASS))
+    k = Kernel()
+    r = k.receipt(Triad(PASS, PASS, PASS))
     assert Kernel(version="other").check(r) is False
 
 
 def test_kernel_check_wrong_digest():
-    k = Kernel(); t = Triad(PASS, PASS, PASS); r = k.receipt(t)
+    k = Kernel()
+    t = Triad(PASS, PASS, PASS)
+    r = k.receipt(t)
     assert k.check(Receipt(t, r.derivation, "wrong", r.signature, r.kernel_version)) is False
 
 
 def test_kernel_check_wrong_signature():
-    k = Kernel(); t = Triad(PASS, PASS, PASS); r = k.receipt(t)
+    k = Kernel()
+    t = Triad(PASS, PASS, PASS)
+    r = k.receipt(t)
     assert k.check(Receipt(t, r.derivation, r.digest, "wrong", r.kernel_version)) is False
 
 
@@ -382,24 +399,29 @@ def test_law_report():
 
 
 def test_main_lattice(capsys):
-    triad_main(["lattice"]); assert "Belnap FOUR" in capsys.readouterr().out
+    triad_main(["lattice"])
+    assert "Belnap FOUR" in capsys.readouterr().out
 
 
 def test_main_laws(capsys):
-    triad_main(["laws"]); assert "Algebraic laws" in capsys.readouterr().out
+    triad_main(["laws"])
+    assert "Algebraic laws" in capsys.readouterr().out
 
 
 def test_main_self_verify(capsys):
-    triad_main(["self-verify"]); assert "triad" in capsys.readouterr().out
+    triad_main(["self-verify"])
+    assert "triad" in capsys.readouterr().out
 
 
 def test_main_demo(capsys):
-    triad_main(["demo"]); assert "triad" in capsys.readouterr().out
+    triad_main(["demo"])
+    assert "triad" in capsys.readouterr().out
 
 
 def test_main_verify(capsys):
     with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
-        json.dump(DEMO_SPEC, f); spec = f.name
+        json.dump(DEMO_SPEC, f)
+        spec = f.name
     try:
         triad_main(["verify", spec])
         assert "triad" in capsys.readouterr().out

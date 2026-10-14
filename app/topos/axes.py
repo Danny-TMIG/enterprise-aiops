@@ -8,6 +8,7 @@ All three share the same objects and morphisms from T. The axes are
 just views — distinguished sub-categories with a selected set of
 arrows.
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -18,14 +19,17 @@ from app.topos.topos import Topos
 
 class Forward(Category):
     """Objects: intent, spec, artifact. Arrows: the constructive path."""
+
     def __init__(self, T: Topos) -> None:
         super().__init__("Forward")
         self.T = T
         self._select(["intent", "spec", "artifact"])
-        self._links([
-            ("intent", "spec", "draft"),
-            ("spec", "artifact", "generate"),
-        ])
+        self._links(
+            [
+                ("intent", "spec", "draft"),
+                ("spec", "artifact", "generate"),
+            ]
+        )
 
     def _select(self, ids: list[str]) -> None:
         for i in ids:
@@ -42,13 +46,16 @@ class Forward(Category):
 
 class Inverse(Category):
     """Objects: artifact, proof. Arrows: the verification path."""
+
     def __init__(self, T: Topos) -> None:
         super().__init__("Inverse")
         self.T = T
         self._select(["artifact", "proof"])
-        self._links([
-            ("artifact", "proof", "verify"),
-        ])
+        self._links(
+            [
+                ("artifact", "proof", "verify"),
+            ]
+        )
 
     def _select(self, ids: list[str]) -> None:
         for i in ids:
@@ -65,6 +72,7 @@ class Inverse(Category):
 
 class Relational(Category):
     """Objects: artifacts / capabilities / agents. Arrows: bindings."""
+
     def __init__(self, T: Topos) -> None:
         super().__init__("Relational")
         self.T = T
@@ -97,5 +105,4 @@ class Axes:
                 # axes may not select Ω as an object; but they must
                 # still see the same terminal/classifier from T.
                 pass
-        return (self.T.classifier.omega_id == "Ω"
-                and self.T.classifier.terminal_id == "1")
+        return self.T.classifier.omega_id == "Ω" and self.T.classifier.terminal_id == "1"

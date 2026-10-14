@@ -1,4 +1,5 @@
 """Tic-tac-toe as a decision tree."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -10,16 +11,21 @@ X = 1
 O = 2
 
 WIN_LINES = [
-    (0, 1, 2), (3, 4, 5), (6, 7, 8),   # rows
-    (0, 3, 6), (1, 4, 7), (2, 5, 8),   # cols
-    (0, 4, 8), (2, 4, 6),              # diagonals
+    (0, 1, 2),
+    (3, 4, 5),
+    (6, 7, 8),  # rows
+    (0, 3, 6),
+    (1, 4, 7),
+    (2, 5, 8),  # cols
+    (0, 4, 8),
+    (2, 4, 6),  # diagonals
 ]
 
 
 @dataclass(frozen=True)
 class TTState:
     board: tuple[int, ...]
-    to_move: int   # X or O
+    to_move: int  # X or O
 
     def winner(self) -> int | None:
         for a, b, c in WIN_LINES:
@@ -56,13 +62,16 @@ class TicTacToe(DecisionTree):
 
     def heuristic(self, s: TTState, player: int) -> float:
         w = s.winner()
-        if w == X: return 1.0
-        if w == O: return -1.0
+        if w == X:
+            return 1.0
+        if w == O:
+            return -1.0
         return 0.0
 
 
 def demo() -> dict:
     from app.puzzles.tree import alpha_beta
+
     t = TicTacToe()
     r = alpha_beta(t, max_depth=9)
     return {

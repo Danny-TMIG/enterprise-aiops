@@ -1,5 +1,6 @@
 import time
 
+
 def test_load_simulation():
     # Mock load testing assertion
     start = time.time()

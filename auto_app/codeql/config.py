@@ -13,7 +13,7 @@ class CodeQLConfig:
         self.results_dir = self.codeql_dir / "results"
         self.results_sarif = self.results_dir / "results.sarif"
         self.binary_path = Path(os.environ.get("CODEQL_PATH", "/Users/metadusa/.codeql/codeql"))
-        
+
     def ensure_directories(self) -> None:
         self.codeql_dir.mkdir(parents=True, exist_ok=True)
         self.results_dir.mkdir(parents=True, exist_ok=True)

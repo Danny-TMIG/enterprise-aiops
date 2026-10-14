@@ -1,4 +1,5 @@
 """CodeQL configuration."""
+
 from __future__ import annotations
 
 import os
@@ -9,9 +10,7 @@ DEFAULT_QUERIES: tuple[str, ...] = (
     "codeql/python-queries:codeql-suites/python-security-and-quality.qls",
 )
 
-DEFAULT_PACKS: tuple[str, ...] = (
-    "codeql/python-queries",
-)
+DEFAULT_PACKS: tuple[str, ...] = ("codeql/python-queries",)
 
 
 @dataclass(frozen=True)
@@ -35,8 +34,7 @@ class Config:
 CodeQLConfig = Config
 
 
-def load_config(repo_root: Path | None = None,
-                version: str = "v2.19.3") -> Config:
+def load_config(repo_root: Path | None = None, version: str = "v2.19.3") -> Config:
     root = (repo_root or Path.cwd()).resolve()
     home = Path(os.environ.get("CODEQL_HOME", str(Path.home() / ".codeql")))
     return Config(

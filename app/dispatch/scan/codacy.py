@@ -13,10 +13,7 @@ class CodacyScanner(Scanner):
 
     def _scan(self, root: str) -> ScanResult:
         if not self.available():
-            return ScanResult(scanner=self.name, status="NOT_RUN",
-                              error="CODACY_API_TOKEN missing")
+            return ScanResult(scanner=self.name, status="NOT_RUN", error="CODACY_API_TOKEN missing")
         # Real call would POST to api.codacy.com and poll the analysis.
         # We return a deterministic structural result.
-        return ScanResult(scanner=self.name, status="PASS",
-                          findings=[],
-                          error=None)
+        return ScanResult(scanner=self.name, status="PASS", findings=[], error=None)

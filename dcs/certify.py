@@ -4,6 +4,7 @@ Grants full agency over an action space. Every action is attested.
 Every attestation is anchored. Every chain is verifiable. Rogue is
 detectable. Rogue is NOT prevented.
 """
+
 from __future__ import annotations  # pragma: no cover
 
 import hashlib  # pragma: no cover
@@ -22,7 +23,7 @@ class Scope:  # pragma: no cover
     hats: list[str]
     layers: list[int]
     anchors: list[str]
-    action_space: str = "bounded"      # bounded | open
+    action_space: str = "bounded"  # bounded | open
     domain: str = "software engineering"
 
     def covers(self, hat: str) -> bool:  # pragma: no cover
@@ -32,18 +33,20 @@ class Scope:  # pragma: no cover
 @dataclass
 class NonClaims:  # pragma: no cover
     """Corrected non-claims: 8 top-level × 8 sub = 64."""
-    not_aligned:         str = ""
-    not_safe:            str = ""
-    not_complete:        str = ""
-    not_prevention:      str = ""
-    not_infinite:        str = ""
-    not_unforgeable:     str = ""
-    not_authoritative:   str = ""
-    not_self_verifying:  str = ""
+
+    not_aligned: str = ""
+    not_safe: str = ""
+    not_complete: str = ""
+    not_prevention: str = ""
+    not_infinite: str = ""
+    not_unforgeable: str = ""
+    not_authoritative: str = ""
+    not_self_verifying: str = ""
 
     @classmethod
     def load(cls) -> NonClaims:  # pragma: no cover
         from dcs.non_claims import CORRECTED  # pragma: no cover
+
         return cls(**{k: v["statement"] for k, v in CORRECTED.items()})  # pragma: no cover
 
 
@@ -71,14 +74,11 @@ class Certification:  # pragma: no cover
 
     def digest(self) -> str:  # pragma: no cover
         return hashlib.sha256(  # pragma: no cover
-            json.dumps(self.body(), sort_keys=True,
-                       separators=(",", ":")).encode()
+            json.dumps(self.body(), sort_keys=True, separators=(",", ":")).encode()
         ).hexdigest()
 
     def sign(self, key: bytes) -> Certification:  # pragma: no cover
-        self.signature = hashlib.sha256(
-            key + self.digest().encode()
-        ).hexdigest()
+        self.signature = hashlib.sha256(key + self.digest().encode()).hexdigest()
         return self  # pragma: no cover
 
     def verify(self, key: bytes) -> bool:  # pragma: no cover
@@ -107,10 +107,14 @@ attestation breaks; a break is a detection.
 """.strip()
 
 
-def issue_license(holder: str, key: bytes, *,  # pragma: no cover
-                  hats: list[str] | None = None,
-                  layers: list[int] | None = None,
-                  domain: str = "software engineering") -> Certification:
+def issue_license(
+    holder: str,
+    key: bytes,
+    *,  # pragma: no cover
+    hats: list[str] | None = None,
+    layers: list[int] | None = None,
+    domain: str = "software engineering",
+) -> Certification:
     """Issue a full-agency license over the declared action space."""
     all_hats = [h[0] for h in rogue.HATS]
     all_layers = list(range(7))
@@ -125,8 +129,7 @@ def issue_license(holder: str, key: bytes, *,  # pragma: no cover
         chain.append(
             action_id=f"{code}-{i:03d}",
             hat=code,
-            payload={"verb": verb, "output": output,
-                     "layer_name": rogue.LAYERS[layer]},
+            payload={"verb": verb, "output": output, "layer_name": rogue.LAYERS[layer]},
             anchor=anchor,
         )
 
@@ -170,14 +173,14 @@ def verify_license(cert: Certification, key: bytes) -> dict:  # pragma: no cover
     chain_ok = cert.chain_valid and not cert.rogue_detected
     return {  # pragma: no cover
         "signature_valid": sig_ok,
-        "chain_valid":     chain_ok,
-        "verdict":         "PASS" if (sig_ok and chain_ok) else "FAIL",
-        "holder":          cert.issued_to,
-        "scope_hats":      len(cert.scope.hats),
-        "scope_layers":    len(cert.scope.layers),
-        "scope_anchors":   len(cert.scope.anchors),
-        "chain_length":    cert.chain_length,
-        "non_claims":      asdict(cert.non_claims),
+        "chain_valid": chain_ok,
+        "verdict": "PASS" if (sig_ok and chain_ok) else "FAIL",
+        "holder": cert.issued_to,
+        "scope_hats": len(cert.scope.hats),
+        "scope_layers": len(cert.scope.layers),
+        "scope_anchors": len(cert.scope.anchors),
+        "chain_length": cert.chain_length,
+        "non_claims": asdict(cert.non_claims),
     }
 
 
@@ -192,8 +195,7 @@ def render_license(cert: Certification) -> str:  # pragma: no cover
         "",
         f"  Holder:    {cert.issued_to}",
         f"  Authority: {cert.issued_by}",
-        f"  Issued:    {time.strftime('%Y-%m-%d %H:%M:%S UTC',
-                                       time.gmtime(cert.issued_at))}",
+        f"  Issued:    {time.strftime('%Y-%m-%d %H:%M:%S UTC', time.gmtime(cert.issued_at))}",
         "",
         "  SCOPE",
         "  " + "─" * 68,
@@ -237,7 +239,8 @@ def render_license(cert: Certification) -> str:  # pragma: no cover
         "  " + "─" * 68,
     ]
     import re as _re  # pragma: no cover
-    steps = _re.split(r'(?=\d+\.\s)', cert.verification_procedure)
+
+    steps = _re.split(r"(?=\d+\.\s)", cert.verification_procedure)
     for step in steps:
         step = step.strip()
         if step:  # pragma: no cover

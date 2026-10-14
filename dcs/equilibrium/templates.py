@@ -18,7 +18,9 @@ from collections.abc import Callable  # pragma: no cover
 from dcs.standard import Requirement  # pragma: no cover
 
 
-def _req(rid: str, hat: str, title: str, fn: Callable[[], None], crit: str = "MUST") -> Requirement:  # pragma: no cover
+def _req(
+    rid: str, hat: str, title: str, fn: Callable[[], None], crit: str = "MUST"
+) -> Requirement:  # pragma: no cover
     name = f"_tpl_{rid.replace('-', '_')}"
     mod = "dcs.equilibrium._dyn"
     _runtime_tests[name] = fn
@@ -52,19 +54,27 @@ def _attach_module() -> None:  # pragma: no cover
 
 
 def _fe(rid, n):  # pragma: no cover
-    return _req(rid, "FE", f"HTML block {n} well-formed", lambda: _assert_html(n))  # pragma: no cover
+    return _req(
+        rid, "FE", f"HTML block {n} well-formed", lambda: _assert_html(n)
+    )  # pragma: no cover
 
 
 def _be(rid, n):  # pragma: no cover
-    return _req(rid, "BE", f"Response {n} has status+body+headers", lambda: _assert_response(n))  # pragma: no cover
+    return _req(
+        rid, "BE", f"Response {n} has status+body+headers", lambda: _assert_response(n)
+    )  # pragma: no cover
 
 
 def _fs(rid, n):  # pragma: no cover
-    return _req(rid, "FS", f"Vertical slice {n} composes FE+BE", lambda: _assert_slice(n))  # pragma: no cover
+    return _req(
+        rid, "FS", f"Vertical slice {n} composes FE+BE", lambda: _assert_slice(n)
+    )  # pragma: no cover
 
 
 def _mo(rid, n):  # pragma: no cover
-    return _req(rid, "MO", f"Manifest variant {n} valid", lambda: _assert_manifest(n))  # pragma: no cover
+    return _req(
+        rid, "MO", f"Manifest variant {n} valid", lambda: _assert_manifest(n)
+    )  # pragma: no cover
 
 
 def _emb(rid, n):  # pragma: no cover
@@ -84,7 +94,9 @@ def _sys(rid, n):  # pragma: no cover
 
 
 def _dis(rid, n):  # pragma: no cover
-    return _req(rid, "DIS", f"Gossip convergence {n}", lambda: _assert_gossip(n))  # pragma: no cover
+    return _req(
+        rid, "DIS", f"Gossip convergence {n}", lambda: _assert_gossip(n)
+    )  # pragma: no cover
 
 
 def _net(rid, n):  # pragma: no cover
@@ -112,7 +124,9 @@ def _ds(rid, n):  # pragma: no cover
 
 
 def _mle(rid, n):  # pragma: no cover
-    return _req(rid, "MLE", f"Manifest schema {n}", lambda: _assert_manifest_schema(n))  # pragma: no cover
+    return _req(
+        rid, "MLE", f"Manifest schema {n}", lambda: _assert_manifest_schema(n)
+    )  # pragma: no cover
 
 
 def _res(rid, n):  # pragma: no cover
@@ -300,7 +314,7 @@ def _assert_bytecode(n):  # pragma: no cover
 def _assert_frame(n):  # pragma: no cover
     payload = bytes([n % 256]) * 4
     hdr = struct.pack("<4sHH", b"FW01", n % 65536, len(payload))
-    magic, ver, ln = struct.unpack_from("<4sHH", hdr, 0)
+    magic, _ver, ln = struct.unpack_from("<4sHH", hdr, 0)
     assert magic == b"FW01" and ln == len(payload)
 
 

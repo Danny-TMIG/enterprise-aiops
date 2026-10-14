@@ -20,7 +20,12 @@ def validate(m: dict) -> None:  # pragma: no cover
     missing = required - set(m)
     if missing:  # pragma: no cover
         raise ValueError(f"manifest missing: {missing}")  # pragma: no cover
-    if m["display"] not in {"standalone", "fullscreen", "minimal-ui", "browser"}:  # pragma: no cover
+    if m["display"] not in {
+        "standalone",
+        "fullscreen",
+        "minimal-ui",
+        "browser",
+    }:  # pragma: no cover
         raise ValueError("bad display mode")  # pragma: no cover
 
 

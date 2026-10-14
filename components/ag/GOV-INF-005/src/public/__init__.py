@@ -1,3 +1,3 @@
-from .005 import Inf005, Inf005Error
+from .mod005 import Inf005, Inf005Error
 
-__all__ = ['Inf005', Inf005Error.__name__!r]
+__all__ = ["Inf005", "Inf005Error"]

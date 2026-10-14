@@ -1,4 +1,5 @@
 """Demonstrate the Cayley-Dickson tower over NAND."""
+
 from __future__ import annotations
 
 import sys
@@ -31,10 +32,12 @@ def demo_nand():
     print("  truth table:")
     for a in (False, True):
         for b in (False, True):
-            print(f"    NAND({a:>1},{b:>1})={NAND(a,b):>1}  "
-                  f"NOT({a:>1})={NOT(a):>1}  "
-                  f"AND={AND(a,b):>1} OR={OR(a,b):>1} "
-                  f"XOR={XOR(a,b):>1} IMPLIES={IMPLIES(a,b):>1}")
+            print(
+                f"    NAND({a:>1},{b:>1})={NAND(a, b):>1}  "
+                f"NOT({a:>1})={NOT(a):>1}  "
+                f"AND={AND(a, b):>1} OR={OR(a, b):>1} "
+                f"XOR={XOR(a, b):>1} IMPLIES={IMPLIES(a, b):>1}"
+            )
     print()
 
 
@@ -59,8 +62,7 @@ def demo_tower():
     _hdr("the ten-level tower")
     t = full_tower()
     for s in t.summary():
-        print(f"  L{s['level']}  dim={s['dim']:>4}  {s['name']:<26}  "
-              f"loses: {s['loses']}")
+        print(f"  L{s['level']}  dim={s['dim']:>4}  {s['name']:<26}  loses: {s['loses']}")
         print(f"       primitives: {s['primitives']}")
         print(f"       invariant : {s['invariant']}")
     print()
@@ -95,8 +97,7 @@ def demo_embedding():
             ca = nand_to_cd(a, 4)
             cb = nand_to_cd(b, 4)
             cc = nand_cd(ca, cb)
-            print(f"    NAND({a:>1},{b:>1}) = {NAND(a,b):>1}  "
-                  f"lifted_truth={cd_to_truth(cc)}")
+            print(f"    NAND({a:>1},{b:>1}) = {NAND(a, b):>1}  lifted_truth={cd_to_truth(cc)}")
     print()
 
 

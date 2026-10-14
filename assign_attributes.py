@@ -67,8 +67,9 @@ class Object:
     def __init__(self, *args, **kwargs): pass
 
 __all__ = ["Morphism", "Object"]
-"""
+""",
 }
+
 
 def main():
     for dir_path, content in modules.items():
@@ -77,6 +78,7 @@ def main():
         with open(init_file, "w") as f:
             f.write(content)
         print(f"[ASF-ASSIGN] Fully populated attributes for {dir_path}")
+
 
 if __name__ == "__main__":
     main()

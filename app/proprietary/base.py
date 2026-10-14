@@ -8,18 +8,19 @@ A proprietary object has three things:
 The object is "real" if either the tenant config points at a live
 endpoint or the local implementation is present and callable.
 """
+
 from __future__ import annotations
 
 import os
 import time
 from collections.abc import Callable
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 
 def _now() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 @dataclass
@@ -49,35 +50,52 @@ class ProprietaryObject:
             return self._invoke_remote(payload)
         if self.has_local():
             return self._invoke_local(payload)
-        return {"ok": False, "vendor": self.vendor,
-                "reason": "no tenant, no local implementation"}
+        return {"ok": False, "vendor": self.vendor, "reason": "no tenant, no local implementation"}
 
     def _invoke_remote(self, payload: dict[str, Any]) -> dict[str, Any]:
         # Real HTTP call when a tenant URL is configured.
         try:
             import httpx
+
             r = httpx.post(self.tenant_endpoint(), json=payload, timeout=15.0)
-            return {"ok": r.status_code < 400, "vendor": self.vendor,
-                    "status": r.status_code,
-                    "body": r.text[:2000], "transport": "http",
-                    "ts": _now()}
+            return {
+                "ok": r.status_code < 400,
+                "vendor": self.vendor,
+                "status": r.status_code,
+                "body": r.text[:2000],
+                "transport": "http",
+                "ts": _now(),
+            }
         except Exception as exc:  # noqa: BLE001
-            return {"ok": False, "vendor": self.vendor,
-                    "error": type(exc).__name__,
-                    "transport": "http", "ts": _now()}
+            return {
+                "ok": False,
+                "vendor": self.vendor,
+                "error": type(exc).__name__,
+                "transport": "http",
+                "ts": _now(),
+            }
 
     def _invoke_local(self, payload: dict[str, Any]) -> dict[str, Any]:
         try:
             t0 = time.time()
             body = self.local_impl(payload)  # type: ignore[misc]
             dt = (time.time() - t0) * 1000
-            return {"ok": True, "vendor": self.vendor,
-                    "body": body, "transport": "local",
-                    "elapsed_ms": int(dt), "ts": _now()}
+            return {
+                "ok": True,
+                "vendor": self.vendor,
+                "body": body,
+                "transport": "local",
+                "elapsed_ms": int(dt),
+                "ts": _now(),
+            }
         except Exception as exc:  # noqa: BLE001
-            return {"ok": False, "vendor": self.vendor,
-                    "error": type(exc).__name__,
-                    "transport": "local", "ts": _now()}
+            return {
+                "ok": False,
+                "vendor": self.vendor,
+                "error": type(exc).__name__,
+                "transport": "local",
+                "ts": _now(),
+            }
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -93,6 +111,7 @@ class ProprietaryObject:
 
 class ProprietaryRuntime:
     """Container for all proprietary objects."""
+
     def __init__(self, objects: list[ProprietaryObject]) -> None:
         self.objects = {o.vendor: o for o in objects}
 

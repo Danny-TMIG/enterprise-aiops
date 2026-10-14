@@ -1,5 +1,6 @@
 """Rewrite the module-body template strings inside /tmp/parallel_train.py to
 match tools/hooks/canonical_{core,mesh}.py. Idempotent, backs up first."""
+
 import ast
 import shutil
 import sys
@@ -12,14 +13,17 @@ CORE = ROOT / "tools/hooks/canonical_core.py"
 MESH = ROOT / "tools/hooks/canonical_mesh.py"
 
 if not GEN.exists():
-    print(f"SKIP: {GEN} not found"); sys.exit(0)
+    print(f"SKIP: {GEN} not found")
+    sys.exit(0)
 
 src = GEN.read_text()
 lines = src.splitlines(keepends=True)
 tree = ast.parse(src)
 
+
 def line_offset(lineno: int) -> int:
     return sum(len(l) for l in lines[: lineno - 1])
+
 
 def find_template(*markers, min_len=800):
     """Return the largest Constant whose value contains every marker.
@@ -40,14 +44,16 @@ def find_template(*markers, min_len=800):
         # module-body shape: starts with a docstring OR has a top-level def/class
         body_like = (
             v.lstrip().startswith(('"""', "'''", "#"))
-            or "\ndef " in v or "\nclass " in v
-            or v.startswith("def ") or v.startswith("class ")
+            or "\ndef " in v
+            or "\nclass " in v
+            or v.startswith(("def ", "class "))
         )
         if not body_like:
             continue
         if best is None or len(v) > len(best.value):
             best = n
     return best
+
 
 def replace_value(s: str, node: ast.Constant, new_text: str) -> str:
     # span of the *raw source* including surrounding quotes
@@ -58,7 +64,8 @@ def replace_value(s: str, node: ast.Constant, new_text: str) -> str:
     prefix = ""
     body = lit
     while body and body[0] in "rRbBuUfF":
-        prefix += body[0]; body = body[1:]
+        prefix += body[0]
+        body = body[1:]
     if not body or body[0] not in "\"'":
         raise ValueError(f"no quote at {start}: {lit[:20]!r}")
     q = body[0]
@@ -71,6 +78,7 @@ def replace_value(s: str, node: ast.Constant, new_text: str) -> str:
         # canonical files use triple-double-quotes for docstrings; escape
         raise ValueError(f"canonical content contains {quote!r}; use raw string")
     return s[:start] + prefix + quote + new_text + quote + s[end:]
+
 
 core_node = find_template("class Trainer", "def run_once")
 mesh_node = find_template("def pollinate", "class MeshOfMeshes")

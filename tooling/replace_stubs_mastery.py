@@ -4,16 +4,15 @@ THE MARK INTELLIGENCE GROUP (TMIG)
 ZERO-STUB OLYMPIC-LEVEL CODE REPLACEMENT ENGINE (ASF v1.2)
 Replaces all placeholder logic, stubs, and boilerplates across the 75-component monorepo.
 """
-import os
-import json
-import hashlib
+
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
+
 def purge_and_replace_stubs():
     print("⚡ [TMIG] Purging all stubs and mock boilerplates across monorepo...")
-    
+
     # 1. Update AIOps In-RAM Engine with rigorous production telemetry & hashing
     engine_path = ROOT / "src" / "aiops_platform_metadusa_cell" / "engine.py"
     engine_path.parent.mkdir(parents=True, exist_ok=True)
@@ -35,16 +34,16 @@ class AIOpsEngine:
     def ingest(self, metrics_payload: Dict[str, Any]) -> int:
         if not isinstance(metrics_payload, dict):
             raise ValueError("Metrics payload must be a valid dictionary structure.")
-        
+
         # Cryptographic stamp
         payload_bytes = json.dumps(metrics_payload, sort_keys=True).encode("utf-8")
         metrics_payload["ingest_seal"] = hashlib.sha256(payload_bytes).hexdigest()
-        
+
         self.metrics_buffer.append(metrics_payload)
-        
+
         if len(self.metrics_buffer) > self.max_buffer_size:
             self.metrics_buffer.pop(0)
-            
+
         return len(self.metrics_buffer)
 
     def status(self) -> Dict[str, Any]:
@@ -58,7 +57,15 @@ class AIOpsEngine:
     engine_path.write_text(engine_code)
 
     # 2. Update Governance State Transition Engine (AG)
-    ag_path = ROOT / "components" / "ag" / "GOV-KRN-002-governed-state-and-transition-engine" / "src" / "public" / "engine.py"
+    ag_path = (
+        ROOT
+        / "components"
+        / "ag"
+        / "GOV-KRN-002-governed-state-and-transition-engine"
+        / "src"
+        / "public"
+        / "engine.py"
+    )
     ag_path.parent.mkdir(parents=True, exist_ok=True)
     ag_code = '''import time
 import hashlib
@@ -76,9 +83,9 @@ class StateTransitionEngine:
     def transition(self, object_id: str, from_state: str, to_state: str, actor: str) -> Dict[str, Any]:
         if to_state not in self.valid_states:
             raise ValueError(f"Invalid target state classification: {to_state}")
-        
+
         veto_check = bool(actor and actor.strip())
-        
+
         record = {
             "object_id": object_id,
             "from_state": from_state,
@@ -88,7 +95,7 @@ class StateTransitionEngine:
             "veto_check": veto_check,
             "status": "AUTHORIZED_AND_SEALED" if veto_check else "REJECTED_BY_GOVERNANCE"
         }
-        
+
         payload = json.dumps(record, sort_keys=True).encode("utf-8")
         record["transition_seal"] = hashlib.sha256(payload).hexdigest()
         return record
@@ -96,7 +103,15 @@ class StateTransitionEngine:
     ag_path.write_text(ag_code)
 
     # 3. Update Cognitive Runtime (AX)
-    ax_path = ROOT / "components" / "ax" / "COG-CORE-001-cognitive-runtime" / "src" / "public" / "runtime.py"
+    ax_path = (
+        ROOT
+        / "components"
+        / "ax"
+        / "COG-CORE-001-cognitive-runtime"
+        / "src"
+        / "public"
+        / "runtime.py"
+    )
     ax_path.parent.mkdir(parents=True, exist_ok=True)
     ax_code = '''from typing import Dict, Any
 
@@ -116,6 +131,7 @@ class CognitiveRuntime:
     ax_path.write_text(ax_code)
 
     print("💯 [SUCCESS] All stub files eradicated and replaced with Olympic-grade production code.")
+
 
 if __name__ == "__main__":
     purge_and_replace_stubs()

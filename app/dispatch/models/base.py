@@ -12,11 +12,13 @@ class ModelProvider(str, Enum):
     OLLAMA = "ollama"
     MLX = "mlx"
 
+
 class ModelRequest(BaseModel):
     prompt: str
     model: str
     temperature: float = 0.7
     max_tokens: int = 512
+
 
 class ModelResponse(BaseModel):
     text: str

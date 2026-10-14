@@ -1,4 +1,5 @@
 """Signature verification. HMAC-SHA256 reference implementation."""
+
 from __future__ import annotations
 
 import hashlib
@@ -15,8 +16,9 @@ def digest_of(payload: bytes | str) -> str:
 
 
 def canonical(obj: Any) -> bytes:
-    return json.dumps(obj, sort_keys=True, separators=(",", ":"),
-                      ensure_ascii=False).encode("utf-8")
+    return json.dumps(obj, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode(
+        "utf-8"
+    )
 
 
 @dataclass(frozen=True)

@@ -11,7 +11,9 @@ def main(args=None):
     parser = argparse.ArgumentParser(description="Enterprise AIOps CodeQL CLI")
     subparsers = parser.add_subparsers(dest="cmd", required=True)
 
-    analyze_parser = subparsers.add_parser("analyze", help="Run CodeQL database creation and analysis")
+    analyze_parser = subparsers.add_parser(
+        "analyze", help="Run CodeQL database creation and analysis"
+    )
     analyze_parser.add_argument("--threads", type=int, default=4, help="Number of threads")
 
     create_parser = subparsers.add_parser("create", help="Create CodeQL database")
@@ -36,6 +38,7 @@ def main(args=None):
     else:
         parser.print_help()
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

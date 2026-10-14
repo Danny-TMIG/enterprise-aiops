@@ -1,4 +1,5 @@
 """get_mesh() + install_routes(app)."""
+
 from __future__ import annotations
 
 from app.mesh.graph import MeshGraph

@@ -12,6 +12,7 @@ Behavior per tick:
   emit      — if the signal is discharged, dissolve
   split     — if residue exceeds threshold, spawn a child
 """
+
 from __future__ import annotations
 
 import random
@@ -47,10 +48,10 @@ class Jellyfish:
             child = Jellyfish(
                 id=f"{self.id}.{len(self.route)}",
                 ttl=self.ttl,
-                residue=self.residue[:len(self.residue) // 2],
+                residue=self.residue[: len(self.residue) // 2],
                 packet=self.packet,
             )
-            self.residue = self.residue[len(self.residue) // 2:]
+            self.residue = self.residue[len(self.residue) // 2 :]
         if self.packet and self.packet.route:
             # delivered
             mesh.release(self.packet)
@@ -68,9 +69,7 @@ class Bloom:
 
     def __init__(self, n: int = 4, seed: int = 0):
         self.rng = random.Random(seed)
-        self.members: list[Jellyfish] = [
-            Jellyfish(id=f"jf-{i}", ttl=6 + i) for i in range(n)
-        ]
+        self.members: list[Jellyfish] = [Jellyfish(id=f"jf-{i}", ttl=6 + i) for i in range(n)]
 
     def tick(self, mesh: Mesh) -> None:
         new: list[Jellyfish] = []
@@ -87,7 +86,6 @@ class Bloom:
 
     def snapshot(self) -> list[dict]:
         return [
-            {"id": j.id, "ttl": j.ttl, "route": j.route,
-             "residue": j.residue[:4]}
+            {"id": j.id, "ttl": j.ttl, "route": j.route, "residue": j.residue[:4]}
             for j in self.members
         ]

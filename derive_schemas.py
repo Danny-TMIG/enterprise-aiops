@@ -5,6 +5,7 @@ Only schemas the three documents name and describe with minimum semantic
 content are written. Anything the documents do not state is omitted, not
 invented. Enum values the documents enumerate are included verbatim.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -28,8 +29,15 @@ COMMON_ENVELOPE = {
     "title": "ASF Common Envelope",
     "type": "object",
     "required": [
-        "schema_version", "object_id", "correlation_id", "sovereign_domain",
-        "issuer", "purpose", "classification", "event_time", "integrity",
+        "schema_version",
+        "object_id",
+        "correlation_id",
+        "sovereign_domain",
+        "issuer",
+        "purpose",
+        "classification",
+        "event_time",
+        "integrity",
     ],
     "additionalProperties": False,
     "properties": {
@@ -79,8 +87,12 @@ DECISION_OUTCOME = {
 ASSURANCE_STATE = {
     "type": "string",
     "enum": [
-        "UNVERIFIED", "VERIFIED-BOUNDED", "INCOMPLETE",
-        "CONTRADICTED", "EXPIRED", "REVOKED",
+        "UNVERIFIED",
+        "VERIFIED-BOUNDED",
+        "INCOMPLETE",
+        "CONTRADICTED",
+        "EXPIRED",
+        "REVOKED",
     ],
 }
 
@@ -88,8 +100,15 @@ ASSURANCE_STATE = {
 REPRESENTATION_CLASS = {
     "type": "string",
     "enum": [
-        "DENIED", "METADATA_ONLY", "PROVENANCE_ONLY", "AGGREGATED",
-        "REDACTED", "ANONYMIZED", "ABSTRACTED", "DERIVED", "FULL",
+        "DENIED",
+        "METADATA_ONLY",
+        "PROVENANCE_ONLY",
+        "AGGREGATED",
+        "REDACTED",
+        "ANONYMIZED",
+        "ABSTRACTED",
+        "DERIVED",
+        "FULL",
     ],
 }
 
@@ -103,7 +122,8 @@ SCHEMAS = {
     # ---- cross-layer control objects --------------------------------
     "common-envelope.schema.json": COMMON_ENVELOPE,
     "asf-error.schema.json": {
-        "$schema": DRAFT, "$id": "asf.error.v1",
+        "$schema": DRAFT,
+        "$id": "asf.error.v1",
         "title": "ASF Error",
         "type": "object",
         "required": ["code", "category", "correlation_id", "retryable"],
@@ -119,7 +139,8 @@ SCHEMAS = {
         },
     },
     "cancellation-revocation-directive.schema.json": {
-        "$schema": DRAFT, "$id": "asf.control.cancellation_revocation.v1",
+        "$schema": DRAFT,
+        "$id": "asf.control.cancellation_revocation.v1",
         "title": "CancellationRevocationDirective",
         "type": "object",
         "required": ["envelope", "target", "reason", "authority_ref", "effective_time"],
@@ -133,10 +154,10 @@ SCHEMAS = {
             "requires_acknowledgement": {"type": "boolean"},
         },
     },
-
     # ---- Govern-emitted contracts -----------------------------------
     "authorization-request.schema.json": {
-        "$schema": DRAFT, "$id": "asf.gov.authorization_request.v1",
+        "$schema": DRAFT,
+        "$id": "asf.gov.authorization_request.v1",
         "title": "AuthorizationRequest",
         "type": "object",
         "required": ["envelope", "subject", "action", "object", "purpose"],
@@ -151,7 +172,8 @@ SCHEMAS = {
         },
     },
     "authorization-decision.schema.json": {
-        "$schema": DRAFT, "$id": "asf.gov.authorization_decision.v1",
+        "$schema": DRAFT,
+        "$id": "asf.gov.authorization_decision.v1",
         "title": "AuthorizationDecision",
         "type": "object",
         "required": ["envelope", "outcome", "effective_authority_ref", "validity"],
@@ -173,7 +195,8 @@ SCHEMAS = {
         },
     },
     "information-flow-request.schema.json": {
-        "$schema": DRAFT, "$id": "asf.gov.information_flow_request.v1",
+        "$schema": DRAFT,
+        "$id": "asf.gov.information_flow_request.v1",
         "title": "InformationFlowRequest",
         "type": "object",
         "required": ["envelope", "source", "destination", "purpose", "labels"],
@@ -189,7 +212,8 @@ SCHEMAS = {
         },
     },
     "information-flow-decision.schema.json": {
-        "$schema": DRAFT, "$id": "asf.gov.information_flow_decision.v1",
+        "$schema": DRAFT,
+        "$id": "asf.gov.information_flow_decision.v1",
         "title": "InformationFlowDecision",
         "type": "object",
         "required": ["envelope", "outcome"],
@@ -203,7 +227,8 @@ SCHEMAS = {
         },
     },
     "representation-request.schema.json": {
-        "$schema": DRAFT, "$id": "asf.gov.representation_request.v1",
+        "$schema": DRAFT,
+        "$id": "asf.gov.representation_request.v1",
         "title": "RepresentationRequest",
         "type": "object",
         "required": ["envelope", "representation_class", "transformation_plan"],
@@ -217,7 +242,8 @@ SCHEMAS = {
         },
     },
     "capability-request.schema.json": {
-        "$schema": DRAFT, "$id": "asf.gov.capability_request.v1",
+        "$schema": DRAFT,
+        "$id": "asf.gov.capability_request.v1",
         "title": "CapabilityRequest",
         "type": "object",
         "required": ["envelope", "functional_need", "requested_by"],
@@ -230,7 +256,8 @@ SCHEMAS = {
         },
     },
     "governed-capability-set.schema.json": {
-        "$schema": DRAFT, "$id": "asf.gov.governed_capability_set.v1",
+        "$schema": DRAFT,
+        "$id": "asf.gov.governed_capability_set.v1",
         "title": "GovernedCapabilitySet",
         "type": "object",
         "required": ["envelope", "candidates"],
@@ -252,7 +279,8 @@ SCHEMAS = {
         },
     },
     "approval-request.schema.json": {
-        "$schema": DRAFT, "$id": "asf.gov.approval_request.v1",
+        "$schema": DRAFT,
+        "$id": "asf.gov.approval_request.v1",
         "title": "ApprovalRequest",
         "type": "object",
         "required": ["envelope", "eligible_approvers", "context", "expiry"],
@@ -266,7 +294,8 @@ SCHEMAS = {
         },
     },
     "approval-decision.schema.json": {
-        "$schema": DRAFT, "$id": "asf.gov.approval_decision.v1",
+        "$schema": DRAFT,
+        "$id": "asf.gov.approval_decision.v1",
         "title": "ApprovalDecision",
         "type": "object",
         "required": ["envelope", "approver", "decision"],
@@ -279,7 +308,8 @@ SCHEMAS = {
         },
     },
     "human-control-presentation.schema.json": {
-        "$schema": DRAFT, "$id": "asf.cog.human_control_presentation.v1",
+        "$schema": DRAFT,
+        "$id": "asf.cog.human_control_presentation.v1",
         "title": "HumanControlPresentation",
         "type": "object",
         "required": ["envelope", "presentation_id", "subject"],
@@ -291,7 +321,8 @@ SCHEMAS = {
         },
     },
     "human-decision-submission.schema.json": {
-        "$schema": DRAFT, "$id": "asf.cog.human_decision_submission.v1",
+        "$schema": DRAFT,
+        "$id": "asf.cog.human_decision_submission.v1",
         "title": "HumanDecisionSubmission",
         "type": "object",
         "required": ["envelope", "presentation_ref", "decision"],
@@ -304,12 +335,18 @@ SCHEMAS = {
         },
     },
     "execution-order.schema.json": {
-        "$schema": DRAFT, "$id": "asf.gov.execution_order.v1",
+        "$schema": DRAFT,
+        "$id": "asf.gov.execution_order.v1",
         "title": "ExecutionOrder",
         "type": "object",
         "required": [
-            "envelope", "order_id", "authorized_action", "capability_ref",
-            "bounded_inputs", "constraints", "evidence_obligations",
+            "envelope",
+            "order_id",
+            "authorized_action",
+            "capability_ref",
+            "bounded_inputs",
+            "constraints",
+            "evidence_obligations",
         ],
         "additionalProperties": False,
         "properties": {
@@ -331,7 +368,8 @@ SCHEMAS = {
         },
     },
     "execution-status.schema.json": {
-        "$schema": DRAFT, "$id": "asf.cmp.execution_status.v1",
+        "$schema": DRAFT,
+        "$id": "asf.cmp.execution_status.v1",
         "title": "ExecutionStatus",
         "type": "object",
         "required": ["envelope", "order_ref", "state"],
@@ -344,7 +382,8 @@ SCHEMAS = {
         },
     },
     "execution-result.schema.json": {
-        "$schema": DRAFT, "$id": "asf.cmp.execution_result.v1",
+        "$schema": DRAFT,
+        "$id": "asf.cmp.execution_result.v1",
         "title": "ExecutionResult",
         "type": "object",
         "required": ["envelope", "order_ref", "terminal_status"],
@@ -359,7 +398,8 @@ SCHEMAS = {
         },
     },
     "execution-evidence.schema.json": {
-        "$schema": DRAFT, "$id": "asf.cmp.execution_evidence.v1",
+        "$schema": DRAFT,
+        "$id": "asf.cmp.execution_evidence.v1",
         "title": "ExecutionEvidence",
         "type": "object",
         "required": ["envelope", "order_ref", "claims"],
@@ -383,7 +423,8 @@ SCHEMAS = {
         },
     },
     "governed-outcome.schema.json": {
-        "$schema": DRAFT, "$id": "asf.gov.governed_outcome.v1",
+        "$schema": DRAFT,
+        "$id": "asf.gov.governed_outcome.v1",
         "title": "GovernedOutcome",
         "type": "object",
         "required": ["envelope", "verified_status", "evidence_ref"],
@@ -397,7 +438,8 @@ SCHEMAS = {
         },
     },
     "cognitive-state-update-directive.schema.json": {
-        "$schema": DRAFT, "$id": "asf.gov.cognitive_state_update_directive.v1",
+        "$schema": DRAFT,
+        "$id": "asf.gov.cognitive_state_update_directive.v1",
         "title": "CognitiveStateUpdateDirective",
         "type": "object",
         "required": ["envelope", "target_state_ref", "directive"],
@@ -410,7 +452,8 @@ SCHEMAS = {
         },
     },
     "knowledge-access-request.schema.json": {
-        "$schema": DRAFT, "$id": "asf.cog.knowledge_access_request.v1",
+        "$schema": DRAFT,
+        "$id": "asf.cog.knowledge_access_request.v1",
         "title": "KnowledgeAccessRequest",
         "type": "object",
         "required": ["envelope", "query", "purpose"],
@@ -423,7 +466,8 @@ SCHEMAS = {
         },
     },
     "governed-knowledge-result.schema.json": {
-        "$schema": DRAFT, "$id": "asf.gov.governed_knowledge_result.v1",
+        "$schema": DRAFT,
+        "$id": "asf.gov.governed_knowledge_result.v1",
         "title": "GovernedKnowledgeResult",
         "type": "object",
         "required": ["envelope", "representation", "references"],

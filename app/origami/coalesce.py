@@ -7,6 +7,7 @@ backticks, and wrapper prefixes in one step.
 
 Nothing downstream ever sees the raw text.
 """
+
 from __future__ import annotations
 
 import ast
@@ -16,8 +17,7 @@ from typing import Any
 _FENCE_RE = re.compile(r"```[a-zA-Z]*\s*\n?(.*?)```", re.DOTALL)
 _WRAP = ('"', "'", "`")
 _FIELD_PREFIX = re.compile(
-    r"^\s*(?:Docstring|FDoc|ModuleDoc|ModDoc|Doc|Text|Params|Ret|Name)"
-    r"\s*[:=]\s*",
+    r"^\s*(?:Docstring|FDoc|ModuleDoc|ModDoc|Doc|Text|Params|Ret|Name)" r"\s*[:=]\s*",
     re.IGNORECASE,
 )
 _ID_TAIL = re.compile(r"[\(\):=\s].*$", re.DOTALL)
@@ -47,8 +47,7 @@ def _dedent(text: str) -> str:
     lines = text.splitlines()
     indents = [len(ln) - len(ln.lstrip()) for ln in lines if ln.strip()]
     cut = min(indents) if indents else 0
-    return "\n".join(ln[cut:] if len(ln) >= cut else ln.lstrip()
-                     for ln in lines)
+    return "\n".join(ln[cut:] if len(ln) >= cut else ln.lstrip() for ln in lines)
 
 
 def _try_parse_module(text: str) -> str:
@@ -62,8 +61,8 @@ def _try_parse_module(text: str) -> str:
     # tolerate a bare block: wrap in `if True:` then unparse
     try:
         wrapped = "if True:\n" + "\n".join(
-            ("    " + ln) if ln.strip() else ln
-            for ln in text.splitlines())
+            ("    " + ln) if ln.strip() else ln for ln in text.splitlines()
+        )
         tree = ast.parse(wrapped)
         inner = tree.body[0].body
         return "\n".join(ast.unparse(stmt) for stmt in inner)
@@ -130,11 +129,9 @@ def canonical_imports(s: str) -> str:
         tree = ast.parse(s)
     except SyntaxError:
         # keep only lines that look like imports
-        kept = [ln for ln in s.splitlines()
-                if ln.strip().startswith(("import ", "from "))]
+        kept = [ln for ln in s.splitlines() if ln.strip().startswith(("import ", "from "))]
         return "\n".join(kept)
-    kept = [n for n in tree.body
-            if isinstance(n, (ast.Import, ast.ImportFrom))]
+    kept = [n for n in tree.body if isinstance(n, (ast.Import, ast.ImportFrom))]
     return "\n".join(ast.unparse(n) for n in kept)
 
 

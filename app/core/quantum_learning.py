@@ -9,6 +9,7 @@ else.
 
 Self-registers as capability `quantum_learning`.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -42,8 +43,9 @@ class Failure:
 @dataclass(frozen=True)
 class Sample:
     """Held-out entropy sample epsilon. Never shown to a fixer."""
+
     id: str
-    kind: str          # "test" | "assert"
+    kind: str  # "test" | "assert"
     payload: str
     seed: int = 0
 
@@ -98,13 +100,21 @@ class ClosureSpace:
         self.root = root
 
     def validate(self) -> Verdict:
-        cmd = [PY, "-m", "pytest", "-q", "--no-header",
-               "-p", "no:cacheprovider", "--tb=line", *self.tests]
-        r = subprocess.run(cmd, cwd=self.root, env=ENV,
-                           capture_output=True, text=True)
-        return Verdict(ok=(r.returncode == 0),
-                       detail=f"pytest exit={r.returncode}",
-                       output=r.stdout + r.stderr)
+        cmd = [
+            PY,
+            "-m",
+            "pytest",
+            "-q",
+            "--no-header",
+            "-p",
+            "no:cacheprovider",
+            "--tb=line",
+            *self.tests,
+        ]
+        r = subprocess.run(cmd, cwd=self.root, env=ENV, capture_output=True, text=True)
+        return Verdict(
+            ok=(r.returncode == 0), detail=f"pytest exit={r.returncode}", output=r.stdout + r.stderr
+        )
 
     def validate_after(self, patch: Callable[[], None]) -> Verdict:
         snap = _snapshot(self.root, self.tests)
@@ -120,8 +130,7 @@ class ClosureSpace:
 class EvolutionSpace:
     """E: sigma' |= eps. Samples drawn before mutation, held out."""
 
-    def __init__(self, samples: Sequence[Sample],
-                 rng: random.Random | None = None):
+    def __init__(self, samples: Sequence[Sample], rng: random.Random | None = None):
         self._pool = list(samples)
         self._rng = rng or random.Random(0)
         self._used: set = set()
@@ -136,18 +145,26 @@ class EvolutionSpace:
 
     def validate(self, s: Sample, root: Path = ROOT) -> Verdict:
         if s.kind == "test":
-            cmd = [PY, "-m", "pytest", "-q", "--no-header",
-                   "-p", "no:cacheprovider", "--tb=short", s.payload]
-            r = subprocess.run(cmd, cwd=root, env=ENV,
-                               capture_output=True, text=True)
-            return Verdict(ok=(r.returncode == 0),
-                           detail=f"eps={s.id} {s.payload}",
-                           output=r.stdout + r.stderr)
+            cmd = [
+                PY,
+                "-m",
+                "pytest",
+                "-q",
+                "--no-header",
+                "-p",
+                "no:cacheprovider",
+                "--tb=short",
+                s.payload,
+            ]
+            r = subprocess.run(cmd, cwd=root, env=ENV, capture_output=True, text=True)
+            return Verdict(
+                ok=(r.returncode == 0), detail=f"eps={s.id} {s.payload}", output=r.stdout + r.stderr
+            )
         if s.kind == "assert":
-            r = subprocess.run([PY, "-c", s.payload], cwd=root, env=ENV,
-                               capture_output=True, text=True)
-            return Verdict(ok=(r.returncode == 0), detail=f"eps={s.id}",
-                           output=r.stdout + r.stderr)
+            r = subprocess.run(
+                [PY, "-c", s.payload], cwd=root, env=ENV, capture_output=True, text=True
+            )
+            return Verdict(ok=(r.returncode == 0), detail=f"eps={s.id}", output=r.stdout + r.stderr)
         return Verdict(ok=False, detail=f"unknown sample kind {s.kind}")
 
 
@@ -213,21 +230,18 @@ def _diff(snap: dict[Path, bytes]) -> str:
     out = []
     for f, old in snap.items():
         if f.exists() and f.read_bytes() != old:
-            out.append(f"--- {f}\n+++ patched ({len(old)} -> "
-                       f"{len(f.read_bytes())} bytes)")
+            out.append(f"--- {f}\n+++ patched ({len(old)} -> {len(f.read_bytes())} bytes)")
     return "\n".join(out)
 
 
-LINE_RE = re.compile(
-    r"^(?P<file>[^:\n]+\.py):(?P<line>\d+): (?P<exc>\w+): (?P<msg>.*)$")
+LINE_RE = re.compile(r"^(?P<file>[^:\n]+\.py):(?P<line>\d+): (?P<exc>\w+): (?P<msg>.*)$")
 
 
 def _first_failure(output: str) -> Failure | None:
     for ln in output.splitlines():
         m = LINE_RE.match(ln.strip())
         if m:
-            return Failure(m["file"], int(m["line"]),
-                           m["exc"], m["msg"])
+            return Failure(m["file"], int(m["line"]), m["exc"], m["msg"])
     return None
 
 
@@ -235,15 +249,24 @@ def _first_failure(output: str) -> Failure | None:
 Fixer = Callable[[Failure, Snapshot], Callable[[], None] | None]
 
 
-def mutate(state: Any, failure: Failure, sample: Sample,
-           fixers: Sequence[Fixer],
-           closure: ClosureSpace,
-           evolution: EvolutionSpace) -> Mutation:
+def mutate(
+    state: Any,
+    failure: Failure,
+    sample: Sample,
+    fixers: Sequence[Fixer],
+    closure: ClosureSpace,
+    evolution: EvolutionSpace,
+) -> Mutation:
     """mu(sigma, f, eps) -> sigma'. Commits only if C and E both hold."""
     before = _hash_tree(ROOT, closure.tests)
-    mut = Mutation(state_before=before, state_after=before,
-                   failure=failure, sample=sample,
-                   c_valid=False, e_valid=False)
+    mut = Mutation(
+        state_before=before,
+        state_after=before,
+        failure=failure,
+        sample=sample,
+        c_valid=False,
+        e_valid=False,
+    )
 
     for fx in fixers:
         try:
@@ -279,15 +302,13 @@ def mutate(state: Any, failure: Failure, sample: Sample,
 
 # ── loop ────────────────────────────────────────────────────────────
 class QuantumLoop:
-    def __init__(self, closure: ClosureSpace, evolution: EvolutionSpace,
-                 fixers: Sequence[Fixer]):
+    def __init__(self, closure: ClosureSpace, evolution: EvolutionSpace, fixers: Sequence[Fixer]):
         self.closure = closure
         self.evolution = evolution
         self.fixers = fixers
 
     def run(self, max_iter: int = 16) -> Report:
-        rep = Report(iterations=0, committed=0, refused=0,
-                     final_status="running")
+        rep = Report(iterations=0, committed=0, refused=0, final_status="running")
         for i in range(1, max_iter + 1):
             rep.iterations = i
             c = self.closure.validate()
@@ -302,8 +323,7 @@ class QuantumLoop:
             if eps is None:
                 rep.final_status = "entropy pool exhausted"
                 return rep
-            m = mutate(None, failure, eps, self.fixers,
-                       self.closure, self.evolution)
+            m = mutate(None, failure, eps, self.fixers, self.closure, self.evolution)
             rep.mutations.append(m)
             if m.committed:
                 rep.committed += 1

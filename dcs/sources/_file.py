@@ -23,14 +23,20 @@ def read_json(  # pragma: no cover
         return None, Attestation(req_id, B.U, tool, f"{env_var} not set")  # pragma: no cover
     p = Path(path)
     if not p.exists():  # pragma: no cover
-        return None, Attestation(req_id, B.U, tool, f"{env_var}={path} not found")  # pragma: no cover
+        return None, Attestation(
+            req_id, B.U, tool, f"{env_var}={path} not found"
+        )  # pragma: no cover
     try:
         return json.loads(p.read_text()), None  # pragma: no cover
     except Exception as e:  # pragma: no cover
-        return None, Attestation(req_id, B.U, tool, f"{path} unreadable: {type(e).__name__}: {e}")  # pragma: no cover
+        return None, Attestation(
+            req_id, B.U, tool, f"{path} unreadable: {type(e).__name__}: {e}"
+        )  # pragma: no cover
 
 
-def summarize_states(checks: list[tuple[str, B]]) -> tuple[B, list[str], list[str]]:  # pragma: no cover
+def summarize_states(
+    checks: list[tuple[str, B]],
+) -> tuple[B, list[str], list[str]]:  # pragma: no cover
     """Fold a list of (name, state) into an overall state plus details.
 
     Returns (folded, failures, unknowns).

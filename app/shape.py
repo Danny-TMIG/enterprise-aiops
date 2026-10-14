@@ -16,6 +16,7 @@ The shape is stable under module renames, file moves, and test
 rewrites, because it names what each pair of modules *is*, not
 what files it lives in.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -52,8 +53,7 @@ class Adjunction:
         identity. Only the pair, the unit, the counit, and the
         witness are.
         """
-        return (self.left_name, self.right_name,
-                self.unit, self.counit, self.witness)
+        return (self.left_name, self.right_name, self.unit, self.counit, self.witness)
 
 
 ADJUNCTIONS: tuple[Adjunction, ...] = (
@@ -143,7 +143,8 @@ def shape_identity() -> tuple:
     paths, or test locations.
     """
     return tuple(a.identity() for a in ADJUNCTIONS) + (
-        META_ANCHOR.name, META_ANCHOR.residual_id,
+        META_ANCHOR.name,
+        META_ANCHOR.residual_id,
     )
 
 
@@ -194,15 +195,16 @@ def validate() -> dict:
     for adj in ADJUNCTIONS:
         left_ok = _module_exists(adj.left_module)
         right_ok = _module_exists(adj.right_module)
-        out.append({
-            "pair": f"{adj.left_name} ⊣ {adj.right_name}",
-            "left_module_exists": left_ok,
-            "right_module_exists": right_ok,
-        })
+        out.append(
+            {
+                "pair": f"{adj.left_name} ⊣ {adj.right_name}",
+                "left_module_exists": left_ok,
+                "right_module_exists": right_ok,
+            }
+        )
     meta_ok = _module_exists(META_ANCHOR.module)
     return {
-        "ok": all(x["left_module_exists"] and x["right_module_exists"] for x in out)
-              and meta_ok,
+        "ok": all(x["left_module_exists"] and x["right_module_exists"] for x in out) and meta_ok,
         "adjunctions": out,
         "meta_anchor_exists": meta_ok,
     }
@@ -211,6 +213,7 @@ def validate() -> dict:
 def _module_exists(dotted_path: str) -> bool:
     """Take the first dotted token that looks like a module path."""
     import importlib
+
     # the strings are like "app.combinator.graph (the graph)"
     # extract the leading module path
     token = dotted_path.split()[0].rstrip(",;")
@@ -223,9 +226,8 @@ def _module_exists(dotted_path: str) -> bool:
 
 def write_markdown(path=None) -> Path:
     from pathlib import Path
-    p = Path(path) if path else (
-        Path(__file__).resolve().parent.parent / "docs" / "shape.md"
-    )
+
+    p = Path(path) if path else (Path(__file__).resolve().parent.parent / "docs" / "shape.md")
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text("# The Shape of the System\n\n```\n" + render() + "\n```\n")
     return p

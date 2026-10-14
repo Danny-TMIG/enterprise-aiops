@@ -4,15 +4,16 @@ A node has 3 ports for γ and δ, 1 port for ε.
 Ports are (node_id, port_index).  Index 0 = principal, 1 = aux0, 2 = aux1.
 Wires is a symmetric dict: port -> port.
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterator
 from dataclasses import dataclass, field
 
-Port = tuple[int, int]      # (node_id, port_index)
-G = "g"                     # γ  (constructor)
-D = "d"                     # δ  (duplicator)
-E = "e"                     # ε  (eraser)
+Port = tuple[int, int]  # (node_id, port_index)
+G = "g"  # γ  (constructor)
+D = "d"  # δ  (duplicator)
+E = "e"  # ε  (eraser)
 
 _NUM_PORTS = {G: 3, D: 3, E: 1}
 

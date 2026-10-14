@@ -1,5 +1,7 @@
 """Import-only smoke test. Regenerate after refactors."""
+
 import importlib
+
 import pytest
 
 

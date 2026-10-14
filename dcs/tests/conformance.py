@@ -140,9 +140,9 @@ def coherence_roster() -> None:
         for h in hats:
             assert h not in assigned, f"hat {h} assigned twice"
             assigned.add(h)
-    assert set(HATS) == assigned, (
-        f"missing: {sorted(set(HATS) - assigned)}; extra: {sorted(assigned - set(HATS))}"
-    )
+    assert (
+        set(HATS) == assigned
+    ), f"missing: {sorted(set(HATS) - assigned)}; extra: {sorted(assigned - set(HATS))}"
 
 
 @requirement(

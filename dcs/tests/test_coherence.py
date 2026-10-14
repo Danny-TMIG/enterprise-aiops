@@ -1,4 +1,5 @@
 """Unit tests for dcs.coherence."""
+
 from dcs.coherence import coherent, incoherent_keys
 
 

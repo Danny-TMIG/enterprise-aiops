@@ -26,7 +26,9 @@ PREDICATE_TYPE = "https://dcs.dannylabs.example/attestation/v1"
 
 
 def _digest(payload: dict) -> str:  # pragma: no cover
-    return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()  # pragma: no cover
+    return hashlib.sha256(
+        json.dumps(payload, sort_keys=True).encode()
+    ).hexdigest()  # pragma: no cover
 
 
 def to_statement(payload: dict, subject_name: str = "dcs-self") -> dict:  # pragma: no cover

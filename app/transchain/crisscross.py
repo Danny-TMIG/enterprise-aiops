@@ -6,6 +6,7 @@ zigzag(c1, c2) = a1 b1 a2 b2 a3 b3 ...
 If the two chains share a letter, the shared letter is emitted once.
 Length = |c1| + |c2| - shared_count.
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterator
@@ -21,18 +22,19 @@ def zigzag(c1: Chain, c2: Chain) -> Chain:
         if i < len(c1):
             x = c1.seq[i]
             if x not in seen:
-                out.append(x); seen.add(x)
+                out.append(x)
+                seen.add(x)
             i += 1
         if j < len(c2):
             y = c2.seq[j]
             if y not in seen:
-                out.append(y); seen.add(y)
+                out.append(y)
+                seen.add(y)
             j += 1
     return Chain(tuple(out))
 
 
-def criss_cross(chains: list[Chain]
-                ) -> Iterator[tuple[Chain, Chain, Chain]]:
+def criss_cross(chains: list[Chain]) -> Iterator[tuple[Chain, Chain, Chain]]:
     """For every ordered pair (c1, c2), yield (c1, c2, zigzag(c1, c2))."""
     for c1 in chains:
         for c2 in chains:

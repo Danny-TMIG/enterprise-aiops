@@ -25,7 +25,7 @@ INNER_EOF
 echo "✅ Fixed dcs/tests/test_sdlc_integration.py"
 
 # 2. Patch the hypothesis edgecase in test_pytest_mastery.py
-# If text consists only of special characters like ':', it strips down to '', 
+# If text consists only of special characters like ':', it strips down to '',
 # but text.strip() is still true, causing the assertion failure.
 # We modify line 159 to accept empty slug strings when input strings lack alphanumeric values.
 if [ -f dcs/tests/test_pytest_mastery.py ]; then
@@ -77,26 +77,26 @@ import coverage
 
 def run_discovery():
     print("\n🔍 Initializing Automated Coverage Discovery...")
-    
+
     cov = coverage.Coverage(config_file=".coveragerc.discovery")
     cov.load()
-    
+
     data = cov.get_data()
     measured_files = data.measured_files()
-    
+
     if not measured_files:
         print("❌ Error: No coverage data found. Did you run pytest with --cov first?")
         sys.exit(1)
-        
+
     has_gaps = False
     print("📋 Component Coverage Analysis:")
-    
+
     for file_path in measured_files:
         rel_path = os.path.relpath(file_path)
         analysis = cov._analyze(file_path)
         missing_lines = sorted(list(analysis.missing))
         missing_branches = analysis.missing_branch_descriptions()
-        
+
         if missing_lines or missing_branches:
             has_gaps = True
             print(f"\n🟥 {rel_path} -> GAPS DETECTED")
@@ -108,7 +108,7 @@ def run_discovery():
                     print(f"     [Line {line_num}]: {branch_desc}")
         else:
             print(f"🟩 {rel_path} -> 100% COMPLIANT")
-            
+
     print("\n🏁 Discovery Completed.")
     if has_gaps:
         print("⚠️ Action Required: Resolve the gaps listed above to achieve 100% coverage.")
@@ -129,4 +129,3 @@ echo "========================================="
 pytest -c /dev/null --cov=dcs --cov-config=.coveragerc.discovery dcs/tests/
 
 python discover_coverage.py
-

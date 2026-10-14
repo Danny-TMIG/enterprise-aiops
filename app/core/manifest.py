@@ -6,11 +6,15 @@ from typing import Any
 class CPVO:
     version: str = "2.7.0-omega"
     verified: bool = True
-    cryptographic_seal: str = "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    cryptographic_seal: str = (
+        "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    )
+
 
 @dataclass
 class CPVOMeter:
     cpvo: Any = None
+
 
 @dataclass
 class Manifest:

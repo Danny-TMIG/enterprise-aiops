@@ -8,6 +8,7 @@ class CPVOMeter:
     def __init__(self, cpvo):
         self.cpvo = cpvo
 
+
 @dataclass
 class Workflow:
     intent: str
@@ -18,5 +19,6 @@ class Workflow:
         cpv_data = getattr(self.manifest, "cpvo", CPVO())
         self.cpvo = CPVOMeter(cpv_data)
 
-def from_cli(text: str, target: str = None, author: str = None) -> str:
+
+def from_cli(text: str, target: str | None = None, author: str | None = None) -> str:
     return text

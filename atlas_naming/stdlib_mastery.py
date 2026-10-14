@@ -12,11 +12,11 @@ Writes:
   atlas_naming/stdlib.json       machine-readable
   atlas_naming/STDLIB.md         human-readable report
 """
+
 from __future__ import annotations
 
 import ast
 import json
-import os
 import sys
 import sysconfig
 from collections import defaultdict
@@ -54,20 +54,42 @@ STDLIB_MODULES |= BUILTIN_MODULE_NAMES
 KNOWN_STDLIB_TOP = frozenset(STDLIB_MODULES)
 
 SKIP_DIRS = {
-    ".git", ".venv", "venv", "env", ".lanes", "node_modules", ".next",
-    "__pycache__", ".mypy_cache", ".ruff_cache", ".hypothesis",
-    ".pytest_cache", ".eggs", "build", "dist", ".tox", ".cache",
-    ".codeql-results", ".mesh-codeql-db", ".snapshots", ".delta",
-    ".last-backups", ".complete-backups", ".benchmarks", "site-packages",
-    "_grammar_spec", ".moat", ".murmur", ".agency", ".backrooms",
+    ".git",
+    ".venv",
+    "venv",
+    "env",
+    ".lanes",
+    "node_modules",
+    ".next",
+    "__pycache__",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".hypothesis",
+    ".pytest_cache",
+    ".eggs",
+    "build",
+    "dist",
+    ".tox",
+    ".cache",
+    ".codeql-results",
+    ".mesh-codeql-db",
+    ".snapshots",
+    ".delta",
+    ".last-backups",
+    ".complete-backups",
+    ".benchmarks",
+    "site-packages",
+    "_grammar_spec",
+    ".moat",
+    ".murmur",
+    ".agency",
+    ".backrooms",
     "atlas_naming",
 }
 
 
 def skipped(p: Path) -> bool:
-    return any(x in SKIP_DIRS for x in p.parts) or any(
-        x.endswith(".egg-info") for x in p.parts
-    )
+    return any(x in SKIP_DIRS for x in p.parts) or any(x.endswith(".egg-info") for x in p.parts)
 
 
 def extract_imports(tree: ast.AST) -> list[dict]:
@@ -77,14 +99,16 @@ def extract_imports(tree: ast.AST) -> list[dict]:
         if isinstance(node, ast.Import):
             for alias in node.names:
                 top = alias.name.split(".")[0]
-                out.append({
-                    "form": "import",
-                    "module": alias.name,
-                    "top": top,
-                    "asname": alias.asname,
-                    "lineno": node.lineno,
-                    "bound_name": alias.asname or alias.name.split(".")[0],
-                })
+                out.append(
+                    {
+                        "form": "import",
+                        "module": alias.name,
+                        "top": top,
+                        "asname": alias.asname,
+                        "lineno": node.lineno,
+                        "bound_name": alias.asname or alias.name.split(".")[0],
+                    }
+                )
         elif isinstance(node, ast.ImportFrom):
             if node.level:
                 # relative import, not stdlib
@@ -92,15 +116,17 @@ def extract_imports(tree: ast.AST) -> list[dict]:
             base = node.module or ""
             top = base.split(".")[0]
             for alias in node.names:
-                out.append({
-                    "form": "from",
-                    "module": base,
-                    "top": top,
-                    "name": alias.name,
-                    "asname": alias.asname,
-                    "lineno": node.lineno,
-                    "bound_name": alias.asname or alias.name,
-                })
+                out.append(
+                    {
+                        "form": "from",
+                        "module": base,
+                        "top": top,
+                        "name": alias.name,
+                        "asname": alias.asname,
+                        "lineno": node.lineno,
+                        "bound_name": alias.asname or alias.name,
+                    }
+                )
     return out
 
 
@@ -151,12 +177,14 @@ def main() -> int:
     print(f"stdlib modules known to interpreter: {len(STDLIB_MODULES)}")
 
     # Walk the tree
-    usage: dict[str, dict] = defaultdict(lambda: {
-        "import_statements": [],
-        "imported_by_files": set(),
-        "aliased_as": set(),
-        "uses_attr_access": False,
-    })
+    usage: dict[str, dict] = defaultdict(
+        lambda: {
+            "import_statements": [],
+            "imported_by_files": set(),
+            "aliased_as": set(),
+            "uses_attr_access": False,
+        }
+    )
 
     parsed = 0
     errors = []
@@ -180,15 +208,17 @@ def main() -> int:
             if top not in KNOWN_STDLIB_TOP:
                 continue
             info = usage[top]
-            info["import_statements"].append({
-                "file": rel,
-                "lineno": imp["lineno"],
-                "form": imp["form"],
-                "module": imp["module"],
-                "name": imp.get("name"),
-                "asname": imp.get("asname"),
-                "bound_name": imp["bound_name"],
-            })
+            info["import_statements"].append(
+                {
+                    "file": rel,
+                    "lineno": imp["lineno"],
+                    "form": imp["form"],
+                    "module": imp["module"],
+                    "name": imp.get("name"),
+                    "asname": imp.get("asname"),
+                    "bound_name": imp["bound_name"],
+                }
+            )
             info["imported_by_files"].add(rel)
             if imp.get("asname"):
                 info["aliased_as"].add(imp["asname"])
@@ -281,7 +311,9 @@ def main() -> int:
         for imp in info["import_statements"][:5]:
             asname = f" as {imp['asname']}" if imp.get("asname") else ""
             if imp["form"] == "import":
-                lines.append(f"- `{imp['file']}:{imp['lineno']}` — `import {imp['module']}{asname}`")
+                lines.append(
+                    f"- `{imp['file']}:{imp['lineno']}` — `import {imp['module']}{asname}`"
+                )
             else:
                 lines.append(
                     f"- `{imp['file']}:{imp['lineno']}` — "

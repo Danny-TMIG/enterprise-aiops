@@ -4,6 +4,7 @@ Every Boolean is expressed with NAND only. The other gates are
 derived, not primitive. This is the seed of the Cayley-Dickson
 tower: at every doubling level, the atom at the base stays NAND.
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterable
@@ -55,10 +56,14 @@ def exhaustive_check() -> dict:
     ok = True
     for a in (False, True):
         for b in (False, True):
-            if NOT(a) != (not a): ok = False
-            if AND(a, b) != (a and b): ok = False
-            if OR(a, b) != (a or b): ok = False
-            if XOR(a, b) != (a != b): ok = False
-            if IMPLIES(a, b) != ((not a) or b): ok = False
-    return {"all_gates_match_standard_truth_tables": ok,
-            "atom": "NAND(a, b) = not (a and b)"}
+            if NOT(a) != (not a):
+                ok = False
+            if AND(a, b) != (a and b):
+                ok = False
+            if OR(a, b) != (a or b):
+                ok = False
+            if XOR(a, b) != (a != b):
+                ok = False
+            if IMPLIES(a, b) != ((not a) or b):
+                ok = False
+    return {"all_gates_match_standard_truth_tables": ok, "atom": "NAND(a, b) = not (a and b)"}

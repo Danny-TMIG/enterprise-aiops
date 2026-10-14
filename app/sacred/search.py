@@ -14,6 +14,7 @@ Fibonacci search:
     probes at fractions F(k-2)/F(k) and F(k-1)/F(k)
     after k steps, width = width_0 / F(k)
 """
+
 from __future__ import annotations
 
 from collections.abc import Callable
@@ -42,10 +43,9 @@ class SearchTrace:
         }
 
 
-def golden_section_search(f: Callable[[float], float],
-                          a: float, b: float,
-                          tol: float = 1e-9,
-                          max_iter: int = 200) -> SearchTrace:
+def golden_section_search(
+    f: Callable[[float], float], a: float, b: float, tol: float = 1e-9, max_iter: int = 200
+) -> SearchTrace:
     """Minimise a unimodal function on [a, b] by golden-section.
     Uses only one new evaluation per step (the reused interior
     point is the key efficiency)."""
@@ -84,9 +84,9 @@ def golden_section_search(f: Callable[[float], float],
     )
 
 
-def fibonacci_search(f: Callable[[float], float],
-                     a: float, b: float,
-                     n_evals: int = 20) -> SearchTrace:
+def fibonacci_search(
+    f: Callable[[float], float], a: float, b: float, n_evals: int = 20
+) -> SearchTrace:
     """Minimise a unimodal function on [a, b] using Fibonacci
     probe positions. Optimal for a known evaluation budget N:
     final width = (b - a) / F(N)."""

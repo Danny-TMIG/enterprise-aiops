@@ -1,5 +1,7 @@
 """Clock: monotonic time + injectable clock for tests."""
 
+import itertools
+
 from dcs.generate import requirement  # pragma: no cover
 
 
@@ -15,7 +17,7 @@ class Clock:  # pragma: no cover
 
 
 def is_monotonic(seq) -> bool:  # pragma: no cover
-    return all(b >= a for a, b in zip(seq, seq[1:]))  # pragma: no cover
+    return all(b >= a for a, b in itertools.pairwise(seq))  # pragma: no cover
 
 
 @requirement(

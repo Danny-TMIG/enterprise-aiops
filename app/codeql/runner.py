@@ -6,6 +6,7 @@ cli_version   — run `codeql version` and parse the output.
 create_database — `codeql database create` for Python.
 analyze       — `codeql database analyze` producing SARIF.
 """
+
 from __future__ import annotations
 
 import os
@@ -29,8 +30,12 @@ class Database:
     log: str = ""
 
     def to_dict(self) -> dict:
-        return {"path": str(self.path), "language": self.language,
-                "created": self.created, "size_bytes": self.size_bytes}
+        return {
+            "path": str(self.path),
+            "language": self.language,
+            "created": self.created,
+            "size_bytes": self.size_bytes,
+        }
 
 
 @dataclass
@@ -57,8 +62,9 @@ def cli_version(cfg: Config | None = None) -> str:
     if not cli_present(cfg):
         return "not-installed"
     try:
-        r = subprocess.run([str(cfg.codeql_bin), "version"],
-                           capture_output=True, text=True, timeout=30)
+        r = subprocess.run(
+            [str(cfg.codeql_bin), "version"], capture_output=True, text=True, timeout=30
+        )
         for line in r.stdout.splitlines():
             line = line.strip()
             if line.lower().startswith("version"):
@@ -78,12 +84,13 @@ def _bundle_url(version: str) -> str:
         bundle = "codeql-bundle-linux64.tar.gz"
     else:
         bundle = "codeql-bundle-osx64.tar.gz"
-    return (f"https://github.com/github/codeql-action/releases/download/"
-            f"codeql-bundle-{version}/{bundle}")
+    return (
+        f"https://github.com/github/codeql-action/releases/download/"
+        f"codeql-bundle-{version}/{bundle}"
+    )
 
 
-def install_cli(cfg: Config | None = None,
-                force: bool = False) -> Config:
+def install_cli(cfg: Config | None = None, force: bool = False) -> Config:
     cfg = cfg or load_config()
     if cli_present(cfg) and not force:
         return cfg
@@ -108,33 +115,33 @@ def install_cli(cfg: Config | None = None,
         tf.extractall(cfg.codeql_home)
     tmp.unlink(missing_ok=True)
     # make binary executable
-    for candidate in (cfg.codeql_home / "codeql",
-                      cfg.codeql_home / "codeql" / "codeql"):
+    for candidate in (cfg.codeql_home / "codeql", cfg.codeql_home / "codeql" / "codeql"):
         if candidate.is_file():
             candidate.chmod(0o755)
     if not cli_present(cfg):
-        raise RuntimeError(
-            f"codeql binary not found after install at {cfg.codeql_bin}")
+        raise RuntimeError(f"codeql binary not found after install at {cfg.codeql_bin}")
     return cfg
 
 
 # ── database ────────────────────────────────────────────────────
-def create_database(cfg: Config | None = None,
-                    force: bool = False,
-                    overrides: dict[str, str] | None = None) -> Database:
+def create_database(
+    cfg: Config | None = None, force: bool = False, overrides: dict[str, str] | None = None
+) -> Database:
     cfg = cfg or load_config()
     if not cli_present(cfg):
         raise RuntimeError("CodeQL CLI not present; run install_cli()")
     db = cfg.db_dir
     if db.exists() and not force:
         size = _dir_size(db)
-        return Database(path=db, language=cfg.language, created=True,
-                        size_bytes=size, log="reused")
+        return Database(path=db, language=cfg.language, created=True, size_bytes=size, log="reused")
     if db.exists():
         shutil.rmtree(db)
     db.parent.mkdir(parents=True, exist_ok=True)
     cmd = [
-        str(cfg.codeql_bin), "database", "create", str(db),
+        str(cfg.codeql_bin),
+        "database",
+        "create",
+        str(db),
         f"--language={cfg.language}",
         f"--source-root={cfg.source_root}",
         f"--threads={cfg.threads}",
@@ -147,15 +154,18 @@ def create_database(cfg: Config | None = None,
     r = subprocess.run(cmd, capture_output=True, text=True, env=env)
     if r.returncode != 0:
         raise RuntimeError("database create failed: " + r.stderr[-2000:])
-    return Database(path=db, language=cfg.language, created=True,
-                    size_bytes=_dir_size(db), log=r.stdout[-2000:])
+    return Database(
+        path=db, language=cfg.language, created=True, size_bytes=_dir_size(db), log=r.stdout[-2000:]
+    )
 
 
 # ── analysis ────────────────────────────────────────────────────
-def analyze(cfg: Config | None = None,
-            db: Database | None = None,
-            download: bool = True,
-            extra_queries: list[str] | None = None) -> Analysis:
+def analyze(
+    cfg: Config | None = None,
+    db: Database | None = None,
+    download: bool = True,
+    extra_queries: list[str] | None = None,
+) -> Analysis:
     cfg = cfg or load_config()
     if not cli_present(cfg):
         raise RuntimeError("CodeQL CLI not present; run install_cli()")
@@ -165,7 +175,10 @@ def analyze(cfg: Config | None = None,
     sarif = cfg.sarif_dir / "results.sarif"
     queries = list(cfg.queries) + list(extra_queries or [])
     cmd = [
-        str(cfg.codeql_bin), "database", "analyze", str(db.path),
+        str(cfg.codeql_bin),
+        "database",
+        "analyze",
+        str(db.path),
         "--format=sarif-latest",
         f"--output={sarif}",
         f"--threads={cfg.threads}",
@@ -177,9 +190,13 @@ def analyze(cfg: Config | None = None,
     env = {**os.environ, **cfg.env}
     print(f"  running: {' '.join(cmd)}")
     r = subprocess.run(cmd, capture_output=True, text=True, env=env)
-    return Analysis(sarif_path=sarif, queries=tuple(queries),
-                    exit_code=r.returncode, stdout=r.stdout[-4000:],
-                    stderr=r.stderr[-4000:])
+    return Analysis(
+        sarif_path=sarif,
+        queries=tuple(queries),
+        exit_code=r.returncode,
+        stdout=r.stdout[-4000:],
+        stderr=r.stderr[-4000:],
+    )
 
 
 # ── helpers ─────────────────────────────────────────────────────

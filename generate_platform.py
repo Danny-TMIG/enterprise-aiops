@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 # Define the complete file tree and contents
@@ -73,8 +72,9 @@ def test_engine_ingestion():
     assert count == 1
     st = engine.status()
     assert st["buffered_metrics"] == 1
-"""
+""",
 }
+
 
 def main():
     print("🧬 [GENESIS] Constructing sovereign AIOps workspace...")
@@ -84,6 +84,7 @@ def main():
         path.write_text(content.strip() + "\n")
         print(f"  ✔ Created {filepath}")
     print("💯 [COMPLETE] Workspace fully provisioned.")
+
 
 if __name__ == "__main__":
     main()

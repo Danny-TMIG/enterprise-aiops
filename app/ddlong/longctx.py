@@ -8,6 +8,7 @@ the last bit of a single float64.
 This is what lets a hopping schedule run for hours without the
 phase reference drifting.
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterable
@@ -19,6 +20,7 @@ from app.ddlong.dd import DD
 @dataclass
 class LongAccumulator:
     """Numerically stable sum of a long sequence."""
+
     sum: DD = field(default_factory=lambda: DD(0.0, 0.0))
     count: int = 0
     min: DD = field(default_factory=lambda: DD(float("inf"), 0.0))
@@ -55,8 +57,7 @@ def fold_sequence(samples: Iterable[float]) -> LongAccumulator:
     return acc
 
 
-def phase_drift(samples: Iterable[float], drift_rate: float = 1e-16
-                ) -> dict:
+def phase_drift(samples: Iterable[float], drift_rate: float = 1e-16) -> dict:
     """Measure the difference between naive and DD accumulation.
 
     Emits the residual after N samples — the amount of accumulated

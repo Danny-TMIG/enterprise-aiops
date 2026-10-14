@@ -16,7 +16,9 @@ def parse(v: str) -> tuple[int, int, int]:  # pragma: no cover
 
 def bump(v: str, kind: str = "patch") -> str:  # pragma: no cover
     a, b, c = parse(v)
-    return {"major": f"{a + 1}.0.0", "minor": f"{a}.{b + 1}.0", "patch": f"{a}.{b}.{c + 1}"}[kind]  # pragma: no cover
+    return {"major": f"{a + 1}.0.0", "minor": f"{a}.{b + 1}.0", "patch": f"{a}.{b}.{c + 1}"}[
+        kind
+    ]  # pragma: no cover
 
 
 @requirement(

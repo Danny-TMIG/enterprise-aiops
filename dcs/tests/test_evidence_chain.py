@@ -1,4 +1,5 @@
 """Tests for the evidence chain module."""
+
 import json
 from pathlib import Path
 
@@ -46,8 +47,10 @@ def test_chain_init(tmp_path):
 def test_capture_success(tmp_path):
     c = _mkchain(tmp_path)
     rec = c.capture(
-        claim="print ok", requirement_ref="R-1",
-        implementation=IMPL, test=Path(__file__),
+        claim="print ok",
+        requirement_ref="R-1",
+        implementation=IMPL,
+        test=Path(__file__),
         command=".venv/bin/python -c \"print('ok')\"",
     )
     assert rec.result == PASS
@@ -58,9 +61,11 @@ def test_capture_success(tmp_path):
 def test_capture_failure(tmp_path):
     c = _mkchain(tmp_path)
     rec = c.capture(
-        claim="exit 1", requirement_ref="R-2",
-        implementation=IMPL, test=Path(__file__),
-        command=".venv/bin/python -c \"import sys; sys.exit(1)\"",
+        claim="exit 1",
+        requirement_ref="R-2",
+        implementation=IMPL,
+        test=Path(__file__),
+        command='.venv/bin/python -c "import sys; sys.exit(1)"',
     )
     assert rec.result == FAIL
     assert rec.data["observation"]["returncode"] == 1
@@ -69,9 +74,12 @@ def test_capture_failure(tmp_path):
 def test_capture_timeout(tmp_path):
     c = _mkchain(tmp_path)
     rec = c.capture(
-        claim="sleep", requirement_ref="R-3",
-        implementation=IMPL, test=Path(__file__),
-        command="sleep 5", timeout=1,
+        claim="sleep",
+        requirement_ref="R-3",
+        implementation=IMPL,
+        test=Path(__file__),
+        command="sleep 5",
+        timeout=1,
     )
     assert rec.result == BLOCKED
 
@@ -79,8 +87,10 @@ def test_capture_timeout(tmp_path):
 def test_verify_pass(tmp_path):
     c = _mkchain(tmp_path)
     rec = c.capture(
-        claim="print ok", requirement_ref="R-1",
-        implementation=IMPL, test=Path(__file__),
+        claim="print ok",
+        requirement_ref="R-1",
+        implementation=IMPL,
+        test=Path(__file__),
         command=".venv/bin/python -c \"print('ok')\"",
     )
     v = c.verify(rec)
@@ -92,8 +102,10 @@ def test_verify_partial_after_tamper(tmp_path):
     copy = tmp_path / "impl.py"
     copy.write_text(IMPL.read_text())
     rec = c.capture(
-        claim="print ok", requirement_ref="R-1",
-        implementation=copy, test=Path(__file__),
+        claim="print ok",
+        requirement_ref="R-1",
+        implementation=copy,
+        test=Path(__file__),
         command=".venv/bin/python -c \"print('ok')\"",
     )
     copy.write_text("tampered")
@@ -104,9 +116,12 @@ def test_verify_partial_after_tamper(tmp_path):
 def test_verify_no_observation(tmp_path):
     c = _mkchain(tmp_path)
     rec = c.capture(
-        claim="sleep", requirement_ref="R-3",
-        implementation=IMPL, test=Path(__file__),
-        command="sleep 5", timeout=1,
+        claim="sleep",
+        requirement_ref="R-3",
+        implementation=IMPL,
+        test=Path(__file__),
+        command="sleep 5",
+        timeout=1,
     )
     v = c.verify(rec)
     assert v.data["verification_result"] == PARTIAL
@@ -115,8 +130,10 @@ def test_verify_no_observation(tmp_path):
 def test_sign_and_verify_signature(tmp_path):
     c = _mkchain(tmp_path)
     rec = c.capture(
-        claim="print ok", requirement_ref="R-1",
-        implementation=IMPL, test=Path(__file__),
+        claim="print ok",
+        requirement_ref="R-1",
+        implementation=IMPL,
+        test=Path(__file__),
         command=".venv/bin/python -c \"print('ok')\"",
     )
     key = "aa" * 32
@@ -128,8 +145,10 @@ def test_sign_and_verify_signature(tmp_path):
 def test_store_and_load(tmp_path):
     c = _mkchain(tmp_path)
     rec = c.capture(
-        claim="print ok", requirement_ref="R-1",
-        implementation=IMPL, test=Path(__file__),
+        claim="print ok",
+        requirement_ref="R-1",
+        implementation=IMPL,
+        test=Path(__file__),
         command=".venv/bin/python -c \"print('ok')\"",
     )
     p = c.store_record(rec, "rec.json")

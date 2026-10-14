@@ -3,6 +3,7 @@
 A hierarchical topic tree: enterprise/site/area/line/cell/asset/tag.
 Pure Python. No broker needed for the model layer.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -53,6 +54,7 @@ class UNSTree:
             for c in n.children.values():
                 out.append(c)
                 walk(c, here)
+
         walk(node, "/" + "/".join([self.root_name] + parts))
         return out
 
@@ -67,6 +69,7 @@ class UNSTree:
                 "payload": n.payload,
                 "children": {k: dump(v) for k, v in n.children.items()},
             }
+
         return dump(self.root)
 
 
@@ -74,6 +77,7 @@ class UNSTree:
 def runtime_available() -> tuple[bool, str]:
     try:
         import paho.mqtt.client  # noqa: F401
+
         return True, "paho-mqtt installed"
     except Exception:
         return False, "paho-mqtt not installed; model layer only"

@@ -1,4 +1,5 @@
 """Compute the delta between two probes. Classify into quadrants."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -26,14 +27,18 @@ class Delta:
 
     @property
     def teacher(self) -> Probe | None:
-        if self.quadrant == Quadrant.A_BEATS_B: return self.a
-        if self.quadrant == Quadrant.B_BEATS_A: return self.b
+        if self.quadrant == Quadrant.A_BEATS_B:
+            return self.a
+        if self.quadrant == Quadrant.B_BEATS_A:
+            return self.b
         return None
 
     @property
     def student(self) -> Probe | None:
-        if self.quadrant == Quadrant.A_BEATS_B: return self.b
-        if self.quadrant == Quadrant.B_BEATS_A: return self.a
+        if self.quadrant == Quadrant.A_BEATS_B:
+            return self.b
+        if self.quadrant == Quadrant.B_BEATS_A:
+            return self.a
         return None
 
     @property
@@ -49,8 +54,7 @@ class Delta:
         }
 
 
-def classify(a: Probe, b: Probe, workload_id: str,
-             input_value: Any, prompt: str) -> Delta:
+def classify(a: Probe, b: Probe, workload_id: str, input_value: Any, prompt: str) -> Delta:
     if a.passed and b.passed:
         q = Quadrant.BOTH_PASS
     elif not a.passed and not b.passed:
@@ -59,8 +63,9 @@ def classify(a: Probe, b: Probe, workload_id: str,
         q = Quadrant.A_BEATS_B
     else:
         q = Quadrant.B_BEATS_A
-    return Delta(workload_id=workload_id, input_value=input_value,
-                 prompt=prompt, a=a, b=b, quadrant=q)
+    return Delta(
+        workload_id=workload_id, input_value=input_value, prompt=prompt, a=a, b=b, quadrant=q
+    )
 
 
 def delta_set(probes_a: list[Probe], probes_b: list[Probe]) -> list[Delta]:
@@ -77,6 +82,7 @@ def delta_set(probes_a: list[Probe], probes_b: list[Probe]) -> list[Delta]:
 
 def summarize(deltas: list[Delta]) -> dict[str, int]:
     from collections import Counter
+
     c = Counter(d.quadrant.value for d in deltas)
     return {
         "total": len(deltas),

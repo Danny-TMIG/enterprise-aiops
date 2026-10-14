@@ -5,10 +5,11 @@ Reads catalog/components.json, flattens the layer arrays, and confirms
 each registered component has a src/public/__init__.py and at least one
 module under src/public/.
 """
-from __future__ import annotations
-from pathlib import Path
-import sys
 
+from __future__ import annotations
+
+import sys
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -30,6 +31,7 @@ def main() -> int:
         return 1
 
     import json
+
     catalog_data = json.loads(catalog_path.read_text())
     components = _flatten_catalog(catalog_data)
     print(f"  ✔ Loaded catalog containing {len(components)} registered components.")

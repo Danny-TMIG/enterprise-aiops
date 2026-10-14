@@ -4,6 +4,7 @@ Single-player decision tree with a terminal goal. BFS finds the
 shortest path. Not adversarial, so minimax doesn't apply — this
 is the "video game" side of the pair.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -49,8 +50,7 @@ class Gridworld(DecisionTree):
         if self.is_terminal(s):
             return []
         acts = []
-        for d, (dx, dy) in (("N", (0, -1)), ("S", (0, 1)),
-                            ("E", (1, 0)), ("W", (-1, 0))):
+        for d, (dx, dy) in (("N", (0, -1)), ("S", (0, 1)), ("E", (1, 0)), ("W", (-1, 0))):
             nx, ny = s.x + dx, s.y + dy
             if self._cell(nx, ny) == WALL:
                 continue
@@ -59,8 +59,7 @@ class Gridworld(DecisionTree):
             acts.append(d)
         if self._cell(s.x, s.y) == KEY and not s.has_key:
             acts.append("pick")
-        if (self._cell(s.x, s.y) == DOOR and s.has_key
-                and not s.door_open):
+        if self._cell(s.x, s.y) == DOOR and s.has_key and not s.door_open:
             acts.append("open")
         return acts
 
@@ -69,8 +68,7 @@ class Gridworld(DecisionTree):
             return GWState(s.x, s.y, has_key=True, door_open=s.door_open)
         if a == "open":
             return GWState(s.x, s.y, has_key=s.has_key, door_open=True)
-        dx, dy = {"N": (0, -1), "S": (0, 1),
-                  "E": (1, 0), "W": (-1, 0)}[a]
+        dx, dy = {"N": (0, -1), "S": (0, 1), "E": (1, 0), "W": (-1, 0)}[a]
         nx, ny = s.x + dx, s.y + dy
         return GWState(nx, ny, has_key=s.has_key, door_open=s.door_open)
 

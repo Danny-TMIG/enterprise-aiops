@@ -13,7 +13,8 @@ _LOCK = threading.Lock()
 def _h(*p: str) -> str:
     m = hashlib.sha256()
     for s in p:
-        m.update(s.encode("utf-8")); m.update(b"\x1f")
+        m.update(s.encode("utf-8"))
+        m.update(b"\x1f")
     return "sha256:" + m.hexdigest()[:24]
 
 
@@ -23,8 +24,7 @@ class OctetEntry:
     fragment_hash: str
     size: int
     reason: str
-    ts: str = field(default_factory=lambda: time.strftime(
-        "%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
+    ts: str = field(default_factory=lambda: time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
 
     @property
     def id(self) -> str:
@@ -56,7 +56,10 @@ class Backrooms:
 
     def search(self, s: str) -> list[dict[str, Any]]:
         s = s.lower()
-        return [e for e in self.all()
-                if s in e.get("reason", "").lower()
-                or s in e.get("fragment_hash", "").lower()
-                or s in e.get("input_hash", "").lower()]
+        return [
+            e
+            for e in self.all()
+            if s in e.get("reason", "").lower()
+            or s in e.get("fragment_hash", "").lower()
+            or s in e.get("input_hash", "").lower()
+        ]

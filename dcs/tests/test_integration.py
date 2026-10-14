@@ -1,4 +1,5 @@
 """Integration tests that exercise the dcs loader."""
+
 from dcs.self import MANIFESTS, _load_manifest
 
 

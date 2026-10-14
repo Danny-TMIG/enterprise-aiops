@@ -32,10 +32,10 @@ async function main() {
         process.exit(1);
     }
 
-    const specPath = options.spec 
-        ? path.resolve(process.cwd(), options.spec) 
+    const specPath = options.spec
+        ? path.resolve(process.cwd(), options.spec)
         : path.resolve(process.cwd(), 'ncf_layer/spec/NCF-1.md');
-    
+
     console.log('[Lock] Acquiring exclusive execution lock...');
     console.log(`[Corpus] Loading specification from: ${specPath}`);
 
@@ -49,7 +49,7 @@ async function main() {
     }
 
     console.log('[Verification] Validating state transition rules against corpus...');
-    
+
     setTimeout(() => {
         console.log(`[Success] State verification completed successfully.`);
         process.exit(0);

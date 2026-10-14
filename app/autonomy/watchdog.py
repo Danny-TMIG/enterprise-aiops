@@ -1,18 +1,19 @@
 """Watchdog — periodically samples probes and feeds the decision engine."""
+
 from __future__ import annotations
 
 import threading
 import time
 from collections.abc import Callable
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 from app.autonomy.decisions import Decision, DecisionEngine
 
 
 def _now() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 @dataclass
@@ -26,6 +27,7 @@ class Watchdog:
     def __init__(self, engine: DecisionEngine | None = None, probes: list[Probe] | None = None):
         if engine is None:
             from app.autonomy.decisions import DecisionEngine
+
             engine = DecisionEngine()
         self.engine = engine
         self.probes: list[Probe] = probes or []
@@ -81,7 +83,6 @@ class Watchdog:
     def recent_decisions(self, limit: int = 50) -> list[dict[str, Any]]:
         return [d.to_dict() for d in self._decisions[-limit:]]
 
-
     def pulse(self) -> dict[str, Any]:
         """Synchronous sample: run probes, evaluate, return the observation.
 
@@ -90,15 +91,13 @@ class Watchdog:
         """
         obs = self.snapshot()
         self._last = obs
-        decisions = (self.engine.evaluate(obs) or []
-                     if self.engine is not None else [])
+        decisions = self.engine.evaluate(obs) or [] if self.engine is not None else []
         self._decisions.extend(decisions)
         return {
             "ts": obs["ts"],
             "observations": {k: v for k, v in obs.items() if k != "ts"},
             "decisions": [
-                d.to_dict() if hasattr(d, "to_dict") else dict(d)
-                if isinstance(d, dict) else d
+                d.to_dict() if hasattr(d, "to_dict") else dict(d) if isinstance(d, dict) else d
                 for d in decisions
             ],
         }

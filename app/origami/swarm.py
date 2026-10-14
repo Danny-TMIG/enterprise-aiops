@@ -5,6 +5,7 @@ shards long prompts via context.py and dispatches the shards in
 parallel threads.  Model weights are shared — only the KV cache
 and prompt differ per worker.
 """
+
 from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -25,9 +26,14 @@ class WorkerResult:
     usage: dict[str, int] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        return {"index": self.index, "text": self.text,
-                "dry_run": self.dry_run, "provider": self.provider,
-                "model": self.model, "usage": self.usage}
+        return {
+            "index": self.index,
+            "text": self.text,
+            "dry_run": self.dry_run,
+            "provider": self.provider,
+            "model": self.model,
+            "usage": self.usage,
+        }
 
 
 @dataclass
@@ -38,10 +44,12 @@ class SwarmResult:
     dry_run_all: bool = False
 
     def to_dict(self) -> dict[str, Any]:
-        return {"n_workers": self.n_workers,
-                "dry_run_all": self.dry_run_all,
-                "workers": [w.to_dict() for w in self.workers],
-                "stitched_chars": len(self.stitched)}
+        return {
+            "n_workers": self.n_workers,
+            "dry_run_all": self.dry_run_all,
+            "workers": [w.to_dict() for w in self.workers],
+            "stitched_chars": len(self.stitched),
+        }
 
 
 class Swarm:
@@ -56,10 +64,14 @@ class Swarm:
             self._workers.append(p)
 
     # ── single-shot ────────────────────────────────────────────
-    def run_one(self, index: int, prompt: str,
-                system: str | None = None,
-                max_tokens: int = 256,
-                temperature: float = 0.0) -> WorkerResult:
+    def run_one(
+        self,
+        index: int,
+        prompt: str,
+        system: str | None = None,
+        max_tokens: int = 256,
+        temperature: float = 0.0,
+    ) -> WorkerResult:
         if not self.available():
             head = prompt.strip().splitlines()[0][:120] if prompt.strip() else ""
             return WorkerResult(
@@ -71,28 +83,38 @@ class Swarm:
                 usage={},
             )
         w = self._workers[index % self.n]
-        resp = w.complete(ModelRequest(
-            task="coding", prompt=prompt, system=system,
-            max_tokens=max_tokens, temperature=temperature,
-        ))
+        resp = w.complete(
+            ModelRequest(
+                task="coding",
+                prompt=prompt,
+                system=system,
+                max_tokens=max_tokens,
+                temperature=temperature,
+            )
+        )
         return WorkerResult(
-            index=index, text=resp.text, dry_run=resp.dry_run,
-            provider=resp.provider, model=resp.model,
+            index=index,
+            text=resp.text,
+            dry_run=resp.dry_run,
+            provider=resp.provider,
+            model=resp.model,
             usage=resp.usage,
         )
 
     # ── parallel fan-out ──────────────────────────────────────
-    def fan(self, prompts: list[str],
-            system: str | None = None,
-            max_tokens: int = 256,
-            temperature: float = 0.0,
-            workers: int | None = None) -> SwarmResult:
+    def fan(
+        self,
+        prompts: list[str],
+        system: str | None = None,
+        max_tokens: int = 256,
+        temperature: float = 0.0,
+        workers: int | None = None,
+    ) -> SwarmResult:
         workers = workers or self.n
         results: list[WorkerResult] = []
         with ThreadPoolExecutor(max_workers=workers) as pool:
             futures = {
-                pool.submit(self.run_one, i, p, system,
-                            max_tokens, temperature): i
+                pool.submit(self.run_one, i, p, system, max_tokens, temperature): i
                 for i, p in enumerate(prompts)
             }
             for f in as_completed(futures):
@@ -100,14 +122,16 @@ class Swarm:
         results.sort(key=lambda r: r.index)
         stitched = "\n---\n".join(r.text for r in results)
         return SwarmResult(
-            workers=results, stitched=stitched, n_workers=self.n,
+            workers=results,
+            stitched=stitched,
+            n_workers=self.n,
             dry_run_all=all(r.dry_run for r in results),
         )
 
     # ── double-double long context ────────────────────────────
-    def run_double_double(self, text: str, instruction: str,
-                          max_tokens: int = 256) -> SwarmResult:
+    def run_double_double(self, text: str, instruction: str, max_tokens: int = 256) -> SwarmResult:
         from app.origami.context import DoubleDouble, shard
+
         parts = [s.text for s in shard(text, n=4)]
         dd = DoubleDouble(parts=parts)
 
@@ -122,10 +146,12 @@ class Swarm:
         merged = "\n---\n".join(w.text for w in l1.workers)
         l2 = self.fan(
             [f"{instruction}\n\nMERGED HALVES:\n{merged}"],
-            max_tokens=max_tokens, workers=1,
+            max_tokens=max_tokens,
+            workers=1,
         )
         return SwarmResult(
-            workers=l2.workers, stitched=l2.stitched,
+            workers=l2.workers,
+            stitched=l2.stitched,
             n_workers=self.n,
             dry_run_all=all(r.dry_run for r in l2.workers),
         )

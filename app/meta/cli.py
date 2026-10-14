@@ -1,4 +1,5 @@
 """meta CLI — human-gated self-modification."""
+
 from __future__ import annotations
 
 import argparse
@@ -13,9 +14,12 @@ def main(argv=None) -> int:
     p.add_argument("--target", default="app/origami/dispatch.py")
     p.add_argument("--harness", default="usefulness")
     p.add_argument("--max-iters", type=int, default=3)
-    p.add_argument("--auto", default=None,
-                   choices=[None, "accept", "reject", "edit"],
-                   help="bypass prompt (for testing)")
+    p.add_argument(
+        "--auto",
+        default=None,
+        choices=[None, "accept", "reject", "edit"],
+        help="bypass prompt (for testing)",
+    )
     p.add_argument("--root", default=".")
     a = p.parse_args(argv)
 
@@ -31,8 +35,11 @@ def main(argv=None) -> int:
     print()
 
     results = iterate(
-        target=a.target, harness=a.harness,
-        max_iters=a.max_iters, auto=a.auto, root=a.root,
+        target=a.target,
+        harness=a.harness,
+        max_iters=a.max_iters,
+        auto=a.auto,
+        root=a.root,
     )
 
     print()
@@ -41,8 +48,7 @@ def main(argv=None) -> int:
         mark = "ACCEPT" if r.accepted else "REJECT"
         b = r.before.get("mean") if r.before else "—"
         af = r.after.get("mean") if r.after else "—"
-        print(f"  [{mark}] iter {r.iteration} "
-              f"reason={r.reason}  {b} → {af}")
+        print(f"  [{mark}] iter {r.iteration} reason={r.reason}  {b} → {af}")
     return 0
 
 

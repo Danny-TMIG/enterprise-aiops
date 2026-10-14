@@ -4,25 +4,33 @@ Operates the cognitive lifecycle over a replaceable substrate. Records
 stage checkpoints; returns typed outcomes; substrate swaps do not change
 the runtime interface.
 """
+
 from __future__ import annotations
-import time, uuid
+
+import time
+import uuid
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 
 @dataclass
 class CognitiveCheckpoint:
-    checkpoint_id: str; operation_id: str; stage: str
-    state: Dict[str, Any]; created_at: float
+    checkpoint_id: str
+    operation_id: str
+    stage: str
+    state: dict[str, Any]
+    created_at: float
 
 
 @dataclass
 class OperationOutcome:
-    operation_id: str; substrate: str; result: Any = None
-    failure: Optional[str] = None
-    checkpoints: List[CognitiveCheckpoint] = field(default_factory=list)
+    operation_id: str
+    substrate: str
+    result: Any = None
+    failure: str | None = None
+    checkpoints: list[CognitiveCheckpoint] = field(default_factory=list)
 
-    def stages(self) -> List[str]:
+    def stages(self) -> list[str]:
         return [c.stage for c in self.checkpoints]
 
 
@@ -31,12 +39,14 @@ class CognitiveRuntime:
 
     def __init__(self, model_name: str = "mlx-community/Qwen2.5-7B-Instruct-4bit"):
         self.model_name = model_name
-        self._ops: Dict[str, OperationOutcome] = {}
+        self._ops: dict[str, OperationOutcome] = {}
 
-    def _ckpt(self, op: OperationOutcome, stage: str, state: Dict[str, Any]) -> None:
-        op.checkpoints.append(CognitiveCheckpoint(
-            f"ckpt-{uuid.uuid4().hex[:8]}", op.operation_id, stage, state, time.time()
-        ))
+    def _ckpt(self, op: OperationOutcome, stage: str, state: dict[str, Any]) -> None:
+        op.checkpoints.append(
+            CognitiveCheckpoint(
+                f"ckpt-{uuid.uuid4().hex[:8]}", op.operation_id, stage, state, time.time()
+            )
+        )
 
     def begin(self, prompt: str) -> OperationOutcome:
         if not prompt or not prompt.strip():
@@ -57,7 +67,7 @@ class CognitiveRuntime:
         self._ckpt(op, "evaluate", {"result_len": len(op.result)})
         return op.result
 
-    def finish(self, op_id: str, failure: Optional[str] = None) -> OperationOutcome:
+    def finish(self, op_id: str, failure: str | None = None) -> OperationOutcome:
         op = self._ops.get(op_id)
         if op is None:
             raise ValueError(f"unknown operation {op_id}")

@@ -1,4 +1,5 @@
 """SARIF parser + markdown renderer."""
+
 from __future__ import annotations
 
 import json
@@ -78,9 +79,9 @@ def parse_sarif(path: Path) -> Report:
             rid = res.get("ruleId", "")
             rule = rules.get(rid, {})
             msg = (res.get("message", {}) or {}).get("text", "")
-            level = (res.get("level")
-                     or rule.get("defaultConfiguration", {}).get("level")
-                     or "warning")
+            level = (
+                res.get("level") or rule.get("defaultConfiguration", {}).get("level") or "warning"
+            )
             locations = res.get("locations", [])
             file = ""
             line = 0
@@ -92,17 +93,19 @@ def parse_sarif(path: Path) -> Report:
                 line = int(region.get("startLine", 0) or 0)
                 col = int(region.get("startColumn", 0) or 0)
             tags = tuple(rule.get("properties", {}).get("tags", []))
-            report.findings.append(Finding(
-                rule_id=rid,
-                rule_name=rule.get("name", rid),
-                severity=level,
-                message=msg,
-                file=file,
-                line=line,
-                column=col,
-                help_uri=rule.get("helpUri", ""),
-                tags=tags,
-            ))
+            report.findings.append(
+                Finding(
+                    rule_id=rid,
+                    rule_name=rule.get("name", rid),
+                    severity=level,
+                    message=msg,
+                    file=file,
+                    line=line,
+                    column=col,
+                    help_uri=rule.get("helpUri", ""),
+                    tags=tags,
+                )
+            )
     return report
 
 
@@ -112,8 +115,7 @@ def summarize(report: Report) -> dict[str, Any]:
         "version": report.version,
         "total": report.total,
         "by_severity": report.by_severity(),
-        "top_rules": sorted(report.by_rule().items(),
-                            key=lambda kv: -kv[1])[:10],
+        "top_rules": sorted(report.by_rule().items(), key=lambda kv: -kv[1])[:10],
     }
 
 
@@ -149,7 +151,6 @@ def render_markdown(report: Report) -> str:
         for i, f in enumerate(report.findings, 1):
             loc = f"{f.file}:{f.line}" if f.file else "-"
             msg = (f.message or "").replace("|", "\\|")[:160]
-            lines.append(f"| {i} | {f.severity} | `{f.rule_id}` | "
-                         f"{loc} | {msg} |")
+            lines.append(f"| {i} | {f.severity} | `{f.rule_id}` | {loc} | {msg} |")
         lines.append("")
     return "\n".join(lines)

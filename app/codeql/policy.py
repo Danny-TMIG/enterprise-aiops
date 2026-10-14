@@ -1,10 +1,11 @@
 """Policy gate over CodeQL reports.
 
-    fail_on_severity: any finding at or above this level fails.
-    max_findings:     total findings must be <= this.
-    allow_rules:      rules always allowed (exempt).
-    deny_rules:       rules always denied (fail fast).
+fail_on_severity: any finding at or above this level fails.
+max_findings:     total findings must be <= this.
+allow_rules:      rules always allowed (exempt).
+deny_rules:       rules always denied (fail fast).
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -29,8 +30,7 @@ class PolicyDecision:
     offending: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict:
-        return {"ok": self.ok, "reason": self.reason,
-                "offending": list(self.offending)}
+        return {"ok": self.ok, "reason": self.reason, "offending": list(self.offending)}
 
 
 def load_policy(doc: dict | None = None) -> Policy:
@@ -58,9 +58,9 @@ def apply_policy(report: Report, policy: Policy) -> PolicyDecision:
             offending.append(f"{f.rule_id} @ {f.file}:{f.line} ({f.severity})")
 
     if offending:
-        return PolicyDecision(ok=False,
-                              reason=f"{len(offending)} finding(s) breach policy",
-                              offending=offending[:50])
+        return PolicyDecision(
+            ok=False, reason=f"{len(offending)} finding(s) breach policy", offending=offending[:50]
+        )
 
     if report.total > policy.max_findings:
         return PolicyDecision(

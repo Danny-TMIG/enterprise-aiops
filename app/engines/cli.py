@@ -1,4 +1,5 @@
 """Demo: parallel dynamic difference engines."""
+
 from __future__ import annotations
 
 import sys
@@ -20,14 +21,13 @@ def main():
     print()
 
     _hdr("running 4 generations of parallel grids")
-    d = Driver(puzzles_per_tile=4, generations=4, seed=0,
-               high=0.85, low=0.25)
+    d = Driver(puzzles_per_tile=4, generations=4, seed=0, high=0.85, low=0.25)
     result = d.run()
 
     for g in result["generations"]:
-        print(f"  gen {g['index']}  "
-              f"difficulty={g['difficulty']}  "
-              f"duration={g['duration_ms']:.1f}ms")
+        print(
+            f"  gen {g['index']}  difficulty={g['difficulty']}  duration={g['duration_ms']:.1f}ms"
+        )
         for k, r in sorted(g["rate_by_kind"].items()):
             print(f"    {k:12s} mean_rate={r:.3f}")
     print()
@@ -51,8 +51,7 @@ def main():
 
     _hdr("final-generation tiles")
     for k, t in sorted(result["final_tiles"].items()):
-        print(f"  {k:24s}  trials={t['trials']} "
-              f"passes={t['passes']} rate={t['rate']:.3f}")
+        print(f"  {k:24s}  trials={t['trials']} passes={t['passes']} rate={t['rate']:.3f}")
 
     print()
     print("=" * 72)

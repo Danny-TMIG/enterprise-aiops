@@ -9,6 +9,7 @@ Six axes, each independently checked:
   5. failures_are_graceful      malformed inputs return errors, don't raise
   6. refine_reduces_undefined   refined ≤ raw on undefined-name count
 """
+
 from __future__ import annotations
 
 import ast
@@ -22,7 +23,11 @@ import textwrap
 from collections.abc import Callable
 
 BUILTINS = set(dir(builtins)) | {
-    "__name__", "__file__", "__doc__", "__builtins__", "__package__",
+    "__name__",
+    "__file__",
+    "__doc__",
+    "__builtins__",
+    "__package__",
 }
 
 
@@ -30,8 +35,7 @@ def undefined_names(source: str) -> list[str]:
     tree = ast.parse(source)
     defined = set()
     for node in ast.walk(tree):
-        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef,
-                             ast.ClassDef)):
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
             defined.add(node.name)
         elif isinstance(node, ast.Import):
             for a in node.names:
@@ -45,7 +49,12 @@ def undefined_names(source: str) -> list[str]:
             for t in node.targets:
                 if isinstance(t, ast.Name):
                     defined.add(t.id)
-        elif isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name) or isinstance(node, ast.For) and isinstance(node.target, ast.Name):
+        elif (
+            isinstance(node, ast.AnnAssign)
+            and isinstance(node.target, ast.Name)
+            or isinstance(node, ast.For)
+            and isinstance(node.target, ast.Name)
+        ):
             defined.add(node.target.id)
         elif isinstance(node, ast.withitem) and isinstance(node.optional_vars, ast.Name):
             defined.add(node.optional_vars.id)
@@ -57,8 +66,7 @@ def undefined_names(source: str) -> list[str]:
                 for elt in t.elts:
                     if isinstance(elt, ast.Name):
                         defined.add(elt.id)
-    used = {n.id for n in ast.walk(tree)
-            if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load)}
+    used = {n.id for n in ast.walk(tree) if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load)}
     return sorted(used - defined - BUILTINS)
 
 
@@ -82,7 +90,7 @@ def axis_signature() -> tuple[bool, str]:
 
 
 # ── 2. independent verification ─────────────────────────────────
-VERIFIER = textwrap.dedent('''
+VERIFIER = textwrap.dedent("""
     import base64, json, sys
     from cryptography.hazmat.primitives.asymmetric.ed25519 import (
         Ed25519PublicKey,
@@ -97,7 +105,7 @@ VERIFIER = textwrap.dedent('''
         print("OK")
     except Exception:
         print("BAD")
-''').strip()
+""").strip()
 
 
 def axis_independent_verification() -> tuple[bool, str]:
@@ -108,6 +116,7 @@ def axis_independent_verification() -> tuple[bool, str]:
     except Exception:
         return False, "cryptography not installed"
     import base64
+
     key = Ed25519PrivateKey.generate()
     pub = key.public_key().public_bytes_raw()
     msg = b"independent-check"
@@ -118,11 +127,16 @@ def axis_independent_verification() -> tuple[bool, str]:
         "msg": base64.b64encode(msg).decode(),
     }
     with tempfile.NamedTemporaryFile("w", suffix=".py", delete=False) as f:
-        f.write(VERIFIER); path = f.name
+        f.write(VERIFIER)
+        path = f.name
     try:
-        r = subprocess.run([sys.executable, path],
-                           input=json.dumps(payload),
-                           capture_output=True, text=True, timeout=15)
+        r = subprocess.run(
+            [sys.executable, path],
+            input=json.dumps(payload),
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
         ok = (r.stdout or "").strip() == "OK"
         return ok, f"separate process verdict: {(r.stdout or '').strip()!r}"
     finally:
@@ -134,6 +148,7 @@ def _run_pipeline() -> tuple[str, str]:
     from app.origami.dispatch import dispatch, refine
     from app.origami.library import get as get_grammar
     from app.origami.swarm import Swarm
+
     g = get_grammar("code_artifact")
     s = Swarm(n_workers=1)
     r = dispatch(g, s, seed=3, max_depth=6, max_tokens=48)
@@ -174,6 +189,7 @@ def axis_refine_reduces_undefined() -> tuple[bool, str]:
 def axis_grammar_is_deterministic() -> tuple[bool, str]:
     from app.origami.grammar import expand
     from app.origami.library import get as get_grammar
+
     g = get_grammar("code_artifact")
     for seed in range(100):
         a = expand(g, max_depth=6, seed=seed)["terminals"]
@@ -199,6 +215,7 @@ def axis_failures_are_graceful() -> tuple[bool, str]:
     # bad depth
     try:
         from app.origami.library import get as gg
+
         expand(gg("review"), max_depth=-1, seed=1)
         checks.append(("neg_depth", "returned"))
     except Exception as e:

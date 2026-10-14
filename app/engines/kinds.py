@@ -10,6 +10,7 @@ A Solver is a named strategy for one kind:
 
 Kinds and solvers compose into the parallel grid.
 """
+
 from __future__ import annotations
 
 import random
@@ -31,6 +32,7 @@ class Kind:
 # ─────────────────────────────────────────────────────────────────
 def _sudoku_sample(difficulty: str, seed: int):
     from app.puzzles.sudoku import make_sudoku
+
     # just use the built-in medium puzzle for all difficulties;
     # difficulty is unused for sudoku for now
     return make_sudoku(seed=seed)
@@ -51,7 +53,7 @@ def _sudoku_verify(puzzle, attempt):
             return False
     for br in range(3):
         for bc in range(3):
-            box = [m[br*3+dr][bc*3+dc] for dr in range(3) for dc in range(3)]
+            box = [m[br * 3 + dr][bc * 3 + dc] for dr in range(3) for dc in range(3)]
             if sorted(box) != list(range(1, 10)):
                 return False
     return True
@@ -65,7 +67,7 @@ def _sudoku_random(puzzle, seed):
     """Fill randomly; will almost always fail."""
     rng = random.Random(seed)
     gmap = dict(puzzle.givens)
-    m = [[0]*9 for _ in range(9)]
+    m = [[0] * 9 for _ in range(9)]
     for r in range(9):
         for c in range(9):
             v = gmap.get(f"r{r}c{c}")
@@ -77,6 +79,7 @@ def _sudoku_greedy(puzzle, seed):
     """Same search as full, but with a tighter node cap so it can
     fail honestly on hard instances."""
     from app.puzzles.solver import solve_fc
+
     s = solve_fc(puzzle.grid, max_nodes=1_000_000)
     if not s.complete:
         return None
@@ -85,6 +88,7 @@ def _sudoku_greedy(puzzle, seed):
 
 def _sudoku_full(puzzle, seed):
     from app.puzzles.solver import solve_fc
+
     s = solve_fc(puzzle.grid, max_nodes=1_000_000)
     if not s.complete:
         return None
@@ -97,6 +101,7 @@ def _sudoku_full(puzzle, seed):
 def _cw_sample(difficulty: str, seed: int):
     from app.puzzles.atlas import load_atlas
     from app.puzzles.crossword import make_crossword
+
     return make_crossword(atlas=load_atlas(), seed=seed)
 
 
@@ -154,6 +159,7 @@ def _cw_full(puzzle, seed):
     word discards them. solve() consults Constraint.satisfied
     per candidate, which is what crossword needs."""
     from app.puzzles.solver import solve
+
     s = solve(puzzle.grid, max_nodes=100_000)
     if not s.complete:
         return None
@@ -165,12 +171,14 @@ def _cw_full(puzzle, seed):
 # ─────────────────────────────────────────────────────────────────
 def _rubik_sample(difficulty: str, seed: int):
     from app.puzzles.rubik import scramble
+
     depth = {"easy": 4, "medium": 6, "hard": 9}.get(difficulty, 6)
     return scramble(n_moves=depth, seed=seed)
 
 
 def _rubik_verify(puzzle, attempt):
     from app.puzzles.rubik import SOLVED
+
     if attempt is None:
         return False
     return attempt == SOLVED
@@ -183,6 +191,7 @@ def _rubik_format(p):
 def _rubik_random(puzzle, seed):
     """Random walk; almost certainly fails."""
     from app.puzzles.rubik import MOVES, apply_move
+
     rng = random.Random(seed)
     s = puzzle
     for _ in range(20):
@@ -193,10 +202,12 @@ def _rubik_random(puzzle, seed):
 
 def _rubik_bfs(puzzle, seed):
     from app.puzzles.rubik import solve_cube
+
     r = solve_cube(puzzle)
     if not r["solved"]:
         return None
     from app.puzzles.rubik import MOVES, apply_move
+
     s = puzzle
     for m in r["solution"]:
         s = apply_move(MOVES[m], s)
@@ -209,8 +220,9 @@ def _rubik_bfs(puzzle, seed):
 def _ttt_sample(difficulty: str, seed: int):
     """Sample a random mid-game board with X to move."""
     from app.puzzles.tictactoe import EMPTY, O, TTState, X
+
     rng = random.Random(seed)
-    b = [EMPTY]*9
+    b = [EMPTY] * 9
     n = rng.randint(0, 6)
     to_move = X
     for _ in range(n):
@@ -226,6 +238,7 @@ def _ttt_sample(difficulty: str, seed: int):
 def _ttt_verify(puzzle, attempt):
     """Attempt is a move index. Verify it is not losing."""
     from app.puzzles.tictactoe import EMPTY, TicTacToe
+
     if attempt is None or not (0 <= attempt < 9):
         return False
     if puzzle.board[attempt] != EMPTY:
@@ -235,7 +248,7 @@ def _ttt_verify(puzzle, attempt):
     new_state = t.apply(state, attempt)
     if t.is_terminal(new_state):
         w = new_state.winner()
-        return w == state.to_move   # win is fine, draw is fine
+        return w == state.to_move  # win is fine, draw is fine
     # ensure opponent cannot immediately win on next move
     for opp_move in t.actions(new_state):
         opp_state = t.apply(new_state, opp_move)
@@ -250,6 +263,7 @@ def _ttt_format(p):
 
 def _ttt_random(puzzle, seed):
     from app.puzzles.tictactoe import EMPTY
+
     rng = random.Random(seed)
     empty = [i for i, v in enumerate(puzzle.board) if v == EMPTY]
     return rng.choice(empty) if empty else None
@@ -258,6 +272,7 @@ def _ttt_random(puzzle, seed):
 def _ttt_center(puzzle, seed):
     """Prefer center, then corners, then edges."""
     from app.puzzles.tictactoe import EMPTY
+
     empty = [i for i, v in enumerate(puzzle.board) if v == EMPTY]
     if not empty:
         return None
@@ -280,6 +295,7 @@ def _ttt_minimax(puzzle, seed):
             self.is_terminal = lambda s: TicTacToe().is_terminal(s)
             self.reward = lambda s, p: TicTacToe().reward(s, p)
             self.heuristic = lambda s, p: 0.0
+
     w = _Wrap(puzzle)
     r = alpha_beta(w, max_depth=9)
     return r.best_action
@@ -290,6 +306,7 @@ def _ttt_minimax(puzzle, seed):
 # ─────────────────────────────────────────────────────────────────
 def _gw_sample(difficulty: str, seed: int):
     from app.puzzles.gridworld import Gridworld
+
     return Gridworld()
 
 
@@ -332,6 +349,7 @@ def _gw_random(puzzle, seed):
 
 def _gw_bfs(puzzle, seed):
     from app.puzzles.tree import bfs
+
     g = puzzle
     r = bfs(g, max_nodes=10_000)
     return list(r.path) if r.found else None
@@ -341,19 +359,19 @@ def _gw_bfs(puzzle, seed):
 # Registry
 # ─────────────────────────────────────────────────────────────────
 KINDS: dict[str, Kind] = {
-    "sudoku":    Kind("sudoku",    _sudoku_sample, _sudoku_verify, _sudoku_format),
-    "crossword": Kind("crossword", _cw_sample,     _cw_verify,     _cw_format),
-    "rubik":     Kind("rubik",     _rubik_sample,  _rubik_verify,  _rubik_format),
-    "tictactoe": Kind("tictactoe", _ttt_sample,    _ttt_verify,    _ttt_format),
-    "gridworld": Kind("gridworld", _gw_sample,     _gw_verify,     _gw_format),
+    "sudoku": Kind("sudoku", _sudoku_sample, _sudoku_verify, _sudoku_format),
+    "crossword": Kind("crossword", _cw_sample, _cw_verify, _cw_format),
+    "rubik": Kind("rubik", _rubik_sample, _rubik_verify, _rubik_format),
+    "tictactoe": Kind("tictactoe", _ttt_sample, _ttt_verify, _ttt_format),
+    "gridworld": Kind("gridworld", _gw_sample, _gw_verify, _gw_format),
 }
 
 SOLVERS: dict[str, dict[str, Callable]] = {
-    "sudoku":    {"random": _sudoku_random, "greedy": _sudoku_greedy, "full": _sudoku_full},
-    "crossword": {"random": _cw_random,     "greedy": _cw_greedy,     "full": _cw_full},
-    "rubik":     {"random": _rubik_random,  "bfs":    _rubik_bfs},
-    "tictactoe": {"random": _ttt_random,    "center": _ttt_center,    "minimax": _ttt_minimax},
-    "gridworld": {"random": _gw_random,     "bfs":    _gw_bfs},
+    "sudoku": {"random": _sudoku_random, "greedy": _sudoku_greedy, "full": _sudoku_full},
+    "crossword": {"random": _cw_random, "greedy": _cw_greedy, "full": _cw_full},
+    "rubik": {"random": _rubik_random, "bfs": _rubik_bfs},
+    "tictactoe": {"random": _ttt_random, "center": _ttt_center, "minimax": _ttt_minimax},
+    "gridworld": {"random": _gw_random, "bfs": _gw_bfs},
 }
 
 
@@ -364,12 +382,15 @@ def list_kinds() -> list:
 def list_solvers(kind: str) -> list:
     return sorted(SOLVERS.get(kind, {}).keys())
 
+
 # Fibonacci-spaced difficulty radii for puzzle generation.
 # Instead of {"easy": 4, "medium": 6, "hard": 9}, use Fibonacci
 # ratios so the perceptual distance between levels is uniform.
 FIB_LEVELS = {"easy": 5, "medium": 8, "hard": 13}
 
 _ORIG_RUBIK_SAMPLE = _rubik_sample
+
+
 def _rubik_sample(puzzle_or_diff, seed):
     # accept either the old difficulty name or the raw integer depth
     if isinstance(puzzle_or_diff, str) and puzzle_or_diff in FIB_LEVELS:
@@ -377,4 +398,5 @@ def _rubik_sample(puzzle_or_diff, seed):
     else:
         depth = int(puzzle_or_diff) if not isinstance(puzzle_or_diff, str) else 6
     from app.puzzles.rubik import scramble
+
     return scramble(n_moves=depth, seed=seed)

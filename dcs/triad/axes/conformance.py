@@ -45,7 +45,9 @@ def behavioral(  # pragma: no cover
     return UNKNOWN  # pragma: no cover
 
 
-def certificate(claim: dict, cert: dict, *, verifier: Callable[[dict, dict], bool]) -> VState:  # pragma: no cover
+def certificate(
+    claim: dict, cert: dict, *, verifier: Callable[[dict, dict], bool]
+) -> VState:  # pragma: no cover
     try:
         ok = verifier(claim, cert)
     except Exception:  # pragma: no cover

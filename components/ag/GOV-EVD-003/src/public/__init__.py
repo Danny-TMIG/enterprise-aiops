@@ -1,3 +1,3 @@
-from .003 import Evd003, Evd003Error
+from .mod003 import Evd003, Evd003Error
 
-__all__ = ['Evd003', Evd003Error.__name__!r]
+__all__ = ["Evd003", "Evd003Error"]

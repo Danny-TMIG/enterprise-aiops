@@ -1,4 +1,5 @@
 """Proposer — ask the local model for a patch."""
+
 from __future__ import annotations
 
 import json
@@ -25,18 +26,20 @@ def _prompt(target: str, source: str, obs: Observation) -> str:
     return (
         "Harness report:\n"
         + json.dumps(report, indent=2)
-        + "\n\nFile: " + target + "\n\nSource:\n"
+        + "\n\nFile: "
+        + target
+        + "\n\nSource:\n"
         + source
     )
 
 
-def propose(target: str, source: str, obs: Observation,
-            swarm) -> str:
+def propose(target: str, source: str, obs: Observation, swarm) -> str:
     p = _prompt(target, source, obs)
     r = swarm.run_one(0, p, system=_SYSTEM, max_tokens=2048)
     text = r.text.strip()
     # drop any fences the model added despite instruction
     import re
+
     m = re.search(r"```[a-zA-Z]*\s*\n?(.*?)```", text, re.DOTALL)
     if m:
         text = m.group(1).strip()

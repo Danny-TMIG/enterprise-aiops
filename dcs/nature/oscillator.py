@@ -20,7 +20,9 @@ def kuramoto(n=100, K=2.0, steps=500, dt=0.01, seed=0):  # pragma: no cover
 
 def order_parameter(theta):  # pragma: no cover
     n = len(theta)
-    return abs(complex(sum(math.cos(t) for t in theta) / n, sum(math.sin(t) for t in theta) / n))  # pragma: no cover
+    return abs(
+        complex(sum(math.cos(t) for t in theta) / n, sum(math.sin(t) for t in theta) / n)
+    )  # pragma: no cover
 
 
 def firefly_sync(n=50, K=0.3, steps=200, seed=0):  # pragma: no cover

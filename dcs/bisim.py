@@ -5,22 +5,18 @@ bisimilar if every transition from one is matched by a same-label
 transition from the other to a bisimilar state, and vice versa. That is
 the coinductive definition; the implementation is partition refinement.
 """
+
 from __future__ import annotations
 
-from typing import Hashable
+from collections.abc import Hashable
 
 Label = Hashable
 State = Hashable
 LTS = dict[State, list[tuple[Label, State]]]
 
 
-def _signature(
-    lts: LTS, s: State, partition: dict[State, int]
-) -> frozenset[tuple[Label, int]]:
-    return frozenset(
-        (label, partition.get(nxt, -1))
-        for label, nxt in lts.get(s, [])
-    )
+def _signature(lts: LTS, s: State, partition: dict[State, int]) -> frozenset[tuple[Label, int]]:
+    return frozenset((label, partition.get(nxt, -1)) for label, nxt in lts.get(s, []))
 
 
 def _refine(lts: LTS) -> dict[State, int]:

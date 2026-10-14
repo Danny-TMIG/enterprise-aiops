@@ -11,7 +11,8 @@ from app.dominion.verdict import PASS, Verdict
 def _h(*p: str) -> str:
     m = hashlib.sha256()
     for s in p:
-        m.update(s.encode("utf-8")); m.update(b"\x1f")
+        m.update(s.encode("utf-8"))
+        m.update(b"\x1f")
     return "sha256:" + m.hexdigest()[:24]
 
 
@@ -26,14 +27,17 @@ class Witness:
 
     @property
     def id(self) -> str:
-        return _h("witness", self.role_id, self.kind,
-                  repr(self.payload)[:128])
+        return _h("witness", self.role_id, self.kind, repr(self.payload)[:128])
 
     def verify(self) -> Verdict:
         if self.verify_fn is None:
-            return Verdict.make(PASS, f"{self.role_id}.trivial",
-                                self.payload, repr(self.payload),
-                                "no checker; witness accepted")
+            return Verdict.make(
+                PASS,
+                f"{self.role_id}.trivial",
+                self.payload,
+                repr(self.payload),
+                "no checker; witness accepted",
+            )
         return self.verify_fn(self.payload)
 
     def to_dict(self) -> dict[str, Any]:

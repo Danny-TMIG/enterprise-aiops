@@ -1,4 +1,5 @@
 """Hardened C2 server, SQLite-backed."""
+
 from __future__ import annotations
 
 import json
@@ -51,6 +52,7 @@ CREATE TABLE IF NOT EXISTS control (
 
 class _AttrDict(dict):
     """A dict that also exposes keys as attributes."""
+
     def __getattr__(self, name):
         try:
             return self[name]
@@ -63,8 +65,7 @@ class C2Server:
         self.db_path = str(db_path)
         Path(self.db_path).parent.mkdir(parents=True, exist_ok=True)
         self._lock = threading.RLock()
-        self._conn = sqlite3.connect(
-            self.db_path, check_same_thread=False, isolation_level=None)
+        self._conn = sqlite3.connect(self.db_path, check_same_thread=False, isolation_level=None)
         self._conn.row_factory = sqlite3.Row
         self._conn.executescript(_SCHEMA)
 
@@ -86,17 +87,21 @@ class C2Server:
                 " hostname=excluded.hostname, os=excluded.os, "
                 " arch=excluded.arch, last_seen=excluded.last_seen, "
                 " status=excluded.status",
-                (bot.id, getattr(bot, "hostname", ""),
-                 getattr(bot, "os", ""), getattr(bot, "arch", ""),
-                 getattr(bot, "last_seen", now) or now,
-                 getattr(bot, "status", "active") or "active", now),
+                (
+                    bot.id,
+                    getattr(bot, "hostname", ""),
+                    getattr(bot, "os", ""),
+                    getattr(bot, "arch", ""),
+                    getattr(bot, "last_seen", now) or now,
+                    getattr(bot, "status", "active") or "active",
+                    now,
+                ),
             )
         return bot.id
 
     def get_bot(self, bot_id: str) -> _AttrDict:
         with self._lock:
-            row = self._conn.execute(
-                "SELECT * FROM bots WHERE id=?", (bot_id,)).fetchone()
+            row = self._conn.execute("SELECT * FROM bots WHERE id=?", (bot_id,)).fetchone()
         if row is None:
             raise KeyError(f"bot {bot_id!r} not found")
         d = _AttrDict(dict(row))
@@ -106,12 +111,11 @@ class C2Server:
     def list_bots(self, status: str | None = None) -> list[dict[str, Any]]:
         with self._lock:
             if status is None:
-                rows = self._conn.execute(
-                    "SELECT * FROM bots ORDER BY registered_at").fetchall()
+                rows = self._conn.execute("SELECT * FROM bots ORDER BY registered_at").fetchall()
             else:
                 rows = self._conn.execute(
-                    "SELECT * FROM bots WHERE status=? "
-                    "ORDER BY registered_at", (status,)).fetchall()
+                    "SELECT * FROM bots WHERE status=? ORDER BY registered_at", (status,)
+                ).fetchall()
         return [dict(r) for r in rows]
 
     # ── tasks ───────────────────────────────────────────────
@@ -122,23 +126,28 @@ class C2Server:
             self._conn.execute(
                 "INSERT INTO tasks(id, bot_id, cmd, args, status, created_at) "
                 "VALUES(?,?,?,?,'queued',?)",
-                (task.id, task.bot_id, task.cmd,
-                 json.dumps(getattr(task, "args", {}) or {}), time.time()),
+                (
+                    task.id,
+                    task.bot_id,
+                    task.cmd,
+                    json.dumps(getattr(task, "args", {}) or {}),
+                    time.time(),
+                ),
             )
         return task.id
 
-    def pending_tasks(self,
-                      bot_id: str | None = None) -> list[dict[str, Any]]:
+    def pending_tasks(self, bot_id: str | None = None) -> list[dict[str, Any]]:
         with self._lock:
             if bot_id is None:
                 rows = self._conn.execute(
-                    "SELECT * FROM tasks WHERE status IN "
-                    "('queued','sent') ORDER BY created_at").fetchall()
+                    "SELECT * FROM tasks WHERE status IN ('queued','sent') ORDER BY created_at"
+                ).fetchall()
             else:
                 rows = self._conn.execute(
                     "SELECT * FROM tasks WHERE bot_id=? "
                     "AND status IN ('queued','sent') ORDER BY created_at",
-                    (bot_id,)).fetchall()
+                    (bot_id,),
+                ).fetchall()
         return [dict(r) for r in rows]
 
     def dispatch(self, bot_id: str) -> dict[str, Any] | None:
@@ -147,82 +156,79 @@ class C2Server:
         with self._lock:
             row = self._conn.execute(
                 "SELECT * FROM tasks WHERE bot_id=? AND status='queued' "
-                "ORDER BY created_at LIMIT 1", (bot_id,)).fetchone()
+                "ORDER BY created_at LIMIT 1",
+                (bot_id,),
+            ).fetchone()
             if row is None:
                 return None
             now = time.time()
             self._conn.execute(
-                "UPDATE tasks SET status='sent', dispatched_at=? WHERE id=?",
-                (now, row["id"]))
-            self._conn.execute(
-                "UPDATE bots SET last_seen=? WHERE id=?", (now, bot_id))
+                "UPDATE tasks SET status='sent', dispatched_at=? WHERE id=?", (now, row["id"])
+            )
+            self._conn.execute("UPDATE bots SET last_seen=? WHERE id=?", (now, bot_id))
         out = dict(row)
         out["status"] = "sent"
         out["dispatched_at"] = now
         return out
 
-    def complete(self, task_id: str, bot_id: str, output: str,
-                 success: bool = True) -> int:
+    def complete(self, task_id: str, bot_id: str, output: str, success: bool = True) -> int:
         with self._lock:
             now = time.time()
             cur = self._conn.execute(
                 "INSERT INTO results(task_id, bot_id, output, success, "
                 " created_at) VALUES(?,?,?,?,?)",
-                (task_id, bot_id, output, 1 if success else 0, now))
+                (task_id, bot_id, output, 1 if success else 0, now),
+            )
             self._conn.execute(
-                "UPDATE tasks SET status='done', completed_at=? WHERE id=?",
-                (now, task_id))
+                "UPDATE tasks SET status='done', completed_at=? WHERE id=?", (now, task_id)
+            )
         return cur.lastrowid
 
     def results_for(self, bot_id: str) -> list[dict[str, Any]]:
         with self._lock:
             rows = self._conn.execute(
-                "SELECT * FROM results WHERE bot_id=? ORDER BY id",
-                (bot_id,)).fetchall()
+                "SELECT * FROM results WHERE bot_id=? ORDER BY id", (bot_id,)
+            ).fetchall()
         return [dict(r) for r in rows]
 
     # ── control ─────────────────────────────────────────────
-    def engage_kill_switch(self,
-                           reason: str = "manual") -> dict[str, Any]:
+    def engage_kill_switch(self, reason: str = "manual") -> dict[str, Any]:
         with self._lock:
             now = time.time()
             self._conn.execute(
-                "INSERT OR REPLACE INTO control(key, value) "
-                "VALUES('kill', ?)",
-                (json.dumps({"reason": reason, "at": now}),))
+                "INSERT OR REPLACE INTO control(key, value) VALUES('kill', ?)",
+                (json.dumps({"reason": reason, "at": now}),),
+            )
+            self._conn.execute("UPDATE bots SET status='terminated' WHERE status='active'")
             self._conn.execute(
-                "UPDATE bots SET status='terminated' WHERE status='active'")
-            self._conn.execute(
-                "UPDATE tasks SET status='cancelled' "
-                "WHERE status IN ('queued','sent')")
+                "UPDATE tasks SET status='cancelled' WHERE status IN ('queued','sent')"
+            )
         return {"status": "terminated", "reason": reason, "at": now}
 
     def kill_switch_engaged(self) -> bool:
         with self._lock:
-            row = self._conn.execute(
-                "SELECT value FROM control WHERE key='kill'").fetchone()
+            row = self._conn.execute("SELECT value FROM control WHERE key='kill'").fetchone()
         return row is not None
 
     def revoke_all_commands(self) -> int:
         with self._lock:
             cur = self._conn.execute(
-                "UPDATE tasks SET status='revoked' "
-                "WHERE status IN ('queued','sent')")
+                "UPDATE tasks SET status='revoked' WHERE status IN ('queued','sent')"
+            )
         return cur.rowcount or 0
 
     def heartbeat(self, bot_id: str) -> float:
         with self._lock:
             now = time.time()
             cur = self._conn.execute(
-                "UPDATE bots SET last_seen=?, status='active' WHERE id=?",
-                (now, bot_id))
+                "UPDATE bots SET last_seen=?, status='active' WHERE id=?", (now, bot_id)
+            )
             if cur.rowcount == 0:
                 raise KeyError(f"bot {bot_id!r} not found")
         return now
 
 
 class C2Controller:
-
     """Sandboxed command-and-control controller for the simulation.
 
     Tracks a set of simulated bots; `poll()` returns their state. The
@@ -230,6 +236,7 @@ class C2Controller:
     `engage_kill_switch()` marks the controller as inert; further calls
     to `poll()` reflect that.
     """
+
     def __init__(self, db_path: str = ":memory:", bots=None, seed: int = 0):
         self.db_path = db_path
         self.seed = seed
@@ -252,6 +259,7 @@ class C2Controller:
     def tick(self) -> dict:
         """Advance one simulation step and return the observation."""
         import time
+
         now = time.time()
         for b in self.bots.values():
             b.last_seen = now
@@ -261,10 +269,10 @@ class C2Controller:
 
     def poll(self) -> dict:
         import time
+
         return {
             "ts": time.time(),
             "count": len(self.bots),
             "kill_switch": self.kill_switch,
             "bots": {bid: b.to_dict() for bid, b in self.bots.items()},
         }
-

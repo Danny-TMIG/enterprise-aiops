@@ -3,6 +3,7 @@
 No dependency on app.dominion. Same shape as dominion workloads
 but defined here so the delta module runs standalone.
 """
+
 from __future__ import annotations
 
 import ast
@@ -41,6 +42,7 @@ def _extract(name: str):
         if name not in ns:
             raise NameError(f"{name!r} not found")
         return ns[name]
+
     return extract
 
 
@@ -74,22 +76,34 @@ class DifferentialVerifier:
             except Exception as e:
                 return Verdict(FAIL, self.id, f"raised on {fix!r}: {e}")
             if not self.equality(got, want):
-                return Verdict(FAIL, self.id,
-                               f"mismatch on {fix!r}: {got!r} != {want!r}")
+                return Verdict(FAIL, self.id, f"mismatch on {fix!r}: {got!r} != {want!r}")
         return Verdict(PASS, self.id, f"{len(self.fixtures)} fixtures match")
 
 
 # ── reference implementations ───────────────────────────────────
-def _ref_count_words(s): return len(str(s).split())
-def _ref_reverse_list(xs): return list(reversed(list(xs)))
+def _ref_count_words(s):
+    return len(str(s).split())
+
+
+def _ref_reverse_list(xs):
+    return list(reversed(list(xs)))
+
+
 def _ref_is_prime(n):
-    if n < 2: return False
+    if n < 2:
+        return False
     i = 2
     while i * i <= n:
-        if n % i == 0: return False
+        if n % i == 0:
+            return False
         i += 1
     return True
-def _ref_sum_list(xs): return sum(xs)
+
+
+def _ref_sum_list(xs):
+    return sum(xs)
+
+
 def _ref_parse_env_int(raw):
     return int(str(raw).replace("_", "").replace(",", ""))
 
@@ -105,7 +119,8 @@ WORKLOADS: dict[str, Workload] = {
             reference=_ref_count_words,
             fixtures=["", "hello", "hello world", "a b c d e"],
             extract=_extract("count_words"),
-        )),
+        ),
+    ),
     "reverse_list": Workload(
         "reverse_list",
         "Write a Python function `reverse_list(xs)` returning the "
@@ -116,7 +131,8 @@ WORKLOADS: dict[str, Workload] = {
             fixtures=[[], [1], [1, 2, 3], ["a", "b", "c"]],
             extract=_extract("reverse_list"),
             equality=lambda a, b: list(a) == list(b),
-        )),
+        ),
+    ),
     "is_prime": Workload(
         "is_prime",
         "Write a Python function `is_prime(n: int) -> bool` returning "
@@ -127,17 +143,18 @@ WORKLOADS: dict[str, Workload] = {
             fixtures=[-3, 0, 1, 2, 3, 4, 17, 25, 97],
             extract=_extract("is_prime"),
             equality=lambda a, b: bool(a) == bool(b),
-        )),
+        ),
+    ),
     "sum_list": Workload(
         "sum_list",
-        "Write a Python function `sum_list(xs)` returning the sum. "
-        "Only the function.",
+        "Write a Python function `sum_list(xs)` returning the sum. Only the function.",
         DifferentialVerifier(
             id="diff.sum_list",
             reference=_ref_sum_list,
             fixtures=[[], [0], [1, 2, 3], list(range(10))],
             extract=_extract("sum_list"),
-        )),
+        ),
+    ),
     "parse_env_int": Workload(
         "parse_env_int",
         "Write a Python function `parse_env_int(raw: str) -> int` "
@@ -147,7 +164,8 @@ WORKLOADS: dict[str, Workload] = {
             reference=_ref_parse_env_int,
             fixtures=["1", "1_000", "1,234", "0", "-42"],
             extract=_extract("parse_env_int"),
-        )),
+        ),
+    ),
 }
 
 
@@ -168,17 +186,21 @@ def _ref_zigzag(pair):
     i = j = 0
     while i < len(a) or j < len(b):
         if i < len(a):
-            out.append(a[i]); i += 1
+            out.append(a[i])
+            i += 1
         if j < len(b):
-            out.append(b[j]); j += 1
+            out.append(b[j])
+            j += 1
     return out
 
 
 def _extract_zigzag(text: str):
     fn = _extract("zigzag")(text)
+
     def wrapped(pair):
         a, b = pair
         return list(fn(a, b))
+
     return wrapped
 
 

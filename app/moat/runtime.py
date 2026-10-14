@@ -1,4 +1,5 @@
 """MoatMesh + MoatRuntime + score_subsystem + record_run."""
+
 from __future__ import annotations
 
 from typing import Any
@@ -19,11 +20,17 @@ class MoatMesh:
 
     def factors(self) -> dict[str, float]:
         base = {
-            "C_g": 1.0, "X_h": 1.0, "S_g": 0.72,
-            "E_g": 0.9, "P_g": 1.0, "Q_g": 1.0, "K_g": 1.0,
+            "C_g": 1.0,
+            "X_h": 1.0,
+            "S_g": 0.72,
+            "E_g": 0.9,
+            "P_g": 1.0,
+            "Q_g": 1.0,
+            "K_g": 1.0,
         }
-        base.update({k: float(v) for k, v in self._seed_factors.items()
-                     if isinstance(v, (int, float))})
+        base.update(
+            {k: float(v) for k, v in self._seed_factors.items() if isinstance(v, (int, float))}
+        )
         return base
 
     def to_dict(self) -> dict[str, Any]:
@@ -59,7 +66,12 @@ class MoatRuntime:
         return {
             "axes": {"real": 1.0, "exists": 1.0, "coherent": 1.0},
             "moat_3axis": 1.0,
-            "X_h": 1.0, "C_g": 1.0, "S_g": 0.72,
-            "E_g": 0.9, "P_g": 1.0, "Q_g": 1.0, "K_g": 1.0,
+            "X_h": 1.0,
+            "C_g": 1.0,
+            "S_g": 0.72,
+            "E_g": 0.9,
+            "P_g": 1.0,
+            "Q_g": 1.0,
+            "K_g": 1.0,
             "score": 1.0,
         }

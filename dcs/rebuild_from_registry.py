@@ -3,13 +3,13 @@ import json
 from pathlib import Path
 
 ROOT = Path.cwd()
-SDLC = json.loads((ROOT/"dcs/standards/sdlc.json").read_text())
-REG = json.loads((ROOT/"dcs/standards/registry.json").read_text())["registry"]
-OUT = ROOT/"dcs/tests/sdlc"
+SDLC = json.loads((ROOT / "dcs/standards/sdlc.json").read_text())
+REG = json.loads((ROOT / "dcs/standards/registry.json").read_text())["registry"]
+OUT = ROOT / "dcs/tests/sdlc"
 OUT.mkdir(parents=True, exist_ok=True)
-(OUT/"__init__.py").touch()
+(OUT / "__init__.py").touch()
 
-body_short = lambda b: b.split()[0].replace("/","").replace("-","").upper()
+body_short = lambda b: b.split()[0].replace("/", "").replace("-", "").upper()
 
 fixed = 0
 for r in SDLC["requirements"]:
@@ -19,15 +19,15 @@ for r in SDLC["requirements"]:
     e = REG[std]
     # rotate clause/control/evidence by category index so rows differ
     ci = hash(r["id"]) % len(e["clauses"])
-    ki = hash(r["id"]+"c") % len(e["controls"])
-    ei = hash(r["id"]+"e") % len(e["evidence"])
+    ki = hash(r["id"] + "c") % len(e["controls"])
+    ei = hash(r["id"] + "e") % len(e["evidence"])
     r["identity"]["clause"] = e["clauses"][ci]
     r["identity"]["control"] = e["controls"][ki]
     r["controls"] = [e["controls"][ki]]
     r["evidence"] = [f"{r['id']}.{e['evidence'][ei]}"]
     fixed += 1
 
-(ROOT/"dcs/standards/sdlc.json").write_text(json.dumps(SDLC, indent=2))
+(ROOT / "dcs/standards/sdlc.json").write_text(json.dumps(SDLC, indent=2))
 print(f"manifest: {fixed} rows given real clauses")
 
 tmpl = '''"""Derived from {std} / {body}: {clause}."""
@@ -50,9 +50,15 @@ def test_{slug}_clause_in_registry():
 n = 0
 for r in SDLC["requirements"]:
     sid = r["id"]
-    slug = sid.lower().replace("-","_")
-    (OUT/f"test_{slug}.py").write_text(tmpl.format(
-        std=r["identity"]["standard"], body=r["identity"]["body"],
-        clause=r["identity"]["clause"], sid=sid, slug=slug))
+    slug = sid.lower().replace("-", "_")
+    (OUT / f"test_{slug}.py").write_text(
+        tmpl.format(
+            std=r["identity"]["standard"],
+            body=r["identity"]["body"],
+            clause=r["identity"]["clause"],
+            sid=sid,
+            slug=slug,
+        )
+    )
     n += 1
 print(f"tests: {n} rewritten")

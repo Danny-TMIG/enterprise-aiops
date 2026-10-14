@@ -1,13 +1,13 @@
 from .correlation import (
-    Correlation,
-    CorrelationRegistry,
-    CorrelationError,
     AlreadyClosedError,
+    Correlation,
+    CorrelationError,
+    CorrelationRegistry,
 )
 
 __all__ = [
-    "Correlation",
-    "CorrelationRegistry",
-    "CorrelationError",
     "AlreadyClosedError",
+    "Correlation",
+    "CorrelationError",
+    "CorrelationRegistry",
 ]

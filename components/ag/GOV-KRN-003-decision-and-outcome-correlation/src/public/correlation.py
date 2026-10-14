@@ -13,6 +13,7 @@ Invariants:
   - a correlation record's chain_hash covers its full field set
   - closing a correlation twice is rejected
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -22,7 +23,7 @@ import threading
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Self
 
 SCHEMA_SQL = """
 CREATE TABLE IF NOT EXISTS correlations (
@@ -51,13 +52,13 @@ class AlreadyClosedError(CorrelationError):
 class Correlation:
     correlation_id: str
     opened_at: float
-    closed_at: Optional[float]
-    decision_refs: List[str]
-    outcome_ref: Optional[str]
+    closed_at: float | None
+    decision_refs: list[str]
+    outcome_ref: str | None
     status: str
     chain_hash: str
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "correlation_id": self.correlation_id,
             "opened_at": self.opened_at,
@@ -73,10 +74,8 @@ def _canonical(obj: Any) -> str:
     return json.dumps(obj, sort_keys=True, separators=(",", ":"))
 
 
-def _chain_hash(record: Dict[str, Any]) -> str:
-    payload = _canonical(
-        {k: v for k, v in record.items() if k != "chain_hash"}
-    )
+def _chain_hash(record: dict[str, Any]) -> str:
+    payload = _canonical({k: v for k, v in record.items() if k != "chain_hash"})
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
@@ -96,16 +95,16 @@ class CorrelationRegistry:
         with self._lock:
             self._conn.close()
 
-    def __enter__(self) -> "CorrelationRegistry":
+    def __enter__(self) -> Self:
         return self
 
-    def __exit__(self, *exc: Any) -> None:
+    def __exit__(self, *exc: object) -> None:
         self.close()
 
     def open(
         self,
         correlation_id: str,
-        decision_refs: List[str],
+        decision_refs: list[str],
     ) -> Correlation:
         if not correlation_id:
             raise CorrelationError("correlation_id must be non-empty")
@@ -121,9 +120,7 @@ class CorrelationRegistry:
                     (correlation_id,),
                 ).fetchone()
                 if existing:
-                    raise CorrelationError(
-                        f"correlation {correlation_id} already opened"
-                    )
+                    raise CorrelationError(f"correlation {correlation_id} already opened")
                 record = {
                     "correlation_id": correlation_id,
                     "opened_at": time.time(),
@@ -139,9 +136,12 @@ class CorrelationRegistry:
                     "  outcome_ref, status, chain_hash)"
                     " VALUES (?, ?, ?, ?, ?, ?, ?)",
                     (
-                        record["correlation_id"], record["opened_at"],
-                        record["closed_at"], _canonical(record["decision_refs"]),
-                        record["outcome_ref"], record["status"],
+                        record["correlation_id"],
+                        record["opened_at"],
+                        record["closed_at"],
+                        _canonical(record["decision_refs"]),
+                        record["outcome_ref"],
+                        record["status"],
                         record["chain_hash"],
                     ),
                 )
@@ -151,9 +151,7 @@ class CorrelationRegistry:
                 raise
         return Correlation(**record)
 
-    def close_with_outcome(
-        self, correlation_id: str, outcome_ref: str
-    ) -> Correlation:
+    def close_with_outcome(self, correlation_id: str, outcome_ref: str) -> Correlation:
         if not outcome_ref:
             raise CorrelationError("outcome_ref must be non-empty")
         with self._lock:
@@ -167,13 +165,9 @@ class CorrelationRegistry:
                     (correlation_id,),
                 ).fetchone()
                 if row is None:
-                    raise CorrelationError(
-                        f"unknown correlation {correlation_id}"
-                    )
+                    raise CorrelationError(f"unknown correlation {correlation_id}")
                 if row[5] == "CLOSED":
-                    raise AlreadyClosedError(
-                        f"correlation {correlation_id} already closed"
-                    )
+                    raise AlreadyClosedError(f"correlation {correlation_id} already closed")
                 opened_record = {
                     "correlation_id": row[0],
                     "opened_at": row[1],
@@ -184,9 +178,7 @@ class CorrelationRegistry:
                 }
                 expected_open = _chain_hash(opened_record)
                 if expected_open != row[6]:
-                    raise CorrelationError(
-                        "open record integrity mismatch"
-                    )
+                    raise CorrelationError("open record integrity mismatch")
                 closed = {
                     "correlation_id": row[0],
                     "opened_at": row[1],
@@ -200,8 +192,10 @@ class CorrelationRegistry:
                     "UPDATE correlations SET closed_at = ?, outcome_ref = ?,"
                     " status = ?, chain_hash = ? WHERE correlation_id = ?",
                     (
-                        closed["closed_at"], closed["outcome_ref"],
-                        closed["status"], closed["chain_hash"],
+                        closed["closed_at"],
+                        closed["outcome_ref"],
+                        closed["status"],
+                        closed["chain_hash"],
                         correlation_id,
                     ),
                 )
@@ -222,16 +216,19 @@ class CorrelationRegistry:
         if row is None:
             raise CorrelationError(f"unknown correlation {correlation_id}")
         return Correlation(
-            correlation_id=row[0], opened_at=row[1], closed_at=row[2],
-            decision_refs=json.loads(row[3]), outcome_ref=row[4],
-            status=row[5], chain_hash=row[6],
+            correlation_id=row[0],
+            opened_at=row[1],
+            closed_at=row[2],
+            decision_refs=json.loads(row[3]),
+            outcome_ref=row[4],
+            status=row[5],
+            chain_hash=row[6],
         )
 
-    def open_correlations(self) -> List[str]:
+    def open_correlations(self) -> list[str]:
         with self._lock:
             rows = self._conn.execute(
-                "SELECT correlation_id FROM correlations WHERE status = 'OPEN'"
-                " ORDER BY opened_at"
+                "SELECT correlation_id FROM correlations WHERE status = 'OPEN' ORDER BY opened_at"
             ).fetchall()
         return [r[0] for r in rows]
 

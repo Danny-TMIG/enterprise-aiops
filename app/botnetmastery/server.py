@@ -4,7 +4,15 @@ from typing import Any
 
 
 class Bot:
-    def __init__(self, id: str, host: str, os: str, arch: str, status: str = "active", last_seen: float | None = None):
+    def __init__(
+        self,
+        id: str,
+        host: str,
+        os: str,
+        arch: str,
+        status: str = "active",
+        last_seen: float | None = None,
+    ):
         self.id = id
         self.host = host
         self.os = os
@@ -17,7 +25,7 @@ class Bot:
             "os": self.os,
             "arch": self.arch,
             "status": self.status,
-            "last_seen": self.last_seen
+            "last_seen": self.last_seen,
         }
 
     @classmethod
@@ -51,7 +59,15 @@ class Bot:
 
 
 class Task:
-    def __init__(self, id: str, bot_id: str, command: str, args: dict[str, Any], status: str = "pending", result: Any | None = None):
+    def __init__(
+        self,
+        id: str,
+        bot_id: str,
+        command: str,
+        args: dict[str, Any],
+        status: str = "pending",
+        result: Any | None = None,
+    ):
         self.id = id
         self.bot_id = bot_id
         self.command = command
@@ -64,7 +80,7 @@ class Task:
             "command": self.command,
             "args": self.args,
             "status": self.status,
-            "result": self.result
+            "result": self.result,
         }
 
     @classmethod
@@ -105,7 +121,7 @@ class C2Server:
     def queue_task(self, *args: Any, **kwargs: Any) -> Any:
         if self.kill_switch_engaged or self.killed:
             raise RuntimeError("Kill switch engaged: cannot queue tasks.")
-        
+
         if len(args) == 1 and isinstance(args[0], Task):
             task = args[0]
         else:
@@ -136,7 +152,11 @@ class C2Server:
             task._data["result"] = result
 
     def pending_tasks(self, bot_id: str) -> list[Task]:
-        return [t for t in self.tasks.values() if t.bot_id == bot_id and t.status in ("pending", "dispatched")]
+        return [
+            t
+            for t in self.tasks.values()
+            if t.bot_id == bot_id and t.status in ("pending", "dispatched")
+        ]
 
     def heartbeat(self, bot_id: str) -> None:
         if bot_id in self.bots:
@@ -180,7 +200,9 @@ class Simulation:
         return bots
 
     def queue_broadcast(self, *args: Any, **kwargs: Any) -> Any:
-        action = kwargs.get("action") or kwargs.get("cmd") or (args[0] if len(args) > 0 else "broadcast")
+        action = (
+            kwargs.get("action") or kwargs.get("cmd") or (args[0] if len(args) > 0 else "broadcast")
+        )
         payload = kwargs.get("payload") or kwargs.get("args") or (args[1] if len(args) > 1 else {})
         self.broadcast_queue.append({"action": action, "payload": payload})
         task_ids = []

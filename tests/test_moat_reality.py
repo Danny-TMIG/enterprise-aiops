@@ -3,6 +3,7 @@
 If the reality probe says 1.0, the moat's X axis must reflect that
 on the subsystems that *define* reality.
 """
+
 import json
 from pathlib import Path
 
@@ -16,12 +17,14 @@ ROOT = Path(__file__).resolve().parent.parent
 
 def test_reality_definition_files_score_x_1():
     """Files that define reality must score X = 1.0."""
-    for rel in ("app/reality/probe.py",
-                "app/reality/install.py",
-                "app/proprietary/base.py",
-                "app/proprietary/registry.py",
-                "app/frontier/dis.py",
-                "app/dis/models/local_mlx.py"):
+    for rel in (
+        "app/reality/probe.py",
+        "app/reality/install.py",
+        "app/proprietary/base.py",
+        "app/proprietary/registry.py",
+        "app/frontier/dis.py",
+        "app/dis/models/local_mlx.py",
+    ):
         p = ROOT / rel
         assert p.exists(), rel
         sc = score_subsystem(rel, p, p.read_text())
@@ -54,8 +57,9 @@ def test_moat_3axis_is_positive_when_reality_is():
 
 
 def test_execution_history_is_recorded():
-    record_run({"id": "test-run", "kernel": {"status": "PASS"},
-                "cpvo": {"cpvo_usd": 0.0}}, merged=False)
+    record_run(
+        {"id": "test-run", "kernel": {"status": "PASS"}, "cpvo": {"cpvo_usd": 0.0}}, merged=False
+    )
     mesh = MoatMesh().refresh()
     f = mesh.equation.factors()
     assert f["X_h"] > 0.0, f

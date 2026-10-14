@@ -4,7 +4,14 @@ from dcs.generate import requirement  # pragma: no cover
 
 
 def box(w: float, h: float, d: float) -> dict:  # pragma: no cover
-    return {"kind": "box", "w": w, "h": h, "d": d, "volume": w * h * d, "vertices": 8}  # pragma: no cover
+    return {
+        "kind": "box",
+        "w": w,
+        "h": h,
+        "d": d,
+        "volume": w * h * d,
+        "vertices": 8,
+    }  # pragma: no cover
 
 
 @requirement(

@@ -1,4 +1,5 @@
 """Claim 4: one M4 Max is one M4 Max."""
+
 from __future__ import annotations
 
 import os
@@ -14,18 +15,22 @@ def model_size() -> tuple:
     size = 0
     for p in hf.rglob("model*.safetensors"):
         size += p.stat().st_size
-    return size, f"{size / (1024 ** 3):.2f} GiB weights on disk"
+    return size, f"{size / (1024**3):.2f} GiB weights on disk"
 
 
 def measure_throughput() -> tuple:
     from app.dispatch.models.base import ModelRequest
     from app.dispatch.models.local_mlx import LocalMLXProvider, _mlx_available
+
     if not _mlx_available():
         return 0.0, "MLX unavailable"
     p = LocalMLXProvider("scale-bench")
-    req = ModelRequest(task="coding",
-                       prompt="Write a one-line Python function that adds 1.",
-                       max_tokens=64, temperature=0.0)
+    req = ModelRequest(
+        task="coding",
+        prompt="Write a one-line Python function that adds 1.",
+        max_tokens=64,
+        temperature=0.0,
+    )
     t0 = time.time()
     r = p.complete(req)
     dt = time.time() - t0
@@ -36,7 +41,7 @@ def measure_throughput() -> tuple:
 
 def main() -> int:
     print("── claim 4: one M4 Max is one M4 Max ──")
-    size, sz = model_size()
+    _size, sz = model_size()
     print(f"  model: {sz}")
     tps, tp = measure_throughput()
     print(f"  throughput: {tp}")
@@ -58,8 +63,7 @@ def main() -> int:
     print("  failure domain: 1 machine")
     print()
     if tps > 0:
-        print(f"  verdict: ceiling = 1 machine × {tps:.0f} tok/s × "
-              f"{per_hour:.0f} artifacts/h")
+        print(f"  verdict: ceiling = 1 machine × {tps:.0f} tok/s × {per_hour:.0f} artifacts/h")
     else:
         print("  verdict: throughput unmeasurable on this host")
     return 0

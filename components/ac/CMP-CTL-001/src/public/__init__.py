@@ -1,3 +1,3 @@
-from .001 import Ctl001, Ctl001Error
+from .mod001 import Ctl001, Ctl001Error
 
-__all__ = ['Ctl001', Ctl001Error.__name__!r]
+__all__ = ["Ctl001", "Ctl001Error"]

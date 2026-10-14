@@ -9,6 +9,7 @@ Usage:
 Reads decisions/<ID>.json, updates the record, recomputes the seal,
 and re-runs the closure report.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -16,7 +17,7 @@ import hashlib
 import json
 import subprocess
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -44,7 +45,7 @@ def main() -> int:
     rec["selected"] = args.selected
     rec["rationale"] = args.rationale
     rec["closed_by"] = args.closed_by
-    rec["closed_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    rec["closed_at"] = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
     rec["status"] = "CLOSED"
 
     payload = json.dumps(

@@ -11,6 +11,7 @@ returns a new record. The chain is content-addressed end to end.
     Rest       record the state as content-addressed
     Recreate   generate the successor
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -22,7 +23,8 @@ from typing import Any
 def _h(*parts: str) -> str:
     m = hashlib.sha256()
     for p in parts:
-        m.update(p.encode("utf-8")); m.update(b"\x1f")
+        m.update(p.encode("utf-8"))
+        m.update(b"\x1f")
     return "sha256:" + m.hexdigest()[:16]
 
 
@@ -33,8 +35,7 @@ class Confession:
 
     @property
     def id(self) -> str:
-        return _h("confession", self.run_digest,
-                  *[s["sin"] + s["subject"] for s in self.sins])
+        return _h("confession", self.run_digest, *[s["sin"] + s["subject"] for s in self.sins])
 
 
 @dataclass
@@ -44,8 +45,7 @@ class Separation:
 
     @property
     def id(self) -> str:
-        return _h("separation", self.confession_id,
-                  *sorted(self.partitions.keys()))
+        return _h("separation", self.confession_id, *sorted(self.partitions.keys()))
 
 
 @dataclass
@@ -111,6 +111,7 @@ class Recreate:
 # ── seven stages ────────────────────────────────────────────────
 def confess(run) -> Confession:
     from app.canon.sins import detect_all
+
     sins = [s.to_dict() for s in detect_all([run])]
     return Confession(run_digest=run.digest, sins=sins)
 
@@ -127,7 +128,7 @@ def separate(c: Confession) -> Separation:
 def witness(sep: Separation) -> Witness:
     ev: dict[str, str] = {}
     for key, items in sep.partitions.items():
-        names = sorted(set(i["sin"] for i in items))
+        names = sorted({i["sin"] for i in items})
         ev[key] = f"{len(items)} sin(s) in class {key}: " + ",".join(names)
     return Witness(separation_id=sep.id, evidence=ev)
 
@@ -151,8 +152,7 @@ def reconcile(j: Judgment) -> Reconciliation:
 
 
 def rest(r: Reconciliation, state: Any) -> Rest:
-    return Rest(reconciliation_id=r.id,
-                state_hash=_h("state", r.id, repr(state)[:128]))
+    return Rest(reconciliation_id=r.id, state_hash=_h("state", r.id, repr(state)[:128]))
 
 
 def recreate(rs: Rest, successor_digest: str) -> Recreate:
@@ -168,8 +168,7 @@ def genesis(run) -> dict:
     rs = rest(r, run.digest)
     rc = recreate(rs, successor_digest=_h("next", rs.id))
     return {
-        "stages": ["confess", "separate", "witness", "judge",
-                   "reconcile", "rest", "recreate"],
+        "stages": ["confess", "separate", "witness", "judge", "reconcile", "rest", "recreate"],
         "confession_id": c.id,
         "separation_id": s.id,
         "witness_id": w.id,

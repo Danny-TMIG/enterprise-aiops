@@ -18,13 +18,13 @@ def main(argv) -> int:
         return 2
     src, sigf = Path(argv[1]), Path(argv[2])
     if not src.exists():
-        print(f"missing: {src}", file=sys.stderr); return 1
+        print(f"missing: {src}", file=sys.stderr)
+        return 1
     if not sigf.exists():
-        print(f"missing: {sigf}", file=sys.stderr); return 1
+        print(f"missing: {sigf}", file=sys.stderr)
+        return 1
     key = os.environ.get(KEY_ENV, DEFAULT).encode()
-    expected = hmac.new(
-        key, hashlib.sha256(src.read_bytes()).digest(), hashlib.sha256
-    ).digest()
+    expected = hmac.new(key, hashlib.sha256(src.read_bytes()).digest(), hashlib.sha256).digest()
     got = base64.b64decode(sigf.read_bytes())
     if hmac.compare_digest(expected, got):
         print("  SBOM signature VALID")

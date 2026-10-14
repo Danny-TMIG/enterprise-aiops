@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import os
 import json
 from pathlib import Path
 
@@ -27,7 +26,6 @@ COMPONENTS = [
     ("ax", "COG-ASSUR-002", "COG-ASSUR-002-replay-and-evaluation-runtime"),
     ("ax", "COG-ASSUR-003", "COG-ASSUR-003-performance-manager"),
     ("ax", "COG-ASSUR-004", "COG-ASSUR-004-security-integration"),
-    
     # AG — Aether Govern (24 components)
     ("ag", "GOV-KRN-001", "GOV-KRN-001-governance-object-model-and-registry"),
     ("ag", "GOV-KRN-002", "GOV-KRN-002-governed-state-and-transition-engine"),
@@ -53,7 +51,6 @@ COMPONENTS = [
     ("ag", "GOV-ADM-001", "GOV-ADM-001-govern-control-plane-and-configuration"),
     ("ag", "GOV-ADM-002", "GOV-ADM-002-health-observability-security-and-incident-interface"),
     ("ag", "GOV-FED-001", "GOV-FED-001-federation-gateway-and-domain-exchange-coordinator"),
-    
     # AC — Aether Compute (30 components)
     ("ac", "CMP-CTL-001", "CMP-CTL-001-compute-contract-kernel"),
     ("ac", "CMP-CTL-002", "CMP-CTL-002-execution-gateway"),
@@ -87,12 +84,19 @@ COMPONENTS = [
     ("ac", "CMP-ECO-001", "CMP-ECO-001-quote-and-economic-optimizer"),
 ]
 
+
 def main():
     print("🧬 [ASF v1.2] Scaffolding complete Aether monorepo workspace...")
-    
+
     # 1. Root directories
     roots = [
-        "catalog", "contracts", "libraries", "integration", "docs", "tooling", "examples",
+        "catalog",
+        "contracts",
+        "libraries",
+        "integration",
+        "docs",
+        "tooling",
+        "examples",
         "deploy/units/core-governance-cell/build",
         "deploy/units/core-governance-cell/config",
         "deploy/units/core-governance-cell/manifests",
@@ -101,57 +105,83 @@ def main():
         "deploy/profiles/enterprise-multidepartment",
         "deploy/profiles/device-continuity",
         "deploy/releases/release-1.0.0",
-        ".github/workflows"
+        ".github/workflows",
     ]
     for r in roots:
         Path(r).mkdir(parents=True, exist_ok=True)
-        
+
     # 2. Core root documentation and config files
-    Path("AUTHORITY.md").write_text("# AUTHORITY.md — The Mark Intelligence Group\n\nGoverned under ASF v1.2 requirements. Approval: ASF12-ENG-004.\n")
-    Path("STATUS.md").write_text("# STATUS.md — Engineering Review Package\n\nStatus: Engineering review package. Approved v1.1 requirements retained.\n")
+    Path("AUTHORITY.md").write_text(
+        "# AUTHORITY.md — The Mark Intelligence Group\n\nGoverned under ASF v1.2 requirements. Approval: ASF12-ENG-004.\n"
+    )
+    Path("STATUS.md").write_text(
+        "# STATUS.md — Engineering Review Package\n\nStatus: Engineering review package. Approved v1.1 requirements retained.\n"
+    )
     Path(".gitignore").write_text(".venv/\n__pycache__/\n*.egg-info/\nbuild/\ndist/\n.DS_Store\n")
-    
+
     # 3. Catalog Inventory Index
     catalog_data = {
         "version": "1.2.0",
-        "components": [{"layer": layer, "id": cid, "path": f"components/{layer}/{slug}"} for layer, cid, slug in COMPONENTS]
+        "components": [
+            {"layer": layer, "id": cid, "path": f"components/{layer}/{slug}"}
+            for layer, cid, slug in COMPONENTS
+        ],
     }
     Path("catalog/components.json").write_text(json.dumps(catalog_data, indent=2))
-    
+
     # 4. Scaffold all 75 component packages with standard subfolders & files
     print("📦 [COMPONENTS] Provisioning 75 component package trees...")
     for layer, cid, slug in COMPONENTS:
         comp_dir = Path(f"components/{layer}/{slug}")
         subdirs = [
-            "src/public", "src/modules", "src/adapters",
-            "tests/unit", "tests/contract", "tests/component", "tests/fixtures",
-            "config", "migrations", "docs"
+            "src/public",
+            "src/modules",
+            "src/adapters",
+            "tests/unit",
+            "tests/contract",
+            "tests/component",
+            "tests/fixtures",
+            "config",
+            "migrations",
+            "docs",
         ]
         for sub in subdirs:
             (comp_dir / sub).mkdir(parents=True, exist_ok=True)
-            
+
         # Component README and component.json metadata
-        (comp_dir / "README.md").write_text(f"# {cid} — Component Package\n\nGoverned under ASF v1.2 specifications.\n")
-        
+        (comp_dir / "README.md").write_text(
+            f"# {cid} — Component Package\n\nGoverned under ASF v1.2 specifications.\n"
+        )
+
         meta = {
             "component_id": cid,
             "layer": layer.upper(),
             "status": "Core v1" if "004" not in cid and "005" not in cid else "Deferred/Gated",
-            "governance": "ASF11-FR-001 through ASF11-FR-017"
+            "governance": "ASF11-FR-001 through ASF11-FR-017",
         }
         (comp_dir / "component.json").write_text(json.dumps(meta, indent=2))
-        (comp_dir / "CHANGELOG.md").write_text(f"# Changelog - {cid}\n\n- 1.0.0: Initial baseline packaging.\n")
+        (comp_dir / "CHANGELOG.md").write_text(
+            f"# Changelog - {cid}\n\n- 1.0.0: Initial baseline packaging.\n"
+        )
 
     # 5. Deployable Unit Scaffold
     unit_dir = Path("deploy/units/core-governance-cell")
-    (unit_dir / "unit.json").write_text(json.dumps({
-        "unit_id": "core-governance-cell",
-        "owner": "Govern Kernel Team",
-        "constituent_components": ["GOV-KRN-001", "GOV-KRN-002", "GOV-IAM-003"]
-    }, indent=2))
-    (unit_dir / "runbook.md").write_text("# Core Governance Cell Runbook\n\nOperational diagnostics and recovery procedures.\n")
+    (unit_dir / "unit.json").write_text(
+        json.dumps(
+            {
+                "unit_id": "core-governance-cell",
+                "owner": "Govern Kernel Team",
+                "constituent_components": ["GOV-KRN-001", "GOV-KRN-002", "GOV-IAM-003"],
+            },
+            indent=2,
+        )
+    )
+    (unit_dir / "runbook.md").write_text(
+        "# Core Governance Cell Runbook\n\nOperational diagnostics and recovery procedures.\n"
+    )
 
     print("💯 [COMPLETE] Aether monorepo successfully scaffolded with all 75 components.")
+
 
 if __name__ == "__main__":
     main()

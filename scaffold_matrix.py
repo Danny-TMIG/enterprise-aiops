@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import os
-import sys
 
 BASE_DIR = os.path.expanduser("~/enterprise_aiops/sovereign-bounded-matrix")
 
@@ -13,8 +12,9 @@ DIRECTORIES = [
     "mark/certificates",
     "mark/sbom",
     "00_START_HERE",
-    "90_PROVENANCE_AND_SUPERSEDED_ARTIFACT_INDEX"
+    "90_PROVENANCE_AND_SUPERSEDED_ARTIFACT_INDEX",
 ]
+
 
 def create_structure():
     print("=== [ASF-MATRIX] Scaffolding Sovereign-Bounded Matrix Trees ===")
@@ -23,6 +23,7 @@ def create_structure():
         os.makedirs(path, exist_ok=True)
         print(f"Provisioned Node: {d}")
 
+
 def write_file(rel_path, content):
     full_path = os.path.join(BASE_DIR, rel_path)
     os.makedirs(os.path.dirname(full_path), exist_ok=True)
@@ -30,9 +31,12 @@ def write_file(rel_path, content):
         f.write(content.strip() + "\n")
     print(f"Generated Artifact: {rel_path}")
 
+
 def generate_codebase():
     # 1. Platform Server Core & ABAC AuthZ (`platform/app/core/security.py`)
-    write_file("platform/app/core/security.py", '''
+    write_file(
+        "platform/app/core/security.py",
+        """
 import hashlib
 import hmac
 import time
@@ -51,10 +55,13 @@ class SovereignAuthEngine:
         salt = base64.b64decode(stored_salt.encode('utf-8'))
         pwd_hash = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 100000)
         return base64.b64encode(pwd_hash).decode('utf-8') == stored_hash
-''')
+""",
+    )
 
     # 2. Daemon Audit Logger with HMAC Chaining (`daemon/audit/logger.py`)
-    write_file("daemon/audit/logger.py", '''
+    write_file(
+        "daemon/audit/logger.py",
+        """
 import hmac
 import hashlib
 import json
@@ -75,14 +82,17 @@ class ChainedAuditLogger:
         }
         entry_str = json.dumps(entry, sort_keys=True)
         current_hash = hmac.new(self.secret_key, entry_str.encode('utf-8'), hashlib.sha256).hexdigest()
-        
+
         signed_entry = {**entry, "current_hash": current_hash}
         self.previous_hash = current_hash
         return signed_entry
-''')
+""",
+    )
 
     # 3. First-Party Mark SBOM Generator (`mark/sbom/generator.py`)
-    write_file("mark/sbom/generator.py", '''
+    write_file(
+        "mark/sbom/generator.py",
+        """
 import json
 import time
 
@@ -109,10 +119,13 @@ def generate_sbom():
 
 if __name__ == "__main__":
     print(generate_sbom())
-''')
+""",
+    )
 
     # 4. Dockerfile for Multi-Stage Production Build
-    write_file("Dockerfile", '''
+    write_file(
+        "Dockerfile",
+        """
 FROM python:3.11-slim AS builder
 WORKDIR /app
 COPY platform/ requirements.txt* ./
@@ -126,9 +139,11 @@ COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/pytho
 COPY . /app/
 EXPOSE 8000
 CMD ["uvicorn", "platform.app.__main__:app", "--host", "0.0.0.0", "--port", "8000"]
-''')
+""",
+    )
 
     print("=== [ASF-MATRIX] Sibling trees and security subsystems successfully materialized. ===")
+
 
 if __name__ == "__main__":
     create_structure()

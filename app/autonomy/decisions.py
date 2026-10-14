@@ -1,19 +1,23 @@
 class Decision:
-    def __init__(self, name: str = "", action: str = "", metadata: dict = None, **kwargs):
+    def __init__(self, name: str = "", action: str = "", metadata: dict | None = None, **kwargs):
         self.name = name
         self.action = action
         self.metadata = metadata or {}
         for k, v in kwargs.items():
             setattr(self, k, v)
 
+
 class Rule:
-    def __init__(self, *args, name: str = "", condition=None, action=None, priority: int = 0, **kwargs):
+    def __init__(
+        self, *args, name: str = "", condition=None, action=None, priority: int = 0, **kwargs
+    ):
         self.name = name or kwargs.get("id", "rule")
         self.condition = condition or (lambda ctx: True)
         self.action = action or (lambda ctx: None)
         self.priority = priority or kwargs.get("weight", 0)
         for k, v in kwargs.items():
             setattr(self, k, v)
+
 
 class DecisionEngine:
     def __init__(self, **kwargs):
@@ -48,7 +52,5 @@ class DecisionEngine:
         return out
 
 
-def evaluate_decision(
-context=None):
+def evaluate_decision(context=None):
     return DecisionEngine().evaluate_all(context or {})
-

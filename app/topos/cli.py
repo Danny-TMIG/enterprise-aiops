@@ -18,9 +18,11 @@ def main(argv=None) -> int:
     else:
         print(f"T  : {st['T']['objects']} objects, {st['T']['morphisms']} morphisms")
         print(f"Ω  : {st['T']['has_omega']}  1: {st['T']['has_terminal']}")
-        print(f"axes: F={st['axes']['Forward']['objects']} "
-              f"G={st['axes']['Inverse']['objects']} "
-              f"R={st['axes']['Relational']['objects']}")
+        print(
+            f"axes: F={st['axes']['Forward']['objects']} "
+            f"G={st['axes']['Inverse']['objects']} "
+            f"R={st['axes']['Relational']['objects']}"
+        )
         print(f"self-similar: {st['self_similar']['verification']}")
         print(f"F ⊣ G: {st['adjunction']}")
     return 0

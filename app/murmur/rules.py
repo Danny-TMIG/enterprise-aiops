@@ -4,6 +4,7 @@ Every rule sees only: (own state, neighbor states). It returns
 None or a Decision. No rule can see the whole flock, no rule
 plans more than one tick ahead.
 """
+
 from __future__ import annotations
 
 from collections.abc import Callable
@@ -21,8 +22,9 @@ class Rule:
     weight: float = 1.0
 
 
-def _avg_neighbor(state: AgentState, neighbors: list[AgentState],
-                  key: str, default: float = 0.0) -> float:
+def _avg_neighbor(
+    state: AgentState, neighbors: list[AgentState], key: str, default: float = 0.0
+) -> float:
     if not neighbors:
         return default
     total = 0.0
@@ -39,8 +41,7 @@ def default_rules() -> list[Rule]:
         return s.deviation() > s.thresholds.get("drift", 0.5)
 
     def drift_act(s, ns):
-        return Decision(verb="act.recenter", params={"gain": 0.2},
-                        urgency=min(1.0, s.deviation()))
+        return Decision(verb="act.recenter", params={"gain": 0.2}, urgency=min(1.0, s.deviation()))
 
     rules.append(Rule("drift", drift_when, drift_act, priority=10))
 
@@ -49,8 +50,7 @@ def default_rules() -> list[Rule]:
         return speed > s.thresholds.get("speed", 2.0)
 
     def too_fast_act(s, ns):
-        return Decision(verb="act.dampen", params={"factor": 0.5},
-                        urgency=0.4)
+        return Decision(verb="act.dampen", params={"factor": 0.5}, urgency=0.4)
 
     rules.append(Rule("too_fast", too_fast_when, too_fast_act, priority=20))
 
@@ -65,9 +65,7 @@ def default_rules() -> list[Rule]:
     def outlier_act(s, ns):
         k = "signal"
         avg = _avg_neighbor(s, ns, k, s.position.get(k, 0.0))
-        return Decision(verb="act.align",
-                        params={"key": k, "target": avg},
-                        urgency=0.6)
+        return Decision(verb="act.align", params={"key": k, "target": avg}, urgency=0.6)
 
     rules.append(Rule("outlier", outlier_when, outlier_act, priority=30))
 
@@ -75,8 +73,7 @@ def default_rules() -> list[Rule]:
         return len(ns) == 0
 
     def lonely_act(s, ns):
-        return Decision(verb="coord.seek", params={"radius": 2.0},
-                        urgency=0.2)
+        return Decision(verb="coord.seek", params={"radius": 2.0}, urgency=0.2)
 
     rules.append(Rule("lonely", lonely_when, lonely_act, priority=50))
 
@@ -84,16 +81,14 @@ def default_rules() -> list[Rule]:
         return s.last_effect is None
 
     def idle_act(s, ns):
-        return Decision(verb="act.probe", params={"amplitude": 0.1},
-                        urgency=0.05)
+        return Decision(verb="act.probe", params={"amplitude": 0.1}, urgency=0.05)
 
     rules.append(Rule("idle", idle_when, idle_act, priority=99))
 
     return rules
 
 
-def select(state: AgentState, neighbors: list[AgentState],
-           rules: list[Rule]) -> Decision | None:
+def select(state: AgentState, neighbors: list[AgentState], rules: list[Rule]) -> Decision | None:
     for r in sorted(rules, key=lambda x: x.priority):
         try:
             if r.when(state, neighbors):

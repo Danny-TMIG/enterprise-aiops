@@ -1,4 +1,5 @@
 """Demonstrate the full trans-chain lattice."""
+
 from __future__ import annotations
 
 import sys
@@ -50,12 +51,9 @@ def _demo_small() -> None:
     alpha = letters(4)  # A B C D
     _hdr(f"small alphabet: {alpha}")
     print(f"  A alone                         = {Chain(('A',))}")
-    print(f"  A -> B                          = "
-          f"{Chain(('A','B'))}")
-    print(f"  A -> B -> C                     = "
-          f"{Chain(('A','B','C'))}")
-    print(f"  A -> B -> C -> D                = "
-          f"{Chain(('A','B','C','D'))}")
+    print(f"  A -> B                          = {Chain(('A', 'B'))}")
+    print(f"  A -> B -> C                     = {Chain(('A', 'B', 'C'))}")
+    print(f"  A -> B -> C -> D                = {Chain(('A', 'B', 'C', 'D'))}")
     print()
 
     for k in range(1, len(alpha) + 1):
@@ -64,7 +62,7 @@ def _demo_small() -> None:
         for c in cs[:8]:
             print(f"    {c}")
         if len(cs) > 8:
-            print(f"    ... and {len(cs)-8} more")
+            print(f"    ... and {len(cs) - 8} more")
     print()
 
 
@@ -77,17 +75,17 @@ def _demo_a_to_z() -> None:
         for c in cs[:6]:
             print(f"    {c}")
         if len(cs) > 6:
-            print(f"    ... and {len(cs)-6} more")
+            print(f"    ... and {len(cs) - 6} more")
     print()
 
 
 def _demo_crisscross() -> None:
     _hdr("criss-cross: zigzag interleave")
-    c1 = Chain(('A', 'B', 'C'))
-    c2 = Chain(('X', 'Y', 'Z'))
+    c1 = Chain(("A", "B", "C"))
+    c2 = Chain(("X", "Y", "Z"))
     print(f"  zigzag({c1}, {c2}) = {zigzag(c1, c2)}")
-    c3 = Chain(('A', 'D'))
-    c4 = Chain(('B', 'A', 'E'))   # shares A
+    c3 = Chain(("A", "D"))
+    c4 = Chain(("B", "A", "E"))  # shares A
     print(f"  zigzag({c3}, {c4}) = {zigzag(c3, c4)}  (A deduplicated)")
     print()
 
@@ -99,7 +97,7 @@ def _demo_crisscross() -> None:
     for c in crossed[:12]:
         print(f"    {c}")
     if len(crossed) > 12:
-        print(f"    ... and {len(crossed)-12} more")
+        print(f"    ... and {len(crossed) - 12} more")
     print()
 
 
@@ -119,8 +117,8 @@ def _demo_trans() -> None:
     print()
 
     print("  from (A,) to (A,B,C,D) — every step is a prefix extension:")
-    cur = Chain(('A',))
-    target = Chain(('A', 'B', 'C', 'D'))
+    cur = Chain(("A",))
+    target = Chain(("A", "B", "C", "D"))
     while cur.id != target.id:
         print(f"    {cur}")
         for x in target.seq:

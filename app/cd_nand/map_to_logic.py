@@ -1,4 +1,5 @@
 """Boolean -> CD embedding. NAND lifts cleanly at every level."""
+
 from __future__ import annotations
 
 from collections.abc import Callable

@@ -1,4 +1,5 @@
 """Smoke tests: import every dcs module, call public no-arg callables."""
+
 import importlib
 import inspect
 import pkgutil
@@ -39,11 +40,12 @@ def test_call_public_noarg_callables():
                 sig = inspect.signature(obj)
             except (ValueError, TypeError):
                 continue
-            required = [p for p in sig.parameters.values()
-                        if p.default is inspect.Parameter.empty
-                        and p.kind in (p.POSITIONAL_ONLY,
-                                       p.POSITIONAL_OR_KEYWORD,
-                                       p.KEYWORD_ONLY)]
+            required = [
+                p
+                for p in sig.parameters.values()
+                if p.default is inspect.Parameter.empty
+                and p.kind in (p.POSITIONAL_ONLY, p.POSITIONAL_OR_KEYWORD, p.KEYWORD_ONLY)
+            ]
             if required:
                 continue
             try:

@@ -3,20 +3,20 @@ from __future__ import annotations
 import hashlib
 import re
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 
 def _now() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 @dataclass
 class Intent:
     raw: str
-    channel: str = "cli"       # cli | api | git
+    channel: str = "cli"  # cli | api | git
     author: str = "user"
-    target: str = ""           # file/route/module the intent touches
+    target: str = ""  # file/route/module the intent touches
     ts: str = field(default_factory=_now)
     id: str = ""
     keywords: list[str] = field(default_factory=list)
@@ -30,15 +30,36 @@ class Intent:
 
     def to_dict(self) -> dict[str, Any]:
         return {
-            "id": self.id, "raw": self.raw, "channel": self.channel,
-            "author": self.author, "target": self.target,
-            "keywords": self.keywords, "ts": self.ts,
+            "id": self.id,
+            "raw": self.raw,
+            "channel": self.channel,
+            "author": self.author,
+            "target": self.target,
+            "keywords": self.keywords,
+            "ts": self.ts,
         }
 
 
 _STOP = {
-    "the", "a", "an", "to", "for", "of", "in", "on", "and", "or",
-    "is", "are", "be", "with", "this", "that", "we", "i", "you",
+    "the",
+    "a",
+    "an",
+    "to",
+    "for",
+    "of",
+    "in",
+    "on",
+    "and",
+    "or",
+    "is",
+    "are",
+    "be",
+    "with",
+    "this",
+    "that",
+    "we",
+    "i",
+    "you",
 }
 
 
@@ -61,5 +82,4 @@ def from_api(payload: dict[str, Any]) -> Intent:
 
 
 def from_git(commit_msg: str, target: str = "", author: str = "git") -> Intent:
-    return Intent(raw=commit_msg.strip(), channel="git",
-                  target=target, author=author)
+    return Intent(raw=commit_msg.strip(), channel="git", target=target, author=author)

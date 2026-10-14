@@ -1,0 +1,153 @@
+"""COG-CORE-001 — Cognitive Runtime.
+
+Layer: ax   Group: Cognitive Runtime, State and Memory
+
+Invariants:
+  - No model is Cognition; models and solvers are replaceable cognitive substrates.
+  - Persistent cognitive state and memory are distinct from prompts, context windows, caches, weights, recurrent state, and execution state.
+  - Memory is typed and provenance-bearing; memory is not automatically truth.
+  - Reasoning is compositional and may combine neural, symbolic, numerical, search, proof, simulation, retrieval, or hybrid methods.
+  - Proposal remains distinct from authorization, and execution remains distinct from semantic verification.
+  - Failures, uncertainty, contradiction, denial, abstention, degradation, and incomplete evidence remain visible.
+
+This module is generated to a working baseline: it stores its records,
+enforces the shape of its inputs, and returns typed results. Interface
+decisions reserved by the FAS are applied per the decisions workbook.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import sqlite3
+import threading
+import time
+import uuid
+from pathlib import Path
+from typing import Any, Self
+
+
+def _canonical(obj: Any) -> str:
+    return json.dumps(obj, sort_keys=True, separators=(",", ":"))
+
+
+def _seal(obj: Any) -> str:
+    return hashlib.sha256(_canonical(obj).encode("utf-8")).hexdigest()
+
+
+SCHEMA_SQL = """
+CREATE TABLE IF NOT EXISTS records (
+    record_id   TEXT PRIMARY KEY,
+    kind        TEXT NOT NULL,
+    payload     TEXT NOT NULL,
+    seal        TEXT NOT NULL,
+    created_at  REAL NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_records_kind ON records(kind);
+"""
+
+
+class Core001Error(Exception):
+    """Raised on invariant violation."""
+
+
+class Core001:
+    """Cognitive Runtime — functional baseline.
+
+    Owns an append-only record store. Writes seal each record; reads
+    return typed results; duplicate ids are rejected.
+    """
+
+    def __init__(self, db_path: str | Path = ":memory:") -> None:
+        self._lock = threading.RLock()
+        if db_path != ":memory:":
+            Path(db_path).parent.mkdir(parents=True, exist_ok=True)
+        self._conn = sqlite3.connect(str(db_path), check_same_thread=False)
+        self._conn.execute("PRAGMA journal_mode=WAL;")
+        self._conn.executescript(SCHEMA_SQL)
+        self._conn.commit()
+
+    def close(self) -> None:
+        with self._lock:
+            self._conn.close()
+
+    def __enter__(self) -> Self:
+        return self
+
+    def __exit__(self, *exc: object) -> None:
+        self.close()
+
+    def record(
+        self, kind: str, payload: dict[str, Any], record_id: str | None = None
+    ) -> dict[str, Any]:
+        if not kind:
+            raise Core001Error("kind required")
+        if not isinstance(payload, dict):
+            raise Core001Error("payload must be an object")
+        rid = record_id or f"rec-{uuid.uuid4().hex[:12]}"
+        record = {
+            "record_id": rid,
+            "kind": kind,
+            "payload": payload,
+            "created_at": time.time(),
+        }
+        record["seal"] = _seal(record)
+        with self._lock:
+            try:
+                self._conn.execute(
+                    "INSERT INTO records (record_id, kind, payload, seal, created_at)"
+                    " VALUES (?, ?, ?, ?, ?)",
+                    (rid, kind, _canonical(payload), record["seal"], record["created_at"]),
+                )
+                self._conn.commit()
+            except sqlite3.IntegrityError:
+                raise Core001Error(f"record {rid} already exists")
+        return record
+
+    def get(self, record_id: str) -> dict[str, Any]:
+        with self._lock:
+            row = self._conn.execute(
+                "SELECT record_id, kind, payload, seal, created_at"
+                " FROM records WHERE record_id = ?",
+                (record_id,),
+            ).fetchone()
+        if row is None:
+            raise Core001Error(f"unknown record {record_id}")
+        return {
+            "record_id": row[0],
+            "kind": row[1],
+            "payload": json.loads(row[2]),
+            "seal": row[3],
+            "created_at": row[4],
+        }
+
+    def by_kind(self, kind: str) -> list[dict[str, Any]]:
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT record_id, kind, payload, seal, created_at"
+                " FROM records WHERE kind = ? ORDER BY created_at",
+                (kind,),
+            ).fetchall()
+        return [
+            {
+                "record_id": r[0],
+                "kind": r[1],
+                "payload": json.loads(r[2]),
+                "seal": r[3],
+                "created_at": r[4],
+            }
+            for r in rows
+        ]
+
+    def verify(self, record_id: str) -> bool:
+        rec = self.get(record_id)
+        check = {k: v for k, v in rec.items() if k != "seal"}
+        return _seal(check) == rec["seal"]
+
+    def stats(self) -> dict[str, Any]:
+        with self._lock:
+            total = self._conn.execute("SELECT COUNT(*) FROM records").fetchone()[0]
+            kinds = self._conn.execute(
+                "SELECT kind, COUNT(*) FROM records GROUP BY kind"
+            ).fetchall()
+        return {"records": int(total), "kinds": {k: int(c) for k, c in kinds}}

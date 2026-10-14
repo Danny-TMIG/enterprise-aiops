@@ -11,6 +11,7 @@ Three concrete uses:
                         frac(k * PHI_INV).  Unlike random, no two
                         successive points cluster.
 """
+
 from __future__ import annotations
 
 from app.sacred.constants import PHI_INV, fib
@@ -22,7 +23,7 @@ def fib_alloc(total: int, tiers: int = 5) -> list[int]:
     action), smallest at the leaves. Sum is preserved exactly."""
     if tiers < 1:
         raise ValueError("tiers >= 1")
-    weights = [fib(tiers - i) for i in range(tiers)]   # F(t), F(t-1), ...
+    weights = [fib(tiers - i) for i in range(tiers)]  # F(t), F(t-1), ...
     wsum = sum(weights)
     out = [total * w // wsum for w in weights]
     # distribute the remainder to the first bucket

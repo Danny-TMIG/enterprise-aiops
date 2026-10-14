@@ -1,4 +1,5 @@
 """Driver: parallel grids, dynamic difficulty, difference engine."""
+
 from __future__ import annotations
 
 import time
@@ -50,7 +51,7 @@ class Driver:
         for g in range(self.generations):
             t0 = time.time()
             difficulty = ctrl.current()
-            outcomes, tiles = run_grid(
+            _outcomes, tiles = run_grid(
                 difficulty_by_kind=difficulty,
                 puzzles_per_tile=self.puzzles_per_tile,
                 seed=self.seed + g * 1000,
@@ -65,17 +66,22 @@ class Driver:
             for k, rmap in rate_by_kind_solver.items():
                 rate_by_kind[k] = (sum(rmap.values()) / len(rmap)) if rmap else 0.0
                 diff.push(k, rmap)
-            gens.append(Generation(
-                index=g, difficulty=dict(difficulty), tiles=tiles,
-                rate_by_kind=rate_by_kind,
-                duration_ms=(time.time() - t0) * 1000.0,
-            ))
+            gens.append(
+                Generation(
+                    index=g,
+                    difficulty=dict(difficulty),
+                    tiles=tiles,
+                    rate_by_kind=rate_by_kind,
+                    duration_ms=(time.time() - t0) * 1000.0,
+                )
+            )
             ctrl.step(rate_by_kind)
 
         return {
             "generations": [g.to_dict() for g in gens],
             "difficulty_history": ctrl.to_dict(),
             "difference": diff.summary(),
-            "final_tiles": {f"{t.kind}/{t.solver}": t.to_dict()
-                            for t in gens[-1].tiles} if gens else {},
+            "final_tiles": {f"{t.kind}/{t.solver}": t.to_dict() for t in gens[-1].tiles}
+            if gens
+            else {},
         }

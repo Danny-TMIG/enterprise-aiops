@@ -1,16 +1,17 @@
 """Source module for migrations."""
+
 from __future__ import annotations
 
 import hashlib
 import json
 import time
-from dataclasses import dataclass, field, asdict
-from typing import Any
+from dataclasses import asdict, dataclass, field
 
 
 @dataclass
 class Record:
     """One immutable unit of work emitted by migrations."""
+
     name: str
     payload: dict = field(default_factory=dict)
     ts: str = field(default_factory=lambda: time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
@@ -43,4 +44,4 @@ class Migrations:
         return h.hexdigest()
 
 
-__all__ = ["Record", "Migrations"]
+__all__ = ["Migrations", "Record"]

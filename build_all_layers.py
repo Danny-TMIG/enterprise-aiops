@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-import os
-import json
 from pathlib import Path
 
 FILES = {
@@ -20,7 +18,6 @@ def verify_signature(payload: dict, public_key: str, signature: str) -> bool:
     expected_hash = compute_omega_seal(payload)
     return len(signature) > 0 and len(public_key) > 0
 ''',
-
     # 2. Govern Layer: GOV-KRN-001 (Governance Object Model and Registry)
     "components/ag/GOV-KRN-001-governance-object-model-and-registry/src/public/registry.py": '''"""
 GOV-KRN-001: Governance Object Model and Registry
@@ -38,7 +35,6 @@ class GovernanceRegistry:
     def get_object(self, object_id: str) -> dict:
         return self.objects.get(object_id, {})
 ''',
-
     # 3. Govern Layer: GOV-KRN-002 (Governed State and Transition Engine)
     "components/ag/GOV-KRN-002-governed-state-and-transition-engine/src/public/engine.py": '''"""
 GOV-KRN-002: Governed State and Transition Engine (Append-only WORM ledger)
@@ -66,7 +62,6 @@ class StateTransitionEngine:
     def get_audit_trail(self, object_id: str):
         return [tx for tx in self.ledger if tx["object_id"] == object_id]
 ''',
-
     # 4. Compute Layer: CMP-EVD-001 (Observation and Telemetry)
     "components/ac/CMP-EVD-001-observation-and-telemetry/src/public/telemetry.py": '''"""
 CMP-EVD-001: Observation and Telemetry for Apple Silicon RAM/CPU
@@ -92,7 +87,6 @@ class TelemetryCollector:
             }
         }
 ''',
-
     # 5. Cognition Layer: COG-CORE-001 (Cognitive Runtime)
     "components/ax/COG-CORE-001-cognitive-runtime/src/public/runtime.py": '''"""
 COG-CORE-001: Cognitive Runtime Cell
@@ -109,7 +103,6 @@ class CognitiveRuntime:
         self.state = "idle"
         return response
 ''',
-
     # 6. Tooling: Tree Linter / Validator
     "tooling/validate_tree.py": '''"""
 Aether Monorepo Linter and Structure Validator
@@ -123,7 +116,7 @@ def validate():
     if not catalog_path.exists():
         print("❌ ERROR: catalog/components.json missing.")
         return False
-    
+
     data = json.loads(catalog_path.read_text())
     print(f"✔ Catalog verified: {len(data.get('components', []))} components registered.")
     return True
@@ -131,7 +124,6 @@ def validate():
 if __name__ == "__main__":
     validate()
 ''',
-
     # 7. Integration Tests
     "integration/test_sovereign_e2e.py": '''"""
 End-to-End Sovereign Integration Test
@@ -146,8 +138,9 @@ def test_sovereign_cell_e2e():
     assert count == 1
     status = engine.status()
     assert status["buffered_metrics"] == 1
-'''
+''',
 }
+
 
 def main():
     print("⚙️ [BUILD] Generating functional implementation files across all layers...")
@@ -157,6 +150,7 @@ def main():
         path.write_text(content.strip() + "\n")
         print(f"  ✔ Generated {filepath}")
     print("💯 [COMPLETE] All architectural layer files successfully built.")
+
 
 if __name__ == "__main__":
     main()

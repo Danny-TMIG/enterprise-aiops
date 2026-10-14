@@ -10,6 +10,7 @@ A CSTLoop wraps the four operations required by the predicate:
 The loop is considered complete only if all four return successfully.
 If undo fails, the loop scores zero — the system has drifted.
 """
+
 from __future__ import annotations
 
 from collections.abc import Callable
@@ -21,8 +22,8 @@ from typing import Any
 class Test:
     name: str
     payload: Any
-    baseline_success: float   # in [0, 1]; the system's success before acquisition
-    target_success: float     # in [0, 1]; the required success to pass
+    baseline_success: float  # in [0, 1]; the system's success before acquisition
+    target_success: float  # in [0, 1]; the required success to pass
 
 
 @dataclass
@@ -62,8 +63,7 @@ class CSTLoop:
 
         proof = self.justify(t)
         if not proof.valid:
-            return {"test": t.name, "status": "illegitimate",
-                    "reason": proof.reason}
+            return {"test": t.name, "status": "illegitimate", "reason": proof.reason}
 
         cap = self.acquire(t)
         if not cap.acquired:

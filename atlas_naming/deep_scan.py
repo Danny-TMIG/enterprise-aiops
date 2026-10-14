@@ -12,6 +12,7 @@ Writes:
   atlas_naming/SHADOWS.md       stdlib shadow action list with runtime proof
   atlas_naming/DECISIONS.md     fill-in decision table with equivalence class
 """
+
 from __future__ import annotations
 
 import ast
@@ -22,9 +23,7 @@ import os
 import re
 import subprocess
 import sys
-import tokenize
 from collections import defaultdict
-from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
 ROOT = Path(os.getcwd()).resolve()
@@ -32,12 +31,36 @@ OUT = ROOT / "atlas_naming"
 ATLAS = OUT / "atlas.json"
 
 SKIP_DIRS = {
-    ".git", ".venv", "venv", "env", ".lanes", "node_modules", ".next",
-    "__pycache__", ".mypy_cache", ".ruff_cache", ".hypothesis",
-    ".pytest_cache", ".eggs", "build", "dist", ".tox", ".cache",
-    ".codeql-results", ".mesh-codeql-db", ".snapshots", ".delta",
-    ".last-backups", ".complete-backups", ".benchmarks", "site-packages",
-    "_grammar_spec", ".moat", ".murmur", ".agency", ".backrooms",
+    ".git",
+    ".venv",
+    "venv",
+    "env",
+    ".lanes",
+    "node_modules",
+    ".next",
+    "__pycache__",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".hypothesis",
+    ".pytest_cache",
+    ".eggs",
+    "build",
+    "dist",
+    ".tox",
+    ".cache",
+    ".codeql-results",
+    ".mesh-codeql-db",
+    ".snapshots",
+    ".delta",
+    ".last-backups",
+    ".complete-backups",
+    ".benchmarks",
+    "site-packages",
+    "_grammar_spec",
+    ".moat",
+    ".murmur",
+    ".agency",
+    ".backrooms",
     "atlas_naming",
 }
 
@@ -51,6 +74,7 @@ def is_skipped(path: Path) -> bool:
 # ---------------------------------------------------------------------------
 # 1. Runtime resolution via subprocess
 # ---------------------------------------------------------------------------
+
 
 def resolve_runtime(name: str) -> dict:
     """Launch a clean Python subprocess with cwd=ROOT and record what `name` resolves to."""
@@ -68,7 +92,9 @@ def resolve_runtime(name: str) -> dict:
         r = subprocess.run(
             [sys.executable, "-c", code],
             cwd=str(ROOT),
-            capture_output=True, text=True, timeout=10,
+            capture_output=True,
+            text=True,
+            timeout=10,
         )
         for line in r.stdout.strip().splitlines():
             line = line.strip()
@@ -76,12 +102,17 @@ def resolve_runtime(name: str) -> dict:
                 return json.loads(line)
     except Exception as e:
         return {"ok": False, "error": f"{type(e).__name__}: {e}"}
-    return {"ok": False, "error": "no JSON output", "stderr": r.stderr[:200] if 'r' in dir() else ""}
+    return {
+        "ok": False,
+        "error": "no JSON output",
+        "stderr": r.stderr[:200] if "r" in dir() else "",
+    }
 
 
 # ---------------------------------------------------------------------------
 # 2. Semantic equivalence via normalized AST
 # ---------------------------------------------------------------------------
+
 
 def normalize_ast(source: str) -> str:
     """Strip comments, docstrings, variable names, and whitespace to a canonical token stream."""
@@ -92,9 +123,12 @@ def normalize_ast(source: str) -> str:
     # Drop docstrings
     for node in ast.walk(tree):
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Module)):
-            if (node.body and isinstance(node.body[0], ast.Expr)
-                    and isinstance(node.body[0].value, ast.Constant)
-                    and isinstance(node.body[0].value.value, str)):
+            if (
+                node.body
+                and isinstance(node.body[0], ast.Expr)
+                and isinstance(node.body[0].value, ast.Constant)
+                and isinstance(node.body[0].value.value, str)
+            ):
                 node.body = node.body[1:] or [ast.Pass()]
     return ast.dump(tree, annotate_fields=False, include_attributes=False)
 
@@ -127,7 +161,10 @@ def extract_definition_source(path: Path, name: str) -> str:
     except Exception:
         return ""
     for node in tree.body:
-        if isinstance(node, (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == name:
+        if (
+            isinstance(node, (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef))
+            and node.name == name
+        ):
             lines = src.splitlines()
             start = node.lineno - 1
             end = getattr(node, "end_lineno", start + 1)
@@ -138,6 +175,7 @@ def extract_definition_source(path: Path, name: str) -> str:
 # ---------------------------------------------------------------------------
 # 3. __init__.py re-export graph
 # ---------------------------------------------------------------------------
+
 
 def scan_reexports() -> dict:
     """Build a map: name -> set of defining modules, following __init__.py re-exports."""
@@ -165,6 +203,7 @@ def scan_reexports() -> dict:
 # 4. .pyi stubs and native extensions
 # ---------------------------------------------------------------------------
 
+
 def scan_stubs_and_extensions() -> dict:
     stubs = []
     exts = []
@@ -182,6 +221,7 @@ def scan_stubs_and_extensions() -> dict:
 # Main
 # ---------------------------------------------------------------------------
 
+
 def main() -> int:
     if not ATLAS.exists():
         print(f"missing {ATLAS}; run the naming atlas first")
@@ -191,7 +231,7 @@ def main() -> int:
 
     # ---------- Runtime resolution for every shadow name ----------
     shadow_names = set()
-    for kind, entries in atlas["stdlib_shadows"].items():
+    for entries in atlas["stdlib_shadows"].values():
         for name in entries:
             shadow_names.add(name)
     print(f"resolving {len(shadow_names)} shadow names in subprocesses")
@@ -253,24 +293,28 @@ def main() -> int:
 
     # SHADOWS.md
     lines = [
-        "# Stdlib Shadow Action List", "",
+        "# Stdlib Shadow Action List",
+        "",
         "Runtime resolution is executed in a clean subprocess with `cwd=repo root`.",
-        "If `resolves_to` points inside the repo, the stdlib name is shadowed.", "",
+        "If `resolves_to` points inside the repo, the stdlib name is shadowed.",
+        "",
         "| Shadowed | Resolves to | In repo? | Files affected |",
         "|---|---|:---:|---:|",
     ]
     for name in sorted(shadow_names):
         res = runtime_cache.get(name, {})
-        origin = res.get("origin", "") if res.get("ok") else f"<error: {res.get('error','')}>"
+        origin = res.get("origin", "") if res.get("ok") else f"<error: {res.get('error', '')}>"
         in_repo = "yes" if origin.startswith(str(ROOT)) else "no"
-        files = atlas["stdlib_shadows"]["packages"].get(name, []) + atlas["stdlib_shadows"]["modules"].get(name, [])
+        files = atlas["stdlib_shadows"]["packages"].get(name, []) + atlas["stdlib_shadows"][
+            "modules"
+        ].get(name, [])
         lines.append(f"| `{name}` | `{origin}` | {in_repo} | {len(set(files))} |")
     lines.append("")
     for name in sorted(shadow_names):
         res = runtime_cache.get(name, {})
         lines.append(f"## `{name}`")
         lines.append("")
-        lines.append(f"- runtime origin: `{res.get('origin','')}`")
+        lines.append(f"- runtime origin: `{res.get('origin', '')}`")
         if res.get("subs"):
             for s in res["subs"]:
                 lines.append(f"- search path: `{s}`")
@@ -290,10 +334,12 @@ def main() -> int:
 
     # DECISIONS.md
     lines = [
-        "# Naming Decision Table", "",
+        "# Naming Decision Table",
+        "",
         "Every class collision with its semantic equivalence class.",
         "Fill in the **Decision** column with one of:",
-        "`consolidate` `alias` `leave` `rename-shadow`", "",
+        "`consolidate` `alias` `leave` `rename-shadow`",
+        "",
         "| Name | Occurrences | Equivalence | Decision |",
         "|---|---:|---|---|",
     ]

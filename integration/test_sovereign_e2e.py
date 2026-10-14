@@ -1,8 +1,9 @@
 """
 End-to-End Sovereign Integration Test
 """
-import pytest
+
 from aiops_platform_metadusa_cell.engine import AIOpsEngine
+
 
 def test_sovereign_cell_e2e():
     engine = AIOpsEngine()

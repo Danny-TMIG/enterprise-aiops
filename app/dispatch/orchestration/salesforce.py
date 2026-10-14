@@ -11,6 +11,7 @@ from app.dispatch.orchestration.base import (
 
 class SalesforceBackend(OrchestratorBackend):
     """Plugs into Agentforce as an External Service / Apex callout."""
+
     name = "salesforce"
 
     def available(self) -> bool:
@@ -18,6 +19,7 @@ class SalesforceBackend(OrchestratorBackend):
 
     def _verify(self, claim: VerificationClaim) -> VerificationVerdict:
         from app.dispatch.verification.registry import VerificationRegistry
+
         out = VerificationRegistry().verify_all(claim.claim, claim.evidence)
         ok = all(v.status == "PASS" for v in out)
         return VerificationVerdict(

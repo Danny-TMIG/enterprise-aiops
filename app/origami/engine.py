@@ -19,5 +19,5 @@ class OrigamiEngine:
         return {
             "layers": self.layers,
             "state_count": len(self.folded_state),
-            "folded_state": self.folded_state
+            "folded_state": self.folded_state,
         }

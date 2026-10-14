@@ -17,7 +17,8 @@ _LOCK = threading.Lock()
 def _h(*p: str) -> str:
     m = hashlib.sha256()
     for s in p:
-        m.update(s.encode("utf-8")); m.update(b"\x1f")
+        m.update(s.encode("utf-8"))
+        m.update(b"\x1f")
     return "sha256:" + m.hexdigest()[:24]
 
 
@@ -27,13 +28,11 @@ class Entry:
     residue: list[str]
     reason: str
     raw: str
-    ts: str = field(default_factory=lambda: time.strftime(
-        "%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
+    ts: str = field(default_factory=lambda: time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
 
     @property
     def id(self) -> str:
-        return _h("backroom", self.intent_hash, self.reason,
-                  "|".join(sorted(self.residue)))
+        return _h("backroom", self.intent_hash, self.reason, "|".join(sorted(self.residue)))
 
 
 class Backrooms:
@@ -61,6 +60,8 @@ class Backrooms:
 
     def search(self, substring: str) -> list[dict[str, Any]]:
         s = substring.lower()
-        return [e for e in self.all()
-                if s in e.get("raw", "").lower()
-                or any(s in r.lower() for r in e.get("residue", []))]
+        return [
+            e
+            for e in self.all()
+            if s in e.get("raw", "").lower() or any(s in r.lower() for r in e.get("residue", []))
+        ]

@@ -9,6 +9,7 @@ shape matches one of a small number of graph-shape predicates. The
 predicates are not rules; they are functions of graph topology. New
 languages add no predicates — they add shapes in the residue.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -68,20 +69,22 @@ def _shapes(g: OctetGraph) -> list[EmergentTask]:
         else:
             shape = f"unknown[{n}]"
 
-        out.append(EmergentTask(
-            id=f"et{idx}",
-            shape=shape,
-            nodes=n,
-            value_span=(min(values) if values else 0,
-                        max(values) if values else 0),
-            evidence=f"component of {n} nodes",
-        ))
+        out.append(
+            EmergentTask(
+                id=f"et{idx}",
+                shape=shape,
+                nodes=n,
+                value_span=(min(values) if values else 0, max(values) if values else 0),
+                evidence=f"component of {n} nodes",
+            )
+        )
         idx += 1
     return out
 
 
-def bypass(g: OctetGraph, max_steps: int = 10_000
-           ) -> tuple[OctetGraph, list[EmergentTask], int, list[str]]:
+def bypass(
+    g: OctetGraph, max_steps: int = 10_000
+) -> tuple[OctetGraph, list[EmergentTask], int, list[str]]:
     """Reduce and read. No rules. No op table. Everything emergent."""
     ng, n, trace = normalise(g.copy(), max_steps=max_steps)
     tasks = _shapes(ng)

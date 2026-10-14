@@ -1,4 +1,5 @@
 """Claim 1: 7B output is 7B output. Measure it, don't assert it."""
+
 from __future__ import annotations
 
 import ast
@@ -34,7 +35,11 @@ PROMPTS = [
 ]
 
 _B = set(dir(builtins)) | {
-    "__name__", "__file__", "__doc__", "__builtins__", "__package__",
+    "__name__",
+    "__file__",
+    "__doc__",
+    "__builtins__",
+    "__package__",
 }
 
 
@@ -59,12 +64,16 @@ def undefined_names(source: str) -> list[str]:
             for t in node.targets:
                 if isinstance(t, ast.Name):
                     defined.add(t.id)
-        elif isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name) or isinstance(node, ast.For) and isinstance(node.target, ast.Name):
+        elif (
+            isinstance(node, ast.AnnAssign)
+            and isinstance(node.target, ast.Name)
+            or isinstance(node, ast.For)
+            and isinstance(node.target, ast.Name)
+        ):
             defined.add(node.target.id)
         elif isinstance(node, ast.withitem) and isinstance(node.optional_vars, ast.Name):
             defined.add(node.optional_vars.id)
-    used = {n.id for n in ast.walk(tree)
-            if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load)}
+    used = {n.id for n in ast.walk(tree) if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load)}
     return sorted(used - defined - _B)
 
 
@@ -77,8 +86,11 @@ def unused_params(source: str) -> list[str]:
     for fn in ast.walk(tree):
         if isinstance(fn, (ast.FunctionDef, ast.AsyncFunctionDef)):
             args = {a.arg for a in fn.args.args}
-            used = {n.id for n in ast.walk(fn)
-                    if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load)}
+            used = {
+                n.id
+                for n in ast.walk(fn)
+                if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load)
+            }
             for a in args:
                 if a not in used:
                     out.append(f"{fn.name}({a})")
@@ -151,8 +163,10 @@ def main() -> int:
     print("── claim 1: 7B output is 7B output — 20-prompt suite ──")
     swarm = Swarm(n_workers=1)
     grammar = get_grammar("code_artifact")
-    totals = {k: 0 for k in ("parse", "no_undefined", "no_unused_params",
-                             "return_consistent", "no_stub_body")}
+    totals = {
+        k: 0
+        for k in ("parse", "no_undefined", "no_unused_params", "return_consistent", "no_stub_body")
+    }
     all_pass = 0
     rows = []
     for i, prompt in enumerate(PROMPTS):
@@ -176,9 +190,16 @@ def main() -> int:
     print(f"  {'all_five_axes':22s} {all_pass}/{n}")
     print()
     for prompt, s in rows:
-        marks = "".join("1" if s[k] else "0" for k in
-                        ("parse", "no_undefined", "no_unused_params",
-                         "return_consistent", "no_stub_body"))
+        marks = "".join(
+            "1" if s[k] else "0"
+            for k in (
+                "parse",
+                "no_undefined",
+                "no_unused_params",
+                "return_consistent",
+                "no_stub_body",
+            )
+        )
         note = ""
         if s["undefined_list"] and s["undefined_list"][0] != "<syntax>":
             note += f" und={s['undefined_list'][:2]}"

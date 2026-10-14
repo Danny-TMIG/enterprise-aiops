@@ -4,9 +4,7 @@ THE MARK INTELLIGENCE GROUP (TMIG)
 OLYMPIC-LEVEL MASTER FILE GENERATION ENGINE (ASF v1.2)
 Zero stubs. Hand-rolled production-grade primitives.
 """
-import os
-import json
-import hashlib
+
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -90,7 +88,6 @@ input:focus { outline: 2px solid var(--primary); border-color: transparent; }"""
 .fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }""",
     "src/styles/themes.css": """[data-theme="dark"] { --bg-dark: #030712; --text-main: #f3f4f6; }""",
     "src/styles/responsive.css": """@media (max-width: 768px) { .container { padding: 1rem; } .grid-layout { grid-template-columns: 1fr; } }""",
-    
     "src/js/app.js": """import { Router } from './router.js';
 import { renderUI } from './ui.js';
 
@@ -145,8 +142,9 @@ self.addEventListener('fetch', event => {
     "background_color": "#030712",
     "theme_color": "#3b82f6",
     "icons": []
-}"""
+}""",
 }
+
 
 def build_olympic_code():
     print("🚀 [OLYMPIC] Provisioning hand-rolled production assets...")
@@ -155,6 +153,7 @@ def build_olympic_code():
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text(content)
     print("💯 [SUCCESS] All Olympic-level files generated with zero stubs.")
+
 
 if __name__ == "__main__":
     build_olympic_code()

@@ -7,9 +7,7 @@ class MoEGatingRouter:
     def __init__(self) -> None:
         self.spatial_threshold = 0.65
 
-    def compute_gating_scores(
-        self, layout_metadata: dict[str, Any]
-    ) -> dict[str, float]:
+    def compute_gating_scores(self, layout_metadata: dict[str, Any]) -> dict[str, float]:
         bounding_boxes = layout_metadata.get("bounding_boxes", [])
         box_density = len(bounding_boxes) / max(1, layout_metadata.get("page_count", 1))
 

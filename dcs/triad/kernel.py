@@ -111,17 +111,20 @@ class Kernel:  # pragma: no cover
 
     # --- axis resolvers ---
 
-    def conformance(self, declared, actual, *, compare: Callable | None = None) -> VState:  # pragma: no cover
+    def conformance(
+        self, declared, actual, *, compare: Callable | None = None
+    ) -> VState:  # pragma: no cover
         return conformance.resolve(declared, actual, compare=compare)  # pragma: no cover
 
     def coherence(  # pragma: no cover
         self, a, b, *, relation: Callable | None = None, mode: str = "equivalence"
     ) -> VState:
         if relation is None:  # pragma: no cover
-  # pragma: no cover
+            # pragma: no cover
             def relation(x, y):  # pragma: no cover
                 return x == y  # pragma: no cover
-  # pragma: no cover
+
+        # pragma: no cover
         if mode == "equivalence":  # pragma: no cover
             return coherence.equivalence(a, b, eq=relation)  # pragma: no cover
         if mode == "refinement":  # pragma: no cover
@@ -176,7 +179,9 @@ class Kernel:  # pragma: no cover
 
     # --- receipts ---
 
-    def receipt(self, triad: Triad, *, derivation: Iterable[dict] = ()) -> Receipt:  # pragma: no cover
+    def receipt(
+        self, triad: Triad, *, derivation: Iterable[dict] = ()
+    ) -> Receipt:  # pragma: no cover
         deriv = tuple(sorted(_canon(d) for d in derivation))
         payload = {
             "triad": triad.to_dict(),

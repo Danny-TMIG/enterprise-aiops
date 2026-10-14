@@ -1,4 +1,5 @@
 """Rubik's cube (2x2). Moves are generated, scramble rejects canceling sequences."""
+
 from __future__ import annotations
 
 import random
@@ -78,16 +79,18 @@ def scramble(n_moves: int = 11, seed: int = 0) -> tuple[int, ...]:
         s = SOLVED
         prev = None
         for _ in range(n_moves):
-            choices = [f + suf for f, suf in product(_FACES, _SUFFIXES)
-                       if prev is None or not _same_face(f, prev)]
+            choices = [
+                f + suf
+                for f, suf in product(_FACES, _SUFFIXES)
+                if prev is None or not _same_face(f, prev)
+            ]
             m = rng.choice(choices)
             s = apply_move(MOVES[m], s)
             prev = m
         if s != SOLVED:
             return s
     raise ValueError(
-        f"scramble could not produce non-SOLVED state in 128 tries "
-        f"(n_moves={n_moves}, seed={seed})"
+        f"scramble could not produce non-SOLVED state in 128 tries (n_moves={n_moves}, seed={seed})"
     )
 
 
@@ -95,8 +98,7 @@ def solve_cube(state: tuple[int, ...]) -> dict:
     """BFS parent chain, emitting inverse moves (walk order = forward order)."""
     dist, parent = _distance_table()
     if state not in dist:
-        return {"solved": False, "nodes": 0, "scramble": state,
-                "note": "state not reachable"}
+        return {"solved": False, "nodes": 0, "scramble": state, "note": "state not reachable"}
 
     path: list[str] = []
     cur = state
@@ -107,7 +109,7 @@ def solve_cube(state: tuple[int, ...]) -> dict:
         if move.endswith("'"):
             path.append(move[:-1])
         elif move.endswith("2"):
-            path.append(move)      # 180-degree turns are self-inverse
+            path.append(move)  # 180-degree turns are self-inverse
         else:
             path.append(move + "'")
         cur = prev

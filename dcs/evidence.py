@@ -18,7 +18,9 @@ except Exception:  # pragma: no cover
 
 def canonical(obj: Any) -> bytes:  # pragma: no cover
     """Deterministic JSON for hashing/signing (sorted keys, no whitespace)."""
-    return json.dumps(obj, sort_keys=True, separators=(",", ":"), default=str).encode()  # pragma: no cover
+    return json.dumps(
+        obj, sort_keys=True, separators=(",", ":"), default=str
+    ).encode()  # pragma: no cover
 
 
 def digest_of(obj: Any) -> str:  # pragma: no cover

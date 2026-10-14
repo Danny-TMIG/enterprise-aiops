@@ -1,15 +1,15 @@
 from .registry import (
     GovernanceObject,
     GovernanceRegistry,
-    RegistryError,
     ImmutableVersionError,
+    RegistryError,
     VersionGapError,
 )
 
 __all__ = [
     "GovernanceObject",
     "GovernanceRegistry",
-    "RegistryError",
     "ImmutableVersionError",
+    "RegistryError",
     "VersionGapError",
 ]

@@ -5,6 +5,7 @@ cannot keep up is dropped, not blocked: the fabric never stalls.
 Sync and async handlers both supported. Every publish is written to
 the events ledger via catch_release so the stream is replayable.
 """
+
 from __future__ import annotations
 
 import asyncio
@@ -53,10 +54,13 @@ class StreamingSubstrate:
         self._published = 0
 
     # ── subscribe / unsubscribe ───────────────────────────────────
-    def subscribe(self, topic: str, handler: Callable,
-                  capacity: int = 1024) -> Subscriber:
-        s = Subscriber(topic=topic, handler=handler, capacity=capacity,
-                       is_async=inspect.iscoroutinefunction(handler))
+    def subscribe(self, topic: str, handler: Callable, capacity: int = 1024) -> Subscriber:
+        s = Subscriber(
+            topic=topic,
+            handler=handler,
+            capacity=capacity,
+            is_async=inspect.iscoroutinefunction(handler),
+        )
         with self._lock:
             self._subs.setdefault(topic, []).append(s)
         return s
@@ -68,10 +72,8 @@ class StreamingSubstrate:
                 lst.remove(sub)
 
     # ── publish ───────────────────────────────────────────────────
-    def publish(self, topic: str, payload: Any,
-                *, meta: dict[str, Any] | None = None) -> int:
-        msg = {"topic": topic, "payload": payload,
-               "meta": meta or {}, "ts": time.time()}
+    def publish(self, topic: str, payload: Any, *, meta: dict[str, Any] | None = None) -> int:
+        msg = {"topic": topic, "payload": payload, "meta": meta or {}, "ts": time.time()}
         n = 0
         with self._lock:
             subs = list(self._subs.get(topic, []))
@@ -91,8 +93,7 @@ class StreamingSubstrate:
             try:
                 if s.is_async:
                     if self._loop and self._loop.is_running():
-                        asyncio.run_coroutine_threadsafe(
-                            s.handler(msg), self._loop)
+                        asyncio.run_coroutine_threadsafe(s.handler(msg), self._loop)
                     else:
                         asyncio.run(s.handler(msg))
                 else:
@@ -113,8 +114,10 @@ class StreamingSubstrate:
                 "subscribers": sum(len(v) for v in self._subs.values()),
                 "published": self._published,
                 "detail": {
-                    t: [{"delivered": s.delivered, "dropped": s.dropped,
-                         "queued": len(s.queue)} for s in subs]
+                    t: [
+                        {"delivered": s.delivered, "dropped": s.dropped, "queued": len(s.queue)}
+                        for s in subs
+                    ]
                     for t, subs in self._subs.items()
                 },
             }

@@ -6,6 +6,7 @@ V is a system measurement, not a grep.
 
 Persists to data/moat_seal_counter.json so it survives restarts.
 """
+
 from __future__ import annotations
 
 import json
@@ -43,6 +44,7 @@ def record_emit(proof_object: dict[str, Any]) -> dict[str, int]:
         d["sealed"] += 1
         try:
             from app.seed.seal import verify_seal
+
             if verify_seal(seal):
                 d["verified"] += 1
         except Exception:

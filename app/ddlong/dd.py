@@ -11,6 +11,7 @@ Uses Dekker's error-free transformations:
 Reference: Bailey, "High-Precision Floating-Point Arithmetic in
 Scientific Computation", 2005.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -31,7 +32,7 @@ def quick_two_sum(a: float, b: float) -> tuple[float, float]:
 
 def split(a: float) -> tuple[float, float]:
     """Split a into (hi, lo) each holding <= 26 bits of mantissa."""
-    c = 134217729.0 * a           # 2**27 + 1
+    c = 134217729.0 * a  # 2**27 + 1
     hi = c - (c - a)
     lo = a - hi
     return hi, lo

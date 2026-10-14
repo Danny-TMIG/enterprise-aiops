@@ -43,7 +43,12 @@ def verify_chain(log_path: Path) -> dict:  # pragma: no cover
             return {"entries": n, "valid": False, "broken_at": n}  # pragma: no cover
         h = _hash(json.dumps({k: v for k, v in e.items() if k != "entry_hash"}, sort_keys=True))
         if h != e["entry_hash"]:  # pragma: no cover
-            return {"entries": n, "valid": False, "broken_at": n, "reason": "hash"}  # pragma: no cover
+            return {
+                "entries": n,
+                "valid": False,
+                "broken_at": n,
+                "reason": "hash",
+            }  # pragma: no cover
         prev = e["entry_hash"]
         n += 1
     return {"entries": n, "valid": True}  # pragma: no cover

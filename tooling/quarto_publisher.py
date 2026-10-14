@@ -3,13 +3,12 @@
 THE MARK INTELLIGENCE GROUP (TMIG)
 QUARTO DOCUMENTATION PUBLISHING ENGINE (ASF v1.2)
 """
-import os
-import json
-import hashlib
+
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DOCS_DIR = ROOT / "docs"
+
 
 def setup_quarto():
     print("📚 [QUARTO] Initializing Quarto publishing configuration...")
@@ -52,6 +51,7 @@ Welcome to the official documentation for the **The Mark Intelligence Group (TMI
     (DOCS_DIR / "index.md").write_text(index_md)
 
     print("💯 [SUCCESS] Quarto config and site structure generated in docs/")
+
 
 if __name__ == "__main__":
     setup_quarto()

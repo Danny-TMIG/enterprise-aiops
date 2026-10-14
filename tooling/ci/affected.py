@@ -5,6 +5,7 @@ Reads component.json dependency edges, inverts them, and returns the set
 of components whose own files changed plus every reverse dependency.
 Writes the result to affected.json and prints it.
 """
+
 from __future__ import annotations
 
 import json
@@ -44,12 +45,16 @@ def component_of(path: str, components: dict[str, dict]) -> str | None:
 def changed_files(base_ref: str) -> list[str]:
     r = subprocess.run(
         ["git", "diff", "--name-only", f"{base_ref}...HEAD"],
-        cwd=ROOT, capture_output=True, text=True,
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
     )
     if r.returncode != 0:
         r = subprocess.run(
             ["git", "diff", "--name-only", "HEAD~1", "HEAD"],
-            cwd=ROOT, capture_output=True, text=True,
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
         )
     return [l for l in r.stdout.splitlines() if l.strip()]
 

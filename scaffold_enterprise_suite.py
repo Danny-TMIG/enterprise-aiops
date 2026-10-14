@@ -5,7 +5,6 @@ Materials generation for directory structure, pyproject, health checks, ASGI, Do
 """
 
 import os
-import json
 
 DIRECTORIES = [
     "platform/app/api",
@@ -19,13 +18,15 @@ DIRECTORIES = [
     "docs/slo",
     "tests",
     "scripts",
-    ".github/workflows"
+    ".github/workflows",
 ]
+
 
 def scaffold_directories():
     for d in DIRECTORIES:
         os.makedirs(d, exist_ok=True)
     print("[ASF-SCAL] Directories successfully provisioned.")
+
 
 def create_pyproject():
     content = """[build-system]
@@ -68,6 +69,7 @@ packages = ["platform/app", "daemon"]
         f.write(content)
     print("[ASF-SCAL] Generated pyproject.toml")
 
+
 def create_engine_patch():
     content = """import time
 import signal
@@ -109,6 +111,7 @@ class SovereignEnginePatch:
         f.write(content)
     print("[ASF-SCAL] Generated platform/app/core/engine_patch.py")
 
+
 def create_asgi():
     content = """from fastapi import FastAPI
 from aiops_platform.app.core.engine_patch import SovereignEnginePatch
@@ -134,6 +137,7 @@ def root():
     with open("platform/app/asgi.py", "w") as f:
         f.write(content)
     print("[ASF-SCAL] Generated platform/app/asgi.py")
+
 
 def create_dockerfile():
     content = """# --- Stage 1: Build & Dependencies ---
@@ -177,6 +181,7 @@ CMD ["uvicorn", "platform.app.asgi:app", "--host", "0.0.0.0", "--port", "8000"]
         f.write(content)
     print("[ASF-SCAL] Generated Dockerfile")
 
+
 def create_dockerignore():
     content = """__pycache__
 *.pyc
@@ -194,6 +199,7 @@ docs/
     with open(".dockerignore", "w") as f:
         f.write(content)
     print("[ASF-SCAL] Generated .dockerignore")
+
 
 def create_pre_commit():
     content = """repos:
@@ -213,6 +219,7 @@ def create_pre_commit():
         f.write(content)
     print("[ASF-SCAL] Generated .pre-commit-config.yaml")
 
+
 def create_gitleaks_toml():
     content = """title = "gitleaks configuration"
 
@@ -225,6 +232,7 @@ paths = [
     with open(".gitleaks.toml", "w") as f:
         f.write(content)
     print("[ASF-SCAL] Generated .gitleaks.toml")
+
 
 def create_dependabot():
     content = """version: 2
@@ -241,6 +249,7 @@ updates:
     with open(".github/dependabot.yml", "w") as f:
         f.write(content)
     print("[ASF-SCAL] Generated .github/dependabot.yml")
+
 
 def create_ci_workflow():
     content = """name: Enterprise CI/CD Pipeline
@@ -271,6 +280,7 @@ jobs:
     with open(".github/workflows/ci.yml", "w") as f:
         f.write(content)
     print("[ASF-SCAL] Generated .github/workflows/ci.yml")
+
 
 def create_codeql_workflow():
     content = """name: CodeQL Security Analysis
@@ -305,6 +315,7 @@ jobs:
         f.write(content)
     print("[ASF-SCAL] Generated .github/workflows/codeql.yml")
 
+
 def create_dependency_review():
     content = """name: Dependency Review
 on: [pull_request]
@@ -320,6 +331,7 @@ jobs:
     with open(".github/workflows/dependency-review.yml", "w") as f:
         f.write(content)
     print("[ASF-SCAL] Generated .github/workflows/dependency-review.yml")
+
 
 def create_secrets_workflow():
     content = """name: Secret Scanning (Gitleaks)
@@ -345,6 +357,7 @@ jobs:
         f.write(content)
     print("[ASF-SCAL] Generated .github/workflows/secrets.yml")
 
+
 def create_runbooks():
     content = """# Incident Response & Runbook: High Error Rate
 
@@ -363,6 +376,7 @@ This runbook outlines the steps to diagnose and remediate high 5xx error rates i
         f.write(content)
     print("[ASF-SCAL] Generated docs/runbooks/high_error_rate.md")
 
+
 def create_slos():
     content = """# Service Level Objectives (SLOs)
 
@@ -377,6 +391,7 @@ def create_slos():
     with open("docs/slo/availability_latency.md", "w") as f:
         f.write(content)
     print("[ASF-SCAL] Generated docs/slo/availability_latency.md")
+
 
 def create_tests():
     e2e = """import pytest
@@ -424,6 +439,7 @@ def test_load_simulation():
         f.write(load)
     print("[ASF-SCAL] Generated test suite (e2e, chaos, load)")
 
+
 def create_makefile():
     content = """.PHONY: install test verify docker-build
 
@@ -443,6 +459,7 @@ verify:
     with open("Makefile", "w") as f:
         f.write(content)
     print("[ASF-SCAL] Generated Makefile")
+
 
 if __name__ == "__main__":
     print("=== [ASF-SCAL] Scaffolding Complete Enterprise Suite ===")

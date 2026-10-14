@@ -4,6 +4,7 @@ Wire format: Power Automate HTTP trigger / Copilot Studio action.
     request:  {"type": "verify", "claim": "...", "evidence": [...]}
     response: {"status": "succeeded|failed", "outputs": {...}}
 """
+
 from __future__ import annotations
 
 from typing import Any

@@ -9,6 +9,7 @@ Usage:
   python tooling/decisions/closure.py --check    # fail if any referenced
                                                  # decision file is missing
 """
+
 from __future__ import annotations
 
 import json

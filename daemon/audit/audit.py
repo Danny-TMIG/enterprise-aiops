@@ -1,16 +1,17 @@
 """Source module for audit."""
+
 from __future__ import annotations
 
 import hashlib
 import json
 import time
-from dataclasses import dataclass, field, asdict
-from typing import Any
+from dataclasses import asdict, dataclass, field
 
 
 @dataclass
 class Record:
     """One immutable unit of work emitted by audit."""
+
     name: str
     payload: dict = field(default_factory=dict)
     ts: str = field(default_factory=lambda: time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
@@ -43,4 +44,4 @@ class Audit:
         return h.hexdigest()
 
 
-__all__ = ["Record", "Audit"]
+__all__ = ["Audit", "Record"]

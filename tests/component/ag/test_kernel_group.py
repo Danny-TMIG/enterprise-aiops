@@ -1,4 +1,5 @@
 """Smoke tests for the Governance Kernel group."""
+
 from __future__ import annotations
 
 import importlib.util
@@ -32,8 +33,7 @@ ENV = {
 
 def test_krn002_transition_and_rejection():
     mod = load(
-        "components/ag/GOV-KRN-002-governed-state-and-transition-engine"
-        "/src/public/engine.py",
+        "components/ag/GOV-KRN-002-governed-state-and-transition-engine/src/public/engine.py",
         "krn002",
     )
     with mod.TransitionEngine() as eng:
@@ -64,8 +64,7 @@ def test_krn002_transition_and_rejection():
 
 def test_krn003_correlation():
     mod = load(
-        "components/ag/GOV-KRN-003-decision-and-outcome-correlation"
-        "/src/public/correlation.py",
+        "components/ag/GOV-KRN-003-decision-and-outcome-correlation/src/public/correlation.py",
         "krn003",
     )
     with mod.CorrelationRegistry() as reg:

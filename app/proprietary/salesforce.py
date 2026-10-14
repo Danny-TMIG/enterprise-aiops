@@ -4,6 +4,7 @@ Wire format: Apex callout / Agentforce external service.
     request:  {"action": "verify", "claim": "...", "context": {...}}
     response: {"success": bool, "data": {...}, "errors": [...]}
 """
+
 from __future__ import annotations
 
 from typing import Any

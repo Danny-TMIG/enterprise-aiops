@@ -1,16 +1,17 @@
 """Source module for 20_GOVERNANCE."""
+
 from __future__ import annotations
 
 import hashlib
 import json
 import time
-from dataclasses import dataclass, field, asdict
-from typing import Any
+from dataclasses import asdict, dataclass, field
 
 
 @dataclass
 class Record:
     """One immutable unit of work emitted by 20_GOVERNANCE."""
+
     name: str
     payload: dict = field(default_factory=dict)
     ts: str = field(default_factory=lambda: time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
@@ -20,7 +21,7 @@ class Record:
         return hashlib.sha256(canon.encode()).hexdigest()
 
 
-class 20Governance:
+class Mod20Governance:
     """Primary interface for 20_GOVERNANCE. Stateless, deterministic."""
 
     def __init__(self) -> None:
@@ -43,4 +44,4 @@ class 20Governance:
         return h.hexdigest()
 
 
-__all__ = ["Record", "20Governance"]
+__all__ = ["Mod20Governance", "Record"]

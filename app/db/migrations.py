@@ -4,6 +4,7 @@ The schema is built idempotently by scripts/build_db.py. This module
 exposes the same operation as a callable so init_db.py and other
 bootstrap paths can run it without shelling out.
 """
+
 from __future__ import annotations
 
 import sqlite3
@@ -25,11 +26,9 @@ def run_migrations(path: Path | None = None) -> dict[str, Any]:
         report["error"] = f"schema import failed: {e}"
         return report
     con = sqlite3.connect(p)
-    before = {r[0] for r in con.execute(
-        "SELECT name FROM sqlite_master WHERE type='table'")}
+    before = {r[0] for r in con.execute("SELECT name FROM sqlite_master WHERE type='table'")}
     con.executescript(ddl())
-    after = {r[0] for r in con.execute(
-        "SELECT name FROM sqlite_master WHERE type='table'")}
+    after = {r[0] for r in con.execute("SELECT name FROM sqlite_master WHERE type='table'")}
     con.commit()
     con.close()
     report["applied"] = len(after - before)

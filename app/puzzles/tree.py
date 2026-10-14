@@ -18,6 +18,7 @@ Solvers:
 All solvers take a tree and return a `SearchResult` with the
 winning path (or best move) plus a node count.
 """
+
 from __future__ import annotations
 
 import math
@@ -66,12 +67,12 @@ def _default_heuristic(s, player):
 # ── BFS ─────────────────────────────────────────────────────────
 def bfs(tree: DecisionTree, max_nodes: int = 1_000_000) -> SearchResult:
     from collections import deque
+
     start = tree.initial()
     if tree.is_terminal(start):
-        return SearchResult(found=True, terminal_state=start,
-                            reward=tree.reward(start, 1), depth=0)
+        return SearchResult(found=True, terminal_state=start, reward=tree.reward(start, 1), depth=0)
     seen = {start}
-    q = deque([(start, [], 1)])   # (state, path, player-to-move)
+    q = deque([(start, [], 1)])  # (state, path, player-to-move)
     nodes = 0
     while q:
         s, path, player = q.popleft()
@@ -84,8 +85,11 @@ def bfs(tree: DecisionTree, max_nodes: int = 1_000_000) -> SearchResult:
             new_path = path + [a]
             if tree.is_terminal(ns):
                 return SearchResult(
-                    found=True, path=new_path, terminal_state=ns,
-                    reward=tree.reward(ns, 1), nodes=nodes,
+                    found=True,
+                    path=new_path,
+                    terminal_state=ns,
+                    reward=tree.reward(ns, 1),
+                    nodes=nodes,
                     depth=len(new_path),
                 )
             if ns not in seen:
@@ -95,8 +99,7 @@ def bfs(tree: DecisionTree, max_nodes: int = 1_000_000) -> SearchResult:
 
 
 # ── IDA* ────────────────────────────────────────────────────────
-def ida_star(tree: DecisionTree, max_depth: int = 64,
-             max_nodes: int = 1_000_000) -> SearchResult:
+def ida_star(tree: DecisionTree, max_depth: int = 64, max_nodes: int = 1_000_000) -> SearchResult:
     nodes = [0]
     bound = [tree.heuristic(tree.initial(), 1)]
 
@@ -106,8 +109,11 @@ def ida_star(tree: DecisionTree, max_depth: int = 64,
             return f, None
         if tree.is_terminal(s):
             return -1, SearchResult(
-                found=True, path=list(path), terminal_state=s,
-                reward=tree.reward(s, 1), nodes=nodes[0],
+                found=True,
+                path=list(path),
+                terminal_state=s,
+                reward=tree.reward(s, 1),
+                nodes=nodes[0],
                 depth=len(path),
             )
         mn = math.inf
@@ -137,16 +143,14 @@ def ida_star(tree: DecisionTree, max_depth: int = 64,
 
 
 # ── minimax ─────────────────────────────────────────────────────
-def minimax(tree: DecisionTree, max_depth: int = 32
-            ) -> SearchResult:
+def minimax(tree: DecisionTree, max_depth: int = 32) -> SearchResult:
     nodes = [0]
 
     def mm(s, depth, player):
         nodes[0] += 1
         if tree.is_terminal(s) or depth == 0:
             return tree.reward(s, 1)
-        vals = [mm(tree.apply(s, a), depth - 1, -player)
-                for a in tree.actions(s)]
+        vals = [mm(tree.apply(s, a), depth - 1, -player) for a in tree.actions(s)]
         if not vals:
             return tree.reward(s, 1)
         return max(vals) if player == 1 else min(vals)
@@ -160,14 +164,16 @@ def minimax(tree: DecisionTree, max_depth: int = 32
             best_v = v
             best_a = a
     return SearchResult(
-        found=True, best_action=best_a, reward=best_v,
-        nodes=nodes[0], depth=0,
+        found=True,
+        best_action=best_a,
+        reward=best_v,
+        nodes=nodes[0],
+        depth=0,
     )
 
 
 # ── alpha-beta ──────────────────────────────────────────────────
-def alpha_beta(tree: DecisionTree, max_depth: int = 32
-               ) -> SearchResult:
+def alpha_beta(tree: DecisionTree, max_depth: int = 32) -> SearchResult:
     nodes = [0]
 
     def ab(s, depth, alpha, beta, player):
@@ -195,14 +201,16 @@ def alpha_beta(tree: DecisionTree, max_depth: int = 32
     best_v = -math.inf
     best_a = None
     for a in tree.actions(start):
-        v = ab(tree.apply(start, a), max_depth - 1,
-               -math.inf, math.inf, -1)
+        v = ab(tree.apply(start, a), max_depth - 1, -math.inf, math.inf, -1)
         if v > best_v:
             best_v = v
             best_a = a
     return SearchResult(
-        found=True, best_action=best_a, reward=best_v,
-        nodes=nodes[0], depth=0,
+        found=True,
+        best_action=best_a,
+        reward=best_v,
+        nodes=nodes[0],
+        depth=0,
     )
 
 
@@ -219,8 +227,7 @@ class _Node:
     untried: list[Action] = field(default_factory=list)
 
 
-def mcts(tree: DecisionTree, iterations: int = 2000,
-         seed: int = 0) -> SearchResult:
+def mcts(tree: DecisionTree, iterations: int = 2000, seed: int = 0) -> SearchResult:
     rng = random.Random(seed)
 
     def expand(n):
@@ -228,8 +235,7 @@ def mcts(tree: DecisionTree, iterations: int = 2000,
             return n
         a = n.untried.pop(rng.randrange(len(n.untried)))
         ns = tree.apply(n.state, a)
-        c = _Node(state=ns, player=-n.player, parent=n, action=a,
-                  untried=tree.actions(ns))
+        c = _Node(state=ns, player=-n.player, parent=n, action=a, untried=tree.actions(ns))
         n.children.append(c)
         return c
 
@@ -253,16 +259,16 @@ def mcts(tree: DecisionTree, iterations: int = 2000,
             value = -value
             n = n.parent
 
-    root = _Node(state=tree.initial(), player=1,
-                 untried=tree.actions(tree.initial()))
+    root = _Node(state=tree.initial(), player=1, untried=tree.actions(tree.initial()))
     for _ in range(iterations):
         n = root
         while not n.untried and n.children:
             # UCB1
             logN = math.log(n.visits + 1)
-            n = max(n.children,
-                    key=lambda c: (c.value / (c.visits + 1e-9)
-                                   + 1.4 * math.sqrt(logN / (c.visits + 1))))
+            n = max(
+                n.children,
+                key=lambda c: c.value / (c.visits + 1e-9) + 1.4 * math.sqrt(logN / (c.visits + 1)),
+            )
         if n.untried:
             n = expand(n)
         v = simulate(n)
@@ -271,7 +277,8 @@ def mcts(tree: DecisionTree, iterations: int = 2000,
         return SearchResult(found=False)
     best = max(root.children, key=lambda c: c.visits)
     return SearchResult(
-        found=True, best_action=best.action,
+        found=True,
+        best_action=best.action,
         reward=best.value / max(best.visits, 1),
         nodes=iterations,
     )

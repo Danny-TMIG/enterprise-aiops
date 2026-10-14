@@ -1,4 +1,5 @@
 """Grammar atlas — taxonomy + guaranteed 4-letter pool."""
+
 from __future__ import annotations
 
 import json
@@ -6,18 +7,49 @@ from dataclasses import dataclass
 from pathlib import Path
 
 CATEGORIES = (
-    "Phonology", "Morphology", "Syntax",
-    "Semantics", "Pragmatics", "Discourse", "Theoretical grammar",
+    "Phonology",
+    "Morphology",
+    "Syntax",
+    "Semantics",
+    "Pragmatics",
+    "Discourse",
+    "Theoretical grammar",
 )
 
 _FALLBACK_4 = [
-    "tone", "stop", "vowel", "nasal", "glide",
-    "root", "stem", "affix", "word", "form", "case",
-    "noun", "verb", "head", "node", "tree",
-    "type", "sort", "term", "role", "mode",
-    "face", "turn", "self", "act", "text",
-    "genre", "frame", "topic", "comment",
-    "merge", "move", "feature",
+    "tone",
+    "stop",
+    "vowel",
+    "nasal",
+    "glide",
+    "root",
+    "stem",
+    "affix",
+    "word",
+    "form",
+    "case",
+    "noun",
+    "verb",
+    "head",
+    "node",
+    "tree",
+    "type",
+    "sort",
+    "term",
+    "role",
+    "mode",
+    "face",
+    "turn",
+    "self",
+    "act",
+    "text",
+    "genre",
+    "frame",
+    "topic",
+    "comment",
+    "merge",
+    "move",
+    "feature",
 ]
 
 
@@ -57,8 +89,7 @@ class Atlas:
         return out
 
     def to_dict(self):
-        return {"name": self.name,
-                "counts": {k: len(v) for k, v in self.categories.items()}}
+        return {"name": self.name, "counts": {k: len(v) for k, v in self.categories.items()}}
 
 
 def load_atlas(path=None, name="default"):

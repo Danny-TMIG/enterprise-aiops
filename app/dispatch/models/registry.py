@@ -11,10 +11,12 @@ class ModelRegistry:
     def get(self, name: str):
         return self.models.get(name, {"provider": "local", "path": name})
 
+
 def get_registry() -> ModelRegistry:
     reg = ModelRegistry()
     reg.register("default", {"provider": "local", "path": "mlx-community/Qwen2.5-7B-Instruct-4bit"})
     return reg
+
 
 class ModelRegistryStatus:
     def status(self) -> dict:

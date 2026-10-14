@@ -11,6 +11,7 @@ from app.dispatch.orchestration.base import (
 
 class ServiceNowBackend(OrchestratorBackend):
     """Plugs into Now Assist / Flow Designer as a REST step."""
+
     name = "servicenow"
 
     def available(self) -> bool:
@@ -18,6 +19,7 @@ class ServiceNowBackend(OrchestratorBackend):
 
     def _verify(self, claim: VerificationClaim) -> VerificationVerdict:
         from app.dispatch.verification.registry import VerificationRegistry
+
         out = VerificationRegistry().verify_all(claim.claim, claim.evidence)
         ok = all(v.status == "PASS" for v in out)
         return VerificationVerdict(

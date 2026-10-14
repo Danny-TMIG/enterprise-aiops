@@ -12,12 +12,14 @@ class ModelRegistry:
         return {
             "total_models": len(self.registry),
             "models": list(self.registry.keys()),
-            "registry_state": "active"
+            "registry_state": "active",
         }
+
 
 class DummyProvider:
     def list(self) -> list[str]:
         return ["provider-1"]
+
 
 class DisRuntime:
     def __init__(self, models: ModelRegistry = None):
@@ -42,6 +44,7 @@ class DisRuntime:
                 "a2a": {"skills": [s["id"] for s in self.a2a.card.skills]},
             },
         }
+
 
 def get_dis() -> DisRuntime:
     return DisRuntime()

@@ -1,14 +1,15 @@
 """Healer — executes bounded, idempotent remedies."""
+
 from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 
 def _now() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 @dataclass(frozen=True)
@@ -36,6 +37,7 @@ class Healer:
 
     def apply(self, name: str, params: dict[str, Any]) -> dict[str, Any]:
         import time
+
         r = self._remedies.get(name)
         if r is None:
             return {"ok": False, "error": "unknown remedy"}
@@ -58,13 +60,13 @@ class Healer:
 
 
 class SystemHealer:
-
     """Runs health checks and applies registered fixes.
 
     A check is (name, check_fn, fix_fn). `check_and_heal()` runs every
     check, calls its fix when the check fails, and returns the list of
     actions taken. Keeps a history of every heal pass.
     """
+
     def __init__(self):
         self._checks: list = []
         self.history: list = []
@@ -86,19 +88,22 @@ class SystemHealer:
             if ok:
                 continue
             if fix_fn is None:
-                actions.append({"check": name, "action": "no_fix",
-                                "reason": err or "check failed"})
+                actions.append({"check": name, "action": "no_fix", "reason": err or "check failed"})
                 continue
             try:
                 fix_fn()
                 actions.append({"check": name, "action": "healed"})
             except Exception as exc:
-                actions.append({"check": name, "action": "heal_failed",
-                                "reason": f"{type(exc).__name__}: {exc}"})
+                actions.append(
+                    {
+                        "check": name,
+                        "action": "heal_failed",
+                        "reason": f"{type(exc).__name__}: {exc}",
+                    }
+                )
         self.history.append(actions)
         return actions
 
     @property
     def n_checks(self) -> int:
         return len(self._checks)
-

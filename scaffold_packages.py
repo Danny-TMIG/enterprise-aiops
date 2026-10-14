@@ -4,6 +4,7 @@
 Driven by catalog/spec_manifest.json. Writes only structure and metadata.
 Does not write implementation code.
 """
+
 from __future__ import annotations
 
 import json
@@ -14,9 +15,16 @@ MANIFEST = ROOT / "catalog" / "spec_manifest.json"
 COMPONENTS = ROOT / "components"
 
 REQUIRED_DIRS = [
-    "src/public", "src/modules", "src/adapters",
-    "tests/unit", "tests/contract", "tests/component", "tests/fixtures",
-    "config", "migrations", "docs",
+    "src/public",
+    "src/modules",
+    "src/adapters",
+    "tests/unit",
+    "tests/contract",
+    "tests/component",
+    "tests/fixtures",
+    "config",
+    "migrations",
+    "docs",
 ]
 
 DOC_FILES = {
@@ -51,7 +59,10 @@ def component_json(entry: dict, source_docs: list[str]) -> dict:
         "consumed_contracts": entry.get("consumed_contracts", []),
         "state_ownership": "UNDECIDED",
         "dependencies": {
-            "build": [], "runtime": [], "authority": [], "state": [],
+            "build": [],
+            "runtime": [],
+            "authority": [],
+            "state": [],
             "optional_deferred": [],
         },
         "modules": [],
@@ -93,8 +104,11 @@ def main() -> int:
         if not (public / "__init__.py").exists():
             (public / "__init__.py").write_text("")
         ctx = {
-            "id": entry["id"], "title": entry["title"], "layer": entry["layer"],
-            "group": entry["group"], "release": entry["release"],
+            "id": entry["id"],
+            "title": entry["title"],
+            "layer": entry["layer"],
+            "group": entry["group"],
+            "release": entry["release"],
             "source": ", ".join(source_docs) or "TBD",
         }
         for relpath, template in DOC_FILES.items():

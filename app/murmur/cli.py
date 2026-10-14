@@ -13,10 +13,8 @@ def main(argv=None) -> int:
     p.add_argument("--n", type=int, default=8)
     p.add_argument("--ticks", type=int, default=50)
     p.add_argument("--dt", type=float, default=0.05)
-    p.add_argument("--tool", default=None,
-                   help="route act.* to this connector")
-    p.add_argument("--list", action="store_true",
-                   help="list all connectors")
+    p.add_argument("--tool", default=None, help="route act.* to this connector")
+    p.add_argument("--list", action="store_true", help="list all connectors")
     p.add_argument("--json", action="store_true")
     a = p.parse_args(argv)
 
@@ -42,9 +40,11 @@ def main(argv=None) -> int:
         print()
         print("  sample effects:")
         for e in (last["effects"] if last else [])[:4]:
-            print(f"    {e['agent']:6s} sit={e['situation']:9s} "
-                  f"fc={e['forecast']:9s} dec={e['decision']:14s} "
-                  f"ok={e['effect']} alloc={e['alloc_share']}")
+            print(
+                f"    {e['agent']:6s} sit={e['situation']:9s} "
+                f"fc={e['forecast']:9s} dec={e['decision']:14s} "
+                f"ok={e['effect']} alloc={e['alloc_share']}"
+            )
     return 0
 
 

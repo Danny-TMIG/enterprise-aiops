@@ -1,13 +1,23 @@
 #!/usr/bin/env python3
 """DCS grounded-claims checker. Walks dcs/ only. Skips third-party."""
+
 from __future__ import annotations
 
 import ast
 import sys
 from pathlib import Path
 
-SKIP_DIRS = {".venv", "site-packages", "__pycache__", ".lanes",
-             ".git", "node_modules", "db", "dcd_codeql"}
+SKIP_DIRS = {
+    ".venv",
+    "site-packages",
+    "__pycache__",
+    ".lanes",
+    ".git",
+    "node_modules",
+    "db",
+    "dcd_codeql",
+}
+
 
 def walk_ast(root: Path):
     dcs_dir = root / "dcs"
@@ -33,13 +43,19 @@ def check_aligned(root: Path) -> list:
             if not (isinstance(func, ast.Attribute) and func.attr == "append"):
                 continue
             recv = func.value
-            recv_name = (recv.id if isinstance(recv, ast.Name)
-                         else recv.attr if isinstance(recv, ast.Attribute)
-                         else None)
+            recv_name = (
+                recv.id
+                if isinstance(recv, ast.Name)
+                else recv.attr
+                if isinstance(recv, ast.Attribute)
+                else None
+            )
             if recv_name != "chain":
                 continue
             if (len(node.args) + len(node.keywords)) < 4:
-                bad.append(f"{p.name}:{node.lineno} {recv_name}.append() has {len(node.args) + len(node.keywords)} args")
+                bad.append(
+                    f"{p.name}:{node.lineno} {recv_name}.append() has {len(node.args) + len(node.keywords)} args"
+                )
     return bad
 
 
@@ -47,8 +63,9 @@ def check_aligned(root: Path) -> list:
 def check_safe(root: Path) -> list:
     bad = []
     for p, tree in walk_ast(root):
-        defines = any(isinstance(n, ast.FunctionDef) and n.name.startswith("verify")
-                      for n in ast.walk(tree))
+        defines = any(
+            isinstance(n, ast.FunctionDef) and n.name.startswith("verify") for n in ast.walk(tree)
+        )
         if not defines:
             continue
         text = p.read_text()
@@ -80,7 +97,11 @@ def check_complete(root: Path) -> list:
                         bad.append(f"{p.name}:{elt.lineno} HATS tuple has {len(elt.elts)} elements")
                         continue
                     a = elt.elts[4]
-                    if not (isinstance(a, ast.Constant) and isinstance(a.value, str) and len(a.value) >= 2):
+                    if not (
+                        isinstance(a, ast.Constant)
+                        and isinstance(a.value, str)
+                        and len(a.value) >= 2
+                    ):
                         bad.append(f"{p.name}:{elt.lineno} HATS anchor empty")
     return bad
 
@@ -104,8 +125,11 @@ def check_finite(root: Path) -> list:
         for node in ast.walk(tree):
             if not isinstance(node, ast.Dict):
                 continue
-            keys = {k.value for k in node.keys
-                    if isinstance(k, ast.Constant) and isinstance(k.value, str)}
+            keys = {
+                k.value
+                for k in node.keys
+                if isinstance(k, ast.Constant) and isinstance(k.value, str)
+            }
             # only flag dicts that ALREADY look like Belnap maps
             if keys and (keys & good) and not (keys <= good):
                 bad.append(f"{p.name}:{node.lineno} Belnap dict has extra keys: {keys - good}")
@@ -139,7 +163,11 @@ def check_anchored(root: Path) -> list:
                     bad.append(f"{p.name}:{node.lineno} STANDARDS_BODIES not iterable")
                     continue
                 for elt in v.elts:
-                    if not (isinstance(elt, ast.Constant) and isinstance(elt.value, str) and len(elt.value) >= 2):
+                    if not (
+                        isinstance(elt, ast.Constant)
+                        and isinstance(elt.value, str)
+                        and len(elt.value) >= 2
+                    ):
                         bad.append(f"{p.name}:{node.lineno} STANDARDS_BODIES trivial entry")
     return bad
 
@@ -149,8 +177,14 @@ def check_anchored(root: Path) -> list:
 def check_externally_verifiable(root: Path) -> list:
     bad = []
     NET = {"urlopen", "socket", "connect", "create_connection"}
-    VERIFY = {"verify", "verify_license", "verify_all", "verify_chain",
-              "verify_inclusion", "verify_attestation"}
+    VERIFY = {
+        "verify",
+        "verify_license",
+        "verify_all",
+        "verify_chain",
+        "verify_inclusion",
+        "verify_attestation",
+    }
     for p, tree in walk_ast(root):
         for node in ast.walk(tree):
             if not (isinstance(node, ast.FunctionDef) and node.name in VERIFY):
@@ -158,21 +192,24 @@ def check_externally_verifiable(root: Path) -> list:
             for sub in ast.walk(node):
                 if isinstance(sub, ast.Call):
                     f = sub.func
-                    name = f.attr if isinstance(f, ast.Attribute) else (
-                        f.id if isinstance(f, ast.Name) else None)
+                    name = (
+                        f.attr
+                        if isinstance(f, ast.Attribute)
+                        else (f.id if isinstance(f, ast.Name) else None)
+                    )
                     if name in NET:
                         bad.append(f"{p.name}:{node.lineno} verify() calls {name}")
     return bad
 
 
 CHECKS = [
-    ("1_aligned",               check_aligned,               "chain.append arity"),
-    ("2_safe",                  check_safe,                  "verify() in conditional"),
-    ("3_complete",              check_complete,              "HATS tuples well-formed"),
-    ("4_prevention",            check_prevention,            "detect_rogue present"),
-    ("5_finite",                check_finite,                "Belnap dict total"),
-    ("6_forgeable_evidence",    check_forgeable,             "no weak hash"),
-    ("7_anchored",              check_anchored,              "STANDARDS_BODIES non-trivial"),
+    ("1_aligned", check_aligned, "chain.append arity"),
+    ("2_safe", check_safe, "verify() in conditional"),
+    ("3_complete", check_complete, "HATS tuples well-formed"),
+    ("4_prevention", check_prevention, "detect_rogue present"),
+    ("5_finite", check_finite, "Belnap dict total"),
+    ("6_forgeable_evidence", check_forgeable, "no weak hash"),
+    ("7_anchored", check_anchored, "STANDARDS_BODIES non-trivial"),
     ("8_externally_verifiable", check_externally_verifiable, "no network in verify"),
 ]
 

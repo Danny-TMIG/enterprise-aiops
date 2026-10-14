@@ -7,6 +7,7 @@ from .config import CodeQLConfig
 
 logger = logging.getLogger(__name__)
 
+
 class CodeQLRunner:
     def __init__(self, config: CodeQLConfig | None = None):
         self.config = config or CodeQLConfig()
@@ -23,11 +24,21 @@ class CodeQLRunner:
 
     def create_database(self, source_root: str | None = None, language: str = "python") -> bool:
         src = source_root or str(self.config.workspace_dir)
-        args = ["create", str(self.config.db_path), f"--language={language}", f"--source-root={src}", "--overwrite"]
+        args = [
+            "create",
+            str(self.config.db_path),
+            f"--language={language}",
+            f"--source-root={src}",
+            "--overwrite",
+        ]
         res = self.run_command(args)
         return res.returncode == 0
 
-    def analyze_database(self, query_suite: str = "codeql/python-queries:codeql-suites/python-security-and-quality.qls", threads: int = 4) -> bool:
+    def analyze_database(
+        self,
+        query_suite: str = "codeql/python-queries:codeql-suites/python-security-and-quality.qls",
+        threads: int = 4,
+    ) -> bool:
         args = [
             "analyze",
             str(self.config.db_path),
@@ -35,7 +46,7 @@ class CodeQLRunner:
             f"--output={self.config.results_sarif}",
             f"--threads={threads}",
             "--download",
-            query_suite
+            query_suite,
         ]
         res = self.run_command(args)
         return res.returncode == 0

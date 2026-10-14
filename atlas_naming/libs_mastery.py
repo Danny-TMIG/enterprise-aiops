@@ -15,12 +15,11 @@ Writes:
   atlas_naming/LIBS.md       ranked dependency report
   atlas_naming/CONFLICTS.md  version conflicts across venvs
 """
+
 from __future__ import annotations
 
 import ast
-import configparser
 import json
-import os
 import re
 import site
 import sys
@@ -33,24 +32,43 @@ OUT = ROOT / "atlas_naming"
 OUT.mkdir(exist_ok=True)
 
 SKIP_DIRS = {
-    ".git", "__pycache__", ".mypy_cache", ".ruff_cache", ".hypothesis",
-    ".pytest_cache", ".eggs", "build", "dist", ".tox", ".cache",
-    ".codeql-results", ".mesh-codeql-db", ".snapshots", ".delta",
-    ".last-backups", ".complete-backups", ".benchmarks",
-    "atlas_naming", "_grammar_spec", ".moat", ".murmur", ".agency",
-    ".backrooms", "node_modules", ".next",
+    ".git",
+    "__pycache__",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".hypothesis",
+    ".pytest_cache",
+    ".eggs",
+    "build",
+    "dist",
+    ".tox",
+    ".cache",
+    ".codeql-results",
+    ".mesh-codeql-db",
+    ".snapshots",
+    ".delta",
+    ".last-backups",
+    ".complete-backups",
+    ".benchmarks",
+    "atlas_naming",
+    "_grammar_spec",
+    ".moat",
+    ".murmur",
+    ".agency",
+    ".backrooms",
+    "node_modules",
+    ".next",
 }
 
 
 def skipped(p: Path) -> bool:
-    return any(x in SKIP_DIRS for x in p.parts) or any(
-        x.endswith(".egg-info") for x in p.parts
-    )
+    return any(x in SKIP_DIRS for x in p.parts) or any(x.endswith(".egg-info") for x in p.parts)
 
 
 # ---------------------------------------------------------------------------
 # 1. Enumerate stdlib
 # ---------------------------------------------------------------------------
+
 
 def enumerate_stdlib() -> set[str]:
     names = set()
@@ -59,9 +77,8 @@ def enumerate_stdlib() -> set[str]:
         if p.stem != "__init__":
             names.add(p.stem)
     for d in stdlib_dir.iterdir():
-        if d.is_dir() and not d.name.startswith("_"):
-            if (d / "__init__.py").exists():
-                names.add(d.name)
+        if d.is_dir() and not d.name.startswith("_") and (d / "__init__.py").exists():
+            names.add(d.name)
     names |= set(sys.builtin_module_names)
     return names
 
@@ -69,6 +86,7 @@ def enumerate_stdlib() -> set[str]:
 # ---------------------------------------------------------------------------
 # 2. Enumerate installed packages across all venvs
 # ---------------------------------------------------------------------------
+
 
 def dist_metadata(pkg_dir: Path) -> dict:
     """Read the metadata from a *.dist-info directory."""
@@ -139,28 +157,45 @@ def find_venv_site_dirs() -> list[tuple[str, Path]]:
 # 3. Walk the tree and collect every import
 # ---------------------------------------------------------------------------
 
+
 def extract_imports(tree: ast.AST) -> list[dict]:
     out = []
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             for alias in node.names:
                 top = alias.name.split(".")[0]
-                out.append({
-                    "form": "import", "module": alias.name, "top": top,
-                    "asname": alias.asname, "lineno": node.lineno,
-                })
+                out.append(
+                    {
+                        "form": "import",
+                        "module": alias.name,
+                        "top": top,
+                        "asname": alias.asname,
+                        "lineno": node.lineno,
+                    }
+                )
         elif isinstance(node, ast.ImportFrom):
             if node.level:
-                out.append({
-                    "form": "relative", "module": "." * node.level + (node.module or ""),
-                    "top": None, "asname": None, "lineno": node.lineno,
-                })
+                out.append(
+                    {
+                        "form": "relative",
+                        "module": "." * node.level + (node.module or ""),
+                        "top": None,
+                        "asname": None,
+                        "lineno": node.lineno,
+                    }
+                )
                 continue
             top = (node.module or "").split(".")[0]
-            out.append({
-                "form": "from", "module": node.module or "", "top": top,
-                "name": None, "asname": None, "lineno": node.lineno,
-            })
+            out.append(
+                {
+                    "form": "from",
+                    "module": node.module or "",
+                    "top": top,
+                    "name": None,
+                    "asname": None,
+                    "lineno": node.lineno,
+                }
+            )
     return out
 
 
@@ -168,8 +203,8 @@ def extract_imports(tree: ast.AST) -> list[dict]:
 # 4. Classify a top-level import name
 # ---------------------------------------------------------------------------
 
-def classify(top: str, stdlib: set[str], installed: dict,
-             local_tops: set[str], venvs: dict) -> str:
+
+def classify(top: str, stdlib: set[str], installed: dict, local_tops: set[str], venvs: dict) -> str:
     if top is None:
         return "relative"
     if top in local_tops:
@@ -185,13 +220,14 @@ def classify(top: str, stdlib: set[str], installed: dict,
 # 5. Load declared dependencies
 # ---------------------------------------------------------------------------
 
+
 def parse_requirements(path: Path) -> set[str]:
     names = set()
     if not path.exists():
         return names
     for line in path.read_text().splitlines():
         line = line.strip()
-        if not line or line.startswith("#") or line.startswith("-"):
+        if not line or line.startswith(("#", "-")):
             continue
         m = re.match(r"([A-Za-z0-9_\-\.]+)", line)
         if m:
@@ -214,6 +250,7 @@ def parse_pyproject(path: Path) -> set[str]:
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
+
 
 def main() -> int:
     stdlib = enumerate_stdlib()
@@ -255,9 +292,13 @@ def main() -> int:
 
     # Walk tree
     print("walking tree...")
-    imports_by_top: dict[str, dict] = defaultdict(lambda: {
-        "files": set(), "statements": 0, "aliases": set(),
-    })
+    imports_by_top: dict[str, dict] = defaultdict(
+        lambda: {
+            "files": set(),
+            "statements": 0,
+            "aliases": set(),
+        }
+    )
     imports_by_category = defaultdict(int)
     unresolved = defaultdict(list)
     parsed = 0
@@ -355,36 +396,51 @@ def main() -> int:
     for cat, count in sorted(imports_by_category.items(), key=lambda kv: -kv[1]):
         md.append(f"| {cat} | {count} |")
 
-    md += ["", "## Third-party dependencies (used)", "",
-           "| Package | Files | Statements | Installed versions | Venvs |",
-           "|---|---:|---:|---|---|"]
+    md += [
+        "",
+        "## Third-party dependencies (used)",
+        "",
+        "| Package | Files | Statements | Installed versions | Venvs |",
+        "|---|---:|---:|---|---|",
+    ]
     for top, info in sorted(roots.items(), key=lambda kv: -kv[1]["file_count"]):
         if info["category"] != "third-party":
             continue
-        versions = ", ".join(f"`{v}`" for v in info["installed"].get("distinct_versions", [])) or "?"
+        versions = (
+            ", ".join(f"`{v}`" for v in info["installed"].get("distinct_versions", [])) or "?"
+        )
         labels = ", ".join(info["installed"].get("labels", [])) or "?"
-        md.append(f"| `{top}` | {info['file_count']} | {info['statement_count']} | {versions} | {labels} |")
+        md.append(
+            f"| `{top}` | {info['file_count']} | {info['statement_count']} | {versions} | {labels} |"
+        )
 
-    md += ["", "## Stdlib dependencies (used)", "",
-           "| Module | Files | Statements | Aliases |",
-           "|---|---:|---:|---|"]
+    md += [
+        "",
+        "## Stdlib dependencies (used)",
+        "",
+        "| Module | Files | Statements | Aliases |",
+        "|---|---:|---:|---|",
+    ]
     for top, info in sorted(roots.items(), key=lambda kv: -kv[1]["file_count"]):
         if info["category"] != "stdlib":
             continue
         aliases = ", ".join(info["aliases"]) or "—"
         md.append(f"| `{top}` | {info['file_count']} | {info['statement_count']} | {aliases} |")
 
-    md += ["", "## Local imports", "",
-           "| Name | Files | Statements |",
-           "|---|---:|---:|"]
+    md += ["", "## Local imports", "", "| Name | Files | Statements |", "|---|---:|---:|"]
     for top, info in sorted(roots.items(), key=lambda kv: -kv[1]["file_count"]):
         if info["category"] != "local":
             continue
         md.append(f"| `{top}` | {info['file_count']} | {info['statement_count']} |")
 
-    md += ["", "## Unresolved imports", "",
-           "These names are not stdlib, not third-party in any venv, and not local.",
-           "They are dead imports, missing dependencies, or typos.", ""]
+    md += [
+        "",
+        "## Unresolved imports",
+        "",
+        "These names are not stdlib, not third-party in any venv, and not local.",
+        "They are dead imports, missing dependencies, or typos.",
+        "",
+    ]
     if unresolved:
         md.append("| Name | Files | First site |")
         md.append("|---|---:|---|")
@@ -394,16 +450,26 @@ def main() -> int:
     else:
         md.append("None.")
 
-    md += ["", "## Declared but unused", "",
-           "Requirements list these, but no file imports them.", ""]
+    md += [
+        "",
+        "## Declared but unused",
+        "",
+        "Requirements list these, but no file imports them.",
+        "",
+    ]
     if declared_unused:
         for name in declared_unused:
             md.append(f"- `{name}`")
     else:
         md.append("None.")
 
-    md += ["", "## Used but undeclared", "",
-           "Files import these, but requirements.txt / pyproject.toml do not list them.", ""]
+    md += [
+        "",
+        "## Used but undeclared",
+        "",
+        "Files import these, but requirements.txt / pyproject.toml do not list them.",
+        "",
+    ]
     if used_undeclared:
         for name in used_undeclared[:80]:
             md.append(f"- `{name}`")
@@ -419,11 +485,13 @@ def main() -> int:
         versions = set(info["versions"].values())
         versions.discard("?")
         if len(versions) > 1:
-            conflicts.append({
-                "name": name,
-                "versions": info["versions"],
-                "labels": info["labels"],
-            })
+            conflicts.append(
+                {
+                    "name": name,
+                    "versions": info["versions"],
+                    "labels": info["labels"],
+                }
+            )
     conflicts.sort(key=lambda c: c["name"])
 
     lines = [

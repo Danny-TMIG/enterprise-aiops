@@ -7,22 +7,22 @@ VARIABLES node_states, request_queue, active_inference
 
 vars == <<node_states, request_queue, active_inference>>
 
-Init == 
+Init ==
     /\ node_states = [n \in Nodes |-> "IDLE"]
     /\ request_queue = <<>>
     /\ active_inference = FALSE
 
-DispatchRequest == 
+DispatchRequest ==
     /\ active_inference = FALSE
     /\ active_inference' = TRUE
     /\ UNCHANGED <<node_states, request_queue>>
 
-CompleteInference == 
+CompleteInference ==
     /\ active_inference = TRUE
     /\ active_inference' = FALSE
     /\ UNCHANGED <<node_states, request_queue>>
 
-Next == 
+Next ==
     \/ DispatchRequest
     \/ CompleteInference
 

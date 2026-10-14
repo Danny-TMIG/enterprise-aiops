@@ -11,6 +11,7 @@ from app.dispatch.orchestration.base import (
 
 class GoogleBackend(OrchestratorBackend):
     """Plugs into Vertex AI Agent Builder / ADK as a tool endpoint."""
+
     name = "google"
 
     def available(self) -> bool:
@@ -18,6 +19,7 @@ class GoogleBackend(OrchestratorBackend):
 
     def _verify(self, claim: VerificationClaim) -> VerificationVerdict:
         from app.dispatch.verification.registry import VerificationRegistry
+
         out = VerificationRegistry().verify_all(claim.claim, claim.evidence)
         ok = all(v.status == "PASS" for v in out)
         return VerificationVerdict(

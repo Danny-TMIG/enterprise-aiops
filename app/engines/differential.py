@@ -10,6 +10,7 @@ differences over a sequence of generations:
 
 Level 3 is the one that answers "is s1 gaining on s2".
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -75,8 +76,7 @@ class DiffEngine:
 
     def __init__(self, solvers_by_kind: dict[str, list[str]]):
         self.by_kind: dict[str, DiffLevels] = {
-            k: DiffLevels(kind=k, solvers=list(v))
-            for k, v in solvers_by_kind.items()
+            k: DiffLevels(kind=k, solvers=list(v)) for k, v in solvers_by_kind.items()
         }
 
     def push(self, kind: str, rate: dict[str, float]) -> None:
@@ -89,7 +89,6 @@ class DiffEngine:
                 "generations": len(d.rate),
                 "dominant": d.dominant(),
                 "improving": d.improving()[:3],
-                "latest_delta": {f"{a}|{b}": round(v, 4)
-                                 for (a, b), v in d.latest_delta().items()},
+                "latest_delta": {f"{a}|{b}": round(v, 4) for (a, b), v in d.latest_delta().items()},
             }
         return out

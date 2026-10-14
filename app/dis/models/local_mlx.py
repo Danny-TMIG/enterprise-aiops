@@ -3,6 +3,7 @@
 Importable even when mlx is not installed; `load()` and `generate()`
 degrade gracefully and report `loaded=False`.
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -23,6 +24,7 @@ class LocalMLX:
             self._model = None
             return False
         import mlx_lm
+
         self._model, self._tokenizer = mlx_lm.load(self.model_id)
         return True
 
@@ -30,9 +32,12 @@ class LocalMLX:
         if self._model is None:
             return ""
         import mlx_lm
+
         return mlx_lm.generate(
-            self._model, self._tokenizer,
-            prompt=prompt, max_tokens=max_tokens,
+            self._model,
+            self._tokenizer,
+            prompt=prompt,
+            max_tokens=max_tokens,
         )
 
     @property

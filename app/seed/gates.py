@@ -1,13 +1,14 @@
 """Two human gates. One review. One decision. Not per-agent."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 
 def _now() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 class GateError(RuntimeError):
@@ -23,8 +24,13 @@ class GateDecision:
     ts: str = field(default_factory=_now)
 
     def to_dict(self) -> dict[str, Any]:
-        return {"gate": self.gate, "approved": self.approved,
-                "by": self.by, "note": self.note, "ts": self.ts}
+        return {
+            "gate": self.gate,
+            "approved": self.approved,
+            "by": self.by,
+            "note": self.note,
+            "ts": self.ts,
+        }
 
 
 @dataclass
@@ -53,6 +59,8 @@ class Gate:
             raise GateError(f"gate '{self.name}' not passed")
 
     def to_dict(self) -> dict[str, Any]:
-        return {"name": self.name,
-                "decision": self.decision.to_dict() if self.decision else None,
-                "passed": self.passed}
+        return {
+            "name": self.name,
+            "decision": self.decision.to_dict() if self.decision else None,
+            "passed": self.passed,
+        }

@@ -5,6 +5,7 @@ Reads affected.json (produced by affected.py) and runs pytest in each
 affected component's tests/ directory. Fails if any affected component
 has a test failure or if the affected set is empty when it should not be.
 """
+
 from __future__ import annotations
 
 import json

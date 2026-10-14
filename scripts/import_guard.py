@@ -3,6 +3,7 @@ import sys
 
 PROTECTED_MODULES = ["numpy", "fastapi", "uvicorn", "pydantic", "networkx", "redis", "mlx"]
 
+
 def audit_imports():
     failed = False
     print("=== Auditing Protected Python Modules ===")
@@ -19,6 +20,7 @@ def audit_imports():
         sys.exit(1)
     else:
         print("\n[SUCCESS] All core modules verified cleanly.")
+
 
 if __name__ == "__main__":
     audit_imports()

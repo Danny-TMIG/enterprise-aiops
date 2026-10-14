@@ -32,7 +32,9 @@ def render(*, floor: int = 12) -> str:  # pragma: no cover
     return "\n".join(lines)  # pragma: no cover
 
 
-def converge(*, floor: int = 12, max_steps: int = 40, write: bool = False) -> str:  # pragma: no cover
+def converge(
+    *, floor: int = 12, max_steps: int = 40, write: bool = False
+) -> str:  # pragma: no cover
     """Iterate: report balance until every hat hits floor or max_steps."""
     trace = []
     for step in range(1, max_steps + 1):

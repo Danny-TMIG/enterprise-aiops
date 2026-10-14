@@ -92,7 +92,9 @@ def dla(n_particles=300, seed=0, size=80):  # pragma: no cover
             dx, dy = rng.choice([(1, 0), (-1, 0), (0, 1), (0, -1)])
             x += dx
             y += dy
-            if any((x + dx, y + dy) in grid for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))):  # pragma: no cover
+            if any(
+                (x + dx, y + dy) in grid for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))
+            ):  # pragma: no cover
                 grid.add((x, y))
                 break
     return {"size": len(grid), "grid": grid}  # pragma: no cover

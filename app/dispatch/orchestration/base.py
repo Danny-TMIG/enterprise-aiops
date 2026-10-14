@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 
 def _now() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 @dataclass
@@ -20,7 +20,7 @@ class VerificationClaim:
 @dataclass
 class VerificationVerdict:
     vendor: str
-    status: str           # PASS | FAIL | UNKNOWN | NOT_RUN | ...
+    status: str  # PASS | FAIL | UNKNOWN | NOT_RUN | ...
     rationale: str = ""
     evidence_used: list[str] = field(default_factory=list)
     dry_run: bool = False
@@ -28,10 +28,12 @@ class VerificationVerdict:
 
     def to_dict(self) -> dict[str, Any]:
         return {
-            "vendor": self.vendor, "status": self.status,
+            "vendor": self.vendor,
+            "status": self.status,
             "rationale": self.rationale,
             "evidence_used": self.evidence_used,
-            "dry_run": self.dry_run, "ts": self.ts,
+            "dry_run": self.dry_run,
+            "ts": self.ts,
         }
 
 
@@ -54,7 +56,8 @@ class OrchestratorBackend:
             return self._verify(claim)
         except Exception as exc:  # noqa: BLE001
             return VerificationVerdict(
-                vendor=self.name, status="UNKNOWN",
+                vendor=self.name,
+                status="UNKNOWN",
                 rationale=f"backend error: {type(exc).__name__}",
                 dry_run=True,
             )
@@ -62,13 +65,13 @@ class OrchestratorBackend:
     def _verify(self, claim: VerificationClaim) -> VerificationVerdict:
         # Default: caller supplied evidence already; run local checks
         from app.dispatch.verification.registry import VerificationRegistry
+
         reg = VerificationRegistry()
         out = reg.verify_all(claim.claim, claim.evidence)
         ok = all(v.status == "PASS" for v in out)
         return VerificationVerdict(
             vendor=self.name,
             status="PASS" if ok else "FAIL",
-            rationale="local verifiers: " + ", ".join(
-                f"{v.prover}={v.status}" for v in out),
+            rationale="local verifiers: " + ", ".join(f"{v.prover}={v.status}" for v in out),
             evidence_used=[e.get("id", "?") for e in claim.evidence],
         )

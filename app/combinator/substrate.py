@@ -13,6 +13,7 @@ We provide:
   - A Substrate Protocol so that FPGA / GPU / ASIC backends can
     be dropped in with the same six rules.
 """
+
 from __future__ import annotations
 
 import json
@@ -26,9 +27,8 @@ from app.combinator.reduce import normalise, step
 
 class Substrate(Protocol):
     name: str
-    def normalise(self, g: Graph,
-                  max_steps: int = 10_000) -> tuple[Graph, int, bool]:
-        ...
+
+    def normalise(self, g: Graph, max_steps: int = 10_000) -> tuple[Graph, int, bool]: ...
 
 
 # ── CPU / in-memory ─────────────────────────────────────────────
@@ -44,14 +44,12 @@ class StreamingSubstrate:
     name = "streaming"
 
     def __init__(self, scratch: Path | None = None):
-        self.scratch = Path(scratch) if scratch else Path(
-            tempfile.mkdtemp(prefix="ic_stream_"))
+        self.scratch = Path(scratch) if scratch else Path(tempfile.mkdtemp(prefix="ic_stream_"))
 
     def _write(self, g: Graph, path: Path) -> None:
         doc = {
             "nodes": {str(k): v for k, v in g.nodes.items()},
-            "wires": {f"{a[0]}:{a[1]}": [b[0], b[1]]
-                      for a, b in g.wires.items()},
+            "wires": {f"{a[0]}:{a[1]}": [b[0], b[1]] for a, b in g.wires.items()},
             "next_id": g._next_id,
         }
         path.write_text(json.dumps(doc))

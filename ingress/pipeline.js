@@ -9,20 +9,20 @@ import path from 'path';
 
 export async function runIngestionPipeline() {
   const machine = new StateVerifierMachine();
-  
+
   machine.on('transition', (event) => {
     console.log(`[STATE_TRANSITION] ${event.from} -> ${event.to} | Hash: ${event.payloadHash.substring(0, 12)}...`);
   });
 
   console.log('--- Initializing Mesh Ingestion Pipeline ---');
-  
+
   // 1. Acquire Lock
   const lockToken = await machine.acquireLock('mesh-daemon-alpha');
   console.log(`[LOCK_ACQUIRED] Token: ${lockToken.substring(0, 16)}...`);
 
   // 2. Ingest Payload (Simulating local MLX/Ollama discovery)
   await machine.transition(STATES.INGESTING, { source: 'local_mlx_ollama_registry' });
-  
+
   const sampleCatalog = {
     models: [
       {

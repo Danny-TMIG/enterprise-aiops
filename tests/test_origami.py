@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: MIT
 """Tests for app.origami.grammar."""
+
 from app.origami.grammar import (
     LoadedGrammar,
     OrigamiGrammar,

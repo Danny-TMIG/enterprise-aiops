@@ -1,4 +1,5 @@
 """Sudoku — 81 vars, 27 all-different constraints (partial)."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -10,7 +11,8 @@ N = 9
 BOX = 3
 
 
-def _vid(r, c): return f"r{r}c{c}"
+def _vid(r, c):
+    return f"r{r}c{c}"
 
 
 def _all_diff_partial(vals):
@@ -34,7 +36,7 @@ class SudokuPuzzle:
         return solve(self.grid, max_nodes=max_nodes)
 
     def to_matrix(self, assignment=None):
-        m = [[0]*N for _ in range(N)]
+        m = [[0] * N for _ in range(N)]
         for r in range(N):
             for c in range(N):
                 v = _vid(r, c)
@@ -62,15 +64,36 @@ class SudokuPuzzle:
 def make_sudoku(givens=None, seed=0):
     if givens is None:
         givens = [
-            (0,0,5),(0,1,3),(0,4,7),
-            (1,0,6),(1,3,1),(1,4,9),(1,5,5),
-            (2,1,9),(2,2,8),(2,7,6),
-            (3,0,8),(3,4,6),(3,8,3),
-            (4,0,4),(4,3,8),(4,5,3),(4,8,1),
-            (5,0,7),(5,4,2),(5,8,6),
-            (6,1,6),(6,6,2),(6,7,8),
-            (7,3,4),(7,4,1),(7,5,9),(7,8,5),
-            (8,4,8),(8,7,7),(8,8,9),
+            (0, 0, 5),
+            (0, 1, 3),
+            (0, 4, 7),
+            (1, 0, 6),
+            (1, 3, 1),
+            (1, 4, 9),
+            (1, 5, 5),
+            (2, 1, 9),
+            (2, 2, 8),
+            (2, 7, 6),
+            (3, 0, 8),
+            (3, 4, 6),
+            (3, 8, 3),
+            (4, 0, 4),
+            (4, 3, 8),
+            (4, 5, 3),
+            (4, 8, 1),
+            (5, 0, 7),
+            (5, 4, 2),
+            (5, 8, 6),
+            (6, 1, 6),
+            (6, 6, 2),
+            (6, 7, 8),
+            (7, 3, 4),
+            (7, 4, 1),
+            (7, 5, 9),
+            (7, 8, 5),
+            (8, 4, 8),
+            (8, 7, 7),
+            (8, 8, 9),
         ]
     gmap = {}
     for r, c, v in givens:
@@ -80,12 +103,12 @@ def make_sudoku(givens=None, seed=0):
         for c in range(N):
             v = _vid(r, c)
             dom = [gmap[v]] if v in gmap else list(range(1, 10))
-            grid.add_var(Var(id=v, domain=dom, coords=[(r, c)],
-                             meta={"row": r, "col": c}))
+            grid.add_var(Var(id=v, domain=dom, coords=[(r, c)], meta={"row": r, "col": c}))
 
     def mk(scope):
         def check(a, s=scope):
             return _all_diff_partial([a.get(x) for x in s])
+
         return check
 
     for r in range(N):
@@ -96,8 +119,7 @@ def make_sudoku(givens=None, seed=0):
         grid.add_constraint(Constraint(f"col{c}", sc, mk(sc)))
     for br in range(BOX):
         for bc in range(BOX):
-            sc = [_vid(br*BOX+dr, bc*BOX+dc)
-                  for dr in range(BOX) for dc in range(BOX)]
+            sc = [_vid(br * BOX + dr, bc * BOX + dc) for dr in range(BOX) for dc in range(BOX)]
             grid.add_constraint(Constraint(f"box{br}{bc}", sc, mk(sc)))
     return SudokuPuzzle(grid=grid, givens=gmap, seed=seed)
 
@@ -106,5 +128,4 @@ def solve_sudoku(puzzle, max_nodes=1_000_000):
     s = puzzle.solve(max_nodes=max_nodes)
     if not s.complete:
         return {"solved": False, "nodes": s.nodes}
-    return {"solved": True, "nodes": s.nodes,
-            "str": puzzle.to_str(puzzle.to_matrix(s.assignment))}
+    return {"solved": True, "nodes": s.nodes, "str": puzzle.to_str(puzzle.to_matrix(s.assignment))}

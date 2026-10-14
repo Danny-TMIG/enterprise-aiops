@@ -8,6 +8,7 @@ not mysticism.
 The golden angle 2π(1 - 1/φ) ≈ 137.5° is the angle between
 successive leaves (or seeds) in the phyllotaxis pattern.
 """
+
 from __future__ import annotations
 
 import math
@@ -26,10 +27,10 @@ def icosa_vertices() -> int:
 def platonic_counts() -> dict[str, dict[str, int]]:
     """Faces / vertices / edges of the five Platonic solids."""
     return {
-        "tetrahedron": {"faces": 4,  "vertices": 4,  "edges": 6},
-        "cube":        {"faces": 6,  "vertices": 8,  "edges": 12},
-        "octahedron":  {"faces": 8,  "vertices": 6,  "edges": 12},
-        "dodecahedron":{"faces": 12, "vertices": 20, "edges": 30},
+        "tetrahedron": {"faces": 4, "vertices": 4, "edges": 6},
+        "cube": {"faces": 6, "vertices": 8, "edges": 12},
+        "octahedron": {"faces": 8, "vertices": 6, "edges": 12},
+        "dodecahedron": {"faces": 12, "vertices": 20, "edges": 30},
         "icosahedron": {"faces": 20, "vertices": 12, "edges": 30},
     }
 

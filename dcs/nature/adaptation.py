@@ -1,5 +1,6 @@
 """Adaptation — habituation, plasticity, homeostasis."""
 
+import itertools
 import math  # pragma: no cover
 import random  # pragma: no cover
 
@@ -53,7 +54,9 @@ def allostasis(predicted_demand: float, gain: float = 0.5) -> float:  # pragma: 
     return gain * predicted_demand  # pragma: no cover
 
 
-def immune_affinity(target: list[int], antibodies: list[list[int]], n_select: int = 3) -> list[int]:  # pragma: no cover
+def immune_affinity(
+    target: list[int], antibodies: list[list[int]], n_select: int = 3
+) -> list[int]:  # pragma: no cover
     """Clonal selection: pick best matches, return best affinity."""
 
     def hamming(a, b):  # pragma: no cover
@@ -94,7 +97,7 @@ def bacterial_chemotaxis(concentration_fn, n=200, seed=0) -> dict:  # pragma: no
 )
 def test_habituation():  # pragma: no cover
     r = habituation()
-    assert all(a > b for a, b in zip(r, r[1:]))
+    assert all(a > b for a, b in itertools.pairwise(r))
 
 
 @requirement(
@@ -106,7 +109,7 @@ def test_habituation():  # pragma: no cover
 )
 def test_sensitization():  # pragma: no cover
     r = sensitization()
-    assert all(a <= b for a, b in zip(r, r[1:]))
+    assert all(a <= b for a, b in itertools.pairwise(r))
 
 
 @requirement(

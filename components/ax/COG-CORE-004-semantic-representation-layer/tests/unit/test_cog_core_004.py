@@ -1,5 +1,5 @@
-import pytest
 from src.public.service import CogCore004Service
+
 
 def test_cog_core_004_service():
     svc = CogCore004Service()

@@ -11,6 +11,7 @@ same call. Chain-hashed with the previous row's hash so the ledger
 stays tamper-evident.
 Restart: the ring is refilled from the last N rows of the ledger.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -45,9 +46,7 @@ class Event:
 class RAMSubstrate:
     """Bounded, thread-safe, RAM-resident head over the events ledger."""
 
-    def __init__(self, *, capacity: int = 8192,
-                 db_path: Path | None = None,
-                 autoload: bool = True):
+    def __init__(self, *, capacity: int = 8192, db_path: Path | None = None, autoload: bool = True):
         self.capacity = capacity
         self.db_path = Path(db_path) if db_path else DB
         self._ring: deque[Event] = deque(maxlen=capacity)
@@ -87,34 +86,27 @@ class RAMSubstrate:
     def append(self, kind: str, subject: str, payload: Any) -> Event:
         with self._lock:
             con = self._connect()
-            row = con.execute(
-                "SELECT COALESCE(MAX(seq),0) FROM events").fetchone()
+            row = con.execute("SELECT COALESCE(MAX(seq),0) FROM events").fetchone()
             seq = int(row[0]) + 1
-            prev = con.execute(
-                "SELECT hash FROM events ORDER BY seq DESC LIMIT 1"
-            ).fetchone()
+            prev = con.execute("SELECT hash FROM events ORDER BY seq DESC LIMIT 1").fetchone()
             prev_hash = prev[0] if prev else None
             body = json.dumps(
                 {"kind": kind, "subject": subject, "payload": payload},
-                default=str, sort_keys=True,
+                default=str,
+                sort_keys=True,
             )
-            h = hashlib.sha256(
-                f"{prev_hash or ''}|{body}".encode()).hexdigest()
+            h = hashlib.sha256(f"{prev_hash or ''}|{body}".encode()).hexdigest()
             con.execute(
-                "INSERT INTO events "
-                "(seq,kind,subject,payload,prev_hash,hash) VALUES (?,?,?,?,?,?)",
+                "INSERT INTO events (seq,kind,subject,payload,prev_hash,hash) VALUES (?,?,?,?,?,?)",
                 (seq, kind, subject, body, prev_hash, h),
             )
             con.commit()
-            created = con.execute(
-                "SELECT created_at FROM events WHERE seq=?", (seq,)
-            ).fetchone()[0]
+            created = con.execute("SELECT created_at FROM events WHERE seq=?", (seq,)).fetchone()[0]
             con.close()
             e = Event(seq, kind, subject, body, prev_hash, h, created)
             self._index(e)
             self._writes += 1
-        self.stream.publish(kind, e.to_dict(),
-                            meta={"subject": subject})
+        self.stream.publish(kind, e.to_dict(), meta={"subject": subject})
         return e
 
     # ── read ──────────────────────────────────────────────────────
@@ -141,8 +133,8 @@ class RAMSubstrate:
             return None
         con = self._connect()
         r = con.execute(
-            "SELECT seq,kind,subject,payload,prev_hash,hash,created_at "
-            "FROM events WHERE seq=?", (seq,)
+            "SELECT seq,kind,subject,payload,prev_hash,hash,created_at FROM events WHERE seq=?",
+            (seq,),
         ).fetchone()
         con.close()
         return Event(*r) if r else None
@@ -161,20 +153,29 @@ class RAMSubstrate:
             prev = row[0] if row else None
         checked = 0
         for r in con.execute(
-            "SELECT seq,payload,prev_hash,hash "
-            "FROM events WHERE seq>=? ORDER BY seq", (from_seq,)
+            "SELECT seq,payload,prev_hash,hash FROM events WHERE seq>=? ORDER BY seq",
+            (from_seq,),
         ):
             seq, payload, prev_hash, h = r
             if prev_hash != prev:
                 con.close()
-                return {"ok": False, "reason": "prev_hash mismatch",
-                        "seq": seq, "expected": prev, "found": prev_hash}
-            want = hashlib.sha256(
-                f"{prev_hash or ''}|{payload}".encode()).hexdigest()
+                return {
+                    "ok": False,
+                    "reason": "prev_hash mismatch",
+                    "seq": seq,
+                    "expected": prev,
+                    "found": prev_hash,
+                }
+            want = hashlib.sha256(f"{prev_hash or ''}|{payload}".encode()).hexdigest()
             if want != h:
                 con.close()
-                return {"ok": False, "reason": "hash mismatch",
-                        "seq": seq, "expected": want, "found": h}
+                return {
+                    "ok": False,
+                    "reason": "hash mismatch",
+                    "seq": seq,
+                    "expected": want,
+                    "found": h,
+                }
             prev = h
             checked += 1
         con.close()

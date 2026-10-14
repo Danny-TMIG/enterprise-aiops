@@ -1,4 +1,5 @@
 """Apoptosispoiesis — form by programmed death."""
+
 from __future__ import annotations  # pragma: no cover
 
 import random  # pragma: no cover
@@ -55,11 +56,19 @@ class Population:  # pragma: no cover
                 necrotic = rng.random() < necrotic_ratio
                 s.status = "necrotic" if necrotic else "apoptotic"
                 s.deaths += 1
-                self.log.append(Death(
-                    tick=self.tick, state_id=s.id, verdict=v, kind=s.status,
-                    evidence={"payload_keys": sorted(s.payload.keys()),
-                              "born": s.born, "lifetime": self.tick - s.born},
-                ))
+                self.log.append(
+                    Death(
+                        tick=self.tick,
+                        state_id=s.id,
+                        verdict=v,
+                        kind=s.status,
+                        evidence={
+                            "payload_keys": sorted(s.payload.keys()),
+                            "born": s.born,
+                            "lifetime": self.tick - s.born,
+                        },
+                    )
+                )
             elif v == UNKNOWN:
                 s.status = "deferred"
             elif v == CONFLICT:
@@ -94,6 +103,11 @@ class Population:  # pragma: no cover
 def sigma_from_triad(kernel, spec_for):  # pragma: no cover
     def sigma(s: State) -> VState:  # pragma: no cover
         t = kernel.verify(spec_for(s))
-        return {"PASS": PASS, "FAIL": FAIL,  # pragma: no cover
-                "UNKNOWN": UNKNOWN, "CONFLICT": CONFLICT}[t.verdict()]
+        return {
+            "PASS": PASS,
+            "FAIL": FAIL,  # pragma: no cover
+            "UNKNOWN": UNKNOWN,
+            "CONFLICT": CONFLICT,
+        }[t.verdict()]
+
     return sigma  # pragma: no cover

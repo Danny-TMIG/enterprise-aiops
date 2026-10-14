@@ -23,8 +23,7 @@ def main(argv=None) -> int:
     if a.approve_spec:
         wf.approve_spec(by=a.author, note="auto")
     else:
-        print(json.dumps({"state": wf.state.value,
-                          "spec": wf.spec.to_dict()}, indent=2))
+        print(json.dumps({"state": wf.state.value, "spec": wf.spec.to_dict()}, indent=2))
         return 0
     wf.generate_artifact()
     wf.scan(root=a.root)
@@ -34,12 +33,17 @@ def main(argv=None) -> int:
     if a.approve_delivery:
         wf.approve_delivery(by=a.author, note="auto")
         wf.merge()
-    print(json.dumps({
-        "state": wf.state.value,
-        "proof_object_id": po.id,
-        "kernel": wf.kernel_result.get("status"),
-        "cpvo": wf.cpvo.totals(),
-    }, indent=2))
+    print(
+        json.dumps(
+            {
+                "state": wf.state.value,
+                "proof_object_id": po.id,
+                "kernel": wf.kernel_result.get("status"),
+                "cpvo": wf.cpvo.totals(),
+            },
+            indent=2,
+        )
+    )
     return 0
 
 

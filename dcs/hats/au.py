@@ -5,7 +5,9 @@ import struct  # pragma: no cover
 from dcs.generate import requirement  # pragma: no cover
 
 
-def wav_header(n_samples: int, rate: int = 44_100, channels: int = 1, width: int = 2) -> bytes:  # pragma: no cover
+def wav_header(
+    n_samples: int, rate: int = 44_100, channels: int = 1, width: int = 2
+) -> bytes:  # pragma: no cover
     data_size = n_samples * channels * width
     return (  # pragma: no cover
         b"RIFF"

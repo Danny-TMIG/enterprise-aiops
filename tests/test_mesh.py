@@ -7,23 +7,49 @@ from app.mesh import MeshGraph, Node, route
 
 client = TestClient(app)
 
+
 def test_mesh_graph_operations() -> None:
     graph = MeshGraph()
-    node = Node(id="endpoint:/test:app/main.py:1", kind="endpoint", name="test_endpoint", file="app/main.py", line=1, extra=["api"])
+    node = Node(
+        id="endpoint:/test:app/main.py:1",
+        kind="endpoint",
+        name="test_endpoint",
+        file="app/main.py",
+        line=1,
+        extra=["api"],
+    )
     graph.add(node)
     assert "endpoint:/test:app/main.py:1" in graph.nodes
     stats = graph.stats()
     assert stats["nodes"] == 1
     assert stats["kinds"]["endpoint"] == 1
 
+
 def test_mesh_router_scoring() -> None:
     graph = MeshGraph()
-    graph.add(Node(id="endpoint:/mesh/route:app/main.py:10", kind="endpoint", name="mesh_route_flex", file="app/main.py", line=10))
-    graph.add(Node(id="agent:omega:app/agency/omega.py:5", kind="agent", name="OmegaAgent", file="app/agency/omega.py", line=5))
+    graph.add(
+        Node(
+            id="endpoint:/mesh/route:app/main.py:10",
+            kind="endpoint",
+            name="mesh_route_flex",
+            file="app/main.py",
+            line=10,
+        )
+    )
+    graph.add(
+        Node(
+            id="agent:omega:app/agency/omega.py:5",
+            kind="agent",
+            name="OmegaAgent",
+            file="app/agency/omega.py",
+            line=5,
+        )
+    )
     matches = route("mesh route", graph)
     assert len(matches) > 0
     assert matches[0]["name"] == "mesh_route_flex"
     assert matches[0]["score"] > 0
+
 
 def test_mesh_fastapi_endpoints() -> None:
     response = client.get("/mesh/status")

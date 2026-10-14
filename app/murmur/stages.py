@@ -1,4 +1,5 @@
 """The nine stages. Every tick runs them in order, per agent."""
+
 from __future__ import annotations
 
 import importlib
@@ -32,8 +33,7 @@ def sense(state: AgentState, ctx: dict[str, Any]) -> Signal:
     base = state.baseline.get("signal", 0.0)
     cur = state.position.get("signal", 0.0)
     value = abs(cur - base)
-    return Signal(source=src, kind=kind, value=value,
-                  payload={"baseline": base, "current": cur})
+    return Signal(source=src, kind=kind, value=value, payload={"baseline": base, "current": cur})
 
 
 def interpret(sig: Signal, state: AgentState) -> Situation:
@@ -43,10 +43,9 @@ def interpret(sig: Signal, state: AgentState) -> Situation:
         label = "acute"
     elif dev > 1.0:
         label = "elevated"
-    return Situation(label=label,
-                     confidence=min(1.0, dev / 2.0),
-                     deviation=dev,
-                     features={"sig": sig.value})
+    return Situation(
+        label=label, confidence=min(1.0, dev / 2.0), deviation=dev, features={"sig": sig.value}
+    )
 
 
 def predict(sit: Situation, state: AgentState) -> Forecast:
@@ -62,27 +61,25 @@ def decide(fc: Forecast, sit: Situation, state: AgentState) -> Decision:
     if fc.outcome == "escalate":
         return Decision("act.recenter", {"gain": 0.35}, urgency=0.9)
     if fc.outcome == "adjust":
-        return Decision("act.align", {"key": "signal",
-                                       "target": state.baseline.get("signal", 0.0)},
-                        urgency=0.5)
+        return Decision(
+            "act.align", {"key": "signal", "target": state.baseline.get("signal", 0.0)}, urgency=0.5
+        )
     return Decision("act.probe", {"amplitude": 0.02}, urgency=0.1)
 
 
-def act(d: Decision, state: AgentState,
-        tool: str | None = None) -> Effect:
+def act(d: Decision, state: AgentState, tool: str | None = None) -> Effect:
     if tool:
-        res = tool_call(tool, "act",
-                        {"summary": d.verb, "params": d.params})
-        return Effect(verb=d.verb, ok=bool(res.get("ok")),
-                      detail=str(res.get("detail", "")), tool=tool)
+        res = tool_call(tool, "act", {"summary": d.verb, "params": d.params})
+        return Effect(
+            verb=d.verb, ok=bool(res.get("ok")), detail=str(res.get("detail", "")), tool=tool
+        )
     return Effect(verb=d.verb, ok=True, detail="local")
 
 
 def coordinate(state: AgentState, peers: list[AgentState]) -> Coordination:
     overlap = 0
     for p in peers:
-        if abs(p.position.get("signal", 0.0)
-               - state.position.get("signal", 0.0)) < 0.05:
+        if abs(p.position.get("signal", 0.0) - state.position.get("signal", 0.0)) < 0.05:
             overlap += 1
     return Coordination(
         peers=[p.agent_id for p in peers],
@@ -91,20 +88,19 @@ def coordinate(state: AgentState, peers: list[AgentState]) -> Coordination:
     )
 
 
-def allocate(co: Coordination, state: AgentState,
-             budget: float = 1.0) -> Allocation:
+def allocate(co: Coordination, state: AgentState, budget: float = 1.0) -> Allocation:
     # more peers agreeing, the less each spends
     share = 1.0 / (1.0 + co.overlaps)
     cap = budget * share
     hit = cap < 0.05
-    return Allocation(share=round(share, 3),
-                      budget=round(cap, 3), cap_hit=hit)
+    return Allocation(share=round(share, 3), budget=round(cap, 3), cap_hit=hit)
 
 
 def verify(e: Effect, fc: Forecast) -> Verdict:
     ok = e.ok and fc.risk < 0.9
-    return Verdict(ok=ok, delta=fc.risk - (0.0 if e.ok else 1.0),
-                   reason="ok" if ok else "effect_or_risk")
+    return Verdict(
+        ok=ok, delta=fc.risk - (0.0 if e.ok else 1.0), reason="ok" if ok else "effect_or_risk"
+    )
 
 
 def learn(v: Verdict, state: AgentState) -> Update:

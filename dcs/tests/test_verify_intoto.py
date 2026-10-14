@@ -1,4 +1,5 @@
 """Unit tests for dcs.verify_intoto."""
+
 from dcs.verify import HMACVerifier
 from dcs.verify_intoto import (
     PAYLOAD_TYPE,
@@ -9,7 +10,6 @@ from dcs.verify_intoto import (
     sign_statement,
     verify_envelope,
 )
-
 
 KEY = b"intoto-test-key"
 

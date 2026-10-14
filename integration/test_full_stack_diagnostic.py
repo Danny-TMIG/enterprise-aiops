@@ -9,6 +9,7 @@ Exercises one path from each layer against the real component interfaces:
   Kernel 001: GovernanceRegistry — put two versions, verify chain
   Correlation: GOV-KRN-003 — open and close a correlation
 """
+
 from __future__ import annotations
 
 import importlib.util
@@ -57,10 +58,8 @@ def test_full_sovereign_stack_pipeline() -> None:
         "integrity": {"algorithm": "sha256", "digest": "0" * 64},
     }
     with k2.TransitionEngine() as engine:
-        t1 = engine.record("diag-subject", "NEW", "OBSERVED",
-                           "diagnostic", "capture", envelope)
-        t2 = engine.record("diag-subject", "OBSERVED", "SEALED",
-                           "diagnostic", "seal", envelope)
+        t1 = engine.record("diag-subject", "NEW", "OBSERVED", "diagnostic", "capture", envelope)
+        t2 = engine.record("diag-subject", "OBSERVED", "SEALED", "diagnostic", "seal", envelope)
         assert t2.seq == 2 and t2.prev_hash == t1.chain_hash
         assert engine.verify_chain("diag-subject") is True
     print("  ✔ [AG] WORM state transition recorded and chain verified.")
@@ -96,9 +95,7 @@ def test_full_sovereign_stack_pipeline() -> None:
         "components/ax/COG-CORE-001-cognitive-runtime/src/public/runtime.py",
         "ax_cog",
     )
-    runtime = cog.CognitiveRuntime(
-        model_name="mlx-community/Qwen2.5-7B-Instruct-4bit"
-    )
+    runtime = cog.CognitiveRuntime(model_name="mlx-community/Qwen2.5-7B-Instruct-4bit")
     op = runtime.begin(f"Analyze system load: {event.metrics.get('cpu_load_percent')}%")
     result = runtime.execute(op.operation_id, "sovereign diagnostic")
     outcome = runtime.finish(op.operation_id)

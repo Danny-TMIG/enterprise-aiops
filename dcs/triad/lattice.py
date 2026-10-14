@@ -23,11 +23,18 @@ class VState:  # pragma: no cover
 
     def __post_init__(self):  # pragma: no cover
         if self.t not in (0, 1) or self.f not in (0, 1):  # pragma: no cover
-            raise ValueError(f"coordinates must be 0/1, got ({self.t},{self.f})")  # pragma: no cover
+            raise ValueError(
+                f"coordinates must be 0/1, got ({self.t},{self.f})"
+            )  # pragma: no cover
 
     @property
     def name(self) -> str:  # pragma: no cover
-        return {(0, 0): "UNKNOWN", (1, 0): "PASS", (0, 1): "FAIL", (1, 1): "CONFLICT"}[  # pragma: no cover
+        return {
+            (0, 0): "UNKNOWN",
+            (1, 0): "PASS",
+            (0, 1): "FAIL",
+            (1, 1): "CONFLICT",
+        }[  # pragma: no cover
             (self.t, self.f)
         ]
 
@@ -44,7 +51,9 @@ class VState:  # pragma: no cover
         if isinstance(x, dict):  # pragma: no cover
             return cls(int(x.get("t", 0)), int(x.get("f", 0)))  # pragma: no cover
         if isinstance(x, str):  # pragma: no cover
-            return {"UNKNOWN": UNKNOWN, "PASS": PASS, "FAIL": FAIL, "CONFLICT": CONFLICT}[x.upper()]  # pragma: no cover
+            return {"UNKNOWN": UNKNOWN, "PASS": PASS, "FAIL": FAIL, "CONFLICT": CONFLICT}[
+                x.upper()
+            ]  # pragma: no cover
         raise TypeError(f"cannot coerce {x!r} to VState")  # pragma: no cover
 
 

@@ -9,3 +9,17 @@ dist/
 .venv/
 .pytest_cache/
 logs/uvicorn.log
+constructors/
+sovereign-bounded-matrix/
+.spec-fix-backups/
+docs/site_output/
+logs/
+*.bak
+*.bak.*
+*.mmap
+*.db
+*.log
+uvicorn.log
+botnet.db
+state.mmap
+affected.json

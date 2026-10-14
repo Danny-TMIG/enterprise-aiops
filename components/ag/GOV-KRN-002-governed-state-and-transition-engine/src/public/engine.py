@@ -21,6 +21,7 @@ Local invariants:
   - seq increments by exactly 1 per subject
   - chain_hash references the previous row's chain_hash
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -30,11 +31,18 @@ import threading
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Self
 
 ENVELOPE_REQUIRED = (
-    "schema_version", "object_id", "correlation_id", "sovereign_domain",
-    "issuer", "purpose", "classification", "event_time", "integrity",
+    "schema_version",
+    "object_id",
+    "correlation_id",
+    "sovereign_domain",
+    "issuer",
+    "purpose",
+    "classification",
+    "event_time",
+    "integrity",
 )
 TRANSITION_REQUIRED = ("from_state", "to_state", "actor", "reason")
 
@@ -77,12 +85,12 @@ class Transition:
     to_state: str
     actor: str
     reason: str
-    envelope: Dict[str, Any]
-    prev_hash: Optional[str]
+    envelope: dict[str, Any]
+    prev_hash: str | None
     chain_hash: str
     created_at: float
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "subject_id": self.subject_id,
             "seq": self.seq,
@@ -109,11 +117,19 @@ def _chain_hash(
     actor: str,
     reason: str,
     envelope_json: str,
-    prev_hash: Optional[str],
+    prev_hash: str | None,
 ) -> str:
     h = hashlib.sha256()
-    for part in (subject_id, str(seq), from_state, to_state,
-                 actor, reason, envelope_json, prev_hash or ""):
+    for part in (
+        subject_id,
+        str(seq),
+        from_state,
+        to_state,
+        actor,
+        reason,
+        envelope_json,
+        prev_hash or "",
+    ):
         h.update(part.encode("utf-8"))
         h.update(b"\x00")
     return h.hexdigest()
@@ -130,12 +146,12 @@ def validate_envelope(envelope: Any) -> None:
         raise EnvelopeError("envelope.integrity must be an object with 'digest'")
 
 
-def validate_transition(
-    from_state: str, to_state: str, actor: str, reason: str
-) -> None:
+def validate_transition(from_state: str, to_state: str, actor: str, reason: str) -> None:
     for name, val in (
-        ("from_state", from_state), ("to_state", to_state),
-        ("actor", actor), ("reason", reason),
+        ("from_state", from_state),
+        ("to_state", to_state),
+        ("actor", actor),
+        ("reason", reason),
     ):
         if not val or not isinstance(val, str):
             raise TransitionError(f"{name} must be a non-empty string")
@@ -157,10 +173,10 @@ class TransitionEngine:
         with self._lock:
             self._conn.close()
 
-    def __enter__(self) -> "TransitionEngine":
+    def __enter__(self) -> Self:
         return self
 
-    def __exit__(self, *exc: Any) -> None:
+    def __exit__(self, *exc: object) -> None:
         self.close()
 
     def latest_seq(self, subject_id: str) -> int:
@@ -171,16 +187,15 @@ class TransitionEngine:
             ).fetchone()
             return int(row[0]) if row and row[0] is not None else 0
 
-    def current_state(self, subject_id: str) -> Optional[str]:
+    def current_state(self, subject_id: str) -> str | None:
         with self._lock:
             row = self._conn.execute(
-                "SELECT to_state FROM transitions WHERE subject_id = ?"
-                " ORDER BY seq DESC LIMIT 1",
+                "SELECT to_state FROM transitions WHERE subject_id = ? ORDER BY seq DESC LIMIT 1",
                 (subject_id,),
             ).fetchone()
             return row[0] if row else None
 
-    def history(self, subject_id: str) -> List[Transition]:
+    def history(self, subject_id: str) -> list[Transition]:
         with self._lock:
             rows = self._conn.execute(
                 "SELECT subject_id, seq, from_state, to_state, actor, reason,"
@@ -190,9 +205,16 @@ class TransitionEngine:
             ).fetchall()
         return [
             Transition(
-                subject_id=r[0], seq=r[1], from_state=r[2], to_state=r[3],
-                actor=r[4], reason=r[5], envelope=json.loads(r[6]),
-                prev_hash=r[7], chain_hash=r[8], created_at=r[9],
+                subject_id=r[0],
+                seq=r[1],
+                from_state=r[2],
+                to_state=r[3],
+                actor=r[4],
+                reason=r[5],
+                envelope=json.loads(r[6]),
+                prev_hash=r[7],
+                chain_hash=r[8],
+                created_at=r[9],
             )
             for r in rows
         ]
@@ -204,8 +226,8 @@ class TransitionEngine:
         to_state: str,
         actor: str,
         reason: str,
-        envelope: Dict[str, Any],
-        expected_seq: Optional[int] = None,
+        envelope: dict[str, Any],
+        expected_seq: int | None = None,
     ) -> Transition:
         if not subject_id:
             raise TransitionError("subject_id must be non-empty")
@@ -223,24 +245,22 @@ class TransitionEngine:
                 current = int(row[0]) if row and row[0] is not None else 0
 
                 if expected_seq is not None and expected_seq != current:
-                    raise ConcurrencyError(
-                        f"expected seq {expected_seq}, current {current}"
-                    )
+                    raise ConcurrencyError(f"expected seq {expected_seq}, current {current}")
                 seq = current + 1
 
                 if current == 0:
                     prev_hash = None
                 else:
                     pr = cur.execute(
-                        "SELECT chain_hash FROM transitions"
-                        " WHERE subject_id = ? AND seq = ?",
+                        "SELECT chain_hash FROM transitions WHERE subject_id = ? AND seq = ?",
                         (subject_id, current),
                     ).fetchone()
                     prev_hash = pr[0] if pr else None
 
                 env_json = _canonical(envelope)
-                ch = _chain_hash(subject_id, seq, from_state, to_state,
-                                 actor, reason, env_json, prev_hash)
+                ch = _chain_hash(
+                    subject_id, seq, from_state, to_state, actor, reason, env_json, prev_hash
+                )
                 created = time.time()
 
                 cur.execute(
@@ -248,8 +268,18 @@ class TransitionEngine:
                     " (subject_id, seq, from_state, to_state, actor, reason,"
                     "  envelope_json, prev_hash, chain_hash, created_at)"
                     " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                    (subject_id, seq, from_state, to_state, actor, reason,
-                     env_json, prev_hash, ch, created),
+                    (
+                        subject_id,
+                        seq,
+                        from_state,
+                        to_state,
+                        actor,
+                        reason,
+                        env_json,
+                        prev_hash,
+                        ch,
+                        created,
+                    ),
                 )
                 self._conn.commit()
             except Exception:
@@ -257,9 +287,15 @@ class TransitionEngine:
                 raise
 
         return Transition(
-            subject_id=subject_id, seq=seq, from_state=from_state,
-            to_state=to_state, actor=actor, reason=reason,
-            envelope=envelope, prev_hash=prev_hash, chain_hash=ch,
+            subject_id=subject_id,
+            seq=seq,
+            from_state=from_state,
+            to_state=to_state,
+            actor=actor,
+            reason=reason,
+            envelope=envelope,
+            prev_hash=prev_hash,
+            chain_hash=ch,
             created_at=created,
         )
 
@@ -267,23 +303,28 @@ class TransitionEngine:
         prev = None
         for t in self.history(subject_id):
             expected = _chain_hash(
-                t.subject_id, t.seq, t.from_state, t.to_state,
-                t.actor, t.reason, _canonical(t.envelope), prev,
+                t.subject_id,
+                t.seq,
+                t.from_state,
+                t.to_state,
+                t.actor,
+                t.reason,
+                _canonical(t.envelope),
+                prev,
             )
             if expected != t.chain_hash:
                 return False
             prev = t.chain_hash
         return True
 
-    def stats(self) -> Dict[str, Any]:
+    def stats(self) -> dict[str, Any]:
         with self._lock:
-            total = self._conn.execute(
-                "SELECT COUNT(*) FROM transitions"
-            ).fetchone()[0]
+            total = self._conn.execute("SELECT COUNT(*) FROM transitions").fetchone()[0]
             subjects = self._conn.execute(
                 "SELECT COUNT(DISTINCT subject_id) FROM transitions"
             ).fetchone()[0]
         return {"transitions": int(total), "subjects": int(subjects)}
+
 
 # Backward-compatible alias for the earlier class name.
 StateTransitionEngine = TransitionEngine

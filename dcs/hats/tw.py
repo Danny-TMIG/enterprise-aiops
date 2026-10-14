@@ -4,7 +4,9 @@ from dcs.generate import requirement  # pragma: no cover
 
 
 def toc(sections: list[str]) -> str:  # pragma: no cover
-    return "\n".join(f"- [{s}](#{s.lower().replace(' ', '-')})" for s in sections)  # pragma: no cover
+    return "\n".join(
+        f"- [{s}](#{s.lower().replace(' ', '-')})" for s in sections
+    )  # pragma: no cover
 
 
 @requirement(

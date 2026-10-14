@@ -6,6 +6,7 @@ touches. It dissolves when the pulse matches a node it lands on
 (matching value). It splits when the pulse contains a component
 with > 2 nodes.
 """
+
 from __future__ import annotations
 
 import random
@@ -64,9 +65,7 @@ class Jellyfish:
 class Bloom:
     def __init__(self, n: int = 3, seed: int = 0):
         self.rng = random.Random(seed)
-        self.members: list[Jellyfish] = [
-            Jellyfish(id=f"jf-{i}", ttl=6 + i) for i in range(n)
-        ]
+        self.members: list[Jellyfish] = [Jellyfish(id=f"jf-{i}", ttl=6 + i) for i in range(n)]
 
     def seed_pulse(self, g: OctetGraph) -> None:
         for j in self.members:
@@ -83,6 +82,7 @@ class Bloom:
         self.members.extend(new)
 
     def snapshot(self) -> list[dict]:
-        return [{"id": j.id, "ttl": j.ttl,
-                 "delivered": j.delivered,
-                 "route_len": len(j.route)} for j in self.members]
+        return [
+            {"id": j.id, "ttl": j.ttl, "delivered": j.delivered, "route_len": len(j.route)}
+            for j in self.members
+        ]

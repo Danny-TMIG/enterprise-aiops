@@ -1,7 +1,10 @@
-import shutil, subprocess, sys, textwrap
+import shutil
+import subprocess
+import textwrap
 from pathlib import Path
 
 ROOT = Path.cwd()
+
 
 def W(path, content):
     p = ROOT / path
@@ -9,13 +12,22 @@ def W(path, content):
     p.write_text(textwrap.dedent(content).lstrip())
     print("wrote", path)
 
-W(".gitignore", "__pycache__/\n*.py[cod]\n.venv/\nvenv/\nenv/\n.lanes/\nbuild/\ndist/\n*.egg-info/\n*.db\n*.sqlite\n*.sqlite3\n.DS_Store\n.idea/\n.vscode/\n.env\n.env.*\n!.env.example\n_site/\n_jekyll_site/\n.pytest_cache/\n.mypy_cache/\n.ruff_cache/\n*.log\n")
+
+W(
+    ".gitignore",
+    "__pycache__/\n*.py[cod]\n.venv/\nvenv/\nenv/\n.lanes/\nbuild/\ndist/\n*.egg-info/\n*.db\n*.sqlite\n*.sqlite3\n.DS_Store\n.idea/\n.vscode/\n.env\n.env.*\n!.env.example\n_site/\n_jekyll_site/\n.pytest_cache/\n.mypy_cache/\n.ruff_cache/\n*.log\n",
+)
 
 W("requirements.txt", "fastapi>=0.110\nuvicorn[standard]>=0.29\npydantic>=2.6\n")
 
-W("requirements-dev.txt", "-r requirements.txt\npytest>=8.0\npytest-asyncio>=0.23\nhttpx>=0.27\nruff>=0.4\nmypy>=1.10\n")
+W(
+    "requirements-dev.txt",
+    "-r requirements.txt\npytest>=8.0\npytest-asyncio>=0.23\nhttpx>=0.27\nruff>=0.4\nmypy>=1.10\n",
+)
 
-W("pyproject.toml", '''[build-system]
+W(
+    "pyproject.toml",
+    """[build-system]
 requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
@@ -48,9 +60,12 @@ ignore_missing_imports = true
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
-''')
+""",
+)
 
-W("LICENSE", '''MIT License
+W(
+    "LICENSE",
+    """MIT License
 
 Copyright (c) 2026 Sovereign Stack
 
@@ -71,9 +86,12 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-''')
+""",
+)
 
-W("README.md", '''# aiops_platform
+W(
+    "README.md",
+    """# aiops_platform
 
 Sovereign local-first AIOps platform. FastAPI ASGI app, SQLite ledger,
 and versioned engine patches with Merkle-rooted history.
@@ -117,9 +135,12 @@ pytest, pip, and uvicorn for any process running from the repo root.
 ## License
 
 MIT. See LICENSE.
-''')
+""",
+)
 
-W("CONTRIBUTING.md", '''# Contributing
+W(
+    "CONTRIBUTING.md",
+    """# Contributing
 
 ## Setup
 
@@ -133,9 +154,12 @@ W("CONTRIBUTING.md", '''# Contributing
     ruff check .
     mypy aiops_platform
     pytest -q
-''')
+""",
+)
 
-W("CHANGELOG.md", '''# Changelog
+W(
+    "CHANGELOG.md",
+    """# Changelog
 
 ## [Unreleased]
 
@@ -151,11 +175,17 @@ W("CHANGELOG.md", '''# Changelog
 ### Fixed
 - Renamed platform/ to aiops_platform/ to stop shadowing the Python
   stdlib platform module.
-''')
+""",
+)
 
-W(".env.example", "AIOPS_HOST=127.0.0.1\nAIOPS_PORT=8000\nAIOPS_LOG_LEVEL=info\nAIOPS_DB_PATH=aiops.db\n")
+W(
+    ".env.example",
+    "AIOPS_HOST=127.0.0.1\nAIOPS_PORT=8000\nAIOPS_LOG_LEVEL=info\nAIOPS_DB_PATH=aiops.db\n",
+)
 
-W("Makefile", '''.PHONY: help install dev test lint type fmt serve clean
+W(
+    "Makefile",
+    """.PHONY: help install dev test lint type fmt serve clean
 
 help:
 	@echo "install dev test lint type fmt serve clean"
@@ -186,18 +216,24 @@ clean:
 	rm -rf build dist *.egg-info
 	find . -type d -name __pycache__ -prune -exec rm -rf {} +
 	find . -name "*.pyc" -delete
-''')
+""",
+)
 
 W("tests/__init__.py", "")
-W("tests/conftest.py", '''import pytest
+W(
+    "tests/conftest.py",
+    """import pytest
 from fastapi.testclient import TestClient
 from aiops_platform.app.asgi import app
 
 @pytest.fixture
 def client():
     return TestClient(app)
-''')
-W("tests/test_api.py", '''def test_health(client):
+""",
+)
+W(
+    "tests/test_api.py",
+    """def test_health(client):
     r = client.get("/health")
     assert r.status_code == 200
     assert r.json()["status"] == "ok"
@@ -214,8 +250,11 @@ def test_root(client):
     assert body["service"] == "aiops_platform"
     assert len(body["merkle_root"]) == 64
     assert body["patches"] >= 1
-''')
-W("tests/test_engine_patch.py", '''from aiops_platform.app.core.engine_patch import SovereignEnginePatch
+""",
+)
+W(
+    "tests/test_engine_patch.py",
+    """from aiops_platform.app.core.engine_patch import SovereignEnginePatch
 
 def test_apply_and_history():
     eng = SovereignEnginePatch()
@@ -232,10 +271,13 @@ def test_merkle_root_changes():
     a = SovereignEnginePatch(); a.apply("x", {"n": 1})
     b = SovereignEnginePatch(); b.apply("x", {"n": 2})
     assert a.merkle_root() != b.merkle_root()
-''')
+""",
+)
 
 W("scripts/__init__.py", "")
-W("scripts/smoke.py", '''import subprocess, sys, time, urllib.request
+W(
+    "scripts/smoke.py",
+    """import subprocess, sys, time, urllib.request
 
 def main():
     proc = subprocess.Popen(
@@ -254,16 +296,31 @@ def main():
 
 if __name__ == "__main__":
     raise SystemExit(main())
-''')
+""",
+)
 
 W("docs/index.md", "# aiops_platform docs\n\n- architecture.md\n- api.md\n- operations.md\n")
-W("docs/architecture.md", "# Architecture\n\nFastAPI app wired in aiops_platform/app/asgi.py. Router in app/api. Patch primitive in app/core/engine_patch.py. SQLite in app/db.\n")
-W("docs/api.md", "# API\n\nGET /health -> liveness\n\nGET /version -> package version\n\nGET / -> service metadata and Merkle root\n")
-W("docs/operations.md", "# Operations\n\nStart:\n\n    python3 -m aiops_platform.app.asgi\n\nKill port 8000:\n\n    lsof -ti:8000 | xargs -r kill -9\n")
+W(
+    "docs/architecture.md",
+    "# Architecture\n\nFastAPI app wired in aiops_platform/app/asgi.py. Router in app/api. Patch primitive in app/core/engine_patch.py. SQLite in app/db.\n",
+)
+W(
+    "docs/api.md",
+    "# API\n\nGET /health -> liveness\n\nGET /version -> package version\n\nGET / -> service metadata and Merkle root\n",
+)
+W(
+    "docs/operations.md",
+    "# Operations\n\nStart:\n\n    python3 -m aiops_platform.app.asgi\n\nKill port 8000:\n\n    lsof -ti:8000 | xargs -r kill -9\n",
+)
 
-W(".editorconfig", "root = true\n\n[*]\ncharset = utf-8\nend_of_line = lf\ninsert_final_newline = true\ntrim_trailing_whitespace = true\nindent_style = space\nindent_size = 4\n\n[*.{yml,yaml,json,toml}]\nindent_size = 2\n\n[Makefile]\nindent_style = tab\n")
+W(
+    ".editorconfig",
+    "root = true\n\n[*]\ncharset = utf-8\nend_of_line = lf\ninsert_final_newline = true\ntrim_trailing_whitespace = true\nindent_style = space\nindent_size = 4\n\n[*.{yml,yaml,json,toml}]\nindent_size = 2\n\n[Makefile]\nindent_style = tab\n",
+)
 
-W(".pre-commit-config.yaml", '''repos:
+W(
+    ".pre-commit-config.yaml",
+    """repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.4.10
     hooks:
@@ -276,7 +333,8 @@ W(".pre-commit-config.yaml", '''repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
       - id: check-yaml
-''')
+""",
+)
 
 PKG = ROOT / "aiops_platform"
 for sub in ("app", "app/core", "app/api", "app/db"):
@@ -285,7 +343,9 @@ for sub in ("app", "app/core", "app/api", "app/db"):
 W("aiops_platform/__init__.py", '__version__ = "1.0.0"\n')
 W("aiops_platform/app/__init__.py", "")
 W("aiops_platform/app/core/__init__.py", "")
-W("aiops_platform/app/core/engine_patch.py", '''from __future__ import annotations
+W(
+    "aiops_platform/app/core/engine_patch.py",
+    """from __future__ import annotations
 import hashlib, json, time
 from dataclasses import dataclass, field, asdict
 
@@ -315,8 +375,11 @@ class SovereignEnginePatch:
         for r in self._applied:
             h.update(r.digest().encode())
         return h.hexdigest()
-''')
-W("aiops_platform/app/db/__init__.py", '''from __future__ import annotations
+""",
+)
+W(
+    "aiops_platform/app/db/__init__.py",
+    '''from __future__ import annotations
 import sqlite3
 from pathlib import Path
 
@@ -329,8 +392,11 @@ def connect() -> sqlite3.Connection:
         ts TEXT, kind TEXT, payload TEXT, digest TEXT)""")
     conn.commit()
     return conn
-''')
-W("aiops_platform/app/api/__init__.py", '''from __future__ import annotations
+''',
+)
+W(
+    "aiops_platform/app/api/__init__.py",
+    """from __future__ import annotations
 from fastapi import APIRouter
 
 router = APIRouter()
@@ -343,8 +409,11 @@ def health() -> dict:
 def version() -> dict:
     from aiops_platform import __version__
     return {"version": __version__}
-''')
-W("aiops_platform/app/asgi.py", '''from __future__ import annotations
+""",
+)
+W(
+    "aiops_platform/app/asgi.py",
+    """from __future__ import annotations
 import uvicorn
 from fastapi import FastAPI
 from aiops_platform.app.api import router
@@ -365,17 +434,25 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-''')
+""",
+)
 
 scaffold = ROOT / "scaffold_enterprise_suite.py"
 if scaffold.exists():
     t = scaffold.read_text()
-    n = t.replace("from platform.app.", "from aiops_platform.app.").replace("import platform.app.", "import aiops_platform.app.")
+    n = t.replace("from platform.app.", "from aiops_platform.app.").replace(
+        "import platform.app.", "import aiops_platform.app."
+    )
     if n != t:
         scaffold.write_text(n)
         print("patched scaffold_enterprise_suite.py")
 
-for name in ("fix_test_imports.py", "fix_final_imports.py", "fix_imports_and_packages.py", "fix_imports.py"):
+for name in (
+    "fix_test_imports.py",
+    "fix_final_imports.py",
+    "fix_imports_and_packages.py",
+    "fix_imports.py",
+):
     p = ROOT / name
     if p.exists():
         p.unlink()

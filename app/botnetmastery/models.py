@@ -1,4 +1,5 @@
 """Canonical Bot and Task."""
+
 from __future__ import annotations
 
 import time
@@ -7,9 +8,15 @@ from typing import Any
 
 
 class Bot:
-    def __init__(self, id: str | None = None,
-                 hostname: str = "", os: str = "", arch: str = "",
-                 last_seen: float = 0.0, status: str = "active"):
+    def __init__(
+        self,
+        id: str | None = None,
+        hostname: str = "",
+        os: str = "",
+        arch: str = "",
+        last_seen: float = 0.0,
+        status: str = "active",
+    ):
         self.id = id or str(uuid.uuid4())
         self.hostname = hostname
         self.os = os
@@ -22,8 +29,7 @@ class Bot:
         return self.id
 
     @classmethod
-    def new(cls, hostname: str, os: str, arch: str,
-            id: str | None = None) -> Bot:
+    def new(cls, hostname: str, os: str, arch: str, id: str | None = None) -> Bot:
         return cls(id=id, hostname=hostname, os=os, arch=arch)
 
     def __getitem__(self, key: str):
@@ -36,9 +42,14 @@ class Bot:
 
 
 class Task:
-    def __init__(self, id: str, bot_id: str, cmd: str,
-                 args: dict[str, Any] | None = None,
-                 status: str = "queued"):
+    def __init__(
+        self,
+        id: str,
+        bot_id: str,
+        cmd: str,
+        args: dict[str, Any] | None = None,
+        status: str = "queued",
+    ):
         self.id = id
         self.bot_id = bot_id
         self.cmd = cmd
@@ -46,8 +57,7 @@ class Task:
         self.status = status
 
     @classmethod
-    def new(cls, bot_id: str, cmd: str,
-            args: dict[str, Any] | None = None) -> Task:
+    def new(cls, bot_id: str, cmd: str, args: dict[str, Any] | None = None) -> Task:
         return cls(id=str(uuid.uuid4()), bot_id=bot_id, cmd=cmd, args=args)
 
     def __getitem__(self, key: str):
@@ -60,11 +70,11 @@ class Task:
 
 
 class BotModel:
-
     """A single simulated bot. In this codebase bots are inert:
     they hold state so the simulator can advance time, they never
     issue real network traffic.
     """
+
     def __init__(self, id: str = "", status: str = "idle", **kwargs):
         self.id = id
         self.status = status
@@ -86,4 +96,3 @@ class BotModel:
 
     def __repr__(self) -> str:
         return f"BotModel({self.id!r}, status={self.status!r})"
-

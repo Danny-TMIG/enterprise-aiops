@@ -25,7 +25,9 @@ def _client(service: str):  # pragma: no cover
 
 
 def _unavailable(req_id: str) -> Attestation:  # pragma: no cover
-    return Attestation(req_id, B.U, "aws", "boto3 not installed or AWS credentials not configured")  # pragma: no cover
+    return Attestation(
+        req_id, B.U, "aws", "boto3 not installed or AWS credentials not configured"
+    )  # pragma: no cover
 
 
 @source("DCS-XC-BACKUP-001")
@@ -92,17 +94,23 @@ def cloudtrail_multi_region() -> Attestation:  # pragma: no cover
     try:
         trails = c.describe_trails(includeShadowTrails=False).get("trailList", [])
     except Exception as e:  # pragma: no cover
-        return Attestation("DCS-NWE-001", B.U, "aws", f"describe_trails: {type(e).__name__}: {e}")  # pragma: no cover
+        return Attestation(
+            "DCS-NWE-001", B.U, "aws", f"describe_trails: {type(e).__name__}: {e}"
+        )  # pragma: no cover
 
     multi = [t for t in trails if t.get("IsMultiRegionTrail")]
     if not multi:  # pragma: no cover
-        return Attestation("DCS-NWE-001", B.F, "aws", "no multi-region trail configured")  # pragma: no cover
+        return Attestation(
+            "DCS-NWE-001", B.F, "aws", "no multi-region trail configured"
+        )  # pragma: no cover
 
     name = multi[0]["Name"]
     try:
         status = c.get_trail_status(Name=name)
     except Exception as e:  # pragma: no cover
-        return Attestation("DCS-NWE-001", B.U, "aws", f"get_trail_status: {type(e).__name__}: {e}")  # pragma: no cover
+        return Attestation(
+            "DCS-NWE-001", B.U, "aws", f"get_trail_status: {type(e).__name__}: {e}"
+        )  # pragma: no cover
 
     logging_on = bool(status.get("IsLogging"))
     return Attestation(  # pragma: no cover

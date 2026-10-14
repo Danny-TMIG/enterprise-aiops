@@ -1,4 +1,5 @@
 """Human gate — accept, reject, or edit a staged patch."""
+
 from __future__ import annotations
 
 import os
@@ -6,8 +7,7 @@ import subprocess
 from pathlib import Path
 
 
-def review(target: str, diff: str, before, staged_path: Path,
-           auto: str | None = None) -> str:
+def review(target: str, diff: str, before, staged_path: Path, auto: str | None = None) -> str:
     """Return 'accept', 'reject', or 'edit'.
 
     `auto` may be set to 'accept' or 'reject' to bypass the prompt
@@ -20,8 +20,7 @@ def review(target: str, diff: str, before, staged_path: Path,
     print("═" * 60)
     print(f"  proposed patch → {target}")
     print("═" * 60)
-    print(f"  before: mean={before.mean:.3f}  "
-          f"axis_pass={before.axis_pass}")
+    print(f"  before: mean={before.mean:.3f}  axis_pass={before.axis_pass}")
     print()
     print(diff[:4000])
     if len(diff) > 4000:

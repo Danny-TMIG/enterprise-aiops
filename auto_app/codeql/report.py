@@ -20,8 +20,4 @@ class CodeQLReporter:
             return {"status": "error_reading_results", "total_issues": 0}
 
         total_issues = sum(len(run.get("results", [])) for run in data.get("runs", []))
-        return {
-            "status": "success",
-            "total_issues": total_issues,
-            "path": str(self.results_path)
-        }
+        return {"status": "success", "total_issues": total_issues, "path": str(self.results_path)}

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Initialise every database layer. Idempotent."""
+
 from __future__ import annotations
 
 import sys
@@ -10,6 +11,7 @@ sys.path.insert(0, str(ROOT))
 
 try:
     from app.db.migrations import run_migrations
+
     HAS_DB = True
 except Exception:
     HAS_DB = False

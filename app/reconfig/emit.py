@@ -6,9 +6,7 @@ from app.reconfig.codeal import CAProgram
 
 
 def emit_python(prog: CAProgram) -> str:
-    lines = [f"# code-al → python: {prog.name}",
-             f"# hash: {prog.hash()}",
-             ""]
+    lines = [f"# code-al → python: {prog.name}", f"# hash: {prog.hash()}", ""]
     lines.append("def run(env):")
     lines.append("    state = {}")
     for ins in prog.instructions:
@@ -21,7 +19,9 @@ def emit_python(prog: CAProgram) -> str:
             case "STORE":
                 src = slots.get("in0", "count")
                 tgt = slots.get("target", "memory")
-                lines.append(f"    env.get('store_{tgt}', env.setdefault)('{src}', state.get('{src}'))")
+                lines.append(
+                    f"    env.get('store_{tgt}', env.setdefault)('{src}', state.get('{src}'))"
+                )
             case "TRAIN":
                 lines.append("    state['model'] = env['trainer'].fit(env.get('data', []))")
             case "EVALUATE":
@@ -33,7 +33,9 @@ def emit_python(prog: CAProgram) -> str:
                 lines.append("    state['events'] = env['source'].read()")
             case "FILTER":
                 by = slots.get("by", "key")
-                lines.append(f"    state['matched'] = [e for e in state['events'] if e.get('{by}')]")
+                lines.append(
+                    f"    state['matched'] = [e for e in state['events'] if e.get('{by}')]"
+                )
             case "ROUTE":
                 to = slots.get("to", "slack")
                 lines.append(f"    state['routed'] = env['router'].send('{to}', state['matched'])")
@@ -51,9 +53,7 @@ def emit_python(prog: CAProgram) -> str:
 
 
 def emit_sql(prog: CAProgram) -> str:
-    lines = [f"-- code-al → sql: {prog.name}",
-             f"-- hash: {prog.hash()}",
-             ""]
+    lines = [f"-- code-al → sql: {prog.name}", f"-- hash: {prog.hash()}", ""]
     for ins in prog.instructions:
         s = ins.slots
         match ins.op:
@@ -77,14 +77,12 @@ def emit_sql(prog: CAProgram) -> str:
 
 
 def emit_mql(prog: CAProgram) -> str:
-    lines = [f"// code-al → mql: {prog.name}",
-             f"// hash: {prog.hash()}",
-             ""]
+    lines = [f"// code-al → mql: {prog.name}", f"// hash: {prog.hash()}", ""]
     for ins in prog.instructions:
         s = ins.slots
         match ins.op:
             case "STORE":
-                lines.append(f'db.{s.get("target","memory")}.insertOne(payload);')
+                lines.append(f"db.{s.get('target', 'memory')}.insertOne(payload);")
             case "FETCH":
                 lines.append("const events = await db.events.find({}).toArray();")
             case "FILTER":
@@ -120,7 +118,7 @@ def emit_rl(prog: CAProgram) -> str:
 def emit_all(prog: CAProgram) -> dict[str, str]:
     return {
         "python": emit_python(prog),
-        "sql":    emit_sql(prog),
-        "mql":    emit_mql(prog),
-        "rl":     emit_rl(prog),
+        "sql": emit_sql(prog),
+        "mql": emit_mql(prog),
+        "rl": emit_rl(prog),
     }

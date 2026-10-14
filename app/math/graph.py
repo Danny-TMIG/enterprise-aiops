@@ -1,4 +1,5 @@
 """Graph metrics from connectomics. Operates on MeshGraph."""
+
 from __future__ import annotations
 
 import collections
@@ -7,6 +8,7 @@ from typing import Any
 
 try:
     import numpy as np
+
     _HAVE_NP = True
 except Exception:
     _HAVE_NP = False
@@ -28,7 +30,7 @@ def adjacency(nodes, edges):
             A[i, j] = 1.0
             A[j, i] = 1.0
         return A, idx
-    A = [dict() for _ in range(n)]
+    A = [{} for _ in range(n)]
     for e in edges:
         i, j = idx.get(e.src), idx.get(e.dst)
         if i is None or j is None or i == j:
@@ -78,15 +80,13 @@ def modularity(nodes, edges, attr: str = "kind") -> dict[str, Any]:
     m2 = float(k.sum())
     if m2 <= 0:
         return {"available": True, "Q": 0.0, "m": 0}
-    comm = [getattr(o, attr, None) or getattr(o, "kind", "?")
-            for o in nodes]
+    comm = [getattr(o, attr, None) or getattr(o, "kind", "?") for o in nodes]
     same = np.zeros((n, n))
     for i in range(n):
         same[i] = [1.0 if comm[i] == comm[j] else 0.0 for j in range(n)]
     B = A - np.outer(k, k) / m2
     Q = float((B * same).sum() / m2)
-    return {"available": True, "Q": round(Q, 4),
-            "m": int(m2 // 2), "communities": len(set(comm))}
+    return {"available": True, "Q": round(Q, 4), "m": int(m2 // 2), "communities": len(set(comm))}
 
 
 def clustering_and_path(nodes, edges) -> dict[str, Any]:

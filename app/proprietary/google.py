@@ -4,6 +4,7 @@ Wire format: Vertex AI Agent Builder tool call (protobuf JSON).
     request:  {"tool": "verify", "parameters": {"claim": "..."}}
     response: {"fulfillmentResponse": {"messages": [...]}}
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -17,9 +18,11 @@ def _local_verify(payload: dict[str, Any]) -> dict[str, Any]:
     ok = bool(claim)
     return {
         "fulfillmentResponse": {
-            "messages": [{
-                "text": {"text": ["PASS" if ok else "FAIL"]},
-            }],
+            "messages": [
+                {
+                    "text": {"text": ["PASS" if ok else "FAIL"]},
+                }
+            ],
             "verdict": "PASS" if ok else "FAIL",
             "claim": claim,
             "backend": "tmig-local",

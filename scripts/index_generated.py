@@ -5,6 +5,7 @@ home is the actual .py file path, not the dotted module name.
 Only names DEFINED in the module (fn.__module__ == mod_name) are indexed,
 so `from typing import Any` does not leak in as a callable.
 """
+
 import importlib
 import sqlite3
 import sys
@@ -25,7 +26,7 @@ for p in sorted(GEN.glob("*.py")):
         m = importlib.import_module(mod_name)
     except Exception:
         continue
-    home = str(p.relative_to(ROOT))          # real file path
+    home = str(p.relative_to(ROOT))  # real file path
     for name, obj in list(vars(m).items()):
         if name.startswith("_"):
             continue
@@ -40,8 +41,9 @@ con = sqlite3.connect(DB, timeout=10.0)
 con.execute("PRAGMA busy_timeout=10000")
 
 # clean prior broken rows: home is dotted, not a path
-con.execute("DELETE FROM capabilities WHERE home LIKE 'app.generated.%' "
-            "AND home NOT LIKE 'app/generated/%'")
+con.execute(
+    "DELETE FROM capabilities WHERE home LIKE 'app.generated.%' AND home NOT LIKE 'app/generated/%'"
+)
 
 inserted = 0
 for code, home in codes:
@@ -49,8 +51,8 @@ for code, home in codes:
         "INSERT OR IGNORE INTO capabilities "
         "(code,name,category,equation,status,provider,home) "
         "VALUES (?,?,?,?,?,?,?)",
-        (code, code, "generated", "synthesized module fn",
-         "real", "self", home))
+        (code, code, "generated", "synthesized module fn", "real", "self", home),
+    )
     inserted += cur.rowcount
     if cur.rowcount == 0:
         con.execute("UPDATE capabilities SET home=? WHERE code=?", (home, code))

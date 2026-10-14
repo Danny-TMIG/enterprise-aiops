@@ -4,7 +4,12 @@ from dcs.generate import requirement  # pragma: no cover
 
 
 def manifest(model_id: str, sha: str, metrics: dict) -> dict:  # pragma: no cover
-    return {"model_id": model_id, "sha256": sha, "metrics": metrics, "schema": 1}  # pragma: no cover
+    return {
+        "model_id": model_id,
+        "sha256": sha,
+        "metrics": metrics,
+        "schema": 1,
+    }  # pragma: no cover
 
 
 def validate(m: dict) -> None:  # pragma: no cover

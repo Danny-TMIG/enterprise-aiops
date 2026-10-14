@@ -5,6 +5,7 @@ Absence is failure, presence is not sufficient — the artifact must also
 satisfy a minimal shape check. Sources may also attest externally; the
 Belnap fold combines them.
 """
+
 from __future__ import annotations
 
 import json
@@ -32,8 +33,8 @@ def risk_register_exists() -> None:
 
 def risk_owners_assigned() -> None:
     for r in _json("risks.json"):
-        assert r.get("owner"), f"risk {r.get('id','?')} has no owner"
-        assert r.get("mitigation"), f"risk {r.get('id','?')} has no mitigation"
+        assert r.get("owner"), f"risk {r.get('id', '?')} has no owner"
+        assert r.get("mitigation"), f"risk {r.get('id', '?')} has no mitigation"
 
 
 def data_provenance() -> None:

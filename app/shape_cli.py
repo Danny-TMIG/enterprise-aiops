@@ -1,4 +1,5 @@
 """python3 -m app.shape [--dict|--validate|--write]"""
+
 from __future__ import annotations
 
 import argparse

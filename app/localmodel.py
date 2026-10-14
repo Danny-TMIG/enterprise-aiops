@@ -21,6 +21,7 @@ a real callable:
 Nothing here needs a network or a package install. A generated result
 is a real result: same code + same args -> same hash, every time.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -32,22 +33,52 @@ from typing import Any
 
 # capability code -> external binary name (None means always-generate)
 BINARY_MAP: dict[str, str | None] = {
-    "n8n": "n8n", "jenkins": "jenkins", "metasploit": "msfconsole",
-    "zaproxy": "zap", "freecad": "freecad", "arduino": "arduino-cli",
-    "zephyr": "west", "kicad3d": "kicad-cli", "openocd": "openocd",
-    "terraform": "terraform", "ansible": "ansible", "docker": "docker",
-    "kubernetes": "kubectl", "helm": "helm", "argo_cd": "argocd",
-    "istio": "istioctl", "vault": "vault", "nmap": "nmap",
-    "wireshark": "tshark", "sqlmap": "sqlmap", "amass": "amass",
-    "bettercap": "bettercap", "kismet": "kismet", "sherlock": "sherlock",
-    "spiderfoot": "sf", "aircrack_ng": "aircrack-ng", "tor": "tor",
-    "theharvester": "theHarvester", "photon": "photon",
-    "dirsearch": "dirsearch", "sublist3r": "sublist3r", "ngrok": "ngrok",
-    "esphome": "esphome", "open3d": "open3d", "openbb": "openbb",
-    "pihole": "pihole", "nextjs": "next", "nuxt": "nuxt",
-    "sails": "sails", "express": "express", "tailwind": "tailwindcss",
-    "angular_starter": "ng", "react": "react-scripts", "vue": "vue",
-    "django": "django-admin", "flask": "flask",
+    "n8n": "n8n",
+    "jenkins": "jenkins",
+    "metasploit": "msfconsole",
+    "zaproxy": "zap",
+    "freecad": "freecad",
+    "arduino": "arduino-cli",
+    "zephyr": "west",
+    "kicad3d": "kicad-cli",
+    "openocd": "openocd",
+    "terraform": "terraform",
+    "ansible": "ansible",
+    "docker": "docker",
+    "kubernetes": "kubectl",
+    "helm": "helm",
+    "argo_cd": "argocd",
+    "istio": "istioctl",
+    "vault": "vault",
+    "nmap": "nmap",
+    "wireshark": "tshark",
+    "sqlmap": "sqlmap",
+    "amass": "amass",
+    "bettercap": "bettercap",
+    "kismet": "kismet",
+    "sherlock": "sherlock",
+    "spiderfoot": "sf",
+    "aircrack_ng": "aircrack-ng",
+    "tor": "tor",
+    "theharvester": "theHarvester",
+    "photon": "photon",
+    "dirsearch": "dirsearch",
+    "sublist3r": "sublist3r",
+    "ngrok": "ngrok",
+    "esphome": "esphome",
+    "open3d": "open3d",
+    "openbb": "openbb",
+    "pihole": "pihole",
+    "nextjs": "next",
+    "nuxt": "nuxt",
+    "sails": "sails",
+    "express": "express",
+    "tailwind": "tailwindcss",
+    "angular_starter": "ng",
+    "react": "react-scripts",
+    "vue": "vue",
+    "django": "django-admin",
+    "flask": "flask",
 }
 
 
@@ -56,11 +87,16 @@ _LOCAL_IMPLS: dict[str, Callable[..., dict[str, Any]]] = {}
 
 def _generate(code: str) -> Callable[..., dict[str, Any]]:
     def impl(**kwargs: Any) -> dict[str, Any]:
-        payload = json.dumps({"code": code, "args": kwargs},
-                             sort_keys=True, default=str)
+        payload = json.dumps({"code": code, "args": kwargs}, sort_keys=True, default=str)
         h = hashlib.sha256(payload.encode()).hexdigest()[:16]
-        return {"ok": True, "generated": True, "code": code,
-                "hash": h, "result": f"local:{code}:{h}"}
+        return {
+            "ok": True,
+            "generated": True,
+            "code": code,
+            "hash": h,
+            "result": f"local:{code}:{h}",
+        }
+
     impl.__name__ = f"local_{code}"
     return impl
 
@@ -69,12 +105,16 @@ def run(code: str, **kwargs: Any) -> dict[str, Any]:
     bin_name = BINARY_MAP.get(code)
     if bin_name and shutil.which(bin_name):
         try:
-            p = subprocess.run([bin_name, "--version"],
-                               capture_output=True, timeout=5, check=False)
+            p = subprocess.run([bin_name, "--version"], capture_output=True, timeout=5, check=False)
             if p.returncode == 0:
                 v = (p.stdout or p.stderr).decode(errors="replace").strip()[:200]
-                return {"ok": True, "generated": False, "code": code,
-                        "binary": bin_name, "version": v}
+                return {
+                    "ok": True,
+                    "generated": False,
+                    "code": code,
+                    "binary": bin_name,
+                    "version": v,
+                }
         except Exception:
             pass
 
@@ -106,7 +146,7 @@ def _bootstrap() -> None:
             continue
         if home != "app/localmodel.py" or code in impl:
             continue
-        impl[code] = (lambda cd: (lambda **kw: run(cd, **kw)))(code)
+        impl[code] = (lambda cd: lambda **kw: run(cd, **kw))(code)
 
 
 _bootstrap()

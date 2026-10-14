@@ -13,6 +13,7 @@ Invariants:
   - the stored row is never updated in place
   - chain_hash of version N references chain_hash of version N-1
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -22,7 +23,7 @@ import threading
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Self
 
 SCHEMA_SQL = """
 CREATE TABLE IF NOT EXISTS governance_objects (
@@ -62,12 +63,12 @@ class GovernanceObject:
     object_id: str
     version: int
     kind: str
-    payload: Dict[str, Any]
-    prev_hash: Optional[str]
+    payload: dict[str, Any]
+    prev_hash: str | None
     chain_hash: str
     created_at: float = field(default=0.0)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "object_id": self.object_id,
             "version": self.version,
@@ -79,7 +80,7 @@ class GovernanceObject:
         }
 
 
-def _canonical(payload: Dict[str, Any]) -> str:
+def _canonical(payload: dict[str, Any]) -> str:
     return json.dumps(payload, sort_keys=True, separators=(",", ":"))
 
 
@@ -88,7 +89,7 @@ def _chain_hash(
     version: int,
     kind: str,
     payload_json: str,
-    prev_hash: Optional[str],
+    prev_hash: str | None,
 ) -> str:
     h = hashlib.sha256()
     h.update(object_id.encode("utf-8"))
@@ -120,10 +121,10 @@ class GovernanceRegistry:
         with self._lock:
             self._conn.close()
 
-    def __enter__(self) -> "GovernanceRegistry":
+    def __enter__(self) -> Self:
         return self
 
-    def __exit__(self, *exc: Any) -> None:
+    def __exit__(self, *exc: object) -> None:
         self.close()
 
     # ---- reads -----------------------------------------------------------
@@ -136,7 +137,7 @@ class GovernanceRegistry:
             ).fetchone()
             return int(row[0]) if row and row[0] is not None else 0
 
-    def get(self, object_id: str, version: Optional[int] = None) -> GovernanceObject:
+    def get(self, object_id: str, version: int | None = None) -> GovernanceObject:
         with self._lock:
             if version is None:
                 version = self.latest_version(object_id)
@@ -160,7 +161,7 @@ class GovernanceRegistry:
             created_at=row[6],
         )
 
-    def history(self, object_id: str) -> List[GovernanceObject]:
+    def history(self, object_id: str) -> list[GovernanceObject]:
         with self._lock:
             rows = self._conn.execute(
                 "SELECT object_id, version, kind, payload_json, prev_hash,"
@@ -170,19 +171,22 @@ class GovernanceRegistry:
             ).fetchall()
         return [
             GovernanceObject(
-                object_id=r[0], version=r[1], kind=r[2],
-                payload=json.loads(r[3]), prev_hash=r[4],
-                chain_hash=r[5], created_at=r[6],
+                object_id=r[0],
+                version=r[1],
+                kind=r[2],
+                payload=json.loads(r[3]),
+                prev_hash=r[4],
+                chain_hash=r[5],
+                created_at=r[6],
             )
             for r in rows
         ]
 
-    def list_ids(self, kind: Optional[str] = None) -> List[str]:
+    def list_ids(self, kind: str | None = None) -> list[str]:
         with self._lock:
             if kind is None:
                 rows = self._conn.execute(
-                    "SELECT DISTINCT object_id FROM governance_objects"
-                    " ORDER BY object_id"
+                    "SELECT DISTINCT object_id FROM governance_objects ORDER BY object_id"
                 ).fetchall()
             else:
                 rows = self._conn.execute(
@@ -198,8 +202,8 @@ class GovernanceRegistry:
         self,
         object_id: str,
         kind: str,
-        payload: Dict[str, Any],
-        expected_version: Optional[int] = None,
+        payload: dict[str, Any],
+        expected_version: int | None = None,
     ) -> GovernanceObject:
         """Append a new immutable version.
 
@@ -218,16 +222,14 @@ class GovernanceRegistry:
             cur.execute("BEGIN IMMEDIATE")
             try:
                 row = cur.execute(
-                    "SELECT MAX(version) FROM governance_objects"
-                    " WHERE object_id = ?",
+                    "SELECT MAX(version) FROM governance_objects WHERE object_id = ?",
                     (object_id,),
                 ).fetchone()
                 current = int(row[0]) if row and row[0] is not None else 0
 
                 if expected_version is not None and expected_version != current:
                     raise ImmutableVersionError(
-                        f"concurrent modification: expected v{expected_version},"
-                        f" current v{current}"
+                        f"concurrent modification: expected v{expected_version}, current v{current}"
                     )
 
                 next_version = current + 1
@@ -243,9 +245,7 @@ class GovernanceRegistry:
                     prev_hash = prev_row[0] if prev_row else None
 
                 payload_json = _canonical(payload)
-                ch = _chain_hash(
-                    object_id, next_version, kind, payload_json, prev_hash
-                )
+                ch = _chain_hash(object_id, next_version, kind, payload_json, prev_hash)
                 created = time.time()
 
                 cur.execute(
@@ -253,8 +253,7 @@ class GovernanceRegistry:
                     " (object_id, version, kind, payload_json, prev_hash,"
                     "  chain_hash, created_at)"
                     " VALUES (?, ?, ?, ?, ?, ?, ?)",
-                    (object_id, next_version, kind, payload_json,
-                     prev_hash, ch, created),
+                    (object_id, next_version, kind, payload_json, prev_hash, ch, created),
                 )
                 self._conn.commit()
             except Exception:
@@ -289,17 +288,14 @@ class GovernanceRegistry:
             prev = obj.chain_hash
         return True
 
-    def stats(self) -> Dict[str, Any]:
+    def stats(self) -> dict[str, Any]:
         with self._lock:
-            total = self._conn.execute(
-                "SELECT COUNT(*) FROM governance_objects"
-            ).fetchone()[0]
+            total = self._conn.execute("SELECT COUNT(*) FROM governance_objects").fetchone()[0]
             objects = self._conn.execute(
                 "SELECT COUNT(DISTINCT object_id) FROM governance_objects"
             ).fetchone()[0]
             kinds = self._conn.execute(
-                "SELECT kind, COUNT(*) FROM governance_objects"
-                " GROUP BY kind ORDER BY kind"
+                "SELECT kind, COUNT(*) FROM governance_objects GROUP BY kind ORDER BY kind"
             ).fetchall()
         return {
             "versions": int(total),

@@ -1,4 +1,5 @@
 """Sanitize leaf values from the model."""
+
 from __future__ import annotations
 
 import re
@@ -67,7 +68,7 @@ def imports(s: str) -> str:
 
 
 _FIELD_PREFIX = re.compile(
-    r'^\s*(?:Docstring|FDoc|Fdoc|ModuleDoc|ModDoc|Doc|Text)\s*:\s*',
+    r"^\s*(?:Docstring|FDoc|Fdoc|ModuleDoc|ModDoc|Doc|Text)\s*:\s*",
     re.IGNORECASE,
 )
 

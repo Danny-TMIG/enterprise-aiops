@@ -15,6 +15,7 @@ map. We define a canonical encoder: bytes → chain of ε nodes
 (erasure-only graph). The encoder is deterministic, so the loop is
 deterministic.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -70,5 +71,5 @@ def self_apply(seed: Graph, max_iterations: int = 6) -> FixedPoint:
         prev_hash = h
         # feed the hash bytes back as a graph
         raw = bytes.fromhex(h.split(":", 1)[1])
-        g = bytes_to_graph(raw[:32])       # 32 bytes → 32 gadgets
+        g = bytes_to_graph(raw[:32])  # 32 bytes → 32 gadgets
     return fp

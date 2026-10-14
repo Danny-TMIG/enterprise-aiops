@@ -1,5 +1,7 @@
 """Frontend, media, mobile, and design-adjacent requirements."""
 
+import itertools
+
 from dcs.generate import requirement  # pragma: no cover
 
 
@@ -190,7 +192,7 @@ def shd_uniform():  # pragma: no cover
 )
 def vid_monotonic():  # pragma: no cover
     ts = [0.0, 0.033, 0.066, 0.100]
-    assert all(b >= a for a, b in zip(ts, ts[1:]))
+    assert all(b >= a for a, b in itertools.pairwise(ts))
 
 
 @requirement(
@@ -198,7 +200,7 @@ def vid_monotonic():  # pragma: no cover
 )
 def vid_codec():  # pragma: no cover
     codec = "avc1.64001f"
-    kind, level = codec.split(".")
+    kind, _level = codec.split(".")
     assert kind == "avc1"
 
 
@@ -270,7 +272,7 @@ def cad_euler():  # pragma: no cover
 )
 def game_turns():  # pragma: no cover
     seq = ["X", "O", "X", "O"]
-    assert all(a != b for a, b in zip(seq, seq[1:]))
+    assert all(a != b for a, b in itertools.pairwise(seq))
 
 
 @requirement(
@@ -311,7 +313,7 @@ def game_terminal():  # pragma: no cover
 )
 def tw_headings():  # pragma: no cover
     levels = [1, 2, 3, 4]
-    assert all(b - a <= 1 for a, b in zip(levels, levels[1:]))
+    assert all(b - a <= 1 for a, b in itertools.pairwise(levels))
 
 
 @requirement(

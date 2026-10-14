@@ -10,26 +10,27 @@ Walks a directory, extracts every module's public interface, then emits:
 Usage:
   python3 tools/gen_grammar_spec.py <root-dir> [<out-dir>]
 """
+
 from __future__ import annotations
 
 import ast
 import json
 import re
 import sys
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
-
 
 # ---------------------------------------------------------------------------
 # Data model
 # ---------------------------------------------------------------------------
 
+
 @dataclass
 class Symbol:
-    kind: str                    # "class" | "function" | "method" | "constant" | "typealias"
+    kind: str  # "class" | "function" | "method" | "constant" | "typealias"
     name: str
-    qualname: str                # dotted, includes class prefix for methods
-    module: str                  # dotted module path
+    qualname: str  # dotted, includes class prefix for methods
+    module: str  # dotted module path
     lineno: int
     docstring: str = ""
     decorators: list[str] = field(default_factory=list)
@@ -43,8 +44,8 @@ class Symbol:
 
 @dataclass
 class Module:
-    name: str                    # dotted
-    path: str                    # relative posix path
+    name: str  # dotted
+    path: str  # relative posix path
     docstring: str = ""
     imports: list[str] = field(default_factory=list)
     from_imports: list[tuple[str, str]] = field(default_factory=list)
@@ -65,12 +66,35 @@ class Codebase:
 # ---------------------------------------------------------------------------
 
 SKIP_DIRS = {
-    ".git", ".venv", "venv", "env", ".lanes", "node_modules", ".next",
-    "__pycache__", ".mypy_cache", ".ruff_cache", ".hypothesis",
-    ".pytest_cache", ".eggs", "build", "dist", ".tox", ".cache",
-    ".codeql-results", ".mesh-codeql-db", ".snapshots", ".delta",
-    ".last-backups", ".complete-backups", ".benchmarks", ".agency",
-    ".backrooms", ".moat", ".murmur", "site-packages",
+    ".git",
+    ".venv",
+    "venv",
+    "env",
+    ".lanes",
+    "node_modules",
+    ".next",
+    "__pycache__",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".hypothesis",
+    ".pytest_cache",
+    ".eggs",
+    "build",
+    "dist",
+    ".tox",
+    ".cache",
+    ".codeql-results",
+    ".mesh-codeql-db",
+    ".snapshots",
+    ".delta",
+    ".last-backups",
+    ".complete-backups",
+    ".benchmarks",
+    ".agency",
+    ".backrooms",
+    ".moat",
+    ".murmur",
+    "site-packages",
 }
 
 
@@ -94,6 +118,7 @@ def module_name(root: Path, py: Path) -> str:
 # ---------------------------------------------------------------------------
 # AST extraction
 # ---------------------------------------------------------------------------
+
 
 def _unparse(node) -> str:
     try:
@@ -161,65 +186,75 @@ def extract_module(py: Path, root: Path) -> Module:
                     except Exception:
                         pass
                 elif isinstance(t, ast.Name) and t.id.isupper():
-                    mod.symbols.append(Symbol(
-                        kind="constant",
-                        name=t.id,
-                        qualname=t.id,
-                        module=mod.name,
-                        lineno=node.lineno,
-                    ))
+                    mod.symbols.append(
+                        Symbol(
+                            kind="constant",
+                            name=t.id,
+                            qualname=t.id,
+                            module=mod.name,
+                            lineno=node.lineno,
+                        )
+                    )
         elif isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name):
             if node.target.id.isupper():
-                mod.symbols.append(Symbol(
-                    kind="constant",
-                    name=node.target.id,
-                    qualname=node.target.id,
+                mod.symbols.append(
+                    Symbol(
+                        kind="constant",
+                        name=node.target.id,
+                        qualname=node.target.id,
+                        module=mod.name,
+                        lineno=node.lineno,
+                    )
+                )
+        elif isinstance(node, ast.ClassDef):
+            mod.symbols.append(
+                Symbol(
+                    kind="class",
+                    name=node.name,
+                    qualname=node.name,
                     module=mod.name,
                     lineno=node.lineno,
-                ))
-        elif isinstance(node, ast.ClassDef):
-            mod.symbols.append(Symbol(
-                kind="class",
-                name=node.name,
-                qualname=node.name,
-                module=mod.name,
-                lineno=node.lineno,
-                docstring=ast.get_docstring(node) or "",
-                decorators=_decorator_names(node),
-                bases=[_unparse(b) for b in node.bases],
-                is_private=node.name.startswith("_"),
-            ))
+                    docstring=ast.get_docstring(node) or "",
+                    decorators=_decorator_names(node),
+                    bases=[_unparse(b) for b in node.bases],
+                    is_private=node.name.startswith("_"),
+                )
+            )
             for sub in node.body:
                 if isinstance(sub, (ast.FunctionDef, ast.AsyncFunctionDef)):
-                    mod.symbols.append(Symbol(
-                        kind="method",
-                        name=sub.name,
-                        qualname=f"{node.name}.{sub.name}",
-                        module=mod.name,
-                        lineno=sub.lineno,
-                        docstring=ast.get_docstring(sub) or "",
-                        decorators=_decorator_names(sub),
-                        args=_arg_names(sub.args),
-                        returns=_unparse(sub.returns) if sub.returns else "",
-                        raises=_raises(sub),
-                        is_async=isinstance(sub, ast.AsyncFunctionDef),
-                        is_private=sub.name.startswith("_"),
-                    ))
+                    mod.symbols.append(
+                        Symbol(
+                            kind="method",
+                            name=sub.name,
+                            qualname=f"{node.name}.{sub.name}",
+                            module=mod.name,
+                            lineno=sub.lineno,
+                            docstring=ast.get_docstring(sub) or "",
+                            decorators=_decorator_names(sub),
+                            args=_arg_names(sub.args),
+                            returns=_unparse(sub.returns) if sub.returns else "",
+                            raises=_raises(sub),
+                            is_async=isinstance(sub, ast.AsyncFunctionDef),
+                            is_private=sub.name.startswith("_"),
+                        )
+                    )
         elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-            mod.symbols.append(Symbol(
-                kind="function",
-                name=node.name,
-                qualname=node.name,
-                module=mod.name,
-                lineno=node.lineno,
-                docstring=ast.get_docstring(node) or "",
-                decorators=_decorator_names(node),
-                args=_arg_names(node.args),
-                returns=_unparse(node.returns) if node.returns else "",
-                raises=_raises(node),
-                is_async=isinstance(node, ast.AsyncFunctionDef),
-                is_private=node.name.startswith("_"),
-            ))
+            mod.symbols.append(
+                Symbol(
+                    kind="function",
+                    name=node.name,
+                    qualname=node.name,
+                    module=mod.name,
+                    lineno=node.lineno,
+                    docstring=ast.get_docstring(node) or "",
+                    decorators=_decorator_names(node),
+                    args=_arg_names(node.args),
+                    returns=_unparse(node.returns) if node.returns else "",
+                    raises=_raises(node),
+                    is_async=isinstance(node, ast.AsyncFunctionDef),
+                    is_private=node.name.startswith("_"),
+                )
+            )
 
     return mod
 
@@ -241,6 +276,7 @@ def walk_codebase(root: Path) -> Codebase:
 # ---------------------------------------------------------------------------
 # Emit EBNF
 # ---------------------------------------------------------------------------
+
 
 def _sanitize_rule(name: str) -> str:
     s = re.sub(r"[^A-Za-z0-9_]", "_", name)
@@ -296,8 +332,11 @@ def emit_ebnf(cb: Codebase) -> str:
             sym_rule = f"{rule}.{_sanitize_rule(s.qualname)}"
             if s.kind == "class":
                 bases = " , ".join(_sanitize_rule(b) for b in s.bases) if s.bases else "object"
-                methods = [_sanitize_rule(m.name) for m in mod.symbols
-                           if m.kind == "method" and m.qualname.startswith(s.name + ".")]
+                methods = [
+                    _sanitize_rule(m.name)
+                    for m in mod.symbols
+                    if m.kind == "method" and m.qualname.startswith(s.name + ".")
+                ]
                 body = " , ".join([f"BASE({bases})"] + [f"METHOD({m})" for m in methods])
                 lines.append(f"{sym_rule} = {body} ;")
             elif s.kind == "method":
@@ -336,6 +375,7 @@ def emit_ebnf(cb: Codebase) -> str:
 # ---------------------------------------------------------------------------
 # Emit SPEC.md
 # ---------------------------------------------------------------------------
+
 
 def emit_spec(cb: Codebase) -> str:
     lines = []
@@ -401,8 +441,11 @@ def emit_spec(cb: Codebase) -> str:
             for c in classes:
                 bases = ", ".join(c.bases) if c.bases else "object"
                 lines.append(f"- `{c.name}` (L{c.lineno}) — bases: `{bases}`")
-                methods = [s for s in mod.symbols
-                           if s.kind == "method" and s.qualname.startswith(c.name + ".")]
+                methods = [
+                    s
+                    for s in mod.symbols
+                    if s.kind == "method" and s.qualname.startswith(c.name + ".")
+                ]
                 for m in methods:
                     args = ", ".join(m.args)
                     ret = f" -> {m.returns}" if m.returns else ""
@@ -447,6 +490,7 @@ def emit_spec(cb: Codebase) -> str:
 # Emit index + dot
 # ---------------------------------------------------------------------------
 
+
 def emit_index(cb: Codebase) -> str:
     data = {
         "root": cb.root,
@@ -460,7 +504,7 @@ def emit_index(cb: Codebase) -> str:
 
 
 def emit_dot(cb: Codebase) -> str:
-    lines = ["digraph imports {", '  rankdir=LR;', '  node [shape=box, fontname="Helvetica"];']
+    lines = ["digraph imports {", "  rankdir=LR;", '  node [shape=box, fontname="Helvetica"];']
     for mod in cb.modules:
         label = mod.name.replace('"', "'")
         lines.append(f'  "{label}";')
@@ -482,6 +526,7 @@ def emit_dot(cb: Codebase) -> str:
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
+
 
 def main() -> int:
     if len(sys.argv) < 2:

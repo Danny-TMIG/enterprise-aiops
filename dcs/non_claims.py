@@ -5,6 +5,7 @@ Each sub-clause is a specific, testable statement about what the
 license does NOT certify. Together they close the gap between what
 readers infer and what the license actually asserts.
 """
+
 from __future__ import annotations  # pragma: no cover
 
 import json  # pragma: no cover
@@ -148,14 +149,14 @@ CORRECTED = {
 }
 
 ORIGINAL_5 = {
-    "not_aligned":      "This license does not certify that the holder's objectives are aligned with any external objective.",
-    "not_safe":         "This license does not certify absence of harm. It certifies detectability of rogue actions.",
-    "not_complete":     "This license does not certify that all possible rogue actions are covered. It covers the action space declared in `scope`.",
-    "not_prevention":   "Rogue is not prevented. Rogue is detected on execution. The chain is total, so no action escapes attestation.",
-    "not_infinite":     "This license is not a proof that rogue AI is impossible by design. That claim has four preconditions (precise rogue definition, precise system class, proof over the class, containment of all real AI in the class). This license satisfies only the first.",
+    "not_aligned": "This license does not certify that the holder's objectives are aligned with any external objective.",
+    "not_safe": "This license does not certify absence of harm. It certifies detectability of rogue actions.",
+    "not_complete": "This license does not certify that all possible rogue actions are covered. It covers the action space declared in `scope`.",
+    "not_prevention": "Rogue is not prevented. Rogue is detected on execution. The chain is total, so no action escapes attestation.",
+    "not_infinite": "This license is not a proof that rogue AI is impossible by design. That claim has four preconditions (precise rogue definition, precise system class, proof over the class, containment of all real AI in the class). This license satisfies only the first.",
 }
 
-TOP_LEVEL_COUNT = len(CORRECTED)              # 8
+TOP_LEVEL_COUNT = len(CORRECTED)  # 8
 SUB_CLAUSE_COUNT = sum(len(v["sub"]) for v in CORRECTED.values())  # 64
 
 
@@ -236,6 +237,7 @@ def save(path: Path):  # pragma: no cover
 
 if __name__ == "__main__":  # pragma: no cover
     import sys  # pragma: no cover
+
     if len(sys.argv) > 1 and sys.argv[1] == "check":  # pragma: no cover
         print(json.dumps(orthogonality_check(), indent=2))
         sys.exit(0 if orthogonality_check()["verdict"] == "PASS" else 1)

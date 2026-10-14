@@ -1,16 +1,17 @@
 """Source module for 90_PROVENANCE_AND_SUPERSEDED_ARTIFACT_INDEX."""
+
 from __future__ import annotations
 
 import hashlib
 import json
 import time
-from dataclasses import dataclass, field, asdict
-from typing import Any
+from dataclasses import asdict, dataclass, field
 
 
 @dataclass
 class Record:
     """One immutable unit of work emitted by 90_PROVENANCE_AND_SUPERSEDED_ARTIFACT_INDEX."""
+
     name: str
     payload: dict = field(default_factory=dict)
     ts: str = field(default_factory=lambda: time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
@@ -20,7 +21,7 @@ class Record:
         return hashlib.sha256(canon.encode()).hexdigest()
 
 
-class 90ProvenanceAndSupersededArtifactIndex:
+class Mod90ProvenanceAndSupersededArtifactIndex:
     """Primary interface for 90_PROVENANCE_AND_SUPERSEDED_ARTIFACT_INDEX. Stateless, deterministic."""
 
     def __init__(self) -> None:
@@ -43,4 +44,4 @@ class 90ProvenanceAndSupersededArtifactIndex:
         return h.hexdigest()
 
 
-__all__ = ["Record", "90ProvenanceAndSupersededArtifactIndex"]
+__all__ = ["Mod90ProvenanceAndSupersededArtifactIndex", "Record"]

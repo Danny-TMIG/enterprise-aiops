@@ -1,4 +1,5 @@
 """Deterministic C2 simulation driver."""
+
 from __future__ import annotations
 
 from typing import Any
@@ -8,9 +9,7 @@ from app.botnetmastery.models import Bot, Task
 
 
 class Simulation:
-    def __init__(self, server: C2Server,
-                 seed: int | None = None,
-                 *args, **kwargs):
+    def __init__(self, server: C2Server, seed: int | None = None, *args, **kwargs):
         self.server = server
         self.seed = seed
         self._state = (seed or 0) & 0x7FFFFFFF
@@ -30,12 +29,10 @@ class Simulation:
         return ids
 
     def queue_broadcast(self, action: str, payload: dict) -> None:
-        self.broadcast_queue.append(
-            {"action": action, "payload": dict(payload or {})})
+        self.broadcast_queue.append({"action": action, "payload": dict(payload or {})})
 
     def tick(self) -> dict[str, int]:
-        stats = {"heartbeats": 0, "dispatched": 0,
-                 "completed": 0, "skipped": 0}
+        stats = {"heartbeats": 0, "dispatched": 0, "completed": 0, "skipped": 0}
         if self.server.kill_switch_engaged():
             stats["skipped"] = len(self.server.list_bots())
             return stats
@@ -52,8 +49,7 @@ class Simulation:
         self.broadcast_queue.clear()
         for act in actions:
             for b in active:
-                self.server.queue_task(Task.new(
-                    b["id"], act["action"], act["payload"]))
+                self.server.queue_task(Task.new(b["id"], act["action"], act["payload"]))
 
         for b in active:
             row = self.server.dispatch(b["id"])
@@ -61,20 +57,16 @@ class Simulation:
                 stats["skipped"] += 1
                 continue
             stats["dispatched"] += 1
-            self.server.complete(row["id"], b["id"],
-                                 '{"ok": true}', success=True)
+            self.server.complete(row["id"], b["id"], '{"ok": true}', success=True)
             stats["completed"] += 1
         return stats
 
 
-def run_simulation(
-steps: int = 1,
-    controller=None,
-    bots=None,
-    seed: int = 0):
+def run_simulation(steps: int = 1, controller=None, bots=None, seed: int = 0):
     """Advance a C2 simulation by `steps` ticks. Returns the full timeline."""
     from app.botnetmastery.c2 import C2Controller
     from app.botnetmastery.models import BotModel
+
     if controller is None:
         controller = C2Controller(bots=bots, seed=seed)
         if bots is None:
@@ -87,4 +79,3 @@ steps: int = 1,
         "events": timeline,
         "final": controller.poll(),
     }
-

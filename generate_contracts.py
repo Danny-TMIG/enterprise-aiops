@@ -21,10 +21,10 @@ SCHEMAS = {
                 "properties": {
                     "algorithm": {"type": "string", "enum": ["Ed25519"]},
                     "public_key": {"type": "string"},
-                    "value": {"type": "string"}
-                }
-            }
-        }
+                    "value": {"type": "string"},
+                },
+            },
+        },
     },
     "contracts/gov/transition_v1.json": {
         "$schema": "http://json-schema.org/draft-07/schema#",
@@ -41,9 +41,9 @@ SCHEMAS = {
             "evidence_ref": {"type": "string"},
             "veto_check": {
                 "type": "boolean",
-                "description": "Indicates whether C-suite active veto circuit breakers cleared."
-            }
-        }
+                "description": "Indicates whether C-suite active veto circuit breakers cleared.",
+            },
+        },
     },
     "contracts/ac/telemetry_v1.json": {
         "$schema": "http://json-schema.org/draft-07/schema#",
@@ -61,13 +61,14 @@ SCHEMAS = {
                     "cpu_load_percent": {"type": "number", "minimum": 0.0, "maximum": 100.0},
                     "ram_used_bytes": {"type": "integer"},
                     "ram_total_bytes": {"type": "integer"},
-                    "mlx_vram_active_bytes": {"type": "integer"}
-                }
+                    "mlx_vram_active_bytes": {"type": "integer"},
+                },
             },
-            "provenance_hash": {"type": "string", "description": "SHA-256 omega seal."}
-        }
-    }
+            "provenance_hash": {"type": "string", "description": "SHA-256 omega seal."},
+        },
+    },
 }
+
 
 def main():
     print("📜 [CONTRACTS] Generating canonical JSON schemas...")
@@ -77,6 +78,7 @@ def main():
         path.write_text(json.dumps(schema, indent=2) + "\n")
         print(f"  ✔ Created {filepath}")
     print("💯 [COMPLETE] Canonical schemas successfully compiled.")
+
 
 if __name__ == "__main__":
     main()

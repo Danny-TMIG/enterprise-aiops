@@ -1,4 +1,3 @@
-
 import pytest
 
 from app.grammar.engine import MasteryEngine
@@ -13,8 +12,13 @@ async def test_linguistic_mastery_pipeline() -> None:
     subdomains = engine.taxonomy["Grammar"]
 
     expected_subdomains = [
-        "Phonology", "Morphology", "Syntax",
-        "Semantics", "Pragmatics", "Discourse", "Theoretical grammar"
+        "Phonology",
+        "Morphology",
+        "Syntax",
+        "Semantics",
+        "Pragmatics",
+        "Discourse",
+        "Theoretical grammar",
     ]
     for sub in expected_subdomains:
         assert sub in subdomains
@@ -26,10 +30,10 @@ async def test_linguistic_mastery_pipeline() -> None:
         for node in nodes:
             engine.certify(node)
             assert engine.is_mastered(node)
-        
+
         metrics = await validator.assert_converges(
             probe_fn=lambda s=sub: engine.subsystem_progress("Grammar", s),
             expected=1.0,
-            subsystem=f"LinguisticMesh-{sub}"
+            subsystem=f"LinguisticMesh-{sub}",
         )
         assert metrics.achieved_value == 1.0

@@ -65,7 +65,9 @@ def measure(std: Standard, floor: int) -> dict[str, HatState]:  # pragma: no cov
     }
 
 
-def derive_floor(std: Standard, *, multiplier: float = 0.0, minimum: int = 8) -> int:  # pragma: no cover
+def derive_floor(
+    std: Standard, *, multiplier: float = 0.0, minimum: int = 8
+) -> int:  # pragma: no cover
     """Floor = max(minimum, ceil(multiplier * median_hat_count)).
     Default multiplier 0 means floor is just minimum; controller escalates."""
     counts = sorted(sum(1 for r in std.requirements if h in r.hats) for h in HATS)
@@ -101,7 +103,9 @@ class RequirementGenerator:  # pragma: no cover
 
 
 # ── controller ────────────────────────────────────────────────────
-def step(std: Standard, floor: int, gen: RequirementGenerator, index: int) -> tuple[Standard, Step]:  # pragma: no cover
+def step(
+    std: Standard, floor: int, gen: RequirementGenerator, index: int
+) -> tuple[Standard, Step]:  # pragma: no cover
     """One cycle: measure, generate one requirement per unsatisfied hat."""
     per_hat = measure(std, floor)
     added: list[str] = []

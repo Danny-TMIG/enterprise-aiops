@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Seed the capability registry, wire the bridges, report status."""
+
 from __future__ import annotations
 
 import sys

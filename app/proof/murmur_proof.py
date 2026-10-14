@@ -8,6 +8,7 @@ Runs the flock for N ticks, prints one line per agent-run:
 where bits are:
     effect_ok / recentered / aligned / verdict_ok / stable / capped
 """
+
 from __future__ import annotations
 
 import sys

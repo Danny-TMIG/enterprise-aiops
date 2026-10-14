@@ -3,6 +3,7 @@
 A graph-shaped IR. Every target language (Python, SQL, MQL, RL,
 ML) compiles to the same Code-AL graph. The graph hashes.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -11,10 +12,26 @@ from dataclasses import asdict, dataclass, field
 from typing import Any
 
 OPS = {
-    "LOAD", "FETCH", "STORE", "COUNT", "SUM", "FILTER", "JOIN",
-    "AGGREGATE", "TRAIN", "EVALUATE", "RETRAIN", "SCHEDULE",
-    "ROUTE", "RECORD", "EMIT", "VERIFY", "VALIDATE", "REVERSE",
-    "CLASSIFY", "READ",
+    "LOAD",
+    "FETCH",
+    "STORE",
+    "COUNT",
+    "SUM",
+    "FILTER",
+    "JOIN",
+    "AGGREGATE",
+    "TRAIN",
+    "EVALUATE",
+    "RETRAIN",
+    "SCHEDULE",
+    "ROUTE",
+    "RECORD",
+    "EMIT",
+    "VERIFY",
+    "VALIDATE",
+    "REVERSE",
+    "CLASSIFY",
+    "READ",
 }
 
 
@@ -26,15 +43,19 @@ def _h(s: str) -> str:
 class CAInstruction:
     id: str
     op: str
-    slots: dict[str, str] = field(default_factory=dict)     # name → ref | literal
+    slots: dict[str, str] = field(default_factory=dict)  # name → ref | literal
     residue: list[str] = field(default_factory=list)
 
     def to_canonical(self) -> str:
         return json.dumps(
-            {"id": self.id, "op": self.op,
-             "slots": {k: self.slots[k] for k in sorted(self.slots)},
-             "residue": sorted(self.residue)},
-            sort_keys=True, separators=(",", ":"),
+            {
+                "id": self.id,
+                "op": self.op,
+                "slots": {k: self.slots[k] for k in sorted(self.slots)},
+                "residue": sorted(self.residue),
+            },
+            sort_keys=True,
+            separators=(",", ":"),
         )
 
 
@@ -68,9 +89,9 @@ def from_tasks(name: str, tasks: list[Any]) -> CAProgram:
             slots[f"out{i}"] = out
         for k, v in (t.params or {}).items():
             slots[k] = str(v)
-        prog.instructions.append(CAInstruction(
-            id=t.id, op=op, slots=slots, residue=list(getattr(t, "residue", []))
-        ))
+        prog.instructions.append(
+            CAInstruction(id=t.id, op=op, slots=slots, residue=list(getattr(t, "residue", [])))
+        )
         for r in getattr(t, "residue", []) or []:
             if r not in prog.residue:
                 prog.residue.append(r)

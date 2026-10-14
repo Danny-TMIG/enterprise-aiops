@@ -11,6 +11,7 @@ We construct it directly: Ω = {False, True}, and every morphism has
 a characteristic arrow χ: dst → Ω that reads "is this in the
 verified subobject?".
 """
+
 from __future__ import annotations
 
 from collections.abc import Callable
@@ -26,6 +27,7 @@ OMEGA_ID = "Ω"
 @dataclass
 class SubobjectClassifier:
     """Ω with ⊤: 1 → Ω.  χ maps a subobject's points to truth."""
+
     omega_id: str = OMEGA_ID
     terminal_id: str = TERMINAL_ID
     true_value: Any = True
@@ -33,23 +35,29 @@ class SubobjectClassifier:
 
     def true_morphism(self) -> Morphism:
         return Morphism(
-            src=self.terminal_id, dst=self.omega_id, name="⊤",
+            src=self.terminal_id,
+            dst=self.omega_id,
+            name="⊤",
             fn=lambda _: self.true_value,
             meta={"classifier": True},
         )
 
-    def characteristic(self, subobject_predicate: Callable[[Any], bool],
-                       X: str) -> Morphism:
+    def characteristic(self, subobject_predicate: Callable[[Any], bool], X: str) -> Morphism:
         tv, fv = self.true_value, self.false_value
         return Morphism(
-            src=X, dst=self.omega_id, name=f"χ_{X}",
+            src=X,
+            dst=self.omega_id,
+            name=f"χ_{X}",
             fn=lambda x: tv if subobject_predicate(x) else fv,
             meta={"classifier": True, "of": X},
         )
 
     def to_dict(self) -> dict[str, Any]:
-        return {"omega": self.omega_id, "terminal": self.terminal_id,
-                "values": [self.true_value, self.false_value]}
+        return {
+            "omega": self.omega_id,
+            "terminal": self.terminal_id,
+            "values": [self.true_value, self.false_value],
+        }
 
 
 class Topos(Category):
@@ -68,10 +76,8 @@ class Topos(Category):
         if pid not in self.objects:
             self.add(Object(pid, "product", {"factors": [a, b]}))
             # projections
-            self.arrow(pid, a, f"π1_{pid}", lambda p: p[0],
-                       meta={"projection": 1})
-            self.arrow(pid, b, f"π2_{pid}", lambda p: p[1],
-                       meta={"projection": 2})
+            self.arrow(pid, a, f"π1_{pid}", lambda p: p[0], meta={"projection": 1})
+            self.arrow(pid, b, f"π2_{pid}", lambda p: p[1], meta={"projection": 2})
         return pid
 
     def exponential(self, a: str, b: str) -> str:
@@ -81,13 +87,11 @@ class Topos(Category):
         return eid
 
     # ── subobjects ─────────────────────────────────────────────
-    def subobject(self, X: str, name: str,
-                  predicate: Callable[[Any], bool]) -> Morphism:
+    def subobject(self, X: str, name: str, predicate: Callable[[Any], bool]) -> Morphism:
         """Add A ↪ X via a predicate; return the characteristic χ_A."""
         aid = f"{X}|{name}"
         self.add(Object(aid, "subobject", {"of": X, "name": name}))
-        self.arrow(aid, X, f"ι_{name}", lambda x: x,
-                   meta={"inclusion": True})
+        self.arrow(aid, X, f"ι_{name}", lambda x: x, meta={"inclusion": True})
         chi = self.classifier.characteristic(predicate, X)
         self.morphisms.append(chi)
         return chi

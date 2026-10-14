@@ -6,7 +6,9 @@ HW = {"cpu_cores": 12, "unified_mem_gb": 64, "platform": "apple_m4_max"}
 
 
 def fits(need: dict) -> bool:  # pragma: no cover
-    return need.get("cores", 0) <= HW["cpu_cores"] and need.get("mem_gb", 0) <= HW["unified_mem_gb"]  # pragma: no cover
+    return (
+        need.get("cores", 0) <= HW["cpu_cores"] and need.get("mem_gb", 0) <= HW["unified_mem_gb"]
+    )  # pragma: no cover
 
 
 @requirement(

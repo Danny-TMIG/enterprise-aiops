@@ -1,9 +1,9 @@
-import os
 from pathlib import Path
+
 
 def fix_repository():
     print("🔧 [FIX] Ensuring all component directories are valid python packages...")
-    
+
     # 1. Add __init__.py files recursively in components/
     components_root = Path("components")
     if components_root.exists():
@@ -18,7 +18,7 @@ def fix_repository():
     # 2. Write the robust diagnostic test file
     diagnostic_path = Path("integration/test_full_stack_diagnostic.py")
     diagnostic_path.parent.mkdir(parents=True, exist_ok=True)
-    
+
     diagnostic_code = '''#!/usr/bin/env python3
 """
 Full-Stack Sovereign Diagnostic Test (Direct Execution Version)
@@ -99,6 +99,7 @@ if __name__ == "__main__":
 '''
     diagnostic_path.write_text(diagnostic_code)
     print("  ✔ Rewrote integration/test_full_stack_diagnostic.py cleanly.")
+
 
 if __name__ == "__main__":
     fix_repository()

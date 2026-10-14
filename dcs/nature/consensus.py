@@ -12,7 +12,9 @@ def bee_waggle(bee_votes: list[float]) -> float:  # pragma: no cover
     return sum(bee_votes) / len(bee_votes)  # pragma: no cover
 
 
-def ant_quorum(recruit_rate: float, threshold: int, ticks: int = 200, seed: int = 0) -> dict:  # pragma: no cover
+def ant_quorum(
+    recruit_rate: float, threshold: int, ticks: int = 200, seed: int = 0
+) -> dict:  # pragma: no cover
     rng = random.Random(seed)
     recruited = 0
     for _ in range(ticks):

@@ -1,13 +1,21 @@
 """Node + route(intent, graph)."""
+
 from __future__ import annotations
 
 from typing import Any
 
 
 class Node:
-    def __init__(self, id: str = "", kind: str = "unknown", name: str = "",
-                 file: str = "", line: int = 0, extra: list | None = None,
-                 **kwargs):
+    def __init__(
+        self,
+        id: str = "",
+        kind: str = "unknown",
+        name: str = "",
+        file: str = "",
+        line: int = 0,
+        extra: list | None = None,
+        **kwargs,
+    ):
         self.id = id
         self.kind = kind
         self.name = name or id
@@ -33,13 +41,15 @@ def route(intent: str, graph) -> list[dict[str, Any]]:
         lname = name.lower()
         score = sum(1.0 for tok in tokens if tok in lname)
         if score > 0:
-            out.append({
-                "id": str(getattr(node, "id", "")),
-                "name": name,
-                "kind": str(getattr(node, "kind", "")),
-                "file": str(getattr(node, "file", "")),
-                "line": int(getattr(node, "line", 0) or 0),
-                "score": float(score),
-            })
+            out.append(
+                {
+                    "id": str(getattr(node, "id", "")),
+                    "name": name,
+                    "kind": str(getattr(node, "kind", "")),
+                    "file": str(getattr(node, "file", "")),
+                    "line": int(getattr(node, "line", 0) or 0),
+                    "score": float(score),
+                }
+            )
     out.sort(key=lambda m: -m["score"])
     return out

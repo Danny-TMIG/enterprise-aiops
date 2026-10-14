@@ -1,4 +1,5 @@
 """Claim 2: nobody external has confirmed anything."""
+
 from __future__ import annotations
 
 import inspect
@@ -19,27 +20,36 @@ def check_no_third_party_sig() -> tuple:
     ext = []
     for pattern in ("*.gpg", "*.asc"):
         for f in Path(".").rglob(pattern):
-            if any(x in str(f) for x in
-                   (".venv", "node_modules", "site-packages")):
+            if any(x in str(f) for x in (".venv", "node_modules", "site-packages")):
                 continue
             ext.append(str(f))
     # SBOM.sig is HMAC with a local key; not third party
     ok = not ext
-    return ok, (f"external signatures: {ext or ['none']}; "
-                f"local keys on disk: {sorted(str(k.name) for k in our_keys)}")
+    return ok, (
+        f"external signatures: {ext or ['none']}; "
+        f"local keys on disk: {sorted(str(k.name) for k in our_keys)}"
+    )
 
 
 def check_apis_never_called() -> tuple:
-    keys = ["ANTHROPIC_API_KEY", "OPENAI_API_KEY", "DEEPSEEK_API_KEY",
-            "MISTRAL_API_KEY", "CODACY_API_TOKEN",
-            "MICROSOFT_VERIFY_ENDPOINT", "SALESFORCE_ORG_URL",
-            "SERVICENOW_INSTANCE", "GOOGLE_CLOUD_PROJECT"]
+    keys = [
+        "ANTHROPIC_API_KEY",
+        "OPENAI_API_KEY",
+        "DEEPSEEK_API_KEY",
+        "MISTRAL_API_KEY",
+        "CODACY_API_TOKEN",
+        "MICROSOFT_VERIFY_ENDPOINT",
+        "SALESFORCE_ORG_URL",
+        "SERVICENOW_INSTANCE",
+        "GOOGLE_CLOUD_PROJECT",
+    ]
     set_keys = [k for k in keys if os.environ.get(k)]
     return (not set_keys), f"set keys: {set_keys or 'none'}"
 
 
 def check_vendor_substitutions() -> tuple:
     from app.proprietary.registry import ProprietaryRegistry
+
     reg = ProprietaryRegistry()
     rows = []
     for name, obj in reg.objects.items():
@@ -50,6 +60,7 @@ def check_vendor_substitutions() -> tuple:
 
 def check_reality_definition() -> tuple:
     from app.proprietary.base import ProprietaryObject
+
     src = inspect.getsource(ProprietaryObject.is_real)
     ok = "has_tenant" in src and "has_local" in src
     return ok, "is_real = has_tenant OR has_local"

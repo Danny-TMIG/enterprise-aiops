@@ -1,4 +1,5 @@
 """Walk from a module to its terminal residual Ω."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -19,8 +20,13 @@ class Chain:
         return {
             "module": self.module,
             "residuals": [
-                {"id": r.id, "class": r.class_name,
-                 "name": r.name, "source": r.source, "arity": str(r.arity)}
+                {
+                    "id": r.id,
+                    "class": r.class_name,
+                    "name": r.name,
+                    "source": r.source,
+                    "arity": str(r.arity),
+                }
                 for r in self.residuals
             ],
             "terminal": self.terminal,
@@ -51,9 +57,7 @@ def render(chain: Chain) -> str:
     lines = [f"── {chain.module} ──"]
     for r in chain.residuals:
         mark = "⊘" if r.arity == 0 else "⟳"
-        lines.append(
-            f"  {mark} {r.id:6s} {r.class_name:22s} {r.name}"
-        )
+        lines.append(f"  {mark} {r.id:6s} {r.class_name:22s} {r.name}")
     if chain.missing:
         lines.append(f"  ! missing: {chain.missing}")
     lines.append(f"  ⊢ → {chain.terminal}")

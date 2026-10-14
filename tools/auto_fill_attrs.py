@@ -1,4 +1,5 @@
 """Loop: parse AttributeError, add the missing attribute to the class, retry."""
+
 import re
 import subprocess
 import sys
@@ -65,11 +66,11 @@ def add_attr(path: Path, cls: str, attr: str) -> bool:
 
     stub = (
         f"\n    def {attr}(self, *args, **kwargs):\n"
-        f"        \"\"\"Auto-generated method for {cls}.{attr}.\"\"\"\n"
+        f'        """Auto-generated method for {cls}.{attr}."""\n'
         f"        return None\n"
     )
     # insert at end of class block, keeping existing indentation style
-    new_src = src[:m.start()] + block.rstrip() + "\n" + stub + "\n" + src[m.end():]
+    new_src = src[: m.start()] + block.rstrip() + "\n" + stub + "\n" + src[m.end() :]
     path.write_text(new_src)
     return True
 
@@ -77,7 +78,9 @@ def add_attr(path: Path, cls: str, attr: str) -> bool:
 for round_no in range(1, MAX_ROUNDS + 1):
     r = subprocess.run(
         [sys.executable, "-m", "pytest", "tests/", "-q", "--no-header", "-o", "addopts="],
-        capture_output=True, text=True, cwd=".",
+        capture_output=True,
+        text=True,
+        cwd=".",
     )
     out = r.stdout + r.stderr
 

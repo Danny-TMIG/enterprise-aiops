@@ -1,4 +1,5 @@
 """State — the smallest thing an agent carries between ticks."""
+
 from __future__ import annotations
 
 import time

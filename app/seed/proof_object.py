@@ -3,12 +3,12 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 
 def _now() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 @dataclass
@@ -28,13 +28,16 @@ class ProofObject:
     seal: dict[str, Any] = field(default_factory=dict)
 
     def compute_id(self) -> str:
-        blob = json.dumps({
-            "intent": self.intent.get("id"),
-            "spec": self.spec.get("id"),
-            "artifact": self.artifact.get("id"),
-            "kernel_status": self.kernel.get("status"),
-            "ts": self.ts,
-        }, sort_keys=True)
+        blob = json.dumps(
+            {
+                "intent": self.intent.get("id"),
+                "spec": self.spec.get("id"),
+                "artifact": self.artifact.get("id"),
+                "kernel_status": self.kernel.get("status"),
+                "ts": self.ts,
+            },
+            sort_keys=True,
+        )
         return "po-" + hashlib.sha256(blob.encode()).hexdigest()[:16]
 
     def finalize(self) -> ProofObject:
@@ -47,13 +50,18 @@ class ProofObject:
 
     def to_dict(self, include_seal: bool = True) -> dict[str, Any]:
         d = {
-            "format": self.format, "id": self.id, "ts": self.ts,
-            "intent": self.intent, "spec": self.spec,
+            "format": self.format,
+            "id": self.id,
+            "ts": self.ts,
+            "intent": self.intent,
+            "spec": self.spec,
             "artifact": self.artifact,
-            "scan": self.scan, "proof": self.proof,
+            "scan": self.scan,
+            "proof": self.proof,
             "kernel": self.kernel,
             "dependency_graph": self.dependency_graph,
-            "cpvo": self.cpvo, "gates": self.gates,
+            "cpvo": self.cpvo,
+            "gates": self.gates,
         }
         if include_seal:
             d["seal"] = self.seal

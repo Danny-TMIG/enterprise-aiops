@@ -1,9 +1,14 @@
-import subprocess, sys, time, urllib.request
+import subprocess
+import sys
+import time
+import urllib.request
+
 
 def main():
     proc = subprocess.Popen(
         [sys.executable, "-m", "aiops_platform.app.asgi"],
-        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
     )
     try:
         time.sleep(2)
@@ -14,6 +19,7 @@ def main():
     finally:
         proc.terminate()
         proc.wait(timeout=5)
+
 
 if __name__ == "__main__":
     raise SystemExit(main())

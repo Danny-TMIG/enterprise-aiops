@@ -32,37 +32,61 @@ def _has_verb(ir: IntentIR, *verbs: str) -> bool:
 
 def _rule_count_then_store(ir: IntentIR) -> list[Task]:
     return [
-        Task(id="t1", op="COUNT",
-             inputs=[ir.objects.get("input", "input")],
-             outputs=["count"],
-             residue=list(ir.residue)),
-        Task(id="t2", op="STORE", inputs=["count"],
-             outputs=["stored"],
-             params={"target": ir.targets[0] if ir.targets else "memory"}),
+        Task(
+            id="t1",
+            op="COUNT",
+            inputs=[ir.objects.get("input", "input")],
+            outputs=["count"],
+            residue=list(ir.residue),
+        ),
+        Task(
+            id="t2",
+            op="STORE",
+            inputs=["count"],
+            outputs=["stored"],
+            params={"target": ir.targets[0] if ir.targets else "memory"},
+        ),
     ]
 
 
 def _rule_train_evaluate(ir: IntentIR) -> list[Task]:
     return [
         Task(id="t1", op="LOAD", inputs=["dataset"], outputs=["data"]),
-        Task(id="t2", op="TRAIN", inputs=["data"], outputs=["model"],
-             params={"target": ir.targets[0] if ir.targets else "mlx"}),
-        Task(id="t3", op="EVALUATE", inputs=["model"],
-             outputs=["metrics", "evidence"],
-             params={"required": ir.evidence_required}),
-        Task(id="t4", op="SCHEDULE", inputs=[],
-             outputs=[],
-             params={"every": _extract_cadence(ir)}),
+        Task(
+            id="t2",
+            op="TRAIN",
+            inputs=["data"],
+            outputs=["model"],
+            params={"target": ir.targets[0] if ir.targets else "mlx"},
+        ),
+        Task(
+            id="t3",
+            op="EVALUATE",
+            inputs=["model"],
+            outputs=["metrics", "evidence"],
+            params={"required": ir.evidence_required},
+        ),
+        Task(id="t4", op="SCHEDULE", inputs=[], outputs=[], params={"every": _extract_cadence(ir)}),
     ]
 
 
 def _rule_route_events(ir: IntentIR) -> list[Task]:
     return [
         Task(id="t1", op="FETCH", inputs=["source"], outputs=["events"]),
-        Task(id="t2", op="FILTER", inputs=["events"], outputs=["matched"],
-             params={"by": ir.objects.get("input", "key")}),
-        Task(id="t3", op="ROUTE", inputs=["matched"], outputs=["routed"],
-             params={"to": ir.targets[0] if ir.targets else "slack"}),
+        Task(
+            id="t2",
+            op="FILTER",
+            inputs=["events"],
+            outputs=["matched"],
+            params={"by": ir.objects.get("input", "key")},
+        ),
+        Task(
+            id="t3",
+            op="ROUTE",
+            inputs=["matched"],
+            outputs=["routed"],
+            params={"to": ir.targets[0] if ir.targets else "slack"},
+        ),
         Task(id="t4", op="RECORD", inputs=["routed"], outputs=["evidence"]),
     ]
 
@@ -93,9 +117,15 @@ RULES: list[Rule] = [
     Rule(
         name="store_only",
         when=lambda ir: _has_verb(ir, "STORE") and not ir.verbs[:1],
-        then=lambda ir: [Task(id="t1", op="STORE",
-                              inputs=["input"], outputs=["stored"],
-                              params={"target": ir.targets[0] if ir.targets else "memory"})],
+        then=lambda ir: [
+            Task(
+                id="t1",
+                op="STORE",
+                inputs=["input"],
+                outputs=["stored"],
+                params={"target": ir.targets[0] if ir.targets else "memory"},
+            )
+        ],
     ),
 ]
 

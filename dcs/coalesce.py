@@ -313,7 +313,9 @@ def _bundle_merge(a, b):  # pragma: no cover
         completed=max(a["completed"], b["completed"]),
         results=results,
     ).seal()
-    return Merged(merged, sources=(a.get("digest") or "", b.get("digest") or ""))  # pragma: no cover
+    return Merged(
+        merged, sources=(a.get("digest") or "", b.get("digest") or "")
+    )  # pragma: no cover
 
 
 register("Bundle", _bundle_merge)
@@ -346,7 +348,9 @@ def _chaos_merge(a, b):  # pragma: no cover
     fa = {f["name"]: f["prob"] for f in a.get("faults", [])}
     fb = {f["name"]: f["prob"] for f in b.get("faults", [])}
     merged = {k: max(fa.get(k, 0.0), fb.get(k, 0.0)) for k in fa.keys() | fb.keys()}
-    return Merged({"faults": [{"name": k, "prob": v} for k, v in sorted(merged.items())]})  # pragma: no cover
+    return Merged(
+        {"faults": [{"name": k, "prob": v} for k, v in sorted(merged.items())]}
+    )  # pragma: no cover
 
 
 def _metric_merge(a, b):  # pragma: no cover

@@ -8,6 +8,7 @@ Wire format: Codacy API v3 /analysis.
 Local implementation is a rule-based Python linter emitting the same
 shape. Every rule has the uniform signature `rule(tree, src) -> list`.
 """
+
 from __future__ import annotations
 
 import ast
@@ -24,7 +25,7 @@ def _rule_unused_import(tree: ast.AST, src: str) -> list[dict[str, Any]]:
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             for a in node.names:
-                name = (a.asname or a.name.split(".")[0])
+                name = a.asname or a.name.split(".")[0]
                 imported[name] = getattr(node, "lineno", 0)
         elif isinstance(node, ast.ImportFrom):
             for a in node.names:
@@ -45,9 +46,15 @@ def _rule_unused_import(tree: ast.AST, src: str) -> list[dict[str, Any]]:
 
     for name, line in imported.items():
         if name not in used:
-            out.append({"line": line, "patternId": "unused_import",
-                        "category": "ErrorProne", "level": "Warning",
-                        "message": f"unused import {name}"})
+            out.append(
+                {
+                    "line": line,
+                    "patternId": "unused_import",
+                    "category": "ErrorProne",
+                    "level": "Warning",
+                    "message": f"unused import {name}",
+                }
+            )
     return out
 
 
@@ -55,24 +62,33 @@ def _rule_bare_except(tree: ast.AST, src: str) -> list[dict[str, Any]]:
     out = []
     for node in ast.walk(tree):
         if isinstance(node, ast.ExceptHandler) and node.type is None:
-            out.append({"line": getattr(node, "lineno", 0),
-                        "patternId": "bare_except",
-                        "category": "ErrorProne", "level": "Error",
-                        "message": "bare except clause"})
+            out.append(
+                {
+                    "line": getattr(node, "lineno", 0),
+                    "patternId": "bare_except",
+                    "category": "ErrorProne",
+                    "level": "Error",
+                    "message": "bare except clause",
+                }
+            )
     return out
 
 
-def _rule_long_function(tree: ast.AST, src: str,
-                        limit: int = 100) -> list[dict[str, Any]]:
+def _rule_long_function(tree: ast.AST, src: str, limit: int = 100) -> list[dict[str, Any]]:
     out = []
     for node in ast.walk(tree):
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
             body = getattr(node, "end_lineno", node.lineno) - node.lineno
             if body > limit:
-                out.append({"line": node.lineno,
-                            "patternId": "function_too_long",
-                            "category": "Complexity", "level": "Warning",
-                            "message": f"function {node.name} is {body} lines"})
+                out.append(
+                    {
+                        "line": node.lineno,
+                        "patternId": "function_too_long",
+                        "category": "Complexity",
+                        "level": "Warning",
+                        "message": f"function {node.name} is {body} lines",
+                    }
+                )
     return out
 
 
@@ -80,9 +96,15 @@ def _rule_todo_comment(tree: ast.AST, src: str) -> list[dict[str, Any]]:
     out = []
     for i, line in enumerate(src.splitlines(), 1):
         if re.search(r"#\s*(TODO|FIXME|XXX)\b", line, re.IGNORECASE):
-            out.append({"line": i, "patternId": "todo_comment",
-                        "category": "CodeStyle", "level": "Info",
-                        "message": "TODO/FIXME marker"})
+            out.append(
+                {
+                    "line": i,
+                    "patternId": "todo_comment",
+                    "category": "CodeStyle",
+                    "level": "Info",
+                    "message": "TODO/FIXME marker",
+                }
+            )
     return out
 
 
@@ -104,10 +126,16 @@ def _local_scan(payload: dict[str, Any]) -> dict[str, Any]:
         try:
             tree = ast.parse(src)
         except SyntaxError as e:
-            issues.append({"file": path, "line": e.lineno or 0,
-                           "patternId": "syntax_error",
-                           "category": "ErrorProne", "level": "Error",
-                           "message": f"syntax error: {e.msg}"})
+            issues.append(
+                {
+                    "file": path,
+                    "line": e.lineno or 0,
+                    "patternId": "syntax_error",
+                    "category": "ErrorProne",
+                    "level": "Error",
+                    "message": f"syntax error: {e.msg}",
+                }
+            )
             continue
         scanned += 1
         for rule in RULES:
@@ -116,15 +144,23 @@ def _local_scan(payload: dict[str, Any]) -> dict[str, Any]:
                     iss["file"] = path
                     issues.append(iss)
             except Exception as exc:  # noqa: BLE001
-                issues.append({"file": path, "line": 0,
-                               "patternId": "rule_error",
-                               "category": "Internal", "level": "Error",
-                               "message": f"{rule.__name__}: {type(exc).__name__}"})
-    return {"repository": payload.get("repository", "local"),
-            "commit": payload.get("commit", "HEAD"),
-            "files_scanned": scanned,
-            "issues": issues,
-            "total": len(issues)}
+                issues.append(
+                    {
+                        "file": path,
+                        "line": 0,
+                        "patternId": "rule_error",
+                        "category": "Internal",
+                        "level": "Error",
+                        "message": f"{rule.__name__}: {type(exc).__name__}",
+                    }
+                )
+    return {
+        "repository": payload.get("repository", "local"),
+        "commit": payload.get("commit", "HEAD"),
+        "files_scanned": scanned,
+        "issues": issues,
+        "total": len(issues),
+    }
 
 
 class CodacyObject(ProprietaryObject):

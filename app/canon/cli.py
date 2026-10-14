@@ -1,4 +1,5 @@
 """Seven sins · ten commandments · book of genesis."""
+
 from __future__ import annotations
 
 import sys
@@ -20,8 +21,7 @@ def _hdr(t):
 def main():
     _hdr("seven sins — failure modes")
     for s in enumerate_sins():
-        print(f"  sin {s['index']}  {s['name']:10s}  "
-              f"residuals={s['residuals']}")
+        print(f"  sin {s['index']}  {s['name']:10s}  residuals={s['residuals']}")
         print(f"    {s['description']}")
         print(f"    detection: {s['detection']}")
         print(f"    remedy:    {s['remedy']}")
@@ -47,17 +47,21 @@ def main():
 
     # reconstruct Runs from the driver's returns
     from app.train.core import Trainer
+
     t = Trainer(cfg)
     runs = [t.run_once(index=i) for i in range(3)]
     print(f"  runs: {len(runs)}")
     for r in runs:
-        print(f"    run {r.index}  digest={r.digest}  "
-              f"tiles={len(r.tiles)}  outcomes={len(r.outcomes)}")
+        print(
+            f"    run {r.index}  digest={r.digest}  "
+            f"tiles={len(r.tiles)}  outcomes={len(r.outcomes)}"
+        )
     print()
 
     _hdr("sin detection over the runs")
     all_sins = detect_all(runs)
     from collections import Counter
+
     counts = Counter(s.sin for s in all_sins)
     print(f"  total sin records: {len(all_sins)}")
     for name, n in counts.most_common():
@@ -84,8 +88,7 @@ def main():
     _hdr("book of genesis — reconciliation")
     for r in runs:
         g = genesis(r)
-        print(f"  run {r.index}  sins={g['n_sins']}  "
-              f"partitions={g['n_partitions']}")
+        print(f"  run {r.index}  sins={g['n_sins']}  partitions={g['n_partitions']}")
         print(f"    confession:     {g['confession_id']}")
         print(f"    separation:     {g['separation_id']}")
         print(f"    witness:        {g['witness_id']}")

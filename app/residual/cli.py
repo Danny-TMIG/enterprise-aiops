@@ -1,4 +1,5 @@
 """Print the grounding of every module in the register."""
+
 from __future__ import annotations
 
 import json
@@ -19,8 +20,7 @@ def main() -> int:
     print(f"  arity distribution: {rep['arity_distribution']}")
     print()
     print("  by class:")
-    for cls, n in sorted(rep["by_class"].items(),
-                        key=lambda kv: -kv[1]):
+    for cls, n in sorted(rep["by_class"].items(), key=lambda kv: -kv[1]):
         print(f"    {cls:24s} {n}")
     print()
 

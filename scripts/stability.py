@@ -16,6 +16,7 @@ property, the failing row is named.
     P9  bridges              graph bridge model layers run
     P10 runtime closure      real capability execution succeeds
 """
+
 from __future__ import annotations
 
 import ast
@@ -42,8 +43,7 @@ def p1_compile() -> dict[str, Any]:
             py_compile.compile(str(p), doraise=True)
             ok += 1
         except py_compile.PyCompileError as e:
-            bad.append({"file": str(p.relative_to(ROOT)),
-                        "err": str(e).split("\n")[0][:120]})
+            bad.append({"file": str(p.relative_to(ROOT)), "err": str(e).split("\n")[0][:120]})
     return {"pass": not bad, "ok": ok, "failed": len(bad), "failures": bad[:8]}
 
 
@@ -69,8 +69,12 @@ def p2_imports() -> dict[str, Any]:
         except SyntaxError:
             continue  # P1 reports source syntax failures.
         for node in ast.walk(tree):
-            if (isinstance(node, ast.ImportFrom) and node.level == 0
-                    and node.module and node.module.startswith("app.")):
+            if (
+                isinstance(node, ast.ImportFrom)
+                and node.level == 0
+                and node.module
+                and node.module.startswith("app.")
+            ):
                 statements.add(ast.unparse(node))
             elif isinstance(node, ast.Import):
                 for alias in node.names:
@@ -106,8 +110,11 @@ for statement in requests:
 state["complete"] = True
 save()
 """
-    print(f"    P2: checking {len(statements)} imports "
-          f"({per_import:g}s per import, {total_limit:g}s total)", flush=True)
+    print(
+        f"    P2: checking {len(statements)} imports "
+        f"({per_import:g}s per import, {total_limit:g}s total)",
+        flush=True,
+    )
     state = {"checked": 0, "missing": {}, "import_errors": [], "current": None}
     reason = None
     with tempfile.TemporaryDirectory(prefix="stability-imports-") as directory:
@@ -119,7 +126,9 @@ save()
         with log.open("wb") as output:
             proc = subprocess.Popen(
                 [sys.executable, "-u", "-c", worker, str(ROOT), str(requests), str(report)],
-                cwd=str(ROOT), stdout=output, stderr=subprocess.STDOUT,
+                cwd=str(ROOT),
+                stdout=output,
+                stderr=subprocess.STDOUT,
                 env={**os.environ, "PYTHONPATH": str(ROOT), "PYTHONUNBUFFERED": "1"},
                 start_new_session=(os.name == "posix"),
             )
@@ -138,7 +147,9 @@ save()
                         break
                     if now - last_message >= 2:
                         current = state.get("current") or "worker startup or shutdown"
-                        print(f"    P2 [{state['checked']}/{len(statements)}]: {current}", flush=True)
+                        print(
+                            f"    P2 [{state['checked']}/{len(statements)}]: {current}", flush=True
+                        )
                         last_message = now
                     if now - start >= total_limit:
                         reason = f"P2 exceeded {total_limit:g}s during {state.get('current')}"
@@ -159,10 +170,14 @@ save()
                     else:
                         proc.kill()
                 proc.wait()
-        result = {"pass": not reason and not state["missing"] and not state["import_errors"],
-                  "checked": state["checked"], "total": len(statements),
-                  "unchecked": len(statements) - state["checked"],
-                  "missing": state["missing"], "import_errors": state["import_errors"]}
+        result = {
+            "pass": not reason and not state["missing"] and not state["import_errors"],
+            "checked": state["checked"],
+            "total": len(statements),
+            "unchecked": len(statements) - state["checked"],
+            "missing": state["missing"],
+            "import_errors": state["import_errors"],
+        }
         if reason:
             result["reason"] = reason
             result["last_import"] = state.get("current")
@@ -177,31 +192,52 @@ save()
 def p3_tests() -> dict[str, Any]:
     """Keep pytest's exit status authoritative and explain coverage failures."""
     r = subprocess.run(
-        [sys.executable, "-m", "pytest", "-q", "--no-header", "-p", "no:cacheprovider", "-p", "no:sugar", "--tb=short", "tests/"],
+        [
+            sys.executable,
+            "-m",
+            "pytest",
+            "-q",
+            "--no-header",
+            "-p",
+            "no:cacheprovider",
+            "-p",
+            "no:sugar",
+            "--tb=short",
+            "tests/",
+        ],
         timeout=45,
-        cwd=str(ROOT), capture_output=True, text=True,
+        cwd=str(ROOT),
+        capture_output=True,
+        text=True,
         env={**__import__("os").environ, "PYTHONPATH": str(ROOT)},
     )
     out = r.stdout + r.stderr
     counts = {}
-    for key, pattern in (("passed", r"(\d+) passed"),
-                         ("failed", r"(\d+) failed"),
-                         ("errors", r"(\d+) error")):
+    for key, pattern in (
+        ("passed", r"(\d+) passed"),
+        ("failed", r"(\d+) failed"),
+        ("errors", r"(\d+) error"),
+    ):
         matches = re.findall(pattern, out)
         counts[key] = int(matches[-1]) if matches else 0
     result = {"pass": r.returncode == 0, "rc": r.returncode, **counts}
     coverage = re.search(
         r"Required test coverage of ([\d.]+)% (not reached|reached)\. "
-        r"Total coverage: ([\d.]+)%", out)
+        r"Total coverage: ([\d.]+)%",
+        out,
+    )
     if coverage:
         result["coverage_percent"] = float(coverage.group(3))
         result["coverage_required"] = float(coverage.group(1))
         result["coverage_pass"] = coverage.group(2) == "reached"
     if r.returncode:
-        reason = {1: "pytest reported a test or quality-gate failure",
-                  2: "pytest was interrupted or test collection failed",
-                  3: "pytest internal error", 4: "pytest configuration or command error",
-                  5: "pytest collected no tests"}.get(r.returncode, "pytest did not complete successfully")
+        reason = {
+            1: "pytest reported a test or quality-gate failure",
+            2: "pytest was interrupted or test collection failed",
+            3: "pytest internal error",
+            4: "pytest configuration or command error",
+            5: "pytest collected no tests",
+        }.get(r.returncode, "pytest did not complete successfully")
         if coverage and coverage.group(2) == "not reached":
             reason += "; " + coverage.group(0)
         result["reason"] = reason
@@ -214,8 +250,7 @@ def p4_ledger_writes() -> dict[str, Any]:
     # every direct `INSERT INTO events` outside ram_substrate is a
     # violation of the single-writer invariant.
     hits = []
-    for p in sorted((ROOT / "app").rglob("*.py")) + \
-             sorted((ROOT / "scripts").rglob("*.py")):
+    for p in sorted((ROOT / "app").rglob("*.py")) + sorted((ROOT / "scripts").rglob("*.py")):
         if "__pycache__" in str(p):
             continue
         rel = str(p.relative_to(ROOT))
@@ -227,8 +262,7 @@ def p4_ledger_writes() -> dict[str, Any]:
             stripped = line.strip()
             if stripped.startswith("#"):
                 continue
-            if re.search(r"execute\s*\(\s*[fr]?['\"]INSERT\s+INTO\s+events",
-                         line, re.IGNORECASE):
+            if re.search(r"execute\s*\(\s*[fr]?['\"]INSERT\s+INTO\s+events", line, re.IGNORECASE):
                 hits.append(rel)
                 break
     return {"pass": not hits, "violations": hits}
@@ -237,12 +271,15 @@ def p4_ledger_writes() -> dict[str, Any]:
 # ── P5 ─────────────────────────────────────────────────────────────
 def p5_chain() -> dict[str, Any]:
     from app.core.ram_substrate import RAMSubstrate
+
     sub = RAMSubstrate(capacity=8, autoload=False)  # small ring, chain check is against db
     v = sub.verify_chain(from_seq=1)
-    return {"pass": bool(v.get("ok")),
-            "checked": v.get("checked", 0),
-            "reason": v.get("reason"),
-            "head": (v.get("head") or "")[:16]}
+    return {
+        "pass": bool(v.get("ok")),
+        "checked": v.get("checked", 0),
+        "reason": v.get("reason"),
+        "head": (v.get("head") or "")[:16],
+    }
 
 
 # ── P6 ─────────────────────────────────────────────────────────────
@@ -252,17 +289,24 @@ def p6_dispatch() -> dict[str, Any]:
     from contextlib import closing
 
     from app.core import capabilities as c
+
     with closing(sqlite3.connect(c.DB)) as con:
-        real = [r[0] for r in con.execute(
-            "SELECT code FROM capabilities WHERE status='real' ORDER BY code")]
+        real = [
+            r[0]
+            for r in con.execute("SELECT code FROM capabilities WHERE status='real' ORDER BY code")
+        ]
     missing = []
     for code in real:
         c._autoload(code)
         if not callable(c._IMPL.get(code)):
             missing.append({"code": code, "reason": c._AUTOLOAD_ERRORS.get(code, "not callable")})
-    return {"pass": not missing, "checked": len(real),
-            "registered": len(real) - len(missing), "missing_count": len(missing),
-            "missing": missing[:12]}
+    return {
+        "pass": not missing,
+        "checked": len(real),
+        "registered": len(real) - len(missing),
+        "missing_count": len(missing),
+        "missing": missing[:12],
+    }
 
 
 def p10_runtime() -> dict[str, Any]:
@@ -275,9 +319,11 @@ def p10_runtime() -> dict[str, Any]:
     import sqlite3
 
     from app.core.capabilities import DB, dispatch
+
     con = sqlite3.connect(DB)
-    real = [r[0] for r in con.execute(
-        "SELECT code FROM capabilities WHERE status='real' ORDER BY code")]
+    real = [
+        r[0] for r in con.execute("SELECT code FROM capabilities WHERE status='real' ORDER BY code")
+    ]
     con.close()
     ok = 0
     failed = []
@@ -288,36 +334,36 @@ def p10_runtime() -> dict[str, Any]:
         else:
             failed.append((code, (getattr(d, "reason", "") or "")[:80]))
     return {
-        "pass":          not failed,
-        "checked":       len(real),
-        "ran_ok":        ok,
-        "dep_satisfied":   len(failed),
+        "pass": not failed,
+        "checked": len(real),
+        "ran_ok": ok,
+        "dep_satisfied": len(failed),
         "failed_sample": failed[:10],
     }
+
 
 def p7_catalog() -> dict[str, Any]:
     import sqlite3
 
     from app.core.capabilities import DB
+
     con = sqlite3.connect(DB)
-    rows = con.execute(
-        "SELECT code, status FROM capabilities WHERE category='nature'"
-    ).fetchall()
+    rows = con.execute("SELECT code, status FROM capabilities WHERE category='nature'").fetchall()
     con.close()
     real = [c for c, s in rows if s == "real"]
-    asp  = [c for c, s in rows if s != "real"]
-    return {"pass": True,
-            "nature_real": len(real), "nature_aspirational": len(asp)}
+    asp = [c for c, s in rows if s != "real"]
+    return {"pass": True, "nature_real": len(real), "nature_aspirational": len(asp)}
 
 
 # ── P8 ─────────────────────────────────────────────────────────────
 def p8_determinism() -> dict[str, Any]:
     """Run one phenomenon twice with the same seed; hashes must match."""
     from app.core.nature import kuramoto, levy_flight, sir
+
     cases = [
-        ("kuramoto",  lambda: kuramoto(n=20, steps=50, seed=7)),
-        ("sir",       lambda: sir(steps=100)),
-        ("levy",      lambda: levy_flight(n=500, seed=11)),
+        ("kuramoto", lambda: kuramoto(n=20, steps=50, seed=7)),
+        ("sir", lambda: sir(steps=100)),
+        ("levy", lambda: levy_flight(n=500, seed=11)),
     ]
     bad = []
     for label, fn in cases:
@@ -328,43 +374,48 @@ def p8_determinism() -> dict[str, Any]:
     return {"pass": not bad, "checked": len(cases), "nondeterministic": bad}
 
 
-
-
 # ── P9 ─────────────────────────────────────────────────────────────
 def p9_bridges() -> dict[str, Any]:
     """Every external-graph bridge declares runtime availability and
     exposes a working model layer that runs without the runtime."""
     from app.bridges import describe
+
     d = describe()
     bad = []
     for name, info in d.items():
         if not isinstance(info, dict):
-            bad.append((name, "not a dict")); continue
+            bad.append((name, "not a dict"))
+            continue
         if "runtime_available" not in info:
-            bad.append((name, "missing runtime_available")); continue
+            bad.append((name, "missing runtime_available"))
+            continue
         # model layer check: run describe()'s own model without error
         try:
             if name == "uns":
                 from app.bridges import uns as m
+
                 t = m.UNSTree()
                 t.add("acme/site1/line1/cell1/asset1/tag1", value=1)
                 assert t.topic("acme/site1/line1/cell1/asset1/tag1")
             elif name == "ros":
                 from app.bridges import ros as m
+
                 c = m.ROSCatalog()
                 c.add_node(m.Node("a", pubs=[m.Topic("/t")]))
                 c.add_node(m.Node("b", subs=[m.Topic("/t")]))
                 assert c.orphan_topics() == []
             elif name == "ros2":
                 from app.bridges import ros2 as m
+
                 c = m.ROS2Catalog()
-                c.add(m.Node2("a", pubs=[m.Endpoint("/t","x","default")]))
-                c.add(m.Node2("b", subs=[m.Endpoint("/t","x","sensor_data")]))
+                c.add(m.Node2("a", pubs=[m.Endpoint("/t", "x", "default")]))
+                c.add(m.Node2("b", subs=[m.Endpoint("/t", "x", "sensor_data")]))
                 assert c.qos_mismatches()
             elif name == "usd":
                 from app.bridges import usd as m
+
                 s = m.Stage()
-                s.open(m.Layer("a.usda", prims={"/W": m.Prim("/W","Xform")}))
+                s.open(m.Layer("a.usda", prims={"/W": m.Prim("/W", "Xform")}))
                 assert s.compose("/W")["defined_in"] == "a.usda"
         except Exception as e:
             bad.append((name, f"{type(e).__name__}: {e}"))
@@ -373,19 +424,20 @@ def p9_bridges() -> dict[str, Any]:
 
 def main() -> int:
     from app.core.ram_substrate import RAMSubstrate
+
     sub = RAMSubstrate(capacity=4096, autoload=True)
 
     checks = [
-        ("P1 compile",     p1_compile),
-        ("P2 imports",     p2_imports),
-        ("P3 tests",       p3_tests),
-        ("P4 ledger",      p4_ledger_writes),
-        ("P5 chain",       p5_chain),
-        ("P6 dispatch",    p6_dispatch),
-        ("P7 catalog",     p7_catalog),
+        ("P1 compile", p1_compile),
+        ("P2 imports", p2_imports),
+        ("P3 tests", p3_tests),
+        ("P4 ledger", p4_ledger_writes),
+        ("P5 chain", p5_chain),
+        ("P6 dispatch", p6_dispatch),
+        ("P7 catalog", p7_catalog),
         ("P8 determinism", p8_determinism),
-        ("P9 bridges",     p9_bridges),
-        ("P10 runtime",    p10_runtime),
+        ("P9 bridges", p9_bridges),
+        ("P10 runtime", p10_runtime),
     ]
 
     results = []

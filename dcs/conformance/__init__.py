@@ -31,7 +31,9 @@ class ConformanceReport:  # pragma: no cover
         return self.__dict__  # pragma: no cover
 
 
-def assess(std_path: Path, root: Path, *, sign_key: Path | None = None) -> ConformanceReport:  # pragma: no cover
+def assess(
+    std_path: Path, root: Path, *, sign_key: Path | None = None
+) -> ConformanceReport:  # pragma: no cover
     std: Standard = load(std_path)
     bundle = run_standard(std, root, sign_key=sign_key)
     summary = bundle.summary()
@@ -64,8 +66,10 @@ def render(rep: ConformanceReport) -> str:  # pragma: no cover
         f"conformance report  {rep.standard_ref}",
         "=" * 50,
         f"declared MUST/SHOULD/MAY:  {rep.declared_must}/{rep.declared_should}/{rep.declared_may}",
-        f"actual   MUST/SHOULD/MAY:  "
-        f"{rep.actual_must_pass}/{rep.actual_should_pass}/{rep.actual_may_pass}",
+        (
+            f"actual   MUST/SHOULD/MAY:  "
+            f"{rep.actual_must_pass}/{rep.actual_should_pass}/{rep.actual_may_pass}"
+        ),
         f"verdict: {rep.verdict}",
     ]
     if rep.disagreements:  # pragma: no cover

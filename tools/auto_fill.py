@@ -1,4 +1,5 @@
 """Loop: run pytest, extract `cannot import name 'X' from 'Y'`, add a stub, retry."""
+
 import re
 import subprocess
 import sys
@@ -20,13 +21,13 @@ class {name}:
             setattr(self, k, v)
 '''
 
-STUB_ASSIGN = '''
+STUB_ASSIGN = """
 try:
     from fastapi import FastAPI as _FastAPI
 except ImportError:
     _FastAPI = None
 {name} = _FastAPI(title="{name}") if _FastAPI else None
-'''
+"""
 
 # Symbols the test suite needs, regardless of test-discovery order.
 KNOWN = {
@@ -127,9 +128,10 @@ def load_local_mlx(model_id="mlx-community/Qwen2.5-7B-Instruct-4bit"):
 # ── 3. loop: run pytest, parse missing symbols, add stubs, retry ──
 for round_no in range(1, MAX_ROUNDS + 1):
     r = subprocess.run(
-        [sys.executable, "-m", "pytest", "tests/", "-q", "--no-header",
-         "-o", "addopts="],
-        capture_output=True, text=True, cwd=".",
+        [sys.executable, "-m", "pytest", "tests/", "-q", "--no-header", "-o", "addopts="],
+        capture_output=True,
+        text=True,
+        cwd=".",
     )
     out = r.stdout + r.stderr
 

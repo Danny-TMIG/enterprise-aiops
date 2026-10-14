@@ -10,6 +10,7 @@ classical schedule because the ratio between consecutive
 temperatures is the slowest-converging ratio of any Fibonacci-type
 sequence.
 """
+
 from __future__ import annotations
 
 import math
@@ -45,14 +46,16 @@ class CoolingTrace:
         }
 
 
-def golden_cooling(f: Callable[[float], float],
-                   x0: float,
-                   neighbour: Callable[[float, float], float],
-                   t0: float = 1.0,
-                   n: int = 200,
-                   step: float = 0.1,
-                   seed: int = 0,
-                   t_min: float = 1e-9) -> CoolingTrace:
+def golden_cooling(
+    f: Callable[[float], float],
+    x0: float,
+    neighbour: Callable[[float, float], float],
+    t0: float = 1.0,
+    n: int = 200,
+    step: float = 0.1,
+    seed: int = 0,
+    t_min: float = 1e-9,
+) -> CoolingTrace:
     """Simulated annealing with T(k) = T0 * PHI_INV^k."""
     rng = random.Random(seed)
     x = x0
@@ -61,7 +64,7 @@ def golden_cooling(f: Callable[[float], float],
     acc = rej = 0
     temps = []
     for k in range(n):
-        T = max(t0 * (PHI_INV ** k), t_min)
+        T = max(t0 * (PHI_INV**k), t_min)
         temps.append(T)
         x_new = neighbour(x, step)
         f_new = f(x_new)
@@ -75,19 +78,25 @@ def golden_cooling(f: Callable[[float], float],
             rej += 1
     return CoolingTrace(
         schedule="golden",
-        iterations=n, best_x=best_x, best_f=best_f,
+        iterations=n,
+        best_x=best_x,
+        best_f=best_f,
         final_temp=temps[-1] if temps else 0.0,
-        accepted=acc, rejected=rej, temperatures=temps,
+        accepted=acc,
+        rejected=rej,
+        temperatures=temps,
     )
 
 
-def fibonacci_cooling(f: Callable[[float], float],
-                      x0: float,
-                      neighbour: Callable[[float, float], float],
-                      t0: float = 1.0,
-                      n: int = 200,
-                      step: float = 0.1,
-                      seed: int = 0) -> CoolingTrace:
+def fibonacci_cooling(
+    f: Callable[[float], float],
+    x0: float,
+    neighbour: Callable[[float, float], float],
+    t0: float = 1.0,
+    n: int = 200,
+    step: float = 0.1,
+    seed: int = 0,
+) -> CoolingTrace:
     """T(k) = T0 / F(k + 2).  Shrinks faster than golden but the
     ratio between temperatures is still φ-ish in the limit."""
     rng = random.Random(seed)
@@ -111,7 +120,11 @@ def fibonacci_cooling(f: Callable[[float], float],
             rej += 1
     return CoolingTrace(
         schedule="fibonacci",
-        iterations=n, best_x=best_x, best_f=best_f,
+        iterations=n,
+        best_x=best_x,
+        best_f=best_f,
         final_temp=temps[-1] if temps else 0.0,
-        accepted=acc, rejected=rej, temperatures=temps,
+        accepted=acc,
+        rejected=rej,
+        temperatures=temps,
     )

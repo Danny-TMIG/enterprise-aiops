@@ -6,6 +6,7 @@ with the log file and the issuer's key can verify:
   - a given license was issued at a claimed position
   - no rogue license was inserted out of band
 """
+
 from __future__ import annotations  # pragma: no cover
 
 import hashlib  # pragma: no cover
@@ -41,8 +42,12 @@ class TransparencyLog:  # pragma: no cover
         prev = self.entries[-1].leaf_hash if self.entries else self.GENESIS
         leaf = sha256_hex(f"{index}:{license_digest}:{holder}:{prev}".encode())
         entry = LogEntry(
-            index=index, license_digest=license_digest, holder=holder,
-            prev_hash=prev, leaf_hash=leaf, timestamp=time.time(),
+            index=index,
+            license_digest=license_digest,
+            holder=holder,
+            prev_hash=prev,
+            leaf_hash=leaf,
+            timestamp=time.time(),
         )
         self.entries.append(entry)
         return entry  # pragma: no cover
@@ -54,17 +59,30 @@ class TransparencyLog:  # pragma: no cover
         prev = self.GENESIS
         for i, e in enumerate(self.entries):
             if e.index != i:  # pragma: no cover
-                return {"valid": False, "length": len(self.entries),  # pragma: no cover
-                        "root": prev, "broken_at": i, "reason": "index"}
+                return {
+                    "valid": False,
+                    "length": len(self.entries),  # pragma: no cover
+                    "root": prev,
+                    "broken_at": i,
+                    "reason": "index",
+                }
             if e.prev_hash != prev:  # pragma: no cover
-                return {"valid": False, "length": len(self.entries),  # pragma: no cover
-                        "root": prev, "broken_at": i, "reason": "chain"}
-            expected = sha256_hex(
-                f"{i}:{e.license_digest}:{e.holder}:{prev}".encode()
-            )
+                return {
+                    "valid": False,
+                    "length": len(self.entries),  # pragma: no cover
+                    "root": prev,
+                    "broken_at": i,
+                    "reason": "chain",
+                }
+            expected = sha256_hex(f"{i}:{e.license_digest}:{e.holder}:{prev}".encode())
             if e.leaf_hash != expected:  # pragma: no cover
-                return {"valid": False, "length": len(self.entries),  # pragma: no cover
-                        "root": prev, "broken_at": i, "reason": "leaf"}
+                return {
+                    "valid": False,
+                    "length": len(self.entries),  # pragma: no cover
+                    "root": prev,
+                    "broken_at": i,
+                    "reason": "leaf",
+                }
             prev = e.leaf_hash
         return {"valid": True, "length": len(self.entries), "root": prev}  # pragma: no cover
 
@@ -75,10 +93,15 @@ class TransparencyLog:  # pragma: no cover
         return None  # pragma: no cover
 
     def save(self, path: Path):  # pragma: no cover
-        path.write_text(json.dumps({
-            "entries": [asdict(e) for e in self.entries],
-            "root": self.root(),
-        }, indent=2))
+        path.write_text(
+            json.dumps(
+                {
+                    "entries": [asdict(e) for e in self.entries],
+                    "root": self.root(),
+                },
+                indent=2,
+            )
+        )
 
     @classmethod
     def load(cls, path: Path, key: bytes) -> TransparencyLog:  # pragma: no cover
@@ -96,15 +119,15 @@ def make_inclusion_proof(log: TransparencyLog, index: int) -> dict:  # pragma: n
     # simple audit path: predecessor chain from genesis to index
     path = []
     prev = TransparencyLog.GENESIS
-    for i, e in enumerate(log.entries[:index + 1]):
+    for i, e in enumerate(log.entries[: index + 1]):
         path.append({"i": i, "prev": prev, "leaf": e.leaf_hash})
         prev = e.leaf_hash
     return {  # pragma: no cover
-        "index":         index,
+        "index": index,
         "license_digest": entry.license_digest,
-        "holder":        entry.holder,
-        "path":          path,
-        "root":          log.root(),
+        "holder": entry.holder,
+        "path": path,
+        "root": log.root(),
     }
 
 

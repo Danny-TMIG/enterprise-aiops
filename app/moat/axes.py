@@ -10,6 +10,7 @@ Both are supported by one dispatcher. Same for score_all:
     score_all()                              -> dict[axis -> float]
     score_all(root, scope="app")             -> list of objects with .x
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -42,7 +43,7 @@ AXES: list[Axis] = [
 # ── score_subsystem — dispatcher ────────────────────────────────
 def score_subsystem(*args, **kwargs):
     """Call shape 1: score_subsystem(name)            -> dict
-       Call shape 2: score_subsystem(name, path, txt) -> object(.x)
+    Call shape 2: score_subsystem(name, path, txt) -> object(.x)
     """
     if len(args) <= 1 and not kwargs.get("path") and "content" not in kwargs:
         # dict path — the axis-name table
@@ -66,7 +67,7 @@ def score_subsystem(*args, **kwargs):
 # ── score_all — dispatcher ──────────────────────────────────────
 def score_all(*args, **kwargs):
     """Call shape 1: score_all()                       -> dict
-       Call shape 2: score_all(root, scope="app")      -> list of objects(.x)
+    Call shape 2: score_all(root, scope="app")      -> list of objects(.x)
     """
     root = args[0] if args else kwargs.get("root")
     scope = kwargs.get("scope")

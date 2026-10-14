@@ -1,4 +1,5 @@
 """Observer — run a harness, parse its structured output."""
+
 from __future__ import annotations
 
 import contextlib
@@ -6,18 +7,19 @@ import importlib
 import io
 import re
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 _AXIS_NAMES = [
-    "parses", "intent_match", "body_nonstub",
-    "test_present", "no_undefined", "no_placeholders",
+    "parses",
+    "intent_match",
+    "body_nonstub",
+    "test_present",
+    "no_undefined",
+    "no_placeholders",
 ]
-_USEFUL_RE = re.compile(
-    r"^\s+\[(\d{6})\]\s+(.+?)\s+score=([\d.]+)\s*$", re.MULTILINE)
-_SAFE_RE = re.compile(
-    r"^\s+\[(SAFE|UNSAFE)\s*\]\s+(.+?)\s+violations=(\d+)\s*$",
-    re.MULTILINE)
+_USEFUL_RE = re.compile(r"^\s+\[(\d{6})\]\s+(.+?)\s+score=([\d.]+)\s*$", re.MULTILINE)
+_SAFE_RE = re.compile(r"^\s+\[(SAFE|UNSAFE)\s*\]\s+(.+?)\s+violations=(\d+)\s*$", re.MULTILINE)
 
 
 @dataclass
@@ -49,14 +51,16 @@ class Observation:
         for r in self.runs:
             bad = [_AXIS_NAMES[i] for i, b in enumerate(r.bits) if b == 0]
             if bad:
-                out.append({"input": r.input, "failing_axes": bad,
-                            "score": r.score})
+                out.append({"input": r.input, "failing_axes": bad, "score": r.score})
         return out
 
     def to_dict(self) -> dict[str, Any]:
         return {
-            "harness": self.harness, "ts": self.ts, "n": self.n,
-            "mean": round(self.mean, 4), "all_pass": self.all_pass,
+            "harness": self.harness,
+            "ts": self.ts,
+            "n": self.n,
+            "mean": round(self.mean, 4),
+            "all_pass": self.all_pass,
             "axis_pass": self.axis_pass,
             "failures": self.failures(),
         }
@@ -77,11 +81,13 @@ def _observe_usefulness() -> Observation:
     raw = _capture(mod)
     runs: list[Run] = []
     for bits_s, prompt, score_s in _USEFUL_RE.findall(raw):
-        runs.append(Run(
-            input=prompt.strip(),
-            bits=[int(c) for c in bits_s],
-            score=float(score_s),
-        ))
+        runs.append(
+            Run(
+                input=prompt.strip(),
+                bits=[int(c) for c in bits_s],
+                score=float(score_s),
+            )
+        )
     axis_pass = {name: 0 for name in _AXIS_NAMES}
     for r in runs:
         for i, b in enumerate(r.bits):
@@ -89,8 +95,11 @@ def _observe_usefulness() -> Observation:
                 axis_pass[_AXIS_NAMES[i]] += 1
     return Observation(
         harness="usefulness",
-        ts=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        runs=runs, axis_pass=axis_pass, n=len(runs), raw=raw,
+        ts=datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        runs=runs,
+        axis_pass=axis_pass,
+        n=len(runs),
+        raw=raw,
     )
 
 
@@ -104,11 +113,8 @@ def observe_murmur() -> Observation:
     # reuse the usefulness line regex — same shape
     runs: list[Run] = []
     for bits_s, name, score_s in _USEFUL_RE.findall(raw):
-        runs.append(Run(input=name.strip(),
-                        bits=[int(c) for c in bits_s],
-                        score=float(score_s)))
-    axis_names = ["effect_ok", "recentered", "aligned",
-                  "verdict_ok", "reinforced", "not_capped"]
+        runs.append(Run(input=name.strip(), bits=[int(c) for c in bits_s], score=float(score_s)))
+    axis_names = ["effect_ok", "recentered", "aligned", "verdict_ok", "reinforced", "not_capped"]
     axis_pass = {a: 0 for a in axis_names}
     for r in runs:
         for i, b in enumerate(r.bits):
@@ -116,8 +122,11 @@ def observe_murmur() -> Observation:
                 axis_pass[axis_names[i]] += 1
     return Observation(
         harness="murmur",
-        ts=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        runs=runs, axis_pass=axis_pass, n=len(runs), raw=raw,
+        ts=datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        runs=runs,
+        axis_pass=axis_pass,
+        n=len(runs),
+        raw=raw,
     )
 
 

@@ -3,9 +3,9 @@
 THE MARK INTELLIGENCE GROUP (TMIG)
 FULL MONOREPO MASTERY & 75-COMPONENT TAXONOMY ENFORCER (ASF v1.2)
 """
-import os
-import json
+
 import hashlib
+import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -33,7 +33,7 @@ COMPONENTS = {
         "COG-ASSUR-001-evidence-projection",
         "COG-ASSUR-002-replay-and-evaluation-runtime",
         "COG-ASSUR-003-performance-manager",
-        "COG-ASSUR-004-security-integration"
+        "COG-ASSUR-004-security-integration",
     ],
     "components/ag": [
         "GOV-KRN-001-governance-object-model-and-registry",
@@ -59,7 +59,7 @@ COMPONENTS = {
         "GOV-EVD-003-attestation-verification-and-artifact-assurance",
         "GOV-ADM-001-govern-control-plane-and-configuration",
         "GOV-ADM-002-health-observability-security-and-incident-interface",
-        "GOV-FED-001-federation-gateway-and-domain-exchange-coordinator"
+        "GOV-FED-001-federation-gateway-and-domain-exchange-coordinator",
     ],
     "components/ac": [
         "CMP-CTL-001-compute-contract-kernel",
@@ -91,8 +91,8 @@ COMPONENTS = {
         "CMP-EVD-001-observation-and-telemetry",
         "CMP-EVD-002-evidence-bridge",
         "CMP-EVD-003-physical-provenance",
-        "CMP-ECO-001-quote-and-economic-optimizer"
-    ]
+        "CMP-ECO-001-quote-and-economic-optimizer",
+    ],
 }
 
 ROOT_DIRS = [
@@ -107,18 +107,19 @@ ROOT_DIRS = [
     "docs/runbooks",
     "tooling",
     "examples",
-    ".github"
+    ".github",
 ]
+
 
 def bootstrap_tmig_monorepo():
     print("🛡️ [TMIG] Initializing full ASF v1.2 monorepo structure for 75 components[cite: 2]...")
-    
+
     # 1. Create root directories
     for d in ROOT_DIRS:
         (ROOT / d).mkdir(parents=True, exist_ok=True)
-        
+
     total_components = 0
-    
+
     # 2. Populate component sub-trees
     for base_path, comp_list in COMPONENTS.items():
         for comp in comp_list:
@@ -133,12 +134,20 @@ def bootstrap_tmig_monorepo():
             (comp_dir / "config").mkdir(parents=True, exist_ok=True)
             (comp_dir / "migrations").mkdir(parents=True, exist_ok=True)
             (comp_dir / "docs").mkdir(parents=True, exist_ok=True)
-            
+
             # Write required markdown files per section 4
-            (comp_dir / "README.md").write_text(f"# Component: {comp}\nGoverned by ASF v1.2 specification[cite: 2].")
-            (comp_dir / "CHANGELOG.md").write_text(f"# Changelog - {comp}\n- Initial release candidate under ASF v1.2[cite: 2].")
-            (comp_dir / "component.json").write_text(json.dumps({"component_id": comp, "status": "active", "compliance": "ASF v1.2"}, indent=2))
-            
+            (comp_dir / "README.md").write_text(
+                f"# Component: {comp}\nGoverned by ASF v1.2 specification[cite: 2]."
+            )
+            (comp_dir / "CHANGELOG.md").write_text(
+                f"# Changelog - {comp}\n- Initial release candidate under ASF v1.2[cite: 2]."
+            )
+            (comp_dir / "component.json").write_text(
+                json.dumps(
+                    {"component_id": comp, "status": "active", "compliance": "ASF v1.2"}, indent=2
+                )
+            )
+
             total_components += 1
 
     # 3. Generate catalog inventory JSON
@@ -149,23 +158,26 @@ def bootstrap_tmig_monorepo():
         "layers": {
             "AX_Cognition": len(COMPONENTS["components/ax"]),
             "AG_Govern": len(COMPONENTS["components/ag"]),
-            "AC_Compute": len(COMPONENTS["components/ac"])
-        }
+            "AC_Compute": len(COMPONENTS["components/ac"]),
+        },
     }
-    
+
     catalog_file = ROOT / "catalog" / "components.json"
     catalog_file.write_text(json.dumps(catalog_data, indent=2))
-    
+
     # 4. Generate Omega Cryptographic Seal
     payload = json.dumps(catalog_data, sort_keys=True).encode("utf-8")
     omega_seal = hashlib.sha256(payload).hexdigest()
-    
+
     seal_file = ROOT / "deploy" / "ledgers" / "tmig_master_seal.json"
     seal_file.parent.mkdir(parents=True, exist_ok=True)
     seal_file.write_text(json.dumps({"catalog": catalog_data, "omega_seal": omega_seal}, indent=2))
-    
-    print(f"💯 [SUCCESS] Provisioned all {total_components} component packages across AX, AG, and AC[cite: 2].")
+
+    print(
+        f"💯 [SUCCESS] Provisioned all {total_components} component packages across AX, AG, and AC[cite: 2]."
+    )
     print(f"🔒 [SEAL] TMIG Master Omega Seal: {omega_seal}")
+
 
 if __name__ == "__main__":
     bootstrap_tmig_monorepo()

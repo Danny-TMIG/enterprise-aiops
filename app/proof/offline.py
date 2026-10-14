@@ -6,6 +6,7 @@ socket.socket and socket.socketpair alone so imports work. Force
 HF_HUB_OFFLINE / TRANSFORMERS_OFFLINE so the loader is cache-only.
 Run a full grammar -> swarm -> refine -> ast.parse pipeline.
 """
+
 from __future__ import annotations
 
 import os
@@ -23,8 +24,12 @@ def _ban(*a, **k):
 
 
 OUTBOUND = [
-    "create_connection", "getaddrinfo", "gethostbyname",
-    "gethostbyname_ex", "gethostbyaddr", "getnameinfo",
+    "create_connection",
+    "getaddrinfo",
+    "gethostbyname",
+    "gethostbyname_ex",
+    "gethostbyaddr",
+    "getnameinfo",
 ]
 
 
@@ -49,15 +54,13 @@ def main() -> int:
         r = dispatch(g, s, seed=1, max_depth=6, max_tokens=32)
 
         if "dry-run" in r.code or "[dry-run:" in r.code:
-            print("  FAIL  swarm produced dry-run output — model not "
-                  "loaded under socket ban")
+            print("  FAIL  swarm produced dry-run output — model not loaded under socket ban")
             return 1
 
         ast.parse(r.code)
         r.code = refine(r.code, s, max_tokens=128)
         ast.parse(r.code)
-        print(f"  PASS  pipeline ran fully offline "
-              f"({len(r.code)} chars, ast.parse twice)")
+        print(f"  PASS  pipeline ran fully offline ({len(r.code)} chars, ast.parse twice)")
         return 0
     except _Blocked as e:
         print(f"  FAIL  outbound network attempted: {e}")

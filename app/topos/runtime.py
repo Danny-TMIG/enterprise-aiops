@@ -5,6 +5,7 @@ concrete Mesh Seed objects (intent, spec, artifact, proof). The
 Seed workflow's states map to morphisms in T; each completed run
 adds arrows to T's Relational axis.
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -27,27 +28,33 @@ def _build_T() -> Topos:
     T.add(Object("proof", "proof", {}))
 
     # Forward arrows
-    T.arrow("intent", "spec", "draft",
-            lambda i: i if isinstance(i, dict) else {"raw": str(i)},
-            meta={"axis": "F", "construct": True})
-    T.arrow("spec", "artifact", "generate",
-            lambda s: s,
-            meta={"axis": "F", "construct": True})
+    T.arrow(
+        "intent",
+        "spec",
+        "draft",
+        lambda i: i if isinstance(i, dict) else {"raw": str(i)},
+        meta={"axis": "F", "construct": True},
+    )
+    T.arrow("spec", "artifact", "generate", lambda s: s, meta={"axis": "F", "construct": True})
 
     # Inverse arrows
-    T.arrow("artifact", "proof", "verify",
-            lambda a: {"artifact": a, "verified": True},
-            meta={"axis": "G", "verify": True})
+    T.arrow(
+        "artifact",
+        "proof",
+        "verify",
+        lambda a: {"artifact": a, "verified": True},
+        meta={"axis": "G", "verify": True},
+    )
 
     # Relational arrows
-    T.arrow("artifact", "artifact", "bind",
-            lambda a: a,
-            meta={"axis": "R", "binding": True})
+    T.arrow("artifact", "artifact", "bind", lambda a: a, meta={"axis": "R", "binding": True})
 
     # The subobject classifier: which morphisms are "verified"
-    T.subobject("proof", "kernel_pass",
-                predicate=lambda p: isinstance(p, dict)
-                and p.get("kernel_status") == "PASS")
+    T.subobject(
+        "proof",
+        "kernel_pass",
+        predicate=lambda p: isinstance(p, dict) and p.get("kernel_status") == "PASS",
+    )
 
     return T
 
@@ -80,33 +87,31 @@ class ToposRuntime:
         self.T.add(Object(aid, "artifact", artifact))
         self.T.add(Object(pid, "proof", kernel))
 
-        self.T.arrow(iid, sid, f"draft:{iid}",
-                     lambda _: spec, meta={"axis": "F"})
-        self.T.arrow(sid, aid, f"generate:{sid}",
-                     lambda _: artifact, meta={"axis": "F"})
-        self.T.arrow(aid, pid, f"verify:{aid}",
-                     lambda _: kernel, meta={"axis": "G"})
+        self.T.arrow(iid, sid, f"draft:{iid}", lambda _: spec, meta={"axis": "F"})
+        self.T.arrow(sid, aid, f"generate:{sid}", lambda _: artifact, meta={"axis": "F"})
+        self.T.arrow(aid, pid, f"verify:{aid}", lambda _: kernel, meta={"axis": "G"})
 
-        self._runs.append({
-            "intent": iid, "spec": sid,
-            "artifact": aid, "proof": pid,
-            "kernel_status": kernel.get("status"),
-        })
+        self._runs.append(
+            {
+                "intent": iid,
+                "spec": sid,
+                "artifact": aid,
+                "proof": pid,
+                "kernel_status": kernel.get("status"),
+            }
+        )
 
     # ── status ─────────────────────────────────────────────────
     def status(self) -> dict[str, Any]:
         return {
-            "signature": {"name": SIGNATURE["name"],
-                          "count": SIGNATURE["count"]},
+            "signature": {"name": SIGNATURE["name"], "count": SIGNATURE["count"]},
             "T": self.T.stats(),
             "axes": self.axes.stats(),
             "self_similar": self.self_sim.to_dict(),
             "adjunction": {
                 "F ⊣ G": True,
-                "triangle_left_ok": self.adjunction.triangle_left(
-                    {"raw": "sample"}),
-                "triangle_right_ok": self.adjunction.triangle_right(
-                    {"artifact": "a"}),
+                "triangle_left_ok": self.adjunction.triangle_left({"raw": "sample"}),
+                "triangle_right_ok": self.adjunction.triangle_right({"artifact": "a"}),
             },
             "runs_recorded": len(self._runs),
         }

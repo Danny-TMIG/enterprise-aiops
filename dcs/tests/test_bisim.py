@@ -1,4 +1,5 @@
 """Unit tests for dcs.bisim."""
+
 from dcs.bisim import bisimilar, equivalence_classes
 
 

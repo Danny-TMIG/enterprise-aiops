@@ -58,11 +58,21 @@ class PersonaRequest(BaseModel):
     profile_id: str | None = "default"
     archetype: str | None = "default"
 
+
 @app.post("/persona/synthesize")
-def synthesize_persona(payload: PersonaRequest | None = None, profile_id: str | None = None, archetype: str | None = None):
+def synthesize_persona(
+    payload: PersonaRequest | None = None,
+    profile_id: str | None = None,
+    archetype: str | None = None,
+):
     p_id = profile_id or (payload.profile_id if payload else "default")
     arch = archetype or (payload.archetype if payload else "default")
-    return {"status": "synthesized", "profile_id": p_id, "archetype": arch, "synthesized_output": "mocked persona synthesis result"}
+    return {
+        "status": "synthesized",
+        "profile_id": p_id,
+        "archetype": arch,
+        "synthesized_output": "mocked persona synthesis result",
+    }
     prompt = f"<|im_start|>system\nYou are an advanced sovereign intelligence engine analyzing target profiles. Generate a detailed behavioral synthesis profile.<|im_end|>\n<|im_start|>user\nTarget ID: {profile_id}\nArchetype: {archetype}\n<|im_end|>\n<|im_start|>assistant\n"
     response = generate(model, tokenizer, prompt=prompt, verbose=False, max_tokens=250)
     return {
@@ -103,18 +113,14 @@ def generate_embeddings(text: str = Query(...)):
 
 
 @app.post("/provenance/sign")
-def sign_inference_artifact(
-    artifact_id: str = Query(...), payload_summary: str = Query(...)
-):
+def sign_inference_artifact(artifact_id: str = Query(...), payload_summary: str = Query(...)):
     timestamp = datetime.datetime.utcnow().isoformat() + "Z"
     attestation = {
         "_type": "https://in-toto.io/statement/v1",
         "subject": [
             {
                 "name": artifact_id,
-                "digest": {
-                    "sha256": hashlib.sha256(payload_summary.encode()).hexdigest()
-                },
+                "digest": {"sha256": hashlib.sha256(payload_summary.encode()).hexdigest()},
             }
         ],
         "predicateType": "https://slsa.dev/provenance/v1",
@@ -155,9 +161,7 @@ def log_audit_event(
     client = get_ch_client()
     if client:
         now = datetime.datetime.utcnow()
-        client.insert(
-            "enterprise_aiops.audit_logs", [[now, event_type, artifact_id, details]]
-        )
+        client.insert("enterprise_aiops.audit_logs", [[now, event_type, artifact_id, details]])
         return {"status": "success", "sink": "ClickHouse", "logged": True}
     return {
         "status": "warning",
@@ -204,9 +208,7 @@ def dispatch_cluster_task(task_name: str, payload_data: str = "default_payload")
             redis_client.hset(
                 "aiops_cluster_tasks",
                 tid,
-                json.dumps(
-                    {"id": tid, "name": name, "payload": payload, "status": "RUNNING"}
-                ),
+                json.dumps({"id": tid, "name": name, "payload": payload, "status": "RUNNING"}),
             )
             # Simulate parallel M4 Max tensor processing / worker workload
             import time
@@ -215,9 +217,7 @@ def dispatch_cluster_task(task_name: str, payload_data: str = "default_payload")
             redis_client.hset(
                 "aiops_cluster_tasks",
                 tid,
-                json.dumps(
-                    {"id": tid, "name": name, "payload": payload, "status": "COMPLETED"}
-                ),
+                json.dumps({"id": tid, "name": name, "payload": payload, "status": "COMPLETED"}),
             )
 
         cluster_executor.submit(background_worker, task_id, task_name, payload_data)
@@ -259,6 +259,7 @@ try:
         return {"status": "rebuilt"}
 except Exception as _e:
     import warnings
+
     warnings.warn(f"mesh routes not registered: {_e}")
 
 
@@ -267,128 +268,167 @@ from fastapi import APIRouter
 
 router_stubs = APIRouter()
 
+
 @router_stubs.get("/cluster/status")
 def cluster_status():
     return {"status": "ok", "cluster": "active", "nodes": 1}
 
+
 @router_stubs.get("/v1/models")
 def v1_models():
-    return {"object": "list", "data": [{"id": "mlx-community/Qwen2.5-7B-Instruct-4bit", "object": "model"}]}
+    return {
+        "object": "list",
+        "data": [{"id": "mlx-community/Qwen2.5-7B-Instruct-4bit", "object": "model"}],
+    }
+
 
 @router_stubs.post("/v1/chat/completions")
-def v1_chat_completions(payload: dict = None):
-    return {"id": "chatcmpl-stub", "object": "chat.completion", "choices": [{"message": {"role": "assistant", "content": "mocked local response"}}]}
+def v1_chat_completions(payload: dict | None = None):
+    return {
+        "id": "chatcmpl-stub",
+        "object": "chat.completion",
+        "choices": [{"message": {"role": "assistant", "content": "mocked local response"}}],
+    }
+
 
 @router_stubs.post("/persona/synthesize")
-def persona_synthesize(payload: dict = None):
+def persona_synthesize(payload: dict | None = None):
     return {"status": "synthesized", "persona": "default"}
+
 
 @router_stubs.get("/autonomy/status")
 def autonomy_status():
     return {"autonomy": "active"}
 
+
 @router_stubs.post("/autonomy/step")
 def autonomy_step():
     return {"step": 1, "status": "executed"}
+
 
 @router_stubs.get("/autonomy/decisions")
 def autonomy_decisions():
     return {"decisions": []}
 
+
 @router_stubs.get("/autonomy/heals")
 def autonomy_heals():
     return {"heals": []}
+
 
 @router_stubs.get("/mesh/nodes")
 def mesh_nodes():
     return {"nodes": []}
 
+
 @router_stubs.get("/mesh/graph")
 def mesh_graph():
     return {"nodes": [], "edges": []}
+
 
 @router_stubs.get("/mesh/planes")
 def mesh_planes():
     return {"planes": []}
 
+
 @router_stubs.get("/topos/status")
 def topos_status():
     return {"status": "active"}
+
 
 @router_stubs.get("/topos/objects")
 def topos_objects():
     return {"objects": []}
 
+
 @router_stubs.get("/topos/morphisms")
 def topos_morphisms():
     return {"morphisms": []}
 
+
 @router_stubs.post("/topos/record")
-def topos_record(payload: dict = None):
+def topos_record(payload: dict | None = None):
     return {"recorded": True}
+
 
 @router_stubs.get("/seed/status")
 def seed_status():
     return {"status": "active"}
 
+
 @router_stubs.get("/seed/manifest")
 def seed_manifest():
     return {"manifest": {}}
 
+
 @router_stubs.post("/seed/intent")
-def seed_intent(payload: dict = None):
+def seed_intent(payload: dict | None = None):
     return {"intent": "recorded"}
+
 
 @router_stubs.get("/seed/runs")
 def seed_runs():
     return {"runs": []}
 
+
 @router_stubs.get("/status/unified")
 def status_unified():
     return {"unified": True}
+
 
 @router_stubs.get("/moat/status")
 def moat_status():
     return {"moat": "secure"}
 
+
 @router_stubs.get("/moat/score")
 def moat_score():
     return {"score": 1.0}
+
 
 @router_stubs.get("/moat/mesh")
 def moat_mesh():
     return {"mesh": "protected"}
 
+
 @router_stubs.post("/moat/refresh")
 def moat_refresh():
     return {"refreshed": True}
+
 
 @router_stubs.get("/reality/status")
 def reality_status():
     return {"reality": "synced"}
 
+
 @router_stubs.get("/reality/install")
 def reality_install():
     return {"installed": True}
+
 
 @router_stubs.get("/proprietary/status")
 def proprietary_status():
     return {"status": "licensed"}
 
+
 @router_stubs.get("/frontier/status")
 def frontier_status():
     return {"frontier": "open"}
+
 
 @router_stubs.get("/frontier/profiles")
 def frontier_profiles():
     return {"profiles": []}
 
+
 @router_stubs.post("/frontier/invoke")
-def frontier_invoke(payload: dict = None):
+def frontier_invoke(payload: dict | None = None):
     return {"invoked": True}
+
 
 @router_stubs.get("/")
 def root_status():
     return {"name": "enterprise_aiops", "status": "running"}
+
 
 app.include_router(router_stubs)

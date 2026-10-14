@@ -9,6 +9,7 @@ etc.) expects:
 The mesh exposes its own capabilities as MCP tools — nothing here
 depends on the Anthropic SDK.
 """
+
 from __future__ import annotations
 
 from collections.abc import Callable
@@ -57,31 +58,32 @@ class MCPServer:
             args = params.get("arguments") or {}
             tool = self.tools.get(name)
             if not tool:
-                return {"isError": True, "content": [
-                    {"type": "text", "text": f"unknown tool: {name}"}]}
+                return {
+                    "isError": True,
+                    "content": [{"type": "text", "text": f"unknown tool: {name}"}],
+                }
             try:
                 result = tool.fn(args)
-                return {"isError": False, "content": [
-                    {"type": "text", "text": _to_text(result)}]}
+                return {"isError": False, "content": [{"type": "text", "text": _to_text(result)}]}
             except Exception as exc:  # noqa: BLE001
-                return {"isError": True, "content": [
-                    {"type": "text",
-                     "text": f"tool error: {type(exc).__name__}"}]}
+                return {
+                    "isError": True,
+                    "content": [{"type": "text", "text": f"tool error: {type(exc).__name__}"}],
+                }
         raise ValueError(f"unknown method: {method}")
 
     def jsonrpc(self, payload: dict[str, Any]) -> dict[str, Any]:
         rid = payload.get("id")
         try:
-            result = self.handle(payload.get("method", ""),
-                                 payload.get("params") or {})
+            result = self.handle(payload.get("method", ""), payload.get("params") or {})
             return {"jsonrpc": "2.0", "id": rid, "result": result}
         except Exception as exc:  # noqa: BLE001
-            return {"jsonrpc": "2.0", "id": rid,
-                    "error": {"code": -32601, "message": str(exc)}}
+            return {"jsonrpc": "2.0", "id": rid, "error": {"code": -32601, "message": str(exc)}}
 
 
 def _to_text(x: Any) -> str:
     import json
+
     try:
         return json.dumps(x, default=str)
     except Exception:
@@ -91,12 +93,12 @@ def _to_text(x: Any) -> str:
 @dataclass
 class MCPClient:
     """In-process MCP client. Replace `transport` for stdio/HTTP."""
+
     server: MCPServer
     next_id: int = 1
 
     def _rpc(self, method: str, params: dict[str, Any]) -> dict[str, Any]:
-        payload = {"jsonrpc": "2.0", "id": self.next_id,
-                   "method": method, "params": params}
+        payload = {"jsonrpc": "2.0", "id": self.next_id, "method": method, "params": params}
         self.next_id += 1
         return self.server.jsonrpc(payload)
 

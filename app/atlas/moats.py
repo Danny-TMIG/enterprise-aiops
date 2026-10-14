@@ -13,6 +13,7 @@ Each moat is a defensible capability. Every moat names:
 This is a live registry. The markdown projection is generated
 from the data here by `write_markdown()`.
 """
+
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
@@ -256,10 +257,11 @@ def by_residual(rid: str) -> list[Moat]:
 
 def search(substr: str) -> list[Moat]:
     s = substr.lower()
-    return [m for m in _MOATS
-            if s in m.name.lower()
-            or s in m.description.lower()
-            or s in m.value.lower()]
+    return [
+        m
+        for m in _MOATS
+        if s in m.name.lower() or s in m.description.lower() or s in m.value.lower()
+    ]
 
 
 def all_moats() -> tuple[Moat, ...]:
@@ -280,7 +282,7 @@ def validate() -> dict:
                 bad.setdefault(m.id, []).append(rid)
 
     ids = [m.id for m in _MOATS]
-    statuses = sorted(set(m.status for m in _MOATS))
+    statuses = sorted({m.status for m in _MOATS})
     return {
         "ok": not bad and ids == list(range(1, len(_MOATS) + 1)),
         "count": len(_MOATS),
@@ -306,8 +308,7 @@ def render_markdown() -> str:
     for m in _MOATS:
         impl = ", ".join(f"`{i.split(' ')[0]}`" for i in m.implementers)
         res = ", ".join(f"`{r}`" for r in m.residuals)
-        out.append(f"| {m.id} | {m.name} | {m.value} | {m.status} | "
-                   f"{impl} | {res} |")
+        out.append(f"| {m.id} | {m.name} | {m.value} | {m.status} | {impl} | {res} |")
     out.append("")
 
     out.append("## Details")
@@ -324,8 +325,7 @@ def render_markdown() -> str:
         for impl in m.implementers:
             out.append(f"- `{impl}`")
         out.append("")
-        out.append("Grounded in residuals: " +
-                   ", ".join(f"`{r}`" for r in m.residuals))
+        out.append("Grounded in residuals: " + ", ".join(f"`{r}`" for r in m.residuals))
         out.append("")
 
     out.append("---")
@@ -334,7 +334,7 @@ def render_markdown() -> str:
     out.append("")
     out.append("| Status | Count |")
     out.append("|--------|-------|")
-    for st in sorted(set(m.status for m in _MOATS)):
+    for st in sorted({m.status for m in _MOATS}):
         n = sum(1 for m in _MOATS if m.status == st)
         out.append(f"| {st} | {n} |")
     out.append("")
@@ -349,16 +349,15 @@ def render_markdown() -> str:
 
 
 def write_markdown(path: Path | None = None) -> Path:
-    p = Path(path) if path else (
-        Path(__file__).resolve().parent.parent.parent
-        / "docs" / "moats.md"
+    p = (
+        Path(path)
+        if path
+        else (Path(__file__).resolve().parent.parent.parent / "docs" / "moats.md")
     )
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(render_markdown())
     return p
 
 
-def evaluate_moats(
-context=None):
+def evaluate_moats(context=None):
     return {"context": dict(context or {}), "axes": {}, "score": 0.0}
-

@@ -8,6 +8,7 @@ The model is asked for JSON. The JSON is parsed. The wire mapper
 converts it to the vendor's native shape. If the model fails, the
 call falls through to the vendor's local implementation.
 """
+
 from __future__ import annotations
 
 import json
@@ -58,10 +59,14 @@ class FrontierResponse:
 
     def to_dict(self) -> dict[str, Any]:
         return {
-            "vendor": self.vendor, "ok": self.ok,
-            "wire": self.wire, "model_out": self.model_out,
-            "provider": self.provider, "model": self.model,
-            "dry_run": self.dry_run, "fallback": self.fallback,
+            "vendor": self.vendor,
+            "ok": self.ok,
+            "wire": self.wire,
+            "model_out": self.model_out,
+            "provider": self.provider,
+            "model": self.model,
+            "dry_run": self.dry_run,
+            "fallback": self.fallback,
             "error": self.error,
         }
 
@@ -78,19 +83,24 @@ class FrontierDis:
         profile = get_profile(req.vendor)
         if profile is None:
             return FrontierResponse(
-                vendor=req.vendor, ok=False, wire={}, model_out={},
+                vendor=req.vendor,
+                ok=False,
+                wire={},
+                model_out={},
                 error=f"unknown vendor: {req.vendor}",
             )
 
         prompt = self._build_prompt(profile, req)
-        model_resp = self.registry.complete(ModelRequest(
-            task=req.task,
-            prompt=prompt,
-            system=profile.system_prompt,
-            max_tokens=req.max_tokens,
-            temperature=req.temperature,
-            metadata={"response_format": "json"},
-        ))
+        model_resp = self.registry.complete(
+            ModelRequest(
+                task=req.task,
+                prompt=prompt,
+                system=profile.system_prompt,
+                max_tokens=req.max_tokens,
+                temperature=req.temperature,
+                metadata={"response_format": "json"},
+            )
+        )
 
         model_out = _extract_json(model_resp.text) or {}
         wire = profile.to_wire(model_out, req.payload) if model_out else {}
@@ -101,7 +111,9 @@ class FrontierDis:
             fb = self._fallback(req.vendor, req.payload)
             if fb is not None:
                 return FrontierResponse(
-                    vendor=req.vendor, ok=True, wire=fb,
+                    vendor=req.vendor,
+                    ok=True,
+                    wire=fb,
                     model_out=model_out,
                     provider=model_resp.provider,
                     model=model_resp.model,
@@ -110,13 +122,16 @@ class FrontierDis:
                 )
 
         return FrontierResponse(
-            vendor=req.vendor, ok=ok, wire=wire, model_out=model_out,
-            provider=model_resp.provider, model=model_resp.model,
+            vendor=req.vendor,
+            ok=ok,
+            wire=wire,
+            model_out=model_out,
+            provider=model_resp.provider,
+            model=model_resp.model,
             dry_run=model_resp.dry_run,
         )
 
-    def _build_prompt(self, profile: VendorProfile,
-                      req: FrontierRequest) -> str:
+    def _build_prompt(self, profile: VendorProfile, req: FrontierRequest) -> str:
         return (
             f"Vendor: {profile.vendor}\n"
             f"Intent: {req.intent}\n"
@@ -125,10 +140,10 @@ class FrontierDis:
             "No prose, no markdown fences."
         )
 
-    def _fallback(self, vendor: str,
-                  payload: dict[str, Any]) -> dict[str, Any] | None:
+    def _fallback(self, vendor: str, payload: dict[str, Any]) -> dict[str, Any] | None:
         try:
             from app.proprietary.registry import ProprietaryRegistry
+
             r = ProprietaryRegistry().invoke(vendor, payload)
             if r.get("ok"):
                 return r.get("body") or {}

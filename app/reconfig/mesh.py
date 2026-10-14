@@ -34,10 +34,7 @@ class Mesh:
         """Deterministic: pick the least-loaded node that advertises
         every op present in the program."""
         ops = {i.op for i in p.program.instructions}
-        candidates = [
-            n for n in self.nodes.values()
-            if ops.issubset(set(n.capabilities))
-        ]
+        candidates = [n for n in self.nodes.values() if ops.issubset(set(n.capabilities))]
         if not candidates:
             return None
         candidates.sort(key=lambda n: (n.load, n.id))

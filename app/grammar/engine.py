@@ -12,7 +12,7 @@ class MasteryEngine:
                 "Semantics": ["node_sem_1"],
                 "Pragmatics": ["node_prag_1"],
                 "Discourse": ["node_disc_1"],
-                "Theoretical grammar": ["node_tg_1"]
+                "Theoretical grammar": ["node_tg_1"],
             }
         }
         self.mastered = set()
@@ -30,16 +30,20 @@ class MasteryEngine:
         mastered_count = sum(1 for n in nodes if n in self.mastered)
         return mastered_count / len(nodes)
 
+
 class ConvergenceMetrics:
     def __init__(self, achieved_value: float):
         self.achieved_value = achieved_value
+
 
 class MeshConvergenceValidator:
     def __init__(self, default_timeout: float = 2.0, poll_interval: float = 0.01):
         self.default_timeout = default_timeout
         self.poll_interval = poll_interval
 
-    async def assert_converges(self, probe_fn: Callable[[], float], expected: float, subsystem: str) -> ConvergenceMetrics:
+    async def assert_converges(
+        self, probe_fn: Callable[[], float], expected: float, subsystem: str
+    ) -> ConvergenceMetrics:
         start_time = asyncio.get_event_loop().time()
         while asyncio.get_event_loop().time() - start_time < self.default_timeout:
             val = probe_fn()

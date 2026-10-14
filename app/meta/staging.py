@@ -1,4 +1,5 @@
 """Staging — atomic patches with snapshot + rollback."""
+
 from __future__ import annotations
 
 import difflib
@@ -45,10 +46,14 @@ class Staging:
             return "<no proposal>"
         old_lines = real.read_text().splitlines(keepends=True) if real.exists() else []
         new_lines = staged.read_text().splitlines(keepends=True)
-        return "".join(difflib.unified_diff(
-            old_lines, new_lines,
-            fromfile=f"a/{target}", tofile=f"b/{target}",
-        ))
+        return "".join(
+            difflib.unified_diff(
+                old_lines,
+                new_lines,
+                fromfile=f"a/{target}",
+                tofile=f"b/{target}",
+            )
+        )
 
     def staged_source(self, target: str) -> str | None:
         p = self._staged(target)

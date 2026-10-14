@@ -1,15 +1,41 @@
 """ROS2 graph model. Extends ROS1 with actions, lifecycle, QoS."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Any
 
 QOS_PRESETS = {
-    "default":       {"reliability": "reliable",  "durability": "volatile",  "history": "keep_last", "depth": 10},
-    "sensor_data":   {"reliability": "best_effort","durability": "volatile", "history": "keep_last", "depth": 5},
-    "services":      {"reliability": "reliable",  "durability": "volatile",  "history": "keep_last", "depth": 10},
-    "parameters":    {"reliability": "reliable",  "durability": "volatile",  "history": "keep_last", "depth": 1000},
-    "transient":     {"reliability": "reliable",  "durability": "transient_local", "history": "keep_last", "depth": 10},
+    "default": {
+        "reliability": "reliable",
+        "durability": "volatile",
+        "history": "keep_last",
+        "depth": 10,
+    },
+    "sensor_data": {
+        "reliability": "best_effort",
+        "durability": "volatile",
+        "history": "keep_last",
+        "depth": 5,
+    },
+    "services": {
+        "reliability": "reliable",
+        "durability": "volatile",
+        "history": "keep_last",
+        "depth": 10,
+    },
+    "parameters": {
+        "reliability": "reliable",
+        "durability": "volatile",
+        "history": "keep_last",
+        "depth": 1000,
+    },
+    "transient": {
+        "reliability": "reliable",
+        "durability": "transient_local",
+        "history": "keep_last",
+        "depth": 10,
+    },
 }
 
 
@@ -63,19 +89,23 @@ class ROS2Catalog:
         for t in set(pub) & set(sub):
             a = QOS_PRESETS.get(pub[t], {})
             b = QOS_PRESETS.get(sub[t], {})
-            if a.get("reliability") != b.get("reliability") \
-               or a.get("durability") != b.get("durability"):
+            if a.get("reliability") != b.get("reliability") or a.get("durability") != b.get(
+                "durability"
+            ):
                 out.append((t, f"pub={pub[t]} sub={sub[t]}"))
         return out
 
     def graph(self) -> dict[str, Any]:
         return {
-            "nodes": {k: {
-                "pubs": [(e.name, e.msg_type, e.qos) for e in v.pubs],
-                "subs": [(e.name, e.msg_type, e.qos) for e in v.subs],
-                "actions": [(a.name, a.goal, a.result, a.feedback) for a in v.actions],
-                "lifecycle": v.lifecycle,
-            } for k, v in self.nodes.items()},
+            "nodes": {
+                k: {
+                    "pubs": [(e.name, e.msg_type, e.qos) for e in v.pubs],
+                    "subs": [(e.name, e.msg_type, e.qos) for e in v.subs],
+                    "actions": [(a.name, a.goal, a.result, a.feedback) for a in v.actions],
+                    "lifecycle": v.lifecycle,
+                }
+                for k, v in self.nodes.items()
+            },
             "qos_mismatches": self.qos_mismatches(),
         }
 
@@ -83,6 +113,7 @@ class ROS2Catalog:
 def runtime_available() -> tuple[bool, str]:
     try:
         import rclpy  # noqa: F401
+
         return True, "rclpy installed"
     except Exception:
         return False, "rclpy not installed; model layer only"

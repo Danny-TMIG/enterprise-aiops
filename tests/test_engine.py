@@ -1,5 +1,5 @@
-import pytest
 from aiops_platform_metadusa_cell.engine import AIOpsEngine
+
 
 def test_engine_ingestion():
     engine = AIOpsEngine()

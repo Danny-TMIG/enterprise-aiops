@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Sign SBOM with HMAC-SHA256. Writes the signature file to disk."""
+
 from __future__ import annotations
 
 import base64

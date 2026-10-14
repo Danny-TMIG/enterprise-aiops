@@ -54,7 +54,9 @@ def load(path: str | Path) -> Standard:  # pragma: no cover
     for raw in doc.get("requirements", []):
         for k in ("id", "title", "section", "hats", "criticality", "test"):
             if k not in raw:  # pragma: no cover
-                raise ValueError(f"requirement missing {k}: {raw.get('id', '?')}")  # pragma: no cover
+                raise ValueError(
+                    f"requirement missing {k}: {raw.get('id', '?')}"
+                )  # pragma: no cover
         if not _REQ_ID.match(raw["id"]):  # pragma: no cover
             raise ValueError(f"bad id: {raw['id']}")  # pragma: no cover
         if raw["criticality"] not in _CRIT:  # pragma: no cover

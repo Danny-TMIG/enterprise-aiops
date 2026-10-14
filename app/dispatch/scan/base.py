@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 
 def _now() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 @dataclass
@@ -19,19 +19,27 @@ class ScanResult:
 
     def to_dict(self) -> dict[str, Any]:
         return {
-            "scanner": self.scanner, "status": self.status,
-            "findings": self.findings, "error": self.error, "ts": self.ts,
+            "scanner": self.scanner,
+            "status": self.status,
+            "findings": self.findings,
+            "error": self.error,
+            "ts": self.ts,
         }
 
 
 class Scanner:
     name = "scanner"
-    def available(self) -> bool: return True
+
+    def available(self) -> bool:
+        return True
+
     def scan(self, root: str) -> ScanResult:
         try:
             return self._scan(root)
         except Exception as exc:  # noqa: BLE001
-            return ScanResult(scanner=self.name, status="EXECUTION_FAILURE",
-                              error=type(exc).__name__)
+            return ScanResult(
+                scanner=self.name, status="EXECUTION_FAILURE", error=type(exc).__name__
+            )
+
     def _scan(self, root: str) -> ScanResult:  # pragma: no cover
         raise NotImplementedError

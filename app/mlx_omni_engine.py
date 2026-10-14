@@ -7,9 +7,7 @@ from prometheus_client import (
 )
 
 
-def _get_or_create_histogram(
-    name, documentation, labelnames=(), buckets=Histogram.DEFAULT_BUCKETS
-):
+def _get_or_create_histogram(name, documentation, labelnames=(), buckets=Histogram.DEFAULT_BUCKETS):
     if name in REGISTRY._names_to_collectors:
         return REGISTRY._names_to_collectors[name]
     return Histogram(name, documentation, labelnames=labelnames, buckets=buckets)

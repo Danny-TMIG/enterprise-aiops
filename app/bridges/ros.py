@@ -1,4 +1,5 @@
 """ROS1 graph model. Pure Python. Runtime binding honest."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -51,11 +52,14 @@ class ROSCatalog:
 
     def graph(self) -> dict[str, Any]:
         return {
-            "nodes": {name: {
-                "pubs": [t.name for t in n.pubs],
-                "subs": [t.name for t in n.subs],
-                "srvs": [s.name for s in n.srvs],
-            } for name, n in self.nodes.items()},
+            "nodes": {
+                name: {
+                    "pubs": [t.name for t in n.pubs],
+                    "subs": [t.name for t in n.subs],
+                    "srvs": [s.name for s in n.srvs],
+                }
+                for name, n in self.nodes.items()
+            },
             "topics": sorted(self.topics()),
             "orphans": self.orphan_topics(),
         }
@@ -64,6 +68,7 @@ class ROSCatalog:
 def runtime_available() -> tuple[bool, str]:
     try:
         import rospy  # noqa: F401
+
         return True, "rospy installed"
     except Exception:
         return False, "rospy not installed; model layer only"

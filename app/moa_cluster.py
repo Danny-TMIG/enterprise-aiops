@@ -3,6 +3,7 @@ from typing import Any
 
 try:
     from mlx_lm import *  # type: ignore
+
     _MLX_LM_OK = True
 except Exception:
     _MLX_LM_OK = False
@@ -21,9 +22,7 @@ class MLXWorkerNode:
 
     async def execute(self, prompt: str, context: dict[str, Any] | None = None) -> str:
         loop = asyncio.get_running_loop()
-        formatted_prompt = (
-            f"[Role: {self.specialization}]\nContext: {context}\nTask: {prompt}"
-        )
+        formatted_prompt = f"[Role: {self.specialization}]\nContext: {context}\nTask: {prompt}"
         response = await loop.run_in_executor(
             None,
             lambda: generate(
@@ -58,25 +57,17 @@ class MoAOrchestrator:
             specialization="Cross-Agent Critique and Final Structured JSON Synthesis",
         )
 
-    async def process_request(
-        self, document_text: str, layout_metadata: dict[str, Any]
-    ) -> str:
+    async def process_request(self, document_text: str, layout_metadata: dict[str, Any]) -> str:
         selected_experts = self.router.route(layout_metadata)
 
         worker_tasks = [
-            self.experts[expert_name].execute(
-                prompt=document_text, context=layout_metadata
-            )
+            self.experts[expert_name].execute(prompt=document_text, context=layout_metadata)
             for expert_name in selected_experts
             if expert_name in self.experts
         ]
         worker_outputs = await asyncio.gather(*worker_tasks)
 
-        synthesis_context = {
-            f"agent_{i}_output": out for i, out in enumerate(worker_outputs)
-        }
+        synthesis_context = {f"agent_{i}_output": out for i, out in enumerate(worker_outputs)}
         aggregator_prompt = "Synthesize extractions into a single verified JSON document, resolving spatial conflicts."
 
-        return await self.aggregator.execute(
-            prompt=aggregator_prompt, context=synthesis_context
-        )
+        return await self.aggregator.execute(prompt=aggregator_prompt, context=synthesis_context)

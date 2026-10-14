@@ -34,4 +34,5 @@ class EnterpriseStateVerifier(RuleBasedStateMachine):
             assert self.owner is not None, "Invariant Violation: Locked state missing owner."
         assert len(self.audit_trail) < 1000, "State space overflow protection triggered."
 
+
 TestEnterpriseStateMachine = EnterpriseStateVerifier.TestCase

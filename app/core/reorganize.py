@@ -20,6 +20,7 @@ proposals derive from.
 
 Dry run by default. Pass apply=True to commit.
 """
+
 from __future__ import annotations
 
 import json
@@ -49,7 +50,7 @@ class DispatchStat:
 @dataclass
 class Proposal:
     code: str
-    field: str           # "status"
+    field: str  # "status"
     before: Any
     after: Any
     reason: str
@@ -81,12 +82,11 @@ def _connect(db: Path = DB) -> sqlite3.Connection:
     return con
 
 
-def _read_dispatch_events(con: sqlite3.Connection,
-                          window: int = 500) -> dict[str, DispatchStat]:
+def _read_dispatch_events(con: sqlite3.Connection, window: int = 500) -> dict[str, DispatchStat]:
     stats: dict[str, DispatchStat] = {}
     for seq, payload in con.execute(
-        "SELECT seq, payload FROM events "
-        "WHERE kind='dispatch' ORDER BY seq DESC LIMIT ?", (window,)
+        "SELECT seq, payload FROM events WHERE kind='dispatch' ORDER BY seq DESC LIMIT ?",
+        (window,),
     ):
         try:
             d = json.loads(payload)
@@ -107,18 +107,16 @@ def _read_dispatch_events(con: sqlite3.Connection,
 
 
 # ── propose ─────────────────────────────────────────────────────────
-def _cap_row(con: sqlite3.Connection, code: str
-             ) -> tuple[str, str] | None:
-    r = con.execute(
-        "SELECT status, home FROM capabilities WHERE code=?", (code,)
-    ).fetchone()
+def _cap_row(con: sqlite3.Connection, code: str) -> tuple[str, str] | None:
+    r = con.execute("SELECT status, home FROM capabilities WHERE code=?", (code,)).fetchone()
     return (r[0], r[1] or "") if r else None
 
 
 def _has_registered_impl(code: str) -> bool:
     try:
         from app.core import capabilities as c
-        c._autoload(code)                       # attempt
+
+        c._autoload(code)  # attempt
         return code in c._IMPL
     except Exception:
         return False
@@ -131,27 +129,32 @@ def propose(stats: dict[str, DispatchStat]) -> list[Proposal]:
         row = _cap_row(con, code)
         if not row:
             continue
-        status, home = row
+        status, _home = row
 
         # R2 only: aspirational -> real when an impl is registered and
         # recent dispatches have succeeded. The reorganizer never
         # downgrades a `real` capability; a wrong `real` claim is a
         # P6 stability failure, not something to hide by mutation.
         if status == "aspirational" and s.successes > 0 and _has_registered_impl(code):
-            out.append(Proposal(
-                code=code, field="status",
-                before="aspirational", after="real",
-                reason=(f"R2: {s.successes}/{s.attempts} recent dispatches "
-                        f"succeeded and impl is registered"),
-                trigger_seq=s.last_seq,
-            ))
+            out.append(
+                Proposal(
+                    code=code,
+                    field="status",
+                    before="aspirational",
+                    after="real",
+                    reason=(
+                        f"R2: {s.successes}/{s.attempts} recent dispatches "
+                        f"succeeded and impl is registered"
+                    ),
+                    trigger_seq=s.last_seq,
+                )
+            )
     con.close()
     return out
 
 
 # ── apply ───────────────────────────────────────────────────────────
-def apply_proposals(proposals: list[Proposal],
-                    sub: Any) -> list[Proposal]:
+def apply_proposals(proposals: list[Proposal], sub: Any) -> list[Proposal]:
     """Mutate the capability table, then close. The ledger write
     happens after the mutation connection is released, so two
     writers never contend for the same lock."""
@@ -175,8 +178,7 @@ def apply_proposals(proposals: list[Proposal],
                 con.close()  # type: ignore[name-defined]
             except Exception:
                 pass
-            sub.append("reorganize.error", p.code,
-                       {"proposal": asdict(p), "error": str(e)})
+            sub.append("reorganize.error", p.code, {"proposal": asdict(p), "error": str(e)})
             continue
         if changed:
             applied.append(p)
@@ -187,6 +189,7 @@ def apply_proposals(proposals: list[Proposal],
 # ── orchestrate ─────────────────────────────────────────────────────
 def run(*, apply: bool = False, window: int = 500) -> Report:
     from app.core.ram_substrate import RAMSubstrate
+
     sub = RAMSubstrate(capacity=4096, autoload=False)
 
     con = _connect()
@@ -198,16 +201,13 @@ def run(*, apply: bool = False, window: int = 500) -> Report:
     proposals = propose(stats)
     rep.proposals = proposals
 
-    sub.append("reorganize.proposed", "capabilities",
-               {"n": len(proposals), "dry_run": not apply})
+    sub.append("reorganize.proposed", "capabilities", {"n": len(proposals), "dry_run": not apply})
 
     if apply and proposals:
         rep.applied = apply_proposals(proposals, sub)
-        sub.append("reorganize.applied", "capabilities",
-                   {"n": len(rep.applied)})
+        sub.append("reorganize.applied", "capabilities", {"n": len(rep.applied)})
     else:
-        sub.append("reorganize.applied", "capabilities",
-                   {"n": 0, "dry_run": True})
+        sub.append("reorganize.applied", "capabilities", {"n": 0, "dry_run": True})
 
     return rep
 

@@ -13,11 +13,13 @@ class Lean4Agent(Prover):
     It *always* carries an explicit LLMExec — the (provider, model)
     actually invoked is recorded on the result. No hidden model call.
     """
+
     name = "lean4agent"
 
     def __init__(self, exec_hint: LLMExec | None = None) -> None:
         self.exec_hint = exec_hint or LLMExec(
-            provider="anthropic", model="claude-sonnet-4-6",
+            provider="anthropic",
+            model="claude-sonnet-4-6",
             task="proving",
         )
 
@@ -40,17 +42,22 @@ class Lean4Agent(Prover):
             "goal, respond with a single `by` tactic block. No prose.\n\n"
             f"Goal: {statement}\n"
         )
-        resp = reg.complete(ModelRequest(
-            task="reasoning", prompt=prompt,
-            metadata={"provider": provider, "model": llm_exec.model},
-        ))
+        resp = reg.complete(
+            ModelRequest(
+                task="reasoning",
+                prompt=prompt,
+                metadata={"provider": provider, "model": llm_exec.model},
+            )
+        )
         tactics = resp.text.strip() or "by trivial"
         return ProverResult(
             prover=self.name,
             status="PASS" if not resp.dry_run else "UNKNOWN",
             proof=tactics,
             llm_exec=llm_exec,
-            evidence=[{"type": "statement", "value": statement},
-                      {"type": "tactics", "value": tactics},
-                      {"type": "dry_run", "value": resp.dry_run}],
+            evidence=[
+                {"type": "statement", "value": statement},
+                {"type": "tactics", "value": tactics},
+                {"type": "dry_run", "value": resp.dry_run},
+            ],
         )

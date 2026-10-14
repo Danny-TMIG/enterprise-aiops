@@ -11,6 +11,7 @@ from app.dispatch.orchestration.base import (
 
 class MicrosoftBackend(OrchestratorBackend):
     """Plugs into Copilot Studio / Power Platform as a custom connector."""
+
     name = "microsoft"
 
     def available(self) -> bool:
@@ -20,6 +21,7 @@ class MicrosoftBackend(OrchestratorBackend):
         # Real integrations POST to Power Automate; here we run local
         # verification and shape the verdict for the connector response.
         from app.dispatch.verification.registry import VerificationRegistry
+
         out = VerificationRegistry().verify_all(claim.claim, claim.evidence)
         ok = all(v.status == "PASS" for v in out)
         return VerificationVerdict(

@@ -8,7 +8,9 @@ def fragment() -> str:  # pragma: no cover
 
 
 def structural_ok(src: str) -> bool:  # pragma: no cover
-    return "#version" in src and "void main()" in src and src.count("{") == src.count("}")  # pragma: no cover
+    return (
+        "#version" in src and "void main()" in src and src.count("{") == src.count("}")
+    )  # pragma: no cover
 
 
 @requirement(

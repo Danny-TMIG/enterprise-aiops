@@ -9,6 +9,7 @@ They all share the same Ω and the same terminal 1. The embedding
 `embed` lifts any finite category C into T's shape by adding 1, Ω,
 and the classifier ⊤.
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -37,11 +38,10 @@ def is_topos(C: Category) -> bool:
 def lift_axes(T: Topos) -> dict[str, Topos]:
     """Every axis is itself a topos, sharing T's Ω."""
     from app.topos.axes import Axes
+
     axes = Axes(T)
     out: dict[str, Topos] = {}
-    for name, c in (("Forward", axes.F),
-                    ("Inverse", axes.G),
-                    ("Relational", axes.R)):
+    for name, c in (("Forward", axes.F), ("Inverse", axes.G), ("Relational", axes.R)):
         Ta = embed(c)
         out[name] = Ta
     return out
@@ -63,8 +63,7 @@ class SelfSimilarity:
             checks[name] = Ta.is_topos()
         # shared classifier
         checks["shared_omega"] = all(
-            Ta.classifier.omega_id == "Ω"
-            for Ta in self.all_topoi().values()
+            Ta.classifier.omega_id == "Ω" for Ta in self.all_topoi().values()
         )
         checks["all_ok"] = all(checks.values())
         return checks

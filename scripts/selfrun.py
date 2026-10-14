@@ -11,6 +11,7 @@ next run's observation is on top of the previous run.
     Phase N  nested    observe the observation (meta-record)
     Phase AZ A–Z       per-letter capability census + dispatch probe
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -49,6 +50,7 @@ def phase_c_compile() -> dict[str, Any]:
 def phase_b_build() -> dict[str, Any]:
     # collect every capability code from the table
     from app.core.capabilities import CAPS
+
     loaded, failed = [], []
     for code, name, cat, eq, st, prov, home in CAPS:
         if st != "real" or not home:
@@ -59,24 +61,40 @@ def phase_b_build() -> dict[str, Any]:
             loaded.append(mod)
         except Exception as e:
             failed.append({"mod": mod, "err": f"{type(e).__name__}: {e}"[:200]})
-    return {"modules_loaded": len(set(loaded)), "modules_failed": len(failed),
-            "failures": failed[:8]}
+    return {
+        "modules_loaded": len(set(loaded)),
+        "modules_failed": len(failed),
+        "failures": failed[:8],
+    }
 
 
 def phase_r_run() -> dict[str, Any]:
     r = subprocess.run(
-        [sys.executable, "-m", "pytest", "-q", "--no-header",
-         "-p", "no:cacheprovider", "--tb=line", "tests/"],
-        cwd=str(ROOT), capture_output=True, text=True,
+        [
+            sys.executable,
+            "-m",
+            "pytest",
+            "-q",
+            "--no-header",
+            "-p",
+            "no:cacheprovider",
+            "--tb=line",
+            "tests/",
+        ],
+        cwd=str(ROOT),
+        capture_output=True,
+        text=True,
         env={**__import__("os").environ, "PYTHONPATH": str(ROOT)},
     )
     tail = (r.stdout + r.stderr).strip().splitlines()[-3:]
     m = re.search(r"(\d+) passed", r.stdout + r.stderr)
     f = re.search(r"(\d+) failed", r.stdout + r.stderr)
-    return {"rc": r.returncode,
-            "passed": int(m.group(1)) if m else 0,
-            "failed": int(f.group(1)) if f else 0,
-            "tail": tail}
+    return {
+        "rc": r.returncode,
+        "passed": int(m.group(1)) if m else 0,
+        "failed": int(f.group(1)) if f else 0,
+        "tail": tail,
+    }
 
 
 def phase_o_observe() -> dict[str, Any]:
@@ -86,8 +104,7 @@ def phase_o_observe() -> dict[str, Any]:
         "head_hash": SUB.stats()["head_hash"],
         "subjects": SUB.stats()["subjects"],
         "kinds": sorted({e.kind for e in SUB.tail(500)}),
-        "recent": [{"seq": e.seq, "kind": e.kind, "subject": e.subject}
-                   for e in SUB.tail(8)],
+        "recent": [{"seq": e.seq, "kind": e.kind, "subject": e.subject} for e in SUB.tail(8)],
         "chain": SUB.verify_chain()["ok"],
     }
 
@@ -96,8 +113,7 @@ def phase_n_nested(prev: dict[str, Any]) -> dict[str, Any]:
     """Observe the observation: hash the summary and record a new event."""
     blob = json.dumps(prev, sort_keys=True, default=str)
     h = hashlib.sha256(blob.encode()).hexdigest()[:16]
-    return {"observed_hash": h, "observed_size": len(blob),
-            "subjects_observed": prev["subjects"]}
+    return {"observed_hash": h, "observed_size": len(blob), "subjects_observed": prev["subjects"]}
 
 
 def phase_az_census() -> dict[str, Any]:
@@ -113,9 +129,7 @@ def phase_az_census() -> dict[str, Any]:
         d = caps.dispatch(code)
         probe.append({"code": code, "ok": d.ok, "status": d.status})
     # also probe the substrate capability itself
-    return {"letters": dict(sorted(census.items())),
-            "codes": sum(census.values()),
-            "probe": probe}
+    return {"letters": dict(sorted(census.items())), "codes": sum(census.values()), "probe": probe}
 
 
 def main() -> int:
@@ -167,7 +181,7 @@ def main() -> int:
     # final chain verify after all writes
     print("\n── chain verify (after all writes) ──")
     v = SUB.verify_chain()
-    print(f"  ok={v['ok']}  checked={v.get('checked')}  head={v.get('head','')[:16]}…")
+    print(f"  ok={v['ok']}  checked={v.get('checked')}  head={v.get('head', '')[:16]}…")
 
     print(f"\n  elapsed {time.time() - t0:.2f}s")
     return 0 if v["ok"] and r["rc"] == 0 else 2

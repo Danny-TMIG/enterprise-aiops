@@ -4,6 +4,7 @@ Wire format: LeanDojo repo-dataset / theorem trace.
     request:  {"theorem": "theorem ... := by ...", "context": "..."}
     response: {"status": "passed|failed", "proof": "...", "steps": [...]}
 """
+
 from __future__ import annotations
 
 import re
@@ -36,9 +37,7 @@ def _local_trace(payload: dict[str, Any]) -> dict[str, Any]:
         return {"status": "failed", "error": "empty theorem"}
     m = _THEOREM_RE.match(thm.strip())
     if not m:
-        return {"status": "failed",
-                "error": "not a theorem declaration",
-                "input": thm[:200]}
+        return {"status": "failed", "error": "not a theorem declaration", "input": thm[:200]}
     kind, statement, tactic = m.group(1), m.group(2), m.group(3)
 
     by_match = _BY_PREFIX.match(tactic)

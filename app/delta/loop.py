@@ -1,4 +1,5 @@
 """Run cycles. Two local models. No network. No third-party teacher."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -25,17 +26,25 @@ class LoopState:
     cycles: list[Cycle] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
-        return {"cycles": [
-            {"index": c.index, "summary": c.summary, "emitted": c.emitted}
-            for c in self.cycles
-        ]}
+        return {
+            "cycles": [
+                {"index": c.index, "summary": c.summary, "emitted": c.emitted} for c in self.cycles
+            ]
+        }
 
 
-def run_cycle(index: int, models: dict[str, Model], workloads: list[Any],
-              inputs: dict[str, Any], writer: CurriculumWriter,
-              seed: int = 0, model_a: str = "A",
-              model_b: str = "B") -> Cycle:
-    a = models[model_a]; b = models[model_b]
+def run_cycle(
+    index: int,
+    models: dict[str, Model],
+    workloads: list[Any],
+    inputs: dict[str, Any],
+    writer: CurriculumWriter,
+    seed: int = 0,
+    model_a: str = "A",
+    model_b: str = "B",
+) -> Cycle:
+    a = models[model_a]
+    b = models[model_b]
     pa, pb = [], []
     for w in workloads:
         inp = inputs.get(w.id, w.id)
@@ -45,19 +54,27 @@ def run_cycle(index: int, models: dict[str, Model], workloads: list[Any],
     summary = summarize(deltas)
     wl_by_id = {w.id: w for w in workloads}
     emitted = writer.emit(deltas, wl_by_id)
-    return Cycle(index=index, probes_a=pa, probes_b=pb,
-                 deltas=deltas, summary=summary, emitted=emitted)
+    return Cycle(
+        index=index, probes_a=pa, probes_b=pb, deltas=deltas, summary=summary, emitted=emitted
+    )
 
 
-def run_loops(n: int, models: dict[str, Model], workloads: list[Any],
-              inputs: dict[str, Any],
-              writer: CurriculumWriter | None = None,
-              seed: int = 0, model_a: str = "A",
-              model_b: str = "B") -> LoopState:
+def run_loops(
+    n: int,
+    models: dict[str, Model],
+    workloads: list[Any],
+    inputs: dict[str, Any],
+    writer: CurriculumWriter | None = None,
+    seed: int = 0,
+    model_a: str = "A",
+    model_b: str = "B",
+) -> LoopState:
     writer = writer or CurriculumWriter()
     state = LoopState()
     for i in range(n):
-        state.cycles.append(run_cycle(i, models, workloads, inputs,
-                                      writer, seed=seed,
-                                      model_a=model_a, model_b=model_b))
+        state.cycles.append(
+            run_cycle(
+                i, models, workloads, inputs, writer, seed=seed, model_a=model_a, model_b=model_b
+            )
+        )
     return state

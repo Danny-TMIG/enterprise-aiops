@@ -17,6 +17,7 @@ Composes with:
   - app.math.phase          (Kuramoto R computed over DD phases)
   - app.combinator          (the schedule can be reduced as a graph)
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -41,8 +42,7 @@ class DDChain:
         self.sent += 1
         return sched
 
-    def observe(self, sched: HoppingSchedule,
-                phase_error_rms: float = 0.0) -> dict:
+    def observe(self, sched: HoppingSchedule, phase_error_rms: float = 0.0) -> dict:
         """Accumulate the schedule's phase evolution into the
         local DD reference. This is the long-context fold."""
         for hop in sched.hops:
@@ -74,9 +74,9 @@ class DDChain:
         }
 
 
-def transmit(payload: bytes, seed: int = 0,
-             hop_period: float = 1e-3,
-             phase_error_rms: float = 0.0) -> dict:
+def transmit(
+    payload: bytes, seed: int = 0, hop_period: float = 1e-3, phase_error_rms: float = 0.0
+) -> dict:
     """End-to-end: encode, decode, compare."""
     sched = hop_encode(payload, seed=seed, hop_period=hop_period)
     decoded = hop_decode(sched, phase_error_rms=phase_error_rms)
@@ -93,8 +93,9 @@ def transmit(payload: bytes, seed: int = 0,
     }
 
 
-def receive(schedule: HoppingSchedule, chain: DDChain | None = None,
-            phase_error_rms: float = 0.0) -> dict:
+def receive(
+    schedule: HoppingSchedule, chain: DDChain | None = None, phase_error_rms: float = 0.0
+) -> dict:
     decoded = hop_decode(schedule, phase_error_rms=phase_error_rms)
     obs = chain.observe(schedule, phase_error_rms=phase_error_rms) if chain else {}
     return {

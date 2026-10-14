@@ -6,6 +6,7 @@ a dict) and records the values of named keys across ticks.
 
 Self-registers as capability `observatory`.
 """
+
 from __future__ import annotations
 
 import statistics
@@ -64,9 +65,13 @@ class Trajectory:
 
 
 # ── wrap a PhysarumRouter (or anything with tick/topology) ──────────
-def observe_live(obj: Any, steps: int, *,
-                 extract: Callable[[Any], dict[str, float]] | None = None,
-                 sample_every: int = 1) -> Trajectory:
+def observe_live(
+    obj: Any,
+    steps: int,
+    *,
+    extract: Callable[[Any], dict[str, float]] | None = None,
+    sample_every: int = 1,
+) -> Trajectory:
     """Run obj.tick(1) `steps` times. After each tick, call extract(obj)
     and record its dict. Default extractor understands PhysarumRouter
     and any object with .stats() or .topology()."""

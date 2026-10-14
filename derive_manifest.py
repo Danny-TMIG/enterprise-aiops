@@ -8,8 +8,11 @@ Fields populated only from what the documents state:
 Anything the documents do not state is set to "UNDECIDED" with a
 governing decision id where one is named. Nothing is invented.
 """
+
 from __future__ import annotations
-import hashlib, json
+
+import hashlib
+import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -98,19 +101,43 @@ COG = {
     "COG-CORE-001": ("Cognitive Runtime, State and Memory", "Cognitive Runtime", "Core v1"),
     "COG-CORE-002": ("Cognitive Runtime, State and Memory", "Cognitive State Manager", "Core v1"),
     "COG-CORE-003": ("Cognitive Runtime, State and Memory", "Memory Fabric", "Core v1"),
-    "COG-CORE-004": ("Knowledge, Reasoning and Planning", "Semantic Representation Layer", "Core v1"),
+    "COG-CORE-004": (
+        "Knowledge, Reasoning and Planning",
+        "Semantic Representation Layer",
+        "Core v1",
+    ),
     "COG-REA-001": ("Knowledge, Reasoning and Planning", "Knowledge Interface", "Core v1"),
     "COG-REA-002": ("Knowledge, Reasoning and Planning", "Cognitive Router", "Core v1"),
     "COG-REA-003": ("Knowledge, Reasoning and Planning", "Reasoning Fabric", "Core v1"),
     "COG-REA-004": ("Knowledge, Reasoning and Planning", "Planning and Decomposition", "Core v1"),
     "COG-REA-005": ("Knowledge, Reasoning and Planning", "Evaluator and Critic", "Core v1"),
-    "COG-CMP-001": ("Models, Skills and Cognitive Composition", "Model and Substrate Adapter", "Core v1"),
-    "COG-CMP-002": ("Models, Skills and Cognitive Composition", "Skill and Capability Interface", "Core v1"),
-    "COG-CMP-003": ("Models, Skills and Cognitive Composition", "Cognitive Cell Runtime", "Core v1"),
-    "COG-CMP-004": ("Models, Skills and Cognitive Composition", "Swarm Coordinator", "Research-gated / deferred"),
+    "COG-CMP-001": (
+        "Models, Skills and Cognitive Composition",
+        "Model and Substrate Adapter",
+        "Core v1",
+    ),
+    "COG-CMP-002": (
+        "Models, Skills and Cognitive Composition",
+        "Skill and Capability Interface",
+        "Core v1",
+    ),
+    "COG-CMP-003": (
+        "Models, Skills and Cognitive Composition",
+        "Cognitive Cell Runtime",
+        "Core v1",
+    ),
+    "COG-CMP-004": (
+        "Models, Skills and Cognitive Composition",
+        "Swarm Coordinator",
+        "Research-gated / deferred",
+    ),
     "COG-CMP-005": ("Models, Skills and Cognitive Composition", "Adaptation Manager", "Core v1"),
     "COG-ASSUR-001": ("Assurance, Security and Performance", "Evidence Projection", "Core v1"),
-    "COG-ASSUR-002": ("Assurance, Security and Performance", "Replay and Evaluation Runtime", "Core v1"),
+    "COG-ASSUR-002": (
+        "Assurance, Security and Performance",
+        "Replay and Evaluation Runtime",
+        "Core v1",
+    ),
     "COG-ASSUR-003": ("Assurance, Security and Performance", "Performance Manager", "Core v1"),
     "COG-ASSUR-004": ("Assurance, Security and Performance", "Security Integration", "Core v1"),
 }
@@ -120,7 +147,11 @@ GOV = {
     "GOV-KRN-002": ("Governance Kernel", "Governed State and Transition Engine", "Core v1"),
     "GOV-KRN-003": ("Governance Kernel", "Decision and Outcome Correlation", "Core v1"),
     "GOV-IAM-001": ("Identity and Authority", "Principal and Domain Identity Registry", "Core v1"),
-    "GOV-IAM-002": ("Identity and Authority", "Authority, Delegation, Consent and Revocation", "Core v1"),
+    "GOV-IAM-002": (
+        "Identity and Authority",
+        "Authority, Delegation, Consent and Revocation",
+        "Core v1",
+    ),
     "GOV-IAM-003": ("Identity and Authority", "Authorization Decision Engine", "Core v1"),
     "GOV-IAM-004": ("Identity and Authority", "Human Approval and Escalation", "Core v1"),
     "GOV-POL-001": ("Policy", "Policy Registry and Integrity", "Core v1"),
@@ -130,16 +161,52 @@ GOV = {
     "GOV-INF-002": ("Information Governance", "Information Flow Decision Engine", "Core v1"),
     "GOV-INF-003": ("Information Governance", "Liquid Aperture Release Control", "Core v1"),
     "GOV-INF-004": ("Information Governance", "Schema and Data Contract Registry", "Core v1"),
-    "GOV-INF-005": ("Information Governance", "Ingestion Governance and Lineage Coordinator", "Core v1"),
+    "GOV-INF-005": (
+        "Information Governance",
+        "Ingestion Governance and Lineage Coordinator",
+        "Core v1",
+    ),
     "GOV-CAP-001": ("Capability Coordination", "Capability Registry", "Core v1"),
-    "GOV-CAP-002": ("Capability Coordination", "Capability Authorization and Eligibility", "Core v1"),
-    "GOV-CAP-003": ("Capability Coordination", "Governed Action and Execution Order Coordinator", "Core v1"),
-    "GOV-EVD-001": ("Evidence and Assurance", "Decision and Cross-Component Evidence Correlation", "Core v1"),
-    "GOV-EVD-002": ("Evidence and Assurance", "Governed Outcome Verification and Audit Reconstruction", "Core v1"),
-    "GOV-EVD-003": ("Evidence and Assurance", "Attestation Verification and Artifact Assurance", "Core v1"),
-    "GOV-ADM-001": ("Administration and Operations", "Govern Control Plane and Configuration", "Core v1"),
-    "GOV-ADM-002": ("Administration and Operations", "Health, Observability, Security and Incident Interface", "Core v1"),
-    "GOV-FED-001": ("Federation and Domain Exchange", "Federation Gateway and Domain Exchange Coordinator", "Deferred"),
+    "GOV-CAP-002": (
+        "Capability Coordination",
+        "Capability Authorization and Eligibility",
+        "Core v1",
+    ),
+    "GOV-CAP-003": (
+        "Capability Coordination",
+        "Governed Action and Execution Order Coordinator",
+        "Core v1",
+    ),
+    "GOV-EVD-001": (
+        "Evidence and Assurance",
+        "Decision and Cross-Component Evidence Correlation",
+        "Core v1",
+    ),
+    "GOV-EVD-002": (
+        "Evidence and Assurance",
+        "Governed Outcome Verification and Audit Reconstruction",
+        "Core v1",
+    ),
+    "GOV-EVD-003": (
+        "Evidence and Assurance",
+        "Attestation Verification and Artifact Assurance",
+        "Core v1",
+    ),
+    "GOV-ADM-001": (
+        "Administration and Operations",
+        "Govern Control Plane and Configuration",
+        "Core v1",
+    ),
+    "GOV-ADM-002": (
+        "Administration and Operations",
+        "Health, Observability, Security and Incident Interface",
+        "Core v1",
+    ),
+    "GOV-FED-001": (
+        "Federation and Domain Exchange",
+        "Federation Gateway and Domain Exchange Coordinator",
+        "Deferred",
+    ),
 }
 
 CMP = {
@@ -172,7 +239,11 @@ CMP = {
     "CMP-EVD-001": ("Observation and Evidence", "Observation and Telemetry", "Core v1"),
     "CMP-EVD-002": ("Observation and Evidence", "Evidence Bridge", "Core v1"),
     "CMP-EVD-003": ("Observation and Evidence", "Physical Provenance", "Core v1"),
-    "CMP-ECO-001": ("Economics", "Quote and Economic Optimizer", "Validation-gated / later v1 phase"),
+    "CMP-ECO-001": (
+        "Economics",
+        "Quote and Economic Optimizer",
+        "Validation-gated / later v1 phase",
+    ),
 }
 
 # Open-decision IDs that gate each component, from the documents' open-decision tables.

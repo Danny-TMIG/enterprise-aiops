@@ -17,6 +17,7 @@ Query languages:
 The mesh runs every query in parallel; findings are normalized to
 (q, table, row_id, detail). No global lock — read-only.
 """
+
 from __future__ import annotations
 
 import json
@@ -90,28 +91,42 @@ def seed_demo(n_bots: int = 24) -> dict[str, int]:
             "INSERT OR IGNORE INTO bots "
             "(id,hostname,os,arch,registered_at,last_seen,status) "
             "VALUES (?,?,?,?,?,?,?)",
-            (bid, f"h{i+1}", ["linux","windows","darwin"][i % 3],
-             ["x86_64","arm64"][i % 2], now - 3600, now - 60*(i % 20),
-             "active" if i % 5 else "terminated"))
+            (
+                bid,
+                f"h{i + 1}",
+                ["linux", "windows", "darwin"][i % 3],
+                ["x86_64", "arm64"][i % 2],
+                now - 3600,
+                now - 60 * (i % 20),
+                "active" if i % 5 else "terminated",
+            ),
+        )
         for j in range(3):
             tid = f"task-{i:03d}-{j}"
             con.execute(
                 "INSERT OR IGNORE INTO tasks "
                 "(id,bot_id,cmd,args,queued_at,dispatched_at,status) "
                 "VALUES (?,?,?,?,?,?,?)",
-                (tid, bid, ["ping","inventory","heartbeat"][j],
-                 json.dumps({"n": j}), now - 300, now - 200,
-                 ["queued","sent","completed"][j]))
+                (
+                    tid,
+                    bid,
+                    ["ping", "inventory", "heartbeat"][j],
+                    json.dumps({"n": j}),
+                    now - 300,
+                    now - 200,
+                    ["queued", "sent", "completed"][j],
+                ),
+            )
             if j == 2:
                 con.execute(
                     "INSERT OR IGNORE INTO results "
                     "(id,task_id,bot_id,payload,success,received_at) "
                     "VALUES (?,?,?,?,?,?)",
-                    (f"res-{i:03d}-{j}", tid, bid,
-                     json.dumps({"ok": True, "n": j}), 1, now - 100))
+                    (f"res-{i:03d}-{j}", tid, bid, json.dumps({"ok": True, "n": j}), 1, now - 100),
+                )
     con.commit()
     counts = {}
-    for t in ("bots","tasks","results"):
+    for t in ("bots", "tasks", "results"):
         counts[t] = con.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
     con.close()
     return counts
@@ -119,15 +134,22 @@ def seed_demo(n_bots: int = 24) -> dict[str, int]:
 
 # ── MQL → SQL compiler ──────────────────────────────────────────
 MQL_OPS = {
-    "$eq": "=", "$ne": "!=", "$gt": ">", "$gte": ">=",
-    "$lt": "<", "$lte": "<=", "$like": "LIKE", "$not_like": "NOT LIKE",
-    "$in": "IN", "$nin": "NOT IN",
+    "$eq": "=",
+    "$ne": "!=",
+    "$gt": ">",
+    "$gte": ">=",
+    "$lt": "<",
+    "$lte": "<=",
+    "$like": "LIKE",
+    "$not_like": "NOT LIKE",
+    "$in": "IN",
+    "$nin": "NOT IN",
 }
 
 
-def compile_mql(table: str, filt: dict[str, Any],
-                projection: list[str] | None = None,
-                limit: int | None = None) -> tuple[str, list[Any]]:
+def compile_mql(
+    table: str, filt: dict[str, Any], projection: list[str] | None = None, limit: int | None = None
+) -> tuple[str, list[Any]]:
     """Mongo-style filter -> SQL. Values are bound, not interpolated."""
     cols = ", ".join(projection) if projection else "*"
     where: list[str] = []
@@ -138,7 +160,7 @@ def compile_mql(table: str, filt: dict[str, Any],
                 sql_op = MQL_OPS.get(op)
                 if sql_op is None:
                     raise ValueError(f"unknown MQL op {op!r}")
-                if sql_op in ("IN","NOT IN"):
+                if sql_op in ("IN", "NOT IN"):
                     if not arg:
                         where.append("0=1" if sql_op == "IN" else "1=1")
                         continue
@@ -191,41 +213,59 @@ class Finding:
 def q_silent_bots() -> list[Finding]:
     """Bots that haven't checked in for over 300 seconds."""
     rows = run_sql(
-        "SELECT id, last_seen FROM bots "
-        "WHERE status='active' AND (? - last_seen) > 300", (time.time(),))
-    return [Finding(q="silent_bots", table="bots", row_id=r["id"],
-                    detail=f"silent {int(time.time()-r['last_seen'])}s")
-            for r in rows]
+        "SELECT id, last_seen FROM bots WHERE status='active' AND (? - last_seen) > 300",
+        (time.time(),),
+    )
+    return [
+        Finding(
+            q="silent_bots",
+            table="bots",
+            row_id=r["id"],
+            detail=f"silent {int(time.time() - r['last_seen'])}s",
+        )
+        for r in rows
+    ]
 
 
 def q_orphan_tasks() -> list[Finding]:
     """Tasks whose bot no longer exists."""
     rows = run_sql(
-        "SELECT t.id, t.bot_id FROM tasks t "
-        "LEFT JOIN bots b ON b.id = t.bot_id WHERE b.id IS NULL")
-    return [Finding(q="orphan_tasks", table="tasks", row_id=r["id"],
-                    detail=f"bot {r['bot_id']} missing")
-            for r in rows]
+        "SELECT t.id, t.bot_id FROM tasks t LEFT JOIN bots b ON b.id = t.bot_id WHERE b.id IS NULL"
+    )
+    return [
+        Finding(
+            q="orphan_tasks", table="tasks", row_id=r["id"], detail=f"bot {r['bot_id']} missing"
+        )
+        for r in rows
+    ]
 
 
 def q_queued_long() -> list[Finding]:
     """Tasks stuck in queued for over 600 seconds."""
     rows = run_sql(
-        "SELECT id, queued_at FROM tasks "
-        "WHERE status='queued' AND (? - queued_at) > 600", (time.time(),))
-    return [Finding(q="queued_long", table="tasks", row_id=r["id"],
-                    detail=f"queued {int(time.time()-r['queued_at'])}s")
-            for r in rows]
+        "SELECT id, queued_at FROM tasks WHERE status='queued' AND (? - queued_at) > 600",
+        (time.time(),),
+    )
+    return [
+        Finding(
+            q="queued_long",
+            table="tasks",
+            row_id=r["id"],
+            detail=f"queued {int(time.time() - r['queued_at'])}s",
+        )
+        for r in rows
+    ]
 
 
 def q_failed_tasks() -> list[Finding]:
     """Tasks whose result has success=0."""
     rows = run_sql(
-        "SELECT t.id, r.payload FROM tasks t "
-        "JOIN results r ON r.task_id = t.id WHERE r.success = 0")
-    return [Finding(q="failed_tasks", table="tasks", row_id=r["id"],
-                    detail=(r["payload"] or "")[:60])
-            for r in rows]
+        "SELECT t.id, r.payload FROM tasks t JOIN results r ON r.task_id = t.id WHERE r.success = 0"
+    )
+    return [
+        Finding(q="failed_tasks", table="tasks", row_id=r["id"], detail=(r["payload"] or "")[:60])
+        for r in rows
+    ]
 
 
 def q_terminated_with_tasks() -> list[Finding]:
@@ -234,20 +274,35 @@ def q_terminated_with_tasks() -> list[Finding]:
         "SELECT b.id AS bid, COUNT(t.id) AS n FROM bots b "
         "JOIN tasks t ON t.bot_id = b.id "
         "WHERE b.status='terminated' AND t.status='queued' "
-        "GROUP BY b.id")
-    return [Finding(q="terminated_with_tasks", table="bots", row_id=r["bid"],
-                    detail=f"{r['n']} queued",
-                    data={"queued": r["n"]}) for r in rows]
+        "GROUP BY b.id"
+    )
+    return [
+        Finding(
+            q="terminated_with_tasks",
+            table="bots",
+            row_id=r["bid"],
+            detail=f"{r['n']} queued",
+            data={"queued": r["n"]},
+        )
+        for r in rows
+    ]
 
 
 def q_success_ratio() -> list[Finding]:
     """Bots whose result success ratio is below 0.5."""
     rows = run_sql(
         "SELECT bot_id, AVG(success) AS s, COUNT(*) AS n FROM results "
-        "GROUP BY bot_id HAVING s < 0.5")
-    return [Finding(q="success_ratio", table="results", row_id=r["bot_id"],
-                    detail=f"avg {r['s']:.2f} over {r['n']}")
-            for r in rows]
+        "GROUP BY bot_id HAVING s < 0.5"
+    )
+    return [
+        Finding(
+            q="success_ratio",
+            table="results",
+            row_id=r["bot_id"],
+            detail=f"avg {r['s']:.2f} over {r['n']}",
+        )
+        for r in rows
+    ]
 
 
 # ── mesh: run CQL + SQL + MQL in parallel ────────────────────────
@@ -266,30 +321,26 @@ class MeshResult:
 
 
 CQL_QUERIES: dict[str, Callable[[], list[Finding]]] = {
-    "silent_bots":           q_silent_bots,
-    "orphan_tasks":          q_orphan_tasks,
-    "queued_long":           q_queued_long,
-    "failed_tasks":          q_failed_tasks,
+    "silent_bots": q_silent_bots,
+    "orphan_tasks": q_orphan_tasks,
+    "queued_long": q_queued_long,
+    "failed_tasks": q_failed_tasks,
     "terminated_with_tasks": q_terminated_with_tasks,
-    "success_ratio":         q_success_ratio,
+    "success_ratio": q_success_ratio,
 }
 
 SQL_QUERIES: dict[str, tuple[str, Sequence[Any]]] = {
-    "bot_os_counts": (
-        "SELECT os, COUNT(*) n FROM bots GROUP BY os ORDER BY n DESC", ()),
-    "task_status": (
-        "SELECT status, COUNT(*) n FROM tasks GROUP BY status", ()),
-    "oldest_bot": (
-        "SELECT id, registered_at FROM bots "
-        "ORDER BY registered_at ASC LIMIT 5", ()),
+    "bot_os_counts": ("SELECT os, COUNT(*) n FROM bots GROUP BY os ORDER BY n DESC", ()),
+    "task_status": ("SELECT status, COUNT(*) n FROM tasks GROUP BY status", ()),
+    "oldest_bot": ("SELECT id, registered_at FROM bots ORDER BY registered_at ASC LIMIT 5", ()),
 }
 
 MQL_QUERIES: dict[str, tuple[str, dict[str, Any]]] = {
-    "active_linux":   ("bots", {"status": "active", "os": "linux"}),
-    "recent_bots":    ("bots", {"last_seen": {"$gt": time.time() - 300}}),
-    "ping_tasks":     ("tasks", {"cmd": "ping"}),
-    "unsuccessful":   ("results", {"success": 0}),
-    "multi_cmd":      ("tasks", {"cmd": {"$in": ["ping", "inventory"]}}),
+    "active_linux": ("bots", {"status": "active", "os": "linux"}),
+    "recent_bots": ("bots", {"last_seen": {"$gt": time.time() - 300}}),
+    "ping_tasks": ("tasks", {"cmd": "ping"}),
+    "unsuccessful": ("results", {"success": 0}),
+    "multi_cmd": ("tasks", {"cmd": {"$in": ["ping", "inventory"]}}),
 }
 
 
@@ -308,8 +359,9 @@ def run_mesh(*, workers: int = 8) -> MeshResult:
             try:
                 out = f.result()
             except Exception as e:
-                out = [] if kind != "cql" else [
-                    Finding(q=name, table="?", row_id="?", detail=str(e))]
+                out = (
+                    [] if kind != "cql" else [Finding(q=name, table="?", row_id="?", detail=str(e))]
+                )
             if kind == "cql":
                 res.cql[name] = out
             elif kind == "sql":

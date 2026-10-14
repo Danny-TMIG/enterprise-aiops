@@ -9,20 +9,22 @@ class Prove2MeProver(Prover):
     Prove2Me is treated as a *statement prover*: it converts a claim
     into a canonical Lean theorem before the kernel checks it.
     """
+
     name = "prove2me"
 
     def _prove(self, statement: str, context):
         lean = self._formalize(statement)
         if not lean:
             return ProverResult(
-                prover=self.name, status="INSUFFICIENT_DATA",
+                prover=self.name,
+                status="INSUFFICIENT_DATA",
                 error="could not formalize statement",
             )
         return ProverResult(
-            prover=self.name, status="PASS",
+            prover=self.name,
+            status="PASS",
             proof=lean,
-            evidence=[{"type": "statement", "value": statement},
-                      {"type": "lean", "value": lean}],
+            evidence=[{"type": "statement", "value": statement}, {"type": "lean", "value": lean}],
         )
 
     def _formalize(self, statement: str) -> str:

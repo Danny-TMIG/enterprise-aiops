@@ -6,7 +6,9 @@ import random  # pragma: no cover
 from dcs.generate import requirement  # pragma: no cover
 
 
-def ant_colony(n_ants=20, n_steps=200, grid=40, decay=0.01, seed=0, food_at=(12, 12)):  # pragma: no cover
+def ant_colony(
+    n_ants=20, n_steps=200, grid=40, decay=0.01, seed=0, food_at=(12, 12)
+):  # pragma: no cover
     """Simple ACO: distance dominates, pheromone is a small bonus.
 
     The bug in the previous version: deposit = 1.0 and distance weight 0.05
@@ -38,7 +40,10 @@ def ant_colony(n_ants=20, n_steps=200, grid=40, decay=0.01, seed=0, food_at=(12,
     for yy in range(grid):
         for xx in range(grid):
             pheromone[yy][xx] *= 1 - decay
-    return {"food_collected": total_food, "pheromone_mass": sum(map(sum, pheromone))}  # pragma: no cover
+    return {
+        "food_collected": total_food,
+        "pheromone_mass": sum(map(sum, pheromone)),
+    }  # pragma: no cover
 
 
 def termite_mound(n=500, deposit_rate=0.3, evaporate=0.02, seed=0):  # pragma: no cover

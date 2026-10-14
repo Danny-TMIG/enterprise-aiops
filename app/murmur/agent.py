@@ -3,6 +3,7 @@
 Rule engine output overrides the stage decision when present.
 Both go through `apply`, so state is updated consistently.
 """
+
 from __future__ import annotations
 
 import time
@@ -21,8 +22,7 @@ class Agent:
     def decide(self) -> Decision | None:
         self.state.ticks += 1
         self.state.last_tick_ts = time.time()
-        return select(self.state, [n.state for n in self.neighbors],
-                      self.rules)
+        return select(self.state, [n.state for n in self.neighbors], self.rules)
 
     def apply(self, d: Decision, dt: float = 0.1) -> None:
         v = d.verb
@@ -44,8 +44,7 @@ class Agent:
             self.state.position[k] = cur + (t - cur) * 0.5
         elif v == "act.probe":
             amp = float(p.get("amplitude", 0.02))
-            self.state.position["signal"] = (
-                self.state.position.get("signal", 0.0) + amp)
+            self.state.position["signal"] = self.state.position.get("signal", 0.0) + amp
         self._advance(dt)
 
     def _advance(self, dt: float) -> None:
@@ -58,6 +57,7 @@ class Agent:
         try:
             if not hasattr(self, "_dd"):
                 from app.ddlong.chain import DDChain
+
                 self._dd = DDChain(node_id=self.id)
             sig = self.state.position.get("signal")
             if sig is not None:
@@ -68,5 +68,4 @@ class Agent:
     def apply_update(self, u: Update) -> None:
         if u.threshold:
             for k in list(self.state.thresholds):
-                self.state.thresholds[k] = max(
-                    0.05, self.state.thresholds[k] + u.threshold)
+                self.state.thresholds[k] = max(0.05, self.state.thresholds[k] + u.threshold)

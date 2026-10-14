@@ -1,4 +1,5 @@
 """Unit tests for dcs.verify."""
+
 import pytest
 
 from dcs.verify import (
@@ -8,7 +9,6 @@ from dcs.verify import (
     digest_of,
     verify,
 )
-
 
 KEY = b"test-key-do-not-use-in-production"
 
@@ -86,8 +86,10 @@ def test_verify_handles_verifier_exception():
     class Boom:
         def sign(self, payload):
             return b""
+
         def verify(self, payload, signature):
             raise RuntimeError("boom")
+
     result = verify(b"x", b"y", Boom())
     assert not result.ok
     assert "RuntimeError" in result.reason

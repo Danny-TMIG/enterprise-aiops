@@ -1,4 +1,5 @@
 """Backtracking solver with MRV and forward checking."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -15,8 +16,7 @@ class Solution:
     trace: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict:
-        return {"assignment": dict(self.assignment),
-                "nodes": self.nodes, "complete": self.complete}
+        return {"assignment": dict(self.assignment), "nodes": self.nodes, "complete": self.complete}
 
 
 def _mrv(grid, assignment):
@@ -56,14 +56,14 @@ def solve(grid: Grid, max_nodes: int = 1_000_000) -> Solution:
             if nodes[0] > max_nodes:
                 del assignment[vid]
                 return False
-            if _consistent(grid, assignment):
-                if bt():
-                    return True
+            if _consistent(grid, assignment) and bt():
+                return True
             del assignment[vid]
         return False
 
     ok = bt()
     return Solution(assignment=dict(assignment), nodes=nodes[0], complete=ok)
+
 
 def solve_fc(grid: Grid, max_nodes: int = 1_000_000) -> Solution:
     """Backtracking with forward checking.

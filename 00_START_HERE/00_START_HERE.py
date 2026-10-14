@@ -1,16 +1,17 @@
 """Source module for 00_START_HERE."""
+
 from __future__ import annotations
 
 import hashlib
 import json
 import time
-from dataclasses import dataclass, field, asdict
-from typing import Any
+from dataclasses import asdict, dataclass, field
 
 
 @dataclass
 class Record:
     """One immutable unit of work emitted by 00_START_HERE."""
+
     name: str
     payload: dict = field(default_factory=dict)
     ts: str = field(default_factory=lambda: time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
@@ -20,7 +21,7 @@ class Record:
         return hashlib.sha256(canon.encode()).hexdigest()
 
 
-class 00StartHere:
+class Mod00StartHere:
     """Primary interface for 00_START_HERE. Stateless, deterministic."""
 
     def __init__(self) -> None:
@@ -43,4 +44,4 @@ class 00StartHere:
         return h.hexdigest()
 
 
-__all__ = ["Record", "00StartHere"]
+__all__ = ["Mod00StartHere", "Record"]

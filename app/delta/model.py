@@ -1,4 +1,5 @@
 """A local model handle. Reads from disk. No network."""
+
 from __future__ import annotations
 
 import hashlib
@@ -11,6 +12,7 @@ from typing import Protocol, runtime_checkable
 @runtime_checkable
 class Model(Protocol):
     id: str
+
     def generate(self, prompt: str, seed: int) -> str: ...
 
 
@@ -66,10 +68,10 @@ def mlx_model(path: str, model_id: str | None = None):
 
     def _gen(prompt: str, seed: int) -> str:
         from app.dispatch.models.base import ModelRequest
-        r = prov.complete(ModelRequest(task="coding", prompt=prompt,
-                                       seed=seed, max_tokens=512,
-                                       temperature=0.0))
+
+        r = prov.complete(
+            ModelRequest(task="coding", prompt=prompt, seed=seed, max_tokens=512, temperature=0.0)
+        )
         return r.text
 
-    return DiskModel(id=model_id or Path(path).stem,
-                     path=Path(path), generate_fn=_gen)
+    return DiskModel(id=model_id or Path(path).stem, path=Path(path), generate_fn=_gen)

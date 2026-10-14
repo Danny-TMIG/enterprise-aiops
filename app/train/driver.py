@@ -1,4 +1,5 @@
 """TrainDriver: N runs, each pollinating the mesh."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -44,8 +45,7 @@ class TrainDriver:
             cd = resolve_cd(r)
             pub = publish(r, chain_id=f"train-{i}")
 
-            cur_rates = {(t.kind, t.solver, t.difficulty): t.rate
-                         for t in r.tiles}
+            cur_rates = {(t.kind, t.solver, t.difficulty): t.rate for t in r.tiles}
             delta: dict[str, float] = {}
             for key, v in cur_rates.items():
                 kstr = "/".join(key)
@@ -53,9 +53,7 @@ class TrainDriver:
                 delta[kstr] = round(v - p, 4)
             prev_rates = cur_rates
 
-            gens.append(TrainGeneration(index=i, run=r, cd=cd,
-                                        publish=pub,
-                                        delta_from_prev=delta))
+            gens.append(TrainGeneration(index=i, run=r, cd=cd, publish=pub, delta_from_prev=delta))
 
         # weave / criss-cross / trans / pollinate
         cc = []

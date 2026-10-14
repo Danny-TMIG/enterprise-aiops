@@ -11,17 +11,18 @@ The mesh presents itself as an A2A agent so external orchestrators
 (Microsoft Copilot, Salesforce Agentforce, ServiceNow, Vertex) can
 invoke it as a verification backend.
 """
+
 from __future__ import annotations
 
 import uuid
 from collections.abc import Callable
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 
 def _now() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 @dataclass
@@ -30,9 +31,14 @@ class AgentCard:
     description: str = "Vendor-agnostic verification backend for orchestrators"
     url: str = "http://127.0.0.1:8000/dis/a2a"
     version: str = "0.1.0"
-    capabilities: list[str] = field(default_factory=lambda: [
-        "verification", "proving", "scanning", "evidence",
-    ])
+    capabilities: list[str] = field(
+        default_factory=lambda: [
+            "verification",
+            "proving",
+            "scanning",
+            "evidence",
+        ]
+    )
     skills: list[dict[str, Any]] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
@@ -55,15 +61,19 @@ class A2AServer:
     handlers: dict[str, Callable[[dict[str, Any]], Any]] = field(default_factory=dict)
     tasks: dict[str, dict[str, Any]] = field(default_factory=dict)
 
-    def skill(self, name: str, description: str,
-              schema: dict[str, Any] | None = None) -> Callable:
+    def skill(self, name: str, description: str, schema: dict[str, Any] | None = None) -> Callable:
         def deco(fn: Callable[[dict[str, Any]], Any]) -> Callable:
-            self.card.skills.append({
-                "id": name, "name": name, "description": description,
-                "inputSchema": schema or {"type": "object"},
-            })
+            self.card.skills.append(
+                {
+                    "id": name,
+                    "name": name,
+                    "description": description,
+                    "inputSchema": schema or {"type": "object"},
+                }
+            )
             self.handlers[name] = fn
             return fn
+
         return deco
 
     def handle(self, method: str, params: dict[str, Any]) -> dict[str, Any]:
@@ -84,13 +94,17 @@ class A2AServer:
 
     def _send(self, params: dict[str, Any]) -> dict[str, Any]:
         tid = params.get("id") or f"task-{uuid.uuid4().hex[:12]}"
-        skill_id = (params.get("skill") or
-                    (params.get("message") or {}).get("skill") or
-                    params.get("skillId"))
+        skill_id = (
+            params.get("skill")
+            or (params.get("message") or {}).get("skill")
+            or params.get("skillId")
+        )
         payload = (params.get("message") or {}).get("params") or params.get("params") or {}
         task = {
-            "id": tid, "status": "working",
-            "createdAt": _now(), "skill": skill_id,
+            "id": tid,
+            "status": "working",
+            "createdAt": _now(),
+            "skill": skill_id,
         }
         self.tasks[tid] = task
         fn = self.handlers.get(skill_id or "")
@@ -111,12 +125,10 @@ class A2AServer:
     def jsonrpc(self, payload: dict[str, Any]) -> dict[str, Any]:
         rid = payload.get("id")
         try:
-            result = self.handle(payload.get("method", ""),
-                                 payload.get("params") or {})
+            result = self.handle(payload.get("method", ""), payload.get("params") or {})
             return {"jsonrpc": "2.0", "id": rid, "result": result}
         except Exception as exc:  # noqa: BLE001
-            return {"jsonrpc": "2.0", "id": rid,
-                    "error": {"code": -32601, "message": str(exc)}}
+            return {"jsonrpc": "2.0", "id": rid, "error": {"code": -32601, "message": str(exc)}}
 
 
 @dataclass
@@ -125,16 +137,14 @@ class A2AClient:
     next_id: int = 1
 
     def _rpc(self, method: str, params: dict[str, Any]) -> dict[str, Any]:
-        payload = {"jsonrpc": "2.0", "id": self.next_id,
-                   "method": method, "params": params}
+        payload = {"jsonrpc": "2.0", "id": self.next_id, "method": method, "params": params}
         self.next_id += 1
         return self.server.jsonrpc(payload)
 
     def card(self) -> dict[str, Any]:
         return self.server.card.to_dict()
 
-    def send(self, skill: str, params: dict[str, Any],
-             id_: str | None = None) -> dict[str, Any]:
+    def send(self, skill: str, params: dict[str, Any], id_: str | None = None) -> dict[str, Any]:
         r = self._rpc("tasks/send", {"id": id_, "skill": skill, "params": params})
         return r.get("result") or r.get("error") or {}
 

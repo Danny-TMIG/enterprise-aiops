@@ -14,7 +14,7 @@ class SeedEngine:
             "seed": self.seed_value,
             "hash": h,
             "status": "seeded",
-            "timestamp": self.created_at
+            "timestamp": self.created_at,
         }
 
     def verify(self, state_hash: str) -> bool:

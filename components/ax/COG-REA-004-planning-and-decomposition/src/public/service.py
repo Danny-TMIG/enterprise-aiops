@@ -3,7 +3,9 @@ COG-REA-004 - Public Interface
 Layer: AX
 Governed under ASF v1.2 specification.
 """
-from typing import Dict, Any, List
+
+from typing import Any
+
 
 class CogRea004Service:
     def __init__(self, node_id: str = "dannys-macbook-m4max"):
@@ -12,7 +14,7 @@ class CogRea004Service:
         self.node_id = node_id
         self.active_state = "initialized"
 
-    def execute_operation(self, payload: Dict[str, Any]) -> Dict[str, Any]:
+    def execute_operation(self, payload: dict[str, Any]) -> dict[str, Any]:
         """
         Executes standard bounded operation for COG-REA-004.
         """
@@ -21,7 +23,7 @@ class CogRea004Service:
             "component_id": self.component_id,
             "status": "success",
             "received_payload": payload,
-            "node": self.node_id
+            "node": self.node_id,
         }
         self.active_state = "idle"
         return result

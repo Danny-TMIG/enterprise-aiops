@@ -10,6 +10,7 @@ Six named grammars are exposed through ``SHIPPED`` (and therefore
 intentionally *not* advertised as a shipped product — the library test
 asserts the shipped set is exactly those six names.
 """
+
 from __future__ import annotations
 
 from app.origami.grammar import (
@@ -23,40 +24,103 @@ from app.origami.grammar import (
 def _module(name: str) -> LoadedGrammar:
     """A module with docstring, imports, one function, one test."""
     g = LoadedGrammar(start="Module", name=name)
-    g.add(Production("Module",
-                     (_n("ModDoc"), _n("Imports"), _n("Func"), _n("Test")),
-                     weight=1.0))
-    g.add(Production("ModDoc", (_t("mod_doc"),), weight=1.0,
-                     payload_prompt="Write a one-sentence module docstring. Plain text only.",
-                     payload_kind="text", tag="mod_doc"))
-    g.add(Production("Imports", (_t("imports"),), weight=1.0,
-                     payload_prompt="Write zero or more Python import lines, one per line. No fences.",
-                     payload_kind="code", tag="imports"))
-    g.add(Production("Func",
-                     (_n("FuncName"), _n("Params"), _n("Ret"), _n("FDoc"), _n("FBody")),
-                     weight=1.0))
-    g.add(Production("FuncName", (_t("func_name"),), weight=1.0,
-                     payload_prompt="Return one snake_case function name.",
-                     payload_kind="identifier", tag="func_name"))
-    g.add(Production("Params", (_t("params"),), weight=1.0,
-                     payload_prompt="Write a Python parameter list (may be empty).",
-                     payload_kind="text", tag="params"))
-    g.add(Production("Ret", (_t("ret"),), weight=1.0,
-                     payload_prompt="Return the return type annotation (e.g. int).",
-                     payload_kind="text", tag="ret"))
-    g.add(Production("FDoc", (_t("fdoc"),), weight=1.0,
-                     payload_prompt="Write a one-line function docstring. Plain text only.",
-                     payload_kind="text", tag="func_doc"))
-    g.add(Production("FBody", (_t("fbody"),), weight=1.0,
-                     payload_prompt="Write the function body. Indent with 4 spaces. No def, no fences.",
-                     payload_kind="code", tag="fbody"))
+    g.add(Production("Module", (_n("ModDoc"), _n("Imports"), _n("Func"), _n("Test")), weight=1.0))
+    g.add(
+        Production(
+            "ModDoc",
+            (_t("mod_doc"),),
+            weight=1.0,
+            payload_prompt="Write a one-sentence module docstring. Plain text only.",
+            payload_kind="text",
+            tag="mod_doc",
+        )
+    )
+    g.add(
+        Production(
+            "Imports",
+            (_t("imports"),),
+            weight=1.0,
+            payload_prompt="Write zero or more Python import lines, one per line. No fences.",
+            payload_kind="code",
+            tag="imports",
+        )
+    )
+    g.add(
+        Production(
+            "Func", (_n("FuncName"), _n("Params"), _n("Ret"), _n("FDoc"), _n("FBody")), weight=1.0
+        )
+    )
+    g.add(
+        Production(
+            "FuncName",
+            (_t("func_name"),),
+            weight=1.0,
+            payload_prompt="Return one snake_case function name.",
+            payload_kind="identifier",
+            tag="func_name",
+        )
+    )
+    g.add(
+        Production(
+            "Params",
+            (_t("params"),),
+            weight=1.0,
+            payload_prompt="Write a Python parameter list (may be empty).",
+            payload_kind="text",
+            tag="params",
+        )
+    )
+    g.add(
+        Production(
+            "Ret",
+            (_t("ret"),),
+            weight=1.0,
+            payload_prompt="Return the return type annotation (e.g. int).",
+            payload_kind="text",
+            tag="ret",
+        )
+    )
+    g.add(
+        Production(
+            "FDoc",
+            (_t("fdoc"),),
+            weight=1.0,
+            payload_prompt="Write a one-line function docstring. Plain text only.",
+            payload_kind="text",
+            tag="func_doc",
+        )
+    )
+    g.add(
+        Production(
+            "FBody",
+            (_t("fbody"),),
+            weight=1.0,
+            payload_prompt="Write the function body. Indent with 4 spaces. No def, no fences.",
+            payload_kind="code",
+            tag="fbody",
+        )
+    )
     g.add(Production("Test", (_n("TName"), _n("TBody")), weight=1.0))
-    g.add(Production("TName", (_t("test_name"),), weight=1.0,
-                     payload_prompt="Return one test function name starting with test_.",
-                     payload_kind="identifier", tag="test_name"))
-    g.add(Production("TBody", (_t("test_body"),), weight=1.0,
-                     payload_prompt="Write one assert statement. No def, no fences.",
-                     payload_kind="code", tag="test_body"))
+    g.add(
+        Production(
+            "TName",
+            (_t("test_name"),),
+            weight=1.0,
+            payload_prompt="Return one test function name starting with test_.",
+            payload_kind="identifier",
+            tag="test_name",
+        )
+    )
+    g.add(
+        Production(
+            "TBody",
+            (_t("test_body"),),
+            weight=1.0,
+            payload_prompt="Write one assert statement. No def, no fences.",
+            payload_kind="code",
+            tag="test_body",
+        )
+    )
     return g
 
 
@@ -90,12 +154,12 @@ def rich_module() -> LoadedGrammar:
 
 
 SHIPPED = {
-    "code_artifact":    code_artifact,
-    "review":           review,
-    "invariant":        invariant,
+    "code_artifact": code_artifact,
+    "review": review,
+    "invariant": invariant,
     "code_with_review": code_with_review,
-    "code_variants":    code_variants,
-    "dense_code":       dense_code,
+    "code_variants": code_variants,
+    "dense_code": dense_code,
 }
 
 

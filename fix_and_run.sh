@@ -69,7 +69,7 @@ def health_check():
 def handle_intent(payload: IntentRequest, x_enterprise_token: str = Header(None)):
     if x_enterprise_token != "enterprise-secure-local-token":
         raise HTTPException(status_code=403, detail="Invalid enterprise security token")
-    
+
     intent_lower = payload.intent.lower()
     if any(k in intent_lower for k in ["refactor", "generate", "endpoint", "code", "fastapi"]):
         model_path = "mlx-community/Qwen2.5-Coder-7B-Instruct-4bit"
@@ -77,10 +77,10 @@ def handle_intent(payload: IntentRequest, x_enterprise_token: str = Header(None)
         model_path = "mlx-community/DeepSeek-R1-Distill-Qwen-7B-4bit"
 
     model, tokenizer = registry.swap_expert(model_path)
-    
+
     prompt = f"System: You are an enterprise AI operations expert.\nUser Intent: {payload.intent}\nResponse:"
     response_text = generate(model, tokenizer, prompt=prompt, max_tokens=256)
-    
+
     return {
         "status": "success",
         "expert_used": model_path,

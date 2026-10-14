@@ -23,13 +23,17 @@ class LinguisticValidator:
         self.default_timeout = default_timeout
         self.poll_interval = poll_interval
 
-    async def assert_converges(self, probe_fn: Callable[[], float], expected: float = 1.0, subsystem: str = "Linguistic") -> ConvergenceMetrics:
+    async def assert_converges(
+        self, probe_fn: Callable[[], float], expected: float = 1.0, subsystem: str = "Linguistic"
+    ) -> ConvergenceMetrics:
         start_time = time.time()
         while time.time() - start_time < self.default_timeout:
             val = probe_fn()
             if abs(float(val) - float(expected)) < 1e-5:
-                return ConvergenceMetrics(achieved_value=float(val), converged=True, subsystem=subsystem)
+                return ConvergenceMetrics(
+                    achieved_value=float(val), converged=True, subsystem=subsystem
+                )
             await asyncio.sleep(self.poll_interval)
-        
+
         final_val = float(probe_fn())
         return ConvergenceMetrics(achieved_value=final_val, converged=False, subsystem=subsystem)

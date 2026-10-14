@@ -1,9 +1,10 @@
 """A through Z. The twenty-six atoms."""
+
 from __future__ import annotations
 
 import string
 
-ALPHABET: tuple[str, ...] = tuple(string.ascii_uppercase)   # A..Z
+ALPHABET: tuple[str, ...] = tuple(string.ascii_uppercase)  # A..Z
 
 
 def letters(n: int | None = None) -> tuple[str, ...]:

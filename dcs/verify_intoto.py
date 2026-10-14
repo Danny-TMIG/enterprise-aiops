@@ -7,6 +7,7 @@ against the signer's key.
 
 Shape follows the in-toto attestation spec v0.1.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -24,7 +25,7 @@ class Subject:
     digest: dict[str, str]
 
     @classmethod
-    def of(cls, name: str, content: bytes | str) -> "Subject":
+    def of(cls, name: str, content: bytes | str) -> Subject:
         return cls(name=name, digest={"sha256": digest_of(content)})
 
 
@@ -37,10 +38,7 @@ class Statement:
     def to_json(self) -> dict[str, Any]:
         return {
             "_type": STATEMENT_TYPE,
-            "subject": [
-                {"name": s.name, "digest": dict(s.digest)}
-                for s in self.subject
-            ],
+            "subject": [{"name": s.name, "digest": dict(s.digest)} for s in self.subject],
             "predicateType": self.predicate_type,
             "predicate": self.predicate,
         }

@@ -1,4 +1,5 @@
 """origami CLI."""
+
 from __future__ import annotations
 
 import argparse
@@ -18,28 +19,37 @@ def _cmd_expand(a) -> int:
     if a.tree:
         print(json.dumps(d["tree"], indent=2, default=str))
         return 0
-    print(json.dumps({
-        "grammar": g.name, "seed": a.seed,
-        "leaves": len(d["leaves"]),
-        "terminals": d["terminals"],
-    }, indent=2))
+    print(
+        json.dumps(
+            {
+                "grammar": g.name,
+                "seed": a.seed,
+                "leaves": len(d["leaves"]),
+                "terminals": d["terminals"],
+            },
+            indent=2,
+        )
+    )
     return 0
 
 
 def _cmd_swarm(a) -> int:
     from app.origami.swarm import Swarm
+
     g = get_grammar(a.grammar)
     s = Swarm(n_workers=a.workers)
     if not s.available():
         print("  ! MLX not available - running without swarm", file=sys.stderr)
-    r = dispatch(g, s, seed=a.seed, max_depth=a.max_depth,
-                 max_tokens=a.max_tokens)
-    if getattr(a, 'refine', False):
+    r = dispatch(g, s, seed=a.seed, max_depth=a.max_depth, max_tokens=a.max_tokens)
+    if getattr(a, "refine", False):
         from app.origami.dispatch import refine as _refine
+
         r.code = _refine(r.code, s, max_tokens=a.max_tokens * 4)
     payload = {
-        "grammar": r.grammar_name, "seed": r.seed,
-        "leaves": r.leaves, "filled": r.filled,
+        "grammar": r.grammar_name,
+        "seed": r.seed,
+        "leaves": r.leaves,
+        "filled": r.filled,
         "swarm": r.swarm,
     }
     if a.out:
@@ -54,8 +64,7 @@ def _cmd_swarm(a) -> int:
 
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(prog="origami")
-    p.add_argument("--grammar", default="code_artifact",
-                   choices=list_shipped())
+    p.add_argument("--grammar", default="code_artifact", choices=list_shipped())
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--max-depth", type=int, default=10)
     p.add_argument("--max-tokens", type=int, default=128)
@@ -64,8 +73,9 @@ def main(argv=None) -> int:
     p.add_argument("--out", default="")
     p.add_argument("--tree", action="store_true")
     p.add_argument("--print-text", action="store_true")
-    p.add_argument("--refine", action="store_true",
-                   help="run one refinement pass over the assembled code")
+    p.add_argument(
+        "--refine", action="store_true", help="run one refinement pass over the assembled code"
+    )
     a = p.parse_args(argv)
     if a.swarm or a.out:
         return _cmd_swarm(a)

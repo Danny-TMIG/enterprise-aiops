@@ -11,6 +11,7 @@ Returns one of the RESULT STATES from the atlas:
 
 The gate never consults an LLM. It consults the registry.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -61,40 +62,63 @@ def gate(
     if not agencies:
         any_scope = [r.scope for r in everything["agency"] if r.live]
         if any_scope:
-            return Decision("NOT_AUTHORIZED", subject, capability,
-                            f"agency exists but not for scope '{scope}'; "
-                            f"held scopes: {any_scope}")
-        return Decision("NOT_AUTHORIZED", subject, capability,
-                        f"no live agency for scope '{scope}'")
+            return Decision(
+                "NOT_AUTHORIZED",
+                subject,
+                capability,
+                f"agency exists but not for scope '{scope}'; held scopes: {any_scope}",
+            )
+        return Decision(
+            "NOT_AUTHORIZED", subject, capability, f"no live agency for scope '{scope}'"
+        )
 
     # 2. License
-    licenses = [r for r in everything["license"]
-                if r.live and r.domain == domain and r.jurisdiction == jurisdiction]
+    licenses = [
+        r
+        for r in everything["license"]
+        if r.live and r.domain == domain and r.jurisdiction == jurisdiction
+    ]
     if not licenses:
-        return Decision("POLICY_DENIED", subject, capability,
-                        f"no live license for '{domain}' under '{jurisdiction}'")
+        return Decision(
+            "POLICY_DENIED",
+            subject,
+            capability,
+            f"no live license for '{domain}' under '{jurisdiction}'",
+        )
 
     # 3. Certification (optional unless required)
     if required_standard:
-        ok_certs = [r for r in everything["cert"]
-                    if r.live
-                    and r.standard == required_standard
-                    and (required_level is None or r.level == required_level)]
+        ok_certs = [
+            r
+            for r in everything["cert"]
+            if r.live
+            and r.standard == required_standard
+            and (required_level is None or r.level == required_level)
+        ]
         if not ok_certs:
-            return Decision("QUALIFICATION_DENIED", subject, capability,
-                            f"missing live cert {required_standard}"
-                            + (f" {required_level}" if required_level else ""))
+            return Decision(
+                "QUALIFICATION_DENIED",
+                subject,
+                capability,
+                f"missing live cert {required_standard}"
+                + (f" {required_level}" if required_level else ""),
+            )
 
     # 4. Expertise (earned)
     exps = [r for r in everything["expertise"] if r.domain == domain]
     if min_expertise > 0.0:
         if not exps:
-            return Decision("INSUFFICIENT_EVIDENCE", subject, capability,
-                            f"no expertise history in '{domain}'")
+            return Decision(
+                "INSUFFICIENT_EVIDENCE", subject, capability, f"no expertise history in '{domain}'"
+            )
         best = max(e.score() for e in exps)
         if best < min_expertise:
-            return Decision("INSUFFICIENT_EVIDENCE", subject, capability,
-                            f"expertise {best} < required {min_expertise}")
+            return Decision(
+                "INSUFFICIENT_EVIDENCE",
+                subject,
+                capability,
+                f"expertise {best} < required {min_expertise}",
+            )
 
     evidence = []
     evidence += [a.evidence_hash for a in agencies]
@@ -102,18 +126,17 @@ def gate(
     if exps:
         evidence += exps[0].evidence_hashes[-4:]
 
-    return Decision("PASS", subject, capability,
-                    "all gates cleared", evidence=evidence)
+    return Decision("PASS", subject, capability, "all gates cleared", evidence=evidence)
 
 
 class GateEvaluator:
-
     """Stateful wrapper around the module-level gate().
 
     `evaluate(context)` resolves subject+capability from the context
     (or uses the context dict directly as a registry lookup key), calls
     gate() against the real registry, and returns the Decision dict.
     """
+
     def __init__(self, registry: Registry | None = None):
         self.registry = registry or get_registry()
 
@@ -126,7 +149,8 @@ class GateEvaluator:
             return {"state": "PASS", "context": ctx}
         try:
             decision = gate(
-                subj, cap,
+                subj,
+                cap,
                 scope=ctx.get("scope", "default"),
                 domain=ctx.get("domain", "default"),
                 jurisdiction=ctx.get("jurisdiction", "default"),
@@ -136,6 +160,9 @@ class GateEvaluator:
             )
             return decision.to_dict()
         except Exception as exc:
-            return {"state": "ERROR", "reason": f"{type(exc).__name__}: {exc}",
-                    "subject": subj, "capability": cap}
-
+            return {
+                "state": "ERROR",
+                "reason": f"{type(exc).__name__}: {exc}",
+                "subject": subj,
+                "capability": cap,
+            }

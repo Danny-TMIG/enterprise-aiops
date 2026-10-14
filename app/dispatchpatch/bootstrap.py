@@ -64,7 +64,7 @@ class DispatchPatchBootstrap:
         protocol: str = "mcp",
         prompt: str = "Execute verification and sync",
         proof: str = "proven kernel validation",
-        code: str = "# sample code"
+        code: str = "# sample code",
     ) -> dict:
         DispatchPatchBootstrap.initialize()
 

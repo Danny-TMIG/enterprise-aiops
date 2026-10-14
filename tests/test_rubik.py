@@ -1,4 +1,5 @@
 """Rubik-specific tests, runnable in isolation: `pytest tests/test_rubik.py`."""
+
 import pytest
 
 from app.puzzles.rubik import (

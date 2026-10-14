@@ -1675,7 +1675,7 @@ static const char* const __pyx_f[] = {
 struct __pyx_obj_3app_10middleware_13fast_verifier___pyx_scope_struct__dispatch;
 
 /* "app/middleware/verification.py":32
- * 
+ *
  * class VerificationMiddleware(BaseHTTPMiddleware):
  *     async def dispatch(self, request: Request, call_next) -> Response:             # <<<<<<<<<<<<<<
  *         if request.method in ["POST", "PUT", "DELETE"] and "/state/" in request.url.path:
@@ -2807,14 +2807,14 @@ static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEng
 static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_4release(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_client_id); /* proto */
 static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_6verify_corpus(CYTHON_UNUSED PyObject *__pyx_self, CYTHON_UNUSED PyObject *__pyx_v_self, PyObject *__pyx_v_payload); /* proto */
 static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_22VerificationMiddleware_dispatch(CYTHON_UNUSED PyObject *__pyx_self, CYTHON_UNUSED PyObject *__pyx_v_self, PyObject *__pyx_v_request, PyObject *__pyx_v_call_next); /* proto */
-static PyObject *__pyx_tp_new__initialisation_3app_10middleware_13fast_verifier___pyx_scope_struct__dispatch(PyObject *o, 
+static PyObject *__pyx_tp_new__initialisation_3app_10middleware_13fast_verifier___pyx_scope_struct__dispatch(PyObject *o,
 #if CYTHON_VECTORCALL_TPNEW
     PyObject *const *args, Py_ssize_t nargs, PyObject *kwnames
 #else
     PyObject *a, PyObject *k
 #endif
 ); /*proto*/
-static PyObject *__pyx_tp_new_vectorcall_3app_10middleware_13fast_verifier___pyx_scope_struct__dispatch(PyTypeObject *t, 
+static PyObject *__pyx_tp_new_vectorcall_3app_10middleware_13fast_verifier___pyx_scope_struct__dispatch(PyTypeObject *t,
 #if CYTHON_VECTORCALL_TPNEW
     PyObject *const *args, Py_ssize_t nargs, PyObject *kwnames
 #else
@@ -3094,7 +3094,7 @@ return 0;
 /* #### Code section: module_code ### */
 
 /* "app/middleware/verification.py":7
- * 
+ *
  * class EnterpriseStateEngine:
  *     def __init__(self):             # <<<<<<<<<<<<<<
  *         self.locked = False
@@ -3102,7 +3102,7 @@ return 0;
 */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_1__init__(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_1__init__(PyObject *__pyx_self,
 #if CYTHON_VECTORCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -3110,7 +3110,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
 static PyMethodDef __pyx_mdef_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_1__init__ = {"__init__", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_1__init__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_1__init__(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_1__init__(PyObject *__pyx_self,
 #if CYTHON_VECTORCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -3222,7 +3222,7 @@ static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEng
  *         self.owner = None
  *         self.corpus_registry: Set[str] = set()             # <<<<<<<<<<<<<<
  *         self.last_transition = time.time()
- * 
+ *
 */
   __pyx_t_1 = PySet_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 10, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -3233,7 +3233,7 @@ static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEng
  *         self.owner = None
  *         self.corpus_registry: Set[str] = set()
  *         self.last_transition = time.time()             # <<<<<<<<<<<<<<
- * 
+ *
  *     def acquire(self, client_id: str) -> bool:
 */
   __pyx_t_2 = NULL;
@@ -3266,7 +3266,7 @@ static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEng
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "app/middleware/verification.py":7
- * 
+ *
  * class EnterpriseStateEngine:
  *     def __init__(self):             # <<<<<<<<<<<<<<
  *         self.locked = False
@@ -3291,14 +3291,14 @@ static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEng
 
 /* "app/middleware/verification.py":13
  *         self.last_transition = time.time()
- * 
+ *
  *     def acquire(self, client_id: str) -> bool:             # <<<<<<<<<<<<<<
  *         if self.locked and self.owner != client_id: return False
  *         self.locked = True
 */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_3acquire(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_3acquire(PyObject *__pyx_self,
 #if CYTHON_VECTORCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -3306,7 +3306,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
 static PyMethodDef __pyx_mdef_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_3acquire = {"acquire", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_3acquire, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_3acquire(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_3acquire(PyObject *__pyx_self,
 #if CYTHON_VECTORCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -3412,7 +3412,7 @@ static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEng
   __Pyx_RefNannySetupContext("acquire", 0);
 
   /* "app/middleware/verification.py":14
- * 
+ *
  *     def acquire(self, client_id: str) -> bool:
  *         if self.locked and self.owner != client_id: return False             # <<<<<<<<<<<<<<
  *         self.locked = True
@@ -3466,7 +3466,7 @@ static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEng
  *         self.locked = True
  *         self.owner = client_id             # <<<<<<<<<<<<<<
  *         return True
- * 
+ *
 */
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_owner, __pyx_v_client_id) < (0)) __PYX_ERR(0, 16, __pyx_L1_error)
 
@@ -3474,7 +3474,7 @@ static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEng
  *         self.locked = True
  *         self.owner = client_id
  *         return True             # <<<<<<<<<<<<<<
- * 
+ *
  *     def release(self, client_id: str) -> bool:
 */
   {
@@ -3490,7 +3490,7 @@ static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEng
 
   /* "app/middleware/verification.py":13
  *         self.last_transition = time.time()
- * 
+ *
  *     def acquire(self, client_id: str) -> bool:             # <<<<<<<<<<<<<<
  *         if self.locked and self.owner != client_id: return False
  *         self.locked = True
@@ -3509,14 +3509,14 @@ static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEng
 
 /* "app/middleware/verification.py":19
  *         return True
- * 
+ *
  *     def release(self, client_id: str) -> bool:             # <<<<<<<<<<<<<<
  *         if self.locked and self.owner == client_id:
  *             self.locked = False
 */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_5release(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_5release(PyObject *__pyx_self,
 #if CYTHON_VECTORCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -3524,7 +3524,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
 static PyMethodDef __pyx_mdef_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_5release = {"release", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_5release, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_5release(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_5release(PyObject *__pyx_self,
 #if CYTHON_VECTORCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -3630,7 +3630,7 @@ static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEng
   __Pyx_RefNannySetupContext("release", 0);
 
   /* "app/middleware/verification.py":20
- * 
+ *
  *     def release(self, client_id: str) -> bool:
  *         if self.locked and self.owner == client_id:             # <<<<<<<<<<<<<<
  *             self.locked = False
@@ -3682,7 +3682,7 @@ static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEng
  *             self.owner = None
  *             return True             # <<<<<<<<<<<<<<
  *         return False
- * 
+ *
 */
     {
       PyObject *__pyx_temp;
@@ -3696,7 +3696,7 @@ static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEng
     goto __pyx_L0;
 
     /* "app/middleware/verification.py":20
- * 
+ *
  *     def release(self, client_id: str) -> bool:
  *         if self.locked and self.owner == client_id:             # <<<<<<<<<<<<<<
  *             self.locked = False
@@ -3708,7 +3708,7 @@ static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEng
  *             self.owner = None
  *             return True
  *         return False             # <<<<<<<<<<<<<<
- * 
+ *
  *     def verify_corpus(self, payload: bytes) -> str:
 */
   {
@@ -3724,7 +3724,7 @@ static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEng
 
   /* "app/middleware/verification.py":19
  *         return True
- * 
+ *
  *     def release(self, client_id: str) -> bool:             # <<<<<<<<<<<<<<
  *         if self.locked and self.owner == client_id:
  *             self.locked = False
@@ -3743,14 +3743,14 @@ static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEng
 
 /* "app/middleware/verification.py":26
  *         return False
- * 
+ *
  *     def verify_corpus(self, payload: bytes) -> str:             # <<<<<<<<<<<<<<
  *         return hashlib.sha256(payload).hexdigest()
- * 
+ *
 */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_7verify_corpus(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_7verify_corpus(PyObject *__pyx_self,
 #if CYTHON_VECTORCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -3758,7 +3758,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
 static PyMethodDef __pyx_mdef_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_7verify_corpus = {"verify_corpus", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_7verify_corpus, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_7verify_corpus(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_21EnterpriseStateEngine_7verify_corpus(PyObject *__pyx_self,
 #if CYTHON_VECTORCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -3868,10 +3868,10 @@ static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEng
   __Pyx_RefNannySetupContext("verify_corpus", 0);
 
   /* "app/middleware/verification.py":27
- * 
+ *
  *     def verify_corpus(self, payload: bytes) -> str:
  *         return hashlib.sha256(payload).hexdigest()             # <<<<<<<<<<<<<<
- * 
+ *
  * engine = EnterpriseStateEngine()
 */
   __pyx_t_4 = NULL;
@@ -3925,10 +3925,10 @@ static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEng
 
   /* "app/middleware/verification.py":26
  *         return False
- * 
+ *
  *     def verify_corpus(self, payload: bytes) -> str:             # <<<<<<<<<<<<<<
  *         return hashlib.sha256(payload).hexdigest()
- * 
+ *
 */
 
   /* function exit code */
@@ -3949,7 +3949,7 @@ static PyObject *__pyx_pf_3app_10middleware_13fast_verifier_21EnterpriseStateEng
 static PyObject *__pyx_gb_3app_10middleware_13fast_verifier_22VerificationMiddleware_2generator(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value); /* proto */
 
 /* "app/middleware/verification.py":32
- * 
+ *
  * class VerificationMiddleware(BaseHTTPMiddleware):
  *     async def dispatch(self, request: Request, call_next) -> Response:             # <<<<<<<<<<<<<<
  *         if request.method in ["POST", "PUT", "DELETE"] and "/state/" in request.url.path:
@@ -3957,7 +3957,7 @@ static PyObject *__pyx_gb_3app_10middleware_13fast_verifier_22VerificationMiddle
 */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_22VerificationMiddleware_1dispatch(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_22VerificationMiddleware_1dispatch(PyObject *__pyx_self,
 #if CYTHON_VECTORCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -3965,7 +3965,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
 static PyMethodDef __pyx_mdef_3app_10middleware_13fast_verifier_22VerificationMiddleware_1dispatch = {"dispatch", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_3app_10middleware_13fast_verifier_22VerificationMiddleware_1dispatch, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_22VerificationMiddleware_1dispatch(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_3app_10middleware_13fast_verifier_22VerificationMiddleware_1dispatch(PyObject *__pyx_self,
 #if CYTHON_VECTORCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -4433,7 +4433,7 @@ static PyObject *__pyx_gb_3app_10middleware_13fast_verifier_22VerificationMiddle
 */
   __pyx_t_5 = NULL;
   __Pyx_INCREF(__pyx_cur_scope->__pyx_v_call_next);
-  __pyx_t_8 = __pyx_cur_scope->__pyx_v_call_next; 
+  __pyx_t_8 = __pyx_cur_scope->__pyx_v_call_next;
   __pyx_t_7 = 1;
   #if CYTHON_UNPACK_METHODS
   if (unlikely(PyMethod_Check(__pyx_t_8))) {
@@ -4487,7 +4487,7 @@ static PyObject *__pyx_gb_3app_10middleware_13fast_verifier_22VerificationMiddle
   CYTHON_MAYBE_UNUSED_VAR(__pyx_cur_scope);
 
   /* "app/middleware/verification.py":32
- * 
+ *
  * class VerificationMiddleware(BaseHTTPMiddleware):
  *     async def dispatch(self, request: Request, call_next) -> Response:             # <<<<<<<<<<<<<<
  *         if request.method in ["POST", "PUT", "DELETE"] and "/state/" in request.url.path:
@@ -4517,7 +4517,7 @@ static PyObject *__pyx_gb_3app_10middleware_13fast_verifier_22VerificationMiddle
 }
 /* #### Code section: module_exttypes ### */
 
-static PyObject *__pyx_tp_new__initialisation_3app_10middleware_13fast_verifier___pyx_scope_struct__dispatch(PyObject *o, 
+static PyObject *__pyx_tp_new__initialisation_3app_10middleware_13fast_verifier___pyx_scope_struct__dispatch(PyObject *o,
 #if CYTHON_VECTORCALL_TPNEW
     CYTHON_UNUSED PyObject *const *args, CYTHON_UNUSED Py_ssize_t nargs, CYTHON_UNUSED PyObject *kwnames
 #else
@@ -4527,7 +4527,7 @@ static PyObject *__pyx_tp_new__initialisation_3app_10middleware_13fast_verifier_
   return o;
 }
 
-static PyObject *__pyx_tp_new_vectorcall_3app_10middleware_13fast_verifier___pyx_scope_struct__dispatch(PyTypeObject *t, 
+static PyObject *__pyx_tp_new_vectorcall_3app_10middleware_13fast_verifier___pyx_scope_struct__dispatch(PyTypeObject *t,
 #if CYTHON_VECTORCALL_TPNEW
     PyObject *const *args, Py_ssize_t nargs, PyObject *kwnames
 #else
@@ -4555,7 +4555,7 @@ static PyObject *__pyx_tp_new_vectorcall_3app_10middleware_13fast_verifier___pyx
     o = __Pyx_AllocateExtensionType(t, 1);
   }
   if (unlikely(!o)) return 0;
-  return __pyx_tp_new__initialisation_3app_10middleware_13fast_verifier___pyx_scope_struct__dispatch(o, 
+  return __pyx_tp_new__initialisation_3app_10middleware_13fast_verifier___pyx_scope_struct__dispatch(o,
 #if CYTHON_VECTORCALL_TPNEW
     args, nargs, kwnames
 #else
@@ -5083,7 +5083,7 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec_fast_verifier(PyObject *__pyx_pyin
         Py_FatalError("failed to import 'refnanny' module");
   }
   #endif
-  
+
 __Pyx_RefNannySetupContext("PyInit_fast_verifier", 0);
   __Pyx_init_runtime_version();
   if (__Pyx_check_binary_version(__PYX_LIMITED_VERSION_HEX, __Pyx_get_runtime_version(), CYTHON_COMPILING_IN_LIMITED_API) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
@@ -5165,7 +5165,7 @@ __Pyx_RefNannySetupContext("PyInit_fast_verifier", 0);
  * from typing import Set
  * from fastapi import HTTPException, Request, Response             # <<<<<<<<<<<<<<
  * from starlette.middleware.base import BaseHTTPMiddleware
- * 
+ *
 */
   {
     PyObject* const __pyx_imported_names[] = {__pyx_mstate_global->__pyx_n_u_HTTPException,__pyx_mstate_global->__pyx_n_u_Request,__pyx_mstate_global->__pyx_n_u_Response};
@@ -5188,7 +5188,7 @@ __Pyx_RefNannySetupContext("PyInit_fast_verifier", 0);
  * from typing import Set
  * from fastapi import HTTPException, Request, Response
  * from starlette.middleware.base import BaseHTTPMiddleware             # <<<<<<<<<<<<<<
- * 
+ *
  * class EnterpriseStateEngine:
 */
   {
@@ -5210,7 +5210,7 @@ __Pyx_RefNannySetupContext("PyInit_fast_verifier", 0);
 
   /* "app/middleware/verification.py":6
  * from starlette.middleware.base import BaseHTTPMiddleware
- * 
+ *
  * class EnterpriseStateEngine:             # <<<<<<<<<<<<<<
  *     def __init__(self):
  *         self.locked = False
@@ -5219,7 +5219,7 @@ __Pyx_RefNannySetupContext("PyInit_fast_verifier", 0);
   __Pyx_GOTREF(__pyx_t_2);
 
   /* "app/middleware/verification.py":7
- * 
+ *
  * class EnterpriseStateEngine:
  *     def __init__(self):             # <<<<<<<<<<<<<<
  *         self.locked = False
@@ -5235,7 +5235,7 @@ __Pyx_RefNannySetupContext("PyInit_fast_verifier", 0);
 
   /* "app/middleware/verification.py":13
  *         self.last_transition = time.time()
- * 
+ *
  *     def acquire(self, client_id: str) -> bool:             # <<<<<<<<<<<<<<
  *         if self.locked and self.owner != client_id: return False
  *         self.locked = True
@@ -5256,7 +5256,7 @@ __Pyx_RefNannySetupContext("PyInit_fast_verifier", 0);
 
   /* "app/middleware/verification.py":19
  *         return True
- * 
+ *
  *     def release(self, client_id: str) -> bool:             # <<<<<<<<<<<<<<
  *         if self.locked and self.owner == client_id:
  *             self.locked = False
@@ -5277,10 +5277,10 @@ __Pyx_RefNannySetupContext("PyInit_fast_verifier", 0);
 
   /* "app/middleware/verification.py":26
  *         return False
- * 
+ *
  *     def verify_corpus(self, payload: bytes) -> str:             # <<<<<<<<<<<<<<
  *         return hashlib.sha256(payload).hexdigest()
- * 
+ *
 */
   __pyx_t_4 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
@@ -5298,7 +5298,7 @@ __Pyx_RefNannySetupContext("PyInit_fast_verifier", 0);
 
   /* "app/middleware/verification.py":6
  * from starlette.middleware.base import BaseHTTPMiddleware
- * 
+ *
  * class EnterpriseStateEngine:             # <<<<<<<<<<<<<<
  *     def __init__(self):
  *         self.locked = False
@@ -5314,9 +5314,9 @@ __Pyx_RefNannySetupContext("PyInit_fast_verifier", 0);
 
   /* "app/middleware/verification.py":29
  *         return hashlib.sha256(payload).hexdigest()
- * 
+ *
  * engine = EnterpriseStateEngine()             # <<<<<<<<<<<<<<
- * 
+ *
  * class VerificationMiddleware(BaseHTTPMiddleware):
 */
   __pyx_t_5 = NULL;
@@ -5336,7 +5336,7 @@ __Pyx_RefNannySetupContext("PyInit_fast_verifier", 0);
 
   /* "app/middleware/verification.py":31
  * engine = EnterpriseStateEngine()
- * 
+ *
  * class VerificationMiddleware(BaseHTTPMiddleware):             # <<<<<<<<<<<<<<
  *     async def dispatch(self, request: Request, call_next) -> Response:
  *         if request.method in ["POST", "PUT", "DELETE"] and "/state/" in request.url.path:
@@ -5361,7 +5361,7 @@ __Pyx_RefNannySetupContext("PyInit_fast_verifier", 0);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
   /* "app/middleware/verification.py":32
- * 
+ *
  * class VerificationMiddleware(BaseHTTPMiddleware):
  *     async def dispatch(self, request: Request, call_next) -> Response:             # <<<<<<<<<<<<<<
  *         if request.method in ["POST", "PUT", "DELETE"] and "/state/" in request.url.path:
@@ -5383,7 +5383,7 @@ __Pyx_RefNannySetupContext("PyInit_fast_verifier", 0);
 
   /* "app/middleware/verification.py":31
  * engine = EnterpriseStateEngine()
- * 
+ *
  * class VerificationMiddleware(BaseHTTPMiddleware):             # <<<<<<<<<<<<<<
  *     async def dispatch(self, request: Request, call_next) -> Response:
  *         if request.method in ["POST", "PUT", "DELETE"] and "/state/" in request.url.path:
@@ -5704,17 +5704,17 @@ static int __Pyx_InitGlobals(void) {
   int __pyx_clineno = 0;
   /* PythonCompatibility.init */
   if (likely(__Pyx_init_co_variables() == 0 && __Pyx_init_tpflags_variables() == 0)); else
-  
+
   if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 1, __pyx_L1_error)
 
   /* CommonTypesMetaclass.init */
   if (likely(__pyx_CommonTypesMetaclass_init(__pyx_m) == 0)); else
-  
+
   if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 1, __pyx_L1_error)
 
   /* Coroutine.init */
   if (likely(__pyx_Coroutine_init(__pyx_m) == 0)); else
-  
+
   if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 1, __pyx_L1_error)
 
   /* Coro_CheckExact.init */
@@ -5728,7 +5728,7 @@ static int __Pyx_InitGlobals(void) {
       }
   } // error handling follows
   #endif
-  
+
   if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 1, __pyx_L1_error)
 
   /* CachedMethodType.init */
@@ -5742,7 +5742,7 @@ static int __Pyx_InitGlobals(void) {
       }
   } // error handling follows
   #endif
-  
+
   if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 1, __pyx_L1_error)
 
   return 0;
@@ -5757,7 +5757,7 @@ static int __Pyx_InitAfterSharedUtility(void) {
   int __pyx_clineno = 0;
   /* CythonFunctionPerModule.init */
   if (likely(__pyx_CyFunction_init(__pyx_m) == 0)); else
-  
+
   if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 1, __pyx_L1_error)
 
   return 0;
@@ -5865,7 +5865,7 @@ static CYTHON_INLINE int __Pyx_PyObject_CompareBoolEq_str_str(PyObject *op1, PyO
     if (unlikely(op2 == Py_None)) {
         if (op1 == Py_None) goto __pyx_return_true; else goto __pyx_return_false;
     }
-    
+
     if (likely(op1 != Py_None)) {
         if (op1 == op2) goto __pyx_return_true;
         if (likely(op2 != Py_None)) {
@@ -5873,7 +5873,7 @@ static CYTHON_INLINE int __Pyx_PyObject_CompareBoolEq_str_str(PyObject *op1, PyO
         }
         goto __pyx_richcmp;
     }
-    
+
     if ((0)) goto __pyx_richcmp;
     if ((0)) goto __pyx_return_true;
     if ((0)) goto __pyx_return_false;
@@ -7151,7 +7151,7 @@ static CYTHON_INLINE int __Pyx_PyObject_CompareBoolNe_object_str(PyObject *op1, 
         if (op1 == op2) goto __pyx_return_false;
         goto __pyx_richcmp;
     }
-    
+
     if (likely(PyUnicode_CheckExact(op1))) {
         if (op1 == op2) goto __pyx_return_false;
         if (likely(op2 != Py_None)) {
@@ -7159,7 +7159,7 @@ static CYTHON_INLINE int __Pyx_PyObject_CompareBoolNe_object_str(PyObject *op1, 
         }
         goto __pyx_richcmp;
     }
-    
+
     if ((0)) goto __pyx_richcmp;
     if ((0)) goto __pyx_return_true;
     if ((0)) goto __pyx_return_false;
@@ -7204,7 +7204,7 @@ static CYTHON_INLINE int __Pyx_PyObject_CompareBoolEq_object_str(PyObject *op1, 
         if (op1 == op2) goto __pyx_return_true;
         goto __pyx_richcmp;
     }
-    
+
     if (likely(PyUnicode_CheckExact(op1))) {
         if (op1 == op2) goto __pyx_return_true;
         if (likely(op2 != Py_None)) {
@@ -7212,7 +7212,7 @@ static CYTHON_INLINE int __Pyx_PyObject_CompareBoolEq_object_str(PyObject *op1, 
         }
         goto __pyx_richcmp;
     }
-    
+
     if ((0)) goto __pyx_richcmp;
     if ((0)) goto __pyx_return_true;
     if ((0)) goto __pyx_return_false;
@@ -7782,7 +7782,7 @@ static CYTHON_INLINE int __Pyx_PyObject_CompareBoolNe_object_object(PyObject *op
         }
         goto __pyx_richcmp;
     }
-    
+
     if (PyUnicode_CheckExact(op1)) {
         if (op1 == op2) goto __pyx_return_false;
         if (PyUnicode_CheckExact(op2)) {
@@ -7790,7 +7790,7 @@ static CYTHON_INLINE int __Pyx_PyObject_CompareBoolNe_object_object(PyObject *op
         }
         goto __pyx_richcmp;
     }
-    
+
     #if !(CYTHON_COMPILING_IN_PYPY || CYTHON_COMPILING_IN_GRAAL)
     if (PyBytes_CheckExact(op1)) {
         if (op1 == op2) goto __pyx_return_false;

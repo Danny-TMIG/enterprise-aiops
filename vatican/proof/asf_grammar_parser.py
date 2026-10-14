@@ -1,12 +1,16 @@
 """Parser and validator for the ASF Component Model grammar."""
+
 from __future__ import annotations
+
 import re
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
 GRAMMAR = Path(__file__).parent / "asf_component_grammar.ebnf"
-COMPONENT_RE = re.compile(r"\b(GOV|CMP|COG)-(KRN|IAM|POL|INF|CAP|EVD|ADM|FED|CTL|TRU|RES|EXE|DAT|ECO|INT|CORE|REA|CMP|ASSUR)-\d{3}\b")
+COMPONENT_RE = re.compile(
+    r"\b(GOV|CMP|COG)-(KRN|IAM|POL|INF|CAP|EVD|ADM|FED|CTL|TRU|RES|EXE|DAT|ECO|INT|CORE|REA|CMP|ASSUR)-\d{3}\b"
+)
 WP_RE = re.compile(r"\b(CMP-)?MATH-\d{3}\b")
 DECISION_RE = re.compile(r"\b(GOV|CMP|COG)-DEC-\d{3}\b")
 
@@ -46,10 +50,12 @@ def parse_grammar(path=GRAMMAR):
     m = re.search(r"^Assurance\s*=\s*(.*?);", stripped, re.MULTILINE | re.DOTALL)
     if m:
         idx.assurance_states = re.findall(r'"([A-Z_]+)"', m.group(1))
-    for name, attr in [("Govern_Invariant","govern_invariants"),
-                       ("Compute_Invariant","compute_invariants"),
-                       ("Cognition_Principle","cognition_principles"),
-                       ("Contract_Invariant","contract_invariants")]:
+    for name, attr in [
+        ("Govern_Invariant", "govern_invariants"),
+        ("Compute_Invariant", "compute_invariants"),
+        ("Cognition_Principle", "cognition_principles"),
+        ("Contract_Invariant", "contract_invariants"),
+    ]:
         m = re.search(rf"^{name}\s*=\s*(.*?);", stripped, re.MULTILINE | re.DOTALL)
         if m:
             setattr(idx, attr, re.findall(r'"([A-Za-z\-]+)"', m.group(1)))

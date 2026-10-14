@@ -94,5 +94,4 @@ class OctetGraph:
         return "\n".join(sorted(lines))
 
     def hash(self) -> str:
-        return "sha256:" + hashlib.sha256(
-            self.canonical().encode("utf-8")).hexdigest()[:24]
+        return "sha256:" + hashlib.sha256(self.canonical().encode("utf-8")).hexdigest()[:24]

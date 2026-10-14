@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """spec_audit.py — audit the Aether monorepo against the ASF spec."""
+
 from __future__ import annotations
-import hashlib, json, sys
+
+import hashlib
+import json
+import sys
 from collections import defaultdict
 from pathlib import Path
 
@@ -90,9 +94,7 @@ def pass2_boilerplate() -> dict:
 
 def pass3_contracts() -> dict:
     schemas = sorted(CONTRACTS.rglob("*.json")) if CONTRACTS.is_dir() else []
-    all_src = "\n".join(
-        p.read_text(errors="ignore") for p in COMPONENTS.rglob("*.py")
-    )
+    all_src = "\n".join(p.read_text(errors="ignore") for p in COMPONENTS.rglob("*.py"))
     unreferenced = []
     ids = {}
     for s in schemas:
@@ -122,8 +124,12 @@ def _probe(path: Path, keys: dict) -> dict:
 def pass4_invariants() -> dict:
     return {
         "gov_krn_001": _probe(
-            COMPONENTS / "ag" / "GOV-KRN-001-governance-object-model-and-registry"
-            / "src" / "public" / "registry.py",
+            COMPONENTS
+            / "ag"
+            / "GOV-KRN-001-governance-object-model-and-registry"
+            / "src"
+            / "public"
+            / "registry.py",
             {
                 "version": ("version", "Version", "VERSION"),
                 "sqlite": ("sqlite", "SQLite", "sqlite3"),
@@ -133,8 +139,12 @@ def pass4_invariants() -> dict:
             },
         ),
         "gov_krn_002": _probe(
-            COMPONENTS / "ag" / "GOV-KRN-002-governed-state-and-transition-engine"
-            / "src" / "public" / "engine.py",
+            COMPONENTS
+            / "ag"
+            / "GOV-KRN-002-governed-state-and-transition-engine"
+            / "src"
+            / "public"
+            / "engine.py",
             {
                 "transition": ("transition", "Transition"),
                 "worm": ("worm", "WORM"),
@@ -142,16 +152,19 @@ def pass4_invariants() -> dict:
             },
         ),
         "cmp_evd_001": _probe(
-            COMPONENTS / "ac" / "CMP-EVD-001-observation-and-telemetry"
-            / "src" / "public" / "telemetry.py",
+            COMPONENTS
+            / "ac"
+            / "CMP-EVD-001-observation-and-telemetry"
+            / "src"
+            / "public"
+            / "telemetry.py",
             {
                 "hardware": ("psutil", "platform", "cpu_count", "os."),
                 "metrics": ("metrics", "Metrics"),
             },
         ),
         "cog_core_001": _probe(
-            COMPONENTS / "ax" / "COG-CORE-001-cognitive-runtime"
-            / "src" / "public" / "runtime.py",
+            COMPONENTS / "ax" / "COG-CORE-001-cognitive-runtime" / "src" / "public" / "runtime.py",
             {
                 "mlx": ("mlx", "MLX"),
                 "prompt": ("prompt", "execute"),

@@ -10,6 +10,7 @@
 Each rule touches only the two participants and their aux wires.
 No global state is consulted. No history. No floats.
 """
+
 from __future__ import annotations
 
 from app.combinator.graph import D, E, G, Graph
@@ -47,8 +48,8 @@ def rule_ee(g: Graph, n1: int, n2: int) -> None:
 # ── commutation γ-δ → 4 new nodes ──────────────────────────────
 def rule_gd(g: Graph, ng: int, nd: int) -> None:
     """γ (aux a, b) meets δ (aux c, d).
-       Produces 4 nodes: δ₁, γ₁, δ₂, γ₂ wired as a 2×2 lattice.
-       Two new γ-δ active pairs are created."""
+    Produces 4 nodes: δ₁, γ₁, δ₂, γ₂ wired as a 2×2 lattice.
+    Two new γ-δ active pairs are created."""
     g.detach((ng, 0))
     a = g.detach((ng, 1))
     b = g.detach((ng, 2))
@@ -57,8 +58,10 @@ def rule_gd(g: Graph, ng: int, nd: int) -> None:
     del g.nodes[ng]
     del g.nodes[nd]
 
-    d1 = g.new_node(D); g1 = g.new_node(G)
-    d2 = g.new_node(D); g2 = g.new_node(G)
+    d1 = g.new_node(D)
+    g1 = g.new_node(G)
+    d2 = g.new_node(D)
+    g2 = g.new_node(G)
 
     # external
     g.wire((d1, 1), a)
@@ -81,7 +84,8 @@ def rule_ge(g: Graph, ng: int, ne: int) -> None:
     a1 = g.detach((ng, 2))
     del g.nodes[ng]
     del g.nodes[ne]
-    e1 = g.new_node(E); e2 = g.new_node(E)
+    e1 = g.new_node(E)
+    e2 = g.new_node(E)
     g.wire((e1, 0), a0)
     g.wire((e2, 0), a1)
 
@@ -92,7 +96,8 @@ def rule_de(g: Graph, nd: int, ne: int) -> None:
     a1 = g.detach((nd, 2))
     del g.nodes[nd]
     del g.nodes[ne]
-    e1 = g.new_node(E); e2 = g.new_node(E)
+    e1 = g.new_node(E)
+    e2 = g.new_node(E)
     g.wire((e1, 0), a0)
     g.wire((e2, 0), a1)
 
@@ -110,14 +115,20 @@ def step(g: Graph) -> bool:
         elif pair == {E}:
             rule_ee(g, n1, n2)
         elif pair == {G, D}:
-            if k1 == G: rule_gd(g, n1, n2)
-            else:       rule_gd(g, n2, n1)
+            if k1 == G:
+                rule_gd(g, n1, n2)
+            else:
+                rule_gd(g, n2, n1)
         elif pair == {G, E}:
-            if k1 == G: rule_ge(g, n1, n2)
-            else:       rule_ge(g, n2, n1)
+            if k1 == G:
+                rule_ge(g, n1, n2)
+            else:
+                rule_ge(g, n2, n1)
         elif pair == {D, E}:
-            if k1 == D: rule_de(g, n1, n2)
-            else:       rule_de(g, n2, n1)
+            if k1 == D:
+                rule_de(g, n1, n2)
+            else:
+                rule_de(g, n2, n1)
         else:
             continue
         return True
@@ -134,9 +145,7 @@ def normalise(g: Graph, max_steps: int = 10_000) -> tuple[Graph, int, bool]:
     return g, n, False
 
 
-def normalise_with_trace(g: Graph,
-                         max_steps: int = 10_000
-                         ) -> tuple[Graph, list[tuple[int, str]]]:
+def normalise_with_trace(g: Graph, max_steps: int = 10_000) -> tuple[Graph, list[tuple[int, str]]]:
     """Reduce and record (step, node_count) at each step."""
     trace = [(0, len(g.nodes))]
     n = 0

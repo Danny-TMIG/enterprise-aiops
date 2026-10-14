@@ -1,3 +1,3 @@
-from .003 import Pol003, Pol003Error
+from .mod003 import Pol003, Pol003Error
 
-__all__ = ['Pol003', Pol003Error.__name__!r]
+__all__ = ["Pol003", "Pol003Error"]

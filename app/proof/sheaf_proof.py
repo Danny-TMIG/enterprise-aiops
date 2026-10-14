@@ -7,6 +7,7 @@ For each prompt:
     - record: does gluing produce parseable code?
     - record: does the code reference names it does not define?
 """
+
 from __future__ import annotations
 
 import ast
@@ -32,7 +33,11 @@ PROMPTS = [
 ]
 
 _B = set(dir(builtins)) | {
-    "__name__", "__file__", "__doc__", "__builtins__", "__package__",
+    "__name__",
+    "__file__",
+    "__doc__",
+    "__builtins__",
+    "__package__",
 }
 
 
@@ -57,7 +62,12 @@ def _undef(source: str) -> list[str]:
             for t in node.targets:
                 if isinstance(t, ast.Name):
                     defd.add(t.id)
-        elif isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name) or isinstance(node, ast.For) and isinstance(node.target, ast.Name):
+        elif (
+            isinstance(node, ast.AnnAssign)
+            and isinstance(node.target, ast.Name)
+            or isinstance(node, ast.For)
+            and isinstance(node.target, ast.Name)
+        ):
             defd.add(node.target.id)
         elif isinstance(node, ast.withitem) and isinstance(node.optional_vars, ast.Name):
             defd.add(node.optional_vars.id)
@@ -65,8 +75,7 @@ def _undef(source: str) -> list[str]:
             t = node.target
             if isinstance(t, ast.Name):
                 defd.add(t.id)
-    used = {n.id for n in ast.walk(tree)
-            if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load)}
+    used = {n.id for n in ast.walk(tree) if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load)}
     return sorted(used - defd - _B)
 
 
@@ -81,8 +90,7 @@ def main() -> int:
     totals = {c: 0 for c in cols}
     rows = []
     for i, prompt in enumerate(PROMPTS):
-        r = dispatch(grammar, swarm, intent=prompt,
-                     seed=i, max_depth=10, max_tokens=128)
+        r = dispatch(grammar, swarm, intent=prompt, seed=i, max_depth=10, max_tokens=128)
         glued = bool(r.code)
         parses = False
         und: list[str] = []

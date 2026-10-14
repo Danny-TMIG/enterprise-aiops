@@ -1,5 +1,5 @@
-import pytest
 from src.public.service import CmpCtl003Service
+
 
 def test_cmp_ctl_003_service():
     svc = CmpCtl003Service()

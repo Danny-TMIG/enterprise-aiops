@@ -1,4 +1,5 @@
 """Demo: double-double long accumulation + frequency-phase hopping."""
+
 from __future__ import annotations
 
 import math
@@ -24,11 +25,13 @@ def demo_dd_arithmetic() -> None:
     print(f"  1.0 + 1e-30 (DD)        = {a + b}")
     # classic: (1 + eps)^2 - 1 - 2*eps - eps^2
     eps = 1e-16
-    f = (1 + eps) ** 2 - 1 - 2 * eps - eps ** 2
-    dd = (DD.from_float(1.0) + DD.from_float(eps)) ** 2 \
-         - DD.from_float(1.0) \
-         - DD.from_float(2 * eps) \
-         - DD.from_float(eps ** 2)
+    f = (1 + eps) ** 2 - 1 - 2 * eps - eps**2
+    dd = (
+        (DD.from_float(1.0) + DD.from_float(eps)) ** 2
+        - DD.from_float(1.0)
+        - DD.from_float(2 * eps)
+        - DD.from_float(eps**2)
+    )
     print(f"  residual (float64)      = {f!r}")
     print(f"  residual (DD)           = {dd}")
     print()
@@ -69,6 +72,7 @@ def demo_long_accumulation() -> None:
 
     # reference: math.fsum gives the correctly-rounded sum
     import math as m
+
     ref = m.fsum(samples)
 
     print(f"  N = {N:,}")
@@ -111,10 +115,12 @@ def demo_hopping_roundtrip() -> None:
     for p in payloads:
         r = transmit(p, seed=1)
         mark = "✓" if r["match"] else "✗"
-        print(f"  [{mark}] len={r['payload_len']:3d}  "
-              f"hops={r['schedule_hops']:4d}  "
-              f"dur={r['duration_s']*1000:.1f}ms  "
-              f"digest={r['digest']}")
+        print(
+            f"  [{mark}] len={r['payload_len']:3d}  "
+            f"hops={r['schedule_hops']:4d}  "
+            f"dur={r['duration_s'] * 1000:.1f}ms  "
+            f"digest={r['digest']}"
+        )
     print()
 
     # phase error tolerance
@@ -147,8 +153,7 @@ def demo_chain() -> None:
     print(f"  after {len(payloads)} transmits:")
     print(f"    sent        = {c2.sent}")
     print(f"    received    = {c2.received}")
-    print(f"    phase_ref   = {c2.phase_ref.hi:.15g} "
-          f"+ {c2.phase_ref.lo:+.3e}")
+    print(f"    phase_ref   = {c2.phase_ref.hi:.15g} + {c2.phase_ref.lo:+.3e}")
     print(f"    acc mean    = {c2.acc.mean().hi:.15g}")
     print()
 

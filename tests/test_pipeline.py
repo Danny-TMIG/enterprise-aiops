@@ -28,8 +28,7 @@ def test_scramble_rejects_cancel():
 
 
 def test_trainer_evolves_config():
-    cfg = TrainConfig(kinds=["sudoku"], difficulties=["easy"],
-                      puzzles_per_tile=1, seed=0)
+    cfg = TrainConfig(kinds=["sudoku"], difficulties=["easy"], puzzles_per_tile=1, seed=0)
     tr = Trainer(cfg)
     before = tr.cfg
     tr.step(0)
@@ -39,8 +38,7 @@ def test_trainer_evolves_config():
 
 
 def test_trans_ancestry():
-    cfg = TrainConfig(kinds=["sudoku"], difficulties=["easy"],
-                      puzzles_per_tile=1, seed=0)
+    cfg = TrainConfig(kinds=["sudoku"], difficulties=["easy"], puzzles_per_tile=1, seed=0)
     tr = Trainer(cfg)
     r0 = tr.step(0)
     r1 = tr.step(1)
@@ -55,8 +53,7 @@ def test_trans_ancestry():
 
 
 def test_pollinate_reports_stream_diff():
-    cfg = TrainConfig(kinds=["sudoku"], difficulties=["easy", "medium"],
-                      puzzles_per_tile=2, seed=0)
+    cfg = TrainConfig(kinds=["sudoku"], difficulties=["easy", "medium"], puzzles_per_tile=2, seed=0)
     tr = Trainer(cfg)
     a = tr.run_once(0)
     b = tr.run_once(1)
@@ -68,8 +65,7 @@ def test_pollinate_reports_stream_diff():
 
 
 def test_evolve_rotates_difficulties():
-    cfg = TrainConfig(kinds=["sudoku"], difficulties=["easy"],
-                      puzzles_per_tile=1, seed=0)
+    cfg = TrainConfig(kinds=["sudoku"], difficulties=["easy"], puzzles_per_tile=1, seed=0)
     tr = Trainer(cfg)
     seen = []
     for i in range(4):
@@ -80,9 +76,9 @@ def test_evolve_rotates_difficulties():
 
 
 def test_pollinate_sees_stream_diff_after_rotation():
-    cfg = TrainConfig(kinds=["sudoku", "tictactoe"],
-                      difficulties=["easy", "medium"],
-                      puzzles_per_tile=1, seed=0)
+    cfg = TrainConfig(
+        kinds=["sudoku", "tictactoe"], difficulties=["easy", "medium"], puzzles_per_tile=1, seed=0
+    )
     tr = Trainer(cfg)
     r0 = tr.step(0)
     r1 = tr.step(1)
@@ -92,8 +88,7 @@ def test_pollinate_sees_stream_diff_after_rotation():
 
 
 def test_weave_and_criss_cross():
-    cfg = TrainConfig(kinds=["sudoku"], difficulties=["easy"],
-                      puzzles_per_tile=1, seed=0)
+    cfg = TrainConfig(kinds=["sudoku"], difficulties=["easy"], puzzles_per_tile=1, seed=0)
     tr = Trainer(cfg)
     a, b = tr.run_once(0), tr.run_once(1)
     w = weave([a, b])

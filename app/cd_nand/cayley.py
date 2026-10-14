@@ -1,4 +1,5 @@
 """Cayley-Dickson doubling over an arbitrary base algebra."""
+
 from __future__ import annotations
 
 from collections.abc import Callable
@@ -29,29 +30,34 @@ class CD:
     or both CDs at level `level - 1`. `op` is the level-`level`
     algebra descriptor.
     """
+
     hi: Any
     lo: Any
     level: int
     op: Alg
 
     def __add__(self, other: CD) -> CD:
-        return CD(self.op.add(self.hi, other.hi),
-                  self.op.add(self.lo, other.lo),
-                  level=self.level, op=self.op)
+        return CD(
+            self.op.add(self.hi, other.hi),
+            self.op.add(self.lo, other.lo),
+            level=self.level,
+            op=self.op,
+        )
 
     def __sub__(self, other: CD) -> CD:
-        return CD(self.op.sub(self.hi, other.hi),
-                  self.op.sub(self.lo, other.lo),
-                  level=self.level, op=self.op)
+        return CD(
+            self.op.sub(self.hi, other.hi),
+            self.op.sub(self.lo, other.lo),
+            level=self.level,
+            op=self.op,
+        )
 
     def __neg__(self) -> CD:
-        return CD(self.op.neg(self.hi), self.op.neg(self.lo),
-                  level=self.level, op=self.op)
+        return CD(self.op.neg(self.hi), self.op.neg(self.lo), level=self.level, op=self.op)
 
     def conj(self) -> CD:
         """(a, b)* = (a*, -b)"""
-        return CD(self.op.conj(self.hi), self.op.neg(self.lo),
-                  level=self.level, op=self.op)
+        return CD(self.op.conj(self.hi), self.op.neg(self.lo), level=self.level, op=self.op)
 
     def __mul__(self, other: CD) -> CD:
         """(a, b)(c, d) = (a c - d* b,  d a + b c*)"""
@@ -61,10 +67,8 @@ class CD:
         # level 0 the operands are raw scalars (bool) that have no
         # `.conj()` method. BOOL_ALG.conj is the identity; higher
         # levels' op.conj composes down the tower.
-        hi = self.op.sub(self.op.mul(a, c),
-                         self.op.mul(self.op.conj(d), b))
-        lo = self.op.add(self.op.mul(d, a),
-                         self.op.mul(b, self.op.conj(c)))
+        hi = self.op.sub(self.op.mul(a, c), self.op.mul(self.op.conj(d), b))
+        lo = self.op.add(self.op.mul(d, a), self.op.mul(b, self.op.conj(c)))
         return CD(hi, lo, level=self.level, op=self.op)
 
     def is_zero(self) -> bool:
@@ -76,10 +80,10 @@ class CD:
 
 # ── base Boolean algebra (level 0) ──────────────────────────────
 BOOL_ALG = Alg(
-    add=lambda a, b: a != b,          # XOR = addition in GF(2)
-    sub=lambda a, b: a != b,          # subtraction = addition in GF(2)
+    add=lambda a, b: a != b,  # XOR = addition in GF(2)
+    sub=lambda a, b: a != b,  # subtraction = addition in GF(2)
     mul=lambda a, b: a and b,
-    neg=lambda a: a,                  # -x = x in GF(2)
+    neg=lambda a: a,  # -x = x in GF(2)
     conj=lambda a: a,
     is_zero=lambda a: not a,
     zero=False,
@@ -91,19 +95,39 @@ BOOL_ALG = Alg(
 # ── build an Alg for level k from an Alg for level k-1 ──────────
 def _recursive_alg(inner: Alg, level: int) -> Alg:
     """Alg whose carrier is CD-at-(level-1)."""
-    def add(x, y): return x + y
-    def sub(x, y): return x - y
-    def mul(x, y): return x * y
-    def neg(x): return -x
-    def conj(x): return x.conj()
-    def is_zero(x): return x.is_zero()
+
+    def add(x, y):
+        return x + y
+
+    def sub(x, y):
+        return x - y
+
+    def mul(x, y):
+        return x * y
+
+    def neg(x):
+        return -x
+
+    def conj(x):
+        return x.conj()
+
+    def is_zero(x):
+        return x.is_zero()
 
     zero = CD(inner.zero, inner.zero, level=level - 1, op=inner)
     one = CD(inner.one, inner.zero, level=level - 1, op=inner)
 
-    return Alg(add=add, sub=sub, mul=mul, neg=neg, conj=conj,
-               is_zero=is_zero, zero=zero, one=one,
-               name=f"cd-L{level}")
+    return Alg(
+        add=add,
+        sub=sub,
+        mul=mul,
+        neg=neg,
+        conj=conj,
+        is_zero=is_zero,
+        zero=zero,
+        one=one,
+        name=f"cd-L{level}",
+    )
 
 
 _ALG_CACHE: dict = {0: BOOL_ALG}

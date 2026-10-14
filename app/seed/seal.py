@@ -10,6 +10,7 @@ API unchanged from the HMAC version:
     verify_seal(envelope, keyid, pubkey=None) -> bool
     unwrap(envelope) -> payload
 """
+
 from __future__ import annotations
 
 import base64
@@ -25,9 +26,7 @@ PUB_PATH = KEY_DIR / "seal_pub.pem"
 
 
 def _canonical(payload: dict[str, Any]) -> bytes:
-    return json.dumps(payload, sort_keys=True,
-                      separators=(",", ":"),
-                      default=str).encode()
+    return json.dumps(payload, sort_keys=True, separators=(",", ":"), default=str).encode()
 
 
 def _load_or_create_key():
@@ -71,9 +70,9 @@ def _load_or_create_key():
     return key
 
 
-def seal(payload: dict[str, Any],
-         keyid: str | None = None) -> dict[str, Any]:
+def seal(payload: dict[str, Any], keyid: str | None = None) -> dict[str, Any]:
     from cryptography.hazmat.primitives import serialization
+
     key = _load_or_create_key()
     body = _canonical(payload)
     sig = key.sign(body)
@@ -84,22 +83,25 @@ def seal(payload: dict[str, Any],
     return {
         "payloadType": "application/vnd.mesh-seed.proof-object+json",
         "payload": base64.b64encode(body).decode(),
-        "signatures": [{
-            "keyid": keyid or "default",
-            "alg": "Ed25519",
-            "sig": base64.b64encode(sig).decode(),
-            "pub": base64.b64encode(pub).decode(),
-        }],
+        "signatures": [
+            {
+                "keyid": keyid or "default",
+                "alg": "Ed25519",
+                "sig": base64.b64encode(sig).decode(),
+                "pub": base64.b64encode(pub).decode(),
+            }
+        ],
     }
 
 
-def verify_seal(envelope: dict[str, Any],
-                keyid: str | None = None,
-                pubkey: bytes | None = None) -> bool:
+def verify_seal(
+    envelope: dict[str, Any], keyid: str | None = None, pubkey: bytes | None = None
+) -> bool:
     from cryptography.exceptions import InvalidSignature
     from cryptography.hazmat.primitives.asymmetric.ed25519 import (
         Ed25519PublicKey,
     )
+
     try:
         body = base64.b64decode(envelope["payload"])
         for s in envelope.get("signatures", []):
@@ -131,14 +133,14 @@ def rotate(keyid: str | None = None) -> str:
         backup = KEY_PATH.with_name(f"seal_key.pem.bak.{ts}")
         KEY_PATH.rename(backup)
         if PUB_PATH.exists():
-            PUB_PATH.rename(backup.with_name(backup.name.replace(
-                "seal_key.pem", "seal_pub.pem")))
+            PUB_PATH.rename(backup.with_name(backup.name.replace("seal_key.pem", "seal_pub.pem")))
     _load_or_create_key()
     return str(backup) if backup else "<no prior key>"
 
 
 def public_key_pem() -> bytes:
     from cryptography.hazmat.primitives import serialization
+
     key = _load_or_create_key()
     return key.public_key().public_bytes(
         encoding=serialization.Encoding.PEM,
@@ -146,4 +148,4 @@ def public_key_pem() -> bytes:
     )
 
 
-DEFAULT_KEY = b'enterprise_aiops_default_key_32bytes_min'
+DEFAULT_KEY = b"enterprise_aiops_default_key_32bytes_min"

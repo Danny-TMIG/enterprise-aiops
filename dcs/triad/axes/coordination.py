@@ -61,7 +61,9 @@ def veto(states: Iterable[VState]) -> VState:  # pragma: no cover
     return UNKNOWN  # pragma: no cover
 
 
-def weighted(states: Iterable[VState], *, weights: Iterable[float] | None = None) -> VState:  # pragma: no cover
+def weighted(
+    states: Iterable[VState], *, weights: Iterable[float] | None = None
+) -> VState:  # pragma: no cover
     s = [_coerce(x) for x in states]
     if not s:  # pragma: no cover
         return UNKNOWN  # pragma: no cover

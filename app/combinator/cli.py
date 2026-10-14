@@ -20,6 +20,7 @@ Three demonstrations:
      or does not. Stability is the analog of the "deterministic
      oracle" from the earlier stack, but with no LLM and no cache.
 """
+
 from __future__ import annotations
 
 import sys
@@ -34,8 +35,9 @@ from app.combinator.substrate import RAMSubstrate, StreamingSubstrate
 def _gg_graph() -> Graph:
     """γ1 (aux a0, a1)  —  γ2 (aux a0, a1)."""
     g = Graph()
-    n1 = g.new_node(G); n2 = g.new_node(G)
-    g.wire((n1, 0), (n2, 0))            # active pair
+    n1 = g.new_node(G)
+    n2 = g.new_node(G)
+    g.wire((n1, 0), (n2, 0))  # active pair
     # aux ports left dangling (free endpoints)
     return g
 
@@ -43,7 +45,8 @@ def _gg_graph() -> Graph:
 def _gd_graph() -> Graph:
     """γ (aux a0, a1)  —  δ (aux a0, a1)."""
     g = Graph()
-    ng = g.new_node(G); nd = g.new_node(D)
+    ng = g.new_node(G)
+    nd = g.new_node(D)
     g.wire((ng, 0), (nd, 0))
     return g
 
@@ -95,15 +98,17 @@ def demo_confluence() -> None:
 
     # build a graph with multiple active pairs
     g = Graph()
-    g1 = g.new_node(G); g2 = g.new_node(G)
-    g3 = g.new_node(G); g4 = g.new_node(G)
-    g.wire((g1, 0), (g2, 0))     # active pair A
-    g.wire((g3, 0), (g4, 0))     # active pair B
-    g.wire((g1, 1), (g3, 1))     # cross-link so reduction order
-    g.wire((g2, 1), (g4, 1))     #   actually changes the graph
+    g1 = g.new_node(G)
+    g2 = g.new_node(G)
+    g3 = g.new_node(G)
+    g4 = g.new_node(G)
+    g.wire((g1, 0), (g2, 0))  # active pair A
+    g.wire((g3, 0), (g4, 0))  # active pair B
+    g.wire((g1, 1), (g3, 1))  # cross-link so reduction order
+    g.wire((g2, 1), (g4, 1))  #   actually changes the graph
 
     # reduce with default order
-    ng1, n1, term1 = normalise(g.copy())
+    ng1, _n1, term1 = normalise(g.copy())
     h1 = hash_graph(ng1)
 
     # reduce by manually popping the *last* active pair at each step
@@ -113,7 +118,7 @@ def demo_confluence() -> None:
         if not pairs:
             break
         # pick last
-        n_last1, n_last2 = pairs[-1]
+        _n_last1, _n_last2 = pairs[-1]
         # call step manually by temporarily reordering
         # (we just call step; the iterator is deterministic anyway)
         if not step(g2):
@@ -138,11 +143,11 @@ def demo_substrate() -> None:
     print(f"  graph: {len(g.nodes)} nodes, {len(g.wires)} wires")
 
     ram = RAMSubstrate()
-    ng_ram, n_ram, term_ram = ram.normalise(g.copy())
+    ng_ram, n_ram, _term_ram = ram.normalise(g.copy())
     h_ram = hash_graph(ng_ram)
 
     disk = StreamingSubstrate()
-    ng_disk, n_disk, term_disk = disk.normalise(g.copy())
+    ng_disk, n_disk, _term_disk = disk.normalise(g.copy())
     h_disk = hash_graph(ng_disk)
 
     print(f"  ram substrate:       steps={n_ram} hash={h_ram[:24]}…")

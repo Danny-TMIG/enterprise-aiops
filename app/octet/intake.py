@@ -4,6 +4,7 @@ The intake is not a parser. It has one job: produce an octet graph
 from arbitrary bytes. Text, JSON, images, audio, raw blobs — same
 code path. The graph is the input.
 """
+
 from __future__ import annotations
 
 import json
@@ -20,7 +21,7 @@ def from_bytes(b: bytes) -> OctetGraph:
         n = g.new_node(G, byte)
         if prev_aux is not None:
             g.wire(prev_aux, (n, 0))
-        prev_aux = (n, 2)          # chain via aux1
+        prev_aux = (n, 2)  # chain via aux1
     return g
 
 

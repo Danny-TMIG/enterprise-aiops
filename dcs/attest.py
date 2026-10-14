@@ -4,6 +4,7 @@ Runs every layer, collects every verdict, signs the summary.
 This is the meta-receipt: the chain that attests the chains that
 attest the actions.
 """
+
 from __future__ import annotations  # pragma: no cover
 
 import hashlib  # pragma: no cover
@@ -38,22 +39,28 @@ def run_layer(name: str, cmd: list[str]) -> Layer:  # pragma: no cover
     dt = int((time.time() - t0) * 1000)
     tail = "\n".join(out.strip().splitlines()[-4:])
     verdict = "PASS" if rc == 0 else "FAIL"
-    return Layer(name=name, command=cmd, exit_code=rc,  # pragma: no cover
-                 stdout_tail=tail, duration_ms=dt, verdict=verdict)
+    return Layer(
+        name=name,
+        command=cmd,
+        exit_code=rc,  # pragma: no cover
+        stdout_tail=tail,
+        duration_ms=dt,
+        verdict=verdict,
+    )
 
 
 PY = sys.executable
 
 
 LAYERS = [
-    ("static_grounding",   [PY, "dcs_codeql/pycheck.py", str(ROOT)]),
-    ("dynamic_grounding",  [PY, "dcs_codeql/dyncheck.py"]),
-    ("non_claims_orth",    [PY, "-m", "dcs.non_claims", "check"]),
-    ("grounded_orth",      [PY, "-m", "dcs.grounded", "orth"]),
-    ("non_claims_duals",   [PY, "-m", "dcs.grounded", "check"]),
-    ("formal_systems",     [PY, "-m", "dcs.formal_systems", "save"]),
-    ("algorithms",         [PY, "-m", "dcs.algorithms", "save"]),
-    ("cross_corpus",       [PY, "-m", "dcs.cross_corpus", "save"]),
+    ("static_grounding", [PY, "dcs_codeql/pycheck.py", str(ROOT)]),
+    ("dynamic_grounding", [PY, "dcs_codeql/dyncheck.py"]),
+    ("non_claims_orth", [PY, "-m", "dcs.non_claims", "check"]),
+    ("grounded_orth", [PY, "-m", "dcs.grounded", "orth"]),
+    ("non_claims_duals", [PY, "-m", "dcs.grounded", "check"]),
+    ("formal_systems", [PY, "-m", "dcs.formal_systems", "save"]),
+    ("algorithms", [PY, "-m", "dcs.algorithms", "save"]),
+    ("cross_corpus", [PY, "-m", "dcs.cross_corpus", "save"]),
 ]
 
 
@@ -97,9 +104,7 @@ def main():  # pragma: no cover
 
     # meta-receipt: the digest of the summary, signed
     summary["digest"] = digest_of({k: v for k, v in summary.items() if k != "digest"})
-    summary["signature"] = hashlib.sha256(
-        key + summary["digest"].encode()
-    ).hexdigest()
+    summary["signature"] = hashlib.sha256(key + summary["digest"].encode()).hexdigest()
 
     out = ROOT / "self_attestation.json"
     out.write_text(json.dumps(summary, indent=2))

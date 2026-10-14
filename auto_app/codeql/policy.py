@@ -30,8 +30,4 @@ class CodeQLPolicy:
                     violations.append(result)
 
         passed = len(violations) <= self.max_critical
-        return {
-            "passed": passed,
-            "violations": violations,
-            "findings": findings
-        }
+        return {"passed": passed, "violations": violations, "findings": findings}

@@ -57,7 +57,9 @@ def _aggregate(req_id: str) -> Attestation:  # pragma: no cover
         f for f in findings if CHECK_MAP.get(f.get("check_id", ""), f.get("check_id", "")) == req_id
     ]
     if not matching:  # pragma: no cover
-        return Attestation(req_id, B.U, "prowler", f"no findings mapped to {req_id}")  # pragma: no cover
+        return Attestation(
+            req_id, B.U, "prowler", f"no findings mapped to {req_id}"
+        )  # pragma: no cover
 
     states = [_ocsf_state(f) for f in matching]
     folded = states[0]

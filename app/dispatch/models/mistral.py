@@ -14,12 +14,14 @@ class MistralProvider(ModelProvider):
             return False
         try:
             import mistralai  # noqa: F401
+
             return True
         except Exception:
             return False
 
     def _call(self, req: ModelRequest) -> ModelResponse:
         from mistralai import Mistral
+
         client = Mistral(api_key=os.environ["MISTRAL_API_KEY"])
         model = req.metadata.get("model") or self.default_model
         r = client.chat.complete(
@@ -30,8 +32,11 @@ class MistralProvider(ModelProvider):
             ],
         )
         return ModelResponse(
-            provider=self.name, model=model,
+            provider=self.name,
+            model=model,
             text=r.choices[0].message.content or "",
-            usage={"input_tokens": getattr(r.usage, "prompt_tokens", 0),
-                   "output_tokens": getattr(r.usage, "completion_tokens", 0)},
+            usage={
+                "input_tokens": getattr(r.usage, "prompt_tokens", 0),
+                "output_tokens": getattr(r.usage, "completion_tokens", 0),
+            },
         )

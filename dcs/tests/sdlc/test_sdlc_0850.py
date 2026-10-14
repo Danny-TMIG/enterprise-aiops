@@ -1,8 +1,11 @@
 """Derived from DO-254 / RTCA: Clause 4."""
+
 import json
 from pathlib import Path
+
 M = Path("dcs/standards/sdlc.json")
 R = Path("dcs/standards/registry.json")
+
 
 def test_sdlc_0850_clause_in_registry():
     data = json.loads(M.read_text())
@@ -13,4 +16,4 @@ def test_sdlc_0850_clause_in_registry():
     assert proc["identity"]["clause"] in reg[std]["clauses"], "clause not in registry"
     assert proc["controls"][0] in reg[std]["controls"], "control not in registry"
     assert proc["evidence"][0].endswith(tuple(reg[std]["evidence"])), "evidence not in registry"
-    assert proc["state"] in {"UNKNOWN","TRUE","FALSE","CONFLICT"}
+    assert proc["state"] in {"UNKNOWN", "TRUE", "FALSE", "CONFLICT"}

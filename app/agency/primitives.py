@@ -15,6 +15,7 @@ Field meanings:
   Expertise      — the accumulated, evidence-weighted track record
                    of a subject in a domain.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -43,19 +44,18 @@ def _revoked(expires_at: str | None) -> bool:
 # ── Agency ───────────────────────────────────────────────────────
 @dataclass(frozen=True)
 class Agency:
-    subject: str                    # mesh node id or actor id
-    scope: str                      # capability namespace, e.g. "code.write"
-    authority: str                  # who holds the underlying authority
-    granted_by: str                 # who delegated
-    evidence_hash: str              # hash of the grant decision
+    subject: str  # mesh node id or actor id
+    scope: str  # capability namespace, e.g. "code.write"
+    authority: str  # who holds the underlying authority
+    granted_by: str  # who delegated
+    evidence_hash: str  # hash of the grant decision
     issued_at: str = field(default_factory=_now)
     expires_at: str | None = None
     revoked: bool = False
 
     @property
     def id(self) -> str:
-        return _h("agency", self.subject, self.scope,
-                  self.authority, self.evidence_hash)
+        return _h("agency", self.subject, self.scope, self.authority, self.evidence_hash)
 
     @property
     def live(self) -> bool:
@@ -66,9 +66,9 @@ class Agency:
 @dataclass(frozen=True)
 class License:
     subject: str
-    domain: str                     # e.g. "k8s.production.eu-west-1"
-    jurisdiction: str               # e.g. "org:acme" or "eu"
-    terms: str                      # short form of the terms
+    domain: str  # e.g. "k8s.production.eu-west-1"
+    jurisdiction: str  # e.g. "org:acme" or "eu"
+    terms: str  # short form of the terms
     issued_by: str
     evidence_hash: str
     issued_at: str = field(default_factory=_now)
@@ -77,8 +77,7 @@ class License:
 
     @property
     def id(self) -> str:
-        return _h("license", self.subject, self.domain,
-                  self.jurisdiction, self.evidence_hash)
+        return _h("license", self.subject, self.domain, self.jurisdiction, self.evidence_hash)
 
     @property
     def live(self) -> bool:
@@ -89,9 +88,9 @@ class License:
 @dataclass(frozen=True)
 class Certification:
     subject: str
-    standard: str                   # e.g. "OWASP-ASVS"
-    version: str                    # e.g. "4.0.3"
-    level: str                      # e.g. "L2"
+    standard: str  # e.g. "OWASP-ASVS"
+    version: str  # e.g. "4.0.3"
+    level: str  # e.g. "L2"
     issued_by: str
     evidence_hash: str
     issued_at: str = field(default_factory=_now)
@@ -100,8 +99,7 @@ class Certification:
 
     @property
     def id(self) -> str:
-        return _h("cert", self.subject, self.standard,
-                  self.version, self.level, self.evidence_hash)
+        return _h("cert", self.subject, self.standard, self.version, self.level, self.evidence_hash)
 
     @property
     def live(self) -> bool:
@@ -148,12 +146,12 @@ class Expertise:
 
 
 class AgencyPrimitive:
-
     """Base record for every governance object the registry tracks.
 
     A primitive has an identity (name/id), a subject it applies to,
     a lifecycle (issued_at, revoked_at, live), and free-form metadata.
     """
+
     def __init__(
         self,
         name: str = "",
@@ -191,4 +189,3 @@ class AgencyPrimitive:
 
     def __repr__(self) -> str:
         return f"AgencyPrimitive({self.name!r}, live={self.live})"
-

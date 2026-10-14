@@ -7,7 +7,7 @@ VARIABLES state, locked, verified_corpus, epoch
 
 vars == <<state, locked, verified_corpus, epoch>>
 
-Init == 
+Init ==
     /\ state = "Idle"
     /\ locked = FALSE
     /\ verified_corpus = FALSE
@@ -35,7 +35,7 @@ SyncConsensus ==
     /\ verified_corpus' = FALSE
     /\ state' = "Idle"
 
-Next == 
+Next ==
     \/ AcquireLock
     \/ VerifyCorpus
     \/ SyncConsensus

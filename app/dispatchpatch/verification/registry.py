@@ -1,4 +1,3 @@
-
 from app.dispatchpatch.verification.base import BaseVerification
 
 

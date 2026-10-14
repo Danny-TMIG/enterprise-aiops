@@ -7,8 +7,11 @@ class ConvergenceMetrics:
     def __getitem__(self, key: str):
         return getattr(self, key)
 
+
 class LinguisticValidator:
-    def assert_converges(self, target: float, tolerance: float = 1e-3, *args, **kwargs) -> ConvergenceMetrics:
+    def assert_converges(
+        self, target: float, tolerance: float = 1e-3, *args, **kwargs
+    ) -> ConvergenceMetrics:
         achieved = float(target)
         is_converged = abs(achieved - target) <= tolerance
         return ConvergenceMetrics(achieved_value=achieved, converged=is_converged)

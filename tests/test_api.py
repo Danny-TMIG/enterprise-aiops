@@ -3,10 +3,12 @@ def test_health(client):
     assert r.status_code == 200
     assert r.json()["status"] == "ok"
 
+
 def test_version(client):
     r = client.get("/version")
     assert r.status_code == 200
     assert r.json()["version"] == "1.0.0"
+
 
 def test_root(client):
     r = client.get("/")

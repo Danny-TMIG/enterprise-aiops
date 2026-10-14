@@ -5,6 +5,7 @@ Reads catalog/spec_manifest.json. Every open_decisions ID referenced by any
 component gets a record under decisions/<id>.json with status OPEN and the
 list of components it gates. Content fields are empty; a reviewer fills them.
 """
+
 from __future__ import annotations
 
 import hashlib

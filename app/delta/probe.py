@@ -1,4 +1,5 @@
 """Run one model against one workload. Record the outcome."""
+
 from __future__ import annotations
 
 import hashlib
@@ -30,16 +31,14 @@ class Probe:
             "model_id": self.model_id,
             "workload_id": self.workload_id,
             "input_value": repr(self.input_value)[:80],
-            "output_hash": hashlib.sha256(
-                self.output.encode()).hexdigest()[:16],
+            "output_hash": hashlib.sha256(self.output.encode()).hexdigest()[:16],
             "verdict": self.verdict_state,
             "verifier": self.verifier_id,
             "evidence": self.verdict_evidence[:120],
         }
 
 
-def run_probe(model: Model, workload, input_value: Any,
-              seed: int = 0) -> Probe:
+def run_probe(model: Model, workload, input_value: Any, seed: int = 0) -> Probe:
     t0 = time.time()
     try:
         output = model.generate(workload.prompt, seed)

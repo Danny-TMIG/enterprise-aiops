@@ -4,6 +4,7 @@ We do not call an LLM here. We emit a *shape* — file + tests + proof
 target — derived from the frozen spec. This is what the mesh ships
 to scan/prove. The shape is a real diff the human reviews at gate 2.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -26,17 +27,21 @@ class Artifact:
 
     def __post_init__(self) -> None:
         if not self.id:
-            blob = json.dumps({
-                "spec_id": self.spec_id,
-                "files": sorted(self.files),
-                "tests": sorted(self.tests),
-                "proof_target": self.proof_target,
-            }, sort_keys=True)
+            blob = json.dumps(
+                {
+                    "spec_id": self.spec_id,
+                    "files": sorted(self.files),
+                    "tests": sorted(self.tests),
+                    "proof_target": self.proof_target,
+                },
+                sort_keys=True,
+            )
             self.id = "art-" + hashlib.sha256(blob.encode()).hexdigest()[:12]
 
     def to_dict(self) -> dict[str, Any]:
         return {
-            "id": self.id, "spec_id": self.spec_id,
+            "id": self.id,
+            "spec_id": self.spec_id,
             "files": list(self.files.keys()),
             "tests": list(self.tests.keys()),
             "proof_target": self.proof_target,
@@ -53,7 +58,7 @@ def generate(spec: Spec) -> Artifact:
 
     module_src = (
         f'"""Generated for spec {spec.id}.\n\n'
-        f'What: {spec.what}\n'
+        f"What: {spec.what}\n"
         f'Where: {spec.where}\n"""\n'
         f"from __future__ import annotations\n\n\n"
         f"def {slug}(value: int) -> int:\n"
@@ -88,9 +93,26 @@ def generate(spec: Spec) -> Artifact:
 
 def _slug(text: str) -> str:
     toks = re.findall(r"[A-Za-z0-9]+", text.lower())
-    toks = [t for t in toks if t not in ("a", "an", "the", "to", "for",
-                                         "of", "in", "on", "and", "or",
-                                         "add", "implement", "create")]
+    toks = [
+        t
+        for t in toks
+        if t
+        not in (
+            "a",
+            "an",
+            "the",
+            "to",
+            "for",
+            "of",
+            "in",
+            "on",
+            "and",
+            "or",
+            "add",
+            "implement",
+            "create",
+        )
+    ]
     return "_".join(toks[:4]) or "mesh_task"
 
 

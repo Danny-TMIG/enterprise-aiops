@@ -4,14 +4,15 @@ THE MARK INTELLIGENCE GROUP (TMIG)
 DOCSYS MASTERY & TAXONOMY VERIFICATION ENGINE (ASF v1.2)
 Automated documentation tree architecture and cryptographic state indexing.
 """
-import os
-import json
+
 import hashlib
+import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DOCS_DIR = ROOT / "docs"
 CATALOG_DIR = ROOT / "catalog"
+
 
 def build_docsys_taxonomy():
     print("📁 [DOCSYS] Architecting self-documenting system taxonomy...")
@@ -37,7 +38,7 @@ Substrate: Apple Silicon M4 Max
         "standard": "ASF v1.2",
         "nodes_indexed": 75,
         "directories": ["docs/", "catalog/", "deploy/ledgers/"],
-        "status": "TAXONOMY_VERIFIED"
+        "status": "TAXONOMY_VERIFIED",
     }
 
     payload = json.dumps(taxonomy_manifest, sort_keys=True).encode("utf-8")
@@ -47,6 +48,7 @@ Substrate: Apple Silicon M4 Max
     manifest_path = CATALOG_DIR / "docsys_manifest.json"
     manifest_path.write_text(json.dumps(taxonomy_manifest, indent=2))
     print(f"💯 [DOCSYS] Taxonomy successfully sealed. Omega Seal: {seal}")
+
 
 if __name__ == "__main__":
     build_docsys_taxonomy()

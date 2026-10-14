@@ -9,5 +9,5 @@ class ModelRegistry:
         return {
             "models": list(self._models.keys()),
             "count": len(self._models),
-            "state": "operational"
+            "state": "operational",
         }

@@ -8,6 +8,7 @@ def test_cpvo_measurement():
     record = CPVORecord(id="test-1", value=5.0)
     assert meter.measure(record) == 10.0
 
+
 def test_manifest():
     m = load_manifest()
     assert m.version == "1.0"

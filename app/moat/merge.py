@@ -10,6 +10,7 @@ Two ways to merge:
       the max on each axis and unioning the notes.  This is what
       stitches subsystems into a moat mesh.
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterable
@@ -28,8 +29,7 @@ class MergeEdge:
     weight: float
 
     def to_dict(self) -> dict[str, Any]:
-        return {"src": self.src, "dst": self.dst,
-                "axis": self.axis.value, "weight": self.weight}
+        return {"src": self.src, "dst": self.dst, "axis": self.axis.value, "weight": self.weight}
 
 
 @dataclass
@@ -55,8 +55,7 @@ def _mean(xs: Iterable[float]) -> float:
 
 def merge(a: AxisScore, b: AxisScore) -> AxisScore:
     """Horizontal merge: take the max on every axis."""
-    m = AxisScore(subsystem=f"{a.subsystem}+{b.subsystem}",
-                  path=a.path)
+    m = AxisScore(subsystem=f"{a.subsystem}+{b.subsystem}", path=a.path)
     for ax in AXES:
         setattr(m, ax.name.lower(), max(a.get(ax), b.get(ax)))
     m.notes = list(set(a.notes + b.notes))
@@ -93,7 +92,7 @@ def merge_set(scores: list[AxisScore]) -> MergeResult:
 
     E, X, V = agg["exists"], agg["real"], agg["verified"]
     # the moat product over the three weighted axes
-    moat = round(E * (X ** 3) * (V ** 2), 6)
+    moat = round(E * (X**3) * (V**2), 6)
 
     # edges: every subsystem that scores low on X or V becomes a
     # "thin" edge the moat wants to reinforce

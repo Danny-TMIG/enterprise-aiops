@@ -51,7 +51,9 @@ def workflows_present() -> Attestation:  # pragma: no cover
     if not ok:  # pragma: no cover
         return Attestation("DCS-AUT-001", B.U, "github", f"api: {data}")  # pragma: no cover
     if not isinstance(data, list):  # pragma: no cover
-        return Attestation("DCS-AUT-001", B.F, "github", "no workflows directory")  # pragma: no cover
+        return Attestation(
+            "DCS-AUT-001", B.F, "github", "no workflows directory"
+        )  # pragma: no cover
     return Attestation(  # pragma: no cover
         "DCS-AUT-001", B.T, "github", f"{len(data)} workflow(s) present", {"count": len(data)}
     )
@@ -65,4 +67,6 @@ def default_branch() -> Attestation:  # pragma: no cover
     ok, data = _get(f"/repos/{repo}")
     if not ok:  # pragma: no cover
         return Attestation("DCS-COH-001", B.U, "github", f"api: {data}")  # pragma: no cover
-    return Attestation("DCS-COH-001", B.T, "github", f"default: {data.get('default_branch', '')}")  # pragma: no cover
+    return Attestation(
+        "DCS-COH-001", B.T, "github", f"default: {data.get('default_branch', '')}"
+    )  # pragma: no cover

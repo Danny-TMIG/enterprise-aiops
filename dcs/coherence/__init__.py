@@ -1,4 +1,5 @@
 """Coherence: two representations of the same value agree."""
+
 from __future__ import annotations
 
 from typing import Any
@@ -16,6 +17,7 @@ def incoherent_keys(a: dict, b: dict) -> list[str]:
         if canonical(a.get(k)) != canonical(b.get(k)):
             out.append(k)
     return out
+
 
 # ── coherent / incoherent_keys ──────────────────────────────────────
 from dcs.verify import canonical as _canonical

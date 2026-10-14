@@ -11,6 +11,7 @@ the codec a jitter margin that a fixed carrier does not.
 
 Uses DD arithmetic internally so a long schedule does not drift.
 """
+
 from __future__ import annotations
 
 import math
@@ -19,17 +20,17 @@ from dataclasses import dataclass, field
 
 # Lattice dimensions. Both are powers of two so phase and freq
 # indices are exact and DD accumulation is exact.
-N_FREQ  = 16        # 4 bits per hop
-N_PHASE = 16        # phase quantised to pi/8 steps
+N_FREQ = 16  # 4 bits per hop
+N_PHASE = 16  # phase quantised to pi/8 steps
 BITS_PER_HOP = 4
 
 
 @dataclass(frozen=True)
 class Hop:
-    freq_index: int          # 0..N_FREQ-1
-    phase_index: int         # 0..N_PHASE-1
-    symbol: int              # 0..2**BITS_PER_HOP - 1
-    t: float = 0.0           # absolute time the hop begins
+    freq_index: int  # 0..N_FREQ-1
+    phase_index: int  # 0..N_PHASE-1
+    symbol: int  # 0..2**BITS_PER_HOP - 1
+    t: float = 0.0  # absolute time the hop begins
 
     def __post_init__(self):
         if not 0 <= self.freq_index < N_FREQ:
@@ -60,7 +61,7 @@ class Hop:
 @dataclass
 class HoppingSchedule:
     hops: list[Hop] = field(default_factory=list)
-    hop_period: float = 1e-3       # seconds per hop
+    hop_period: float = 1e-3  # seconds per hop
     seed: int = 0
 
     @property
@@ -92,9 +93,7 @@ def _prng(seed: int):
 
 
 # ── encode ─────────────────────────────────────────────────────
-def hop_encode(payload: bytes,
-               seed: int = 0,
-               hop_period: float = 1e-3) -> HoppingSchedule:
+def hop_encode(payload: bytes, seed: int = 0, hop_period: float = 1e-3) -> HoppingSchedule:
     """Encode bytes as a hopping schedule.
 
     Each 4-bit nibble of the payload becomes one hop. The hop's
@@ -117,8 +116,7 @@ def hop_encode(payload: bytes,
         # freq and phase indices are a function of symbol, seed, and prev hop
         f_idx = (symbol + (r & 0xF) + prev_f) % N_FREQ
         p_idx = ((symbol >> 1) + ((r >> 4) & 0xF) + prev_p) % N_PHASE
-        hops.append(Hop(freq_index=f_idx, phase_index=p_idx,
-                        symbol=symbol, t=t))
+        hops.append(Hop(freq_index=f_idx, phase_index=p_idx, symbol=symbol, t=t))
         prev_f = f_idx
         prev_p = p_idx
         t += hop_period
@@ -126,8 +124,7 @@ def hop_encode(payload: bytes,
 
 
 # ── decode ─────────────────────────────────────────────────────
-def hop_decode(schedule: HoppingSchedule,
-               phase_error_rms: float = 0.0) -> bytes:
+def hop_decode(schedule: HoppingSchedule, phase_error_rms: float = 0.0) -> bytes:
     """Decode a hopping schedule back to bytes.
 
     phase_error_rms: simulated noise injected into the phase
@@ -150,7 +147,7 @@ def hop_decode(schedule: HoppingSchedule,
         if phase_error_rms > 0.0:
             observed_phase += noise_rng.gauss(0.0, phase_error_rms)
         observed_phase = observed_phase % (2 * math.pi)
-        observed_p_idx = int(round(observed_phase / tol)) % N_PHASE
+        observed_p_idx = round(observed_phase / tol) % N_PHASE
         if observed_p_idx != hop.phase_index:
             sym = (sym_f + 1) % N_FREQ
             out.append(sym)
@@ -158,7 +155,8 @@ def hop_decode(schedule: HoppingSchedule,
             prev_p = hop.phase_index
             continue
         candidates = [
-            (sym_f - k) % N_FREQ for k in range(N_FREQ)
+            (sym_f - k) % N_FREQ
+            for k in range(N_FREQ)
             if ((sym_f - k) % N_FREQ >> 1) == (sym_p % (N_PHASE // 2))
         ]
         sym = candidates[0] if candidates else sym_f

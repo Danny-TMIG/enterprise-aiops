@@ -6,7 +6,7 @@ Bridging 72-Coordinate Computer Science Space with 160-Axis Constitutional State
 
 import json
 import time
-from typing import Dict, Any, List
+
 
 class SovereignMatrixRefinementEngine:
     def __init__(self, core_id: str):
@@ -18,10 +18,10 @@ class SovereignMatrixRefinementEngine:
             "meta": {"self": True, "domain": None, "evidence": [], "gap": False},
             "constitutional_axes": self.constitutional_axes_count,
             "status": "REFINED_ESTABLISHED",
-            "timestamp": time.time()
+            "timestamp": time.time(),
         }
 
-    def bind_coordinate(self, coordinate: Dict[str, str], domain: str, evidence: List[str]) -> None:
+    def bind_coordinate(self, coordinate: dict[str, str], domain: str, evidence: list[str]) -> None:
         for axis in self.cs_axes:
             if axis in coordinate:
                 self.matrix_state["coordinate"][axis] = coordinate[axis]
@@ -29,11 +29,15 @@ class SovereignMatrixRefinementEngine:
         self.matrix_state["meta"]["evidence"] = evidence
 
     def export_state(self) -> str:
-        return json.dumps({
-            "core_id": self.core_id,
-            "space_cardinality": "12^6 = 2,985,984",
-            "matrix_state": self.matrix_state
-        }, indent=2)
+        return json.dumps(
+            {
+                "core_id": self.core_id,
+                "space_cardinality": "12^6 = 2,985,984",
+                "matrix_state": self.matrix_state,
+            },
+            indent=2,
+        )
+
 
 if __name__ == "__main__":
     engine = SovereignMatrixRefinementEngine("ASF-REFINED-001")
@@ -44,10 +48,10 @@ if __name__ == "__main__":
             "ABSTRACTION": "12 Cyber-physical system",
             "PROPERTY": "10 Safety",
             "CONTEXT": "05 Real-time",
-            "LIFECYCLE": "08 Execute"
+            "LIFECYCLE": "08 Execute",
         },
         domain="robotics",
-        evidence=["tests", "measurements", "formal proofs"]
+        evidence=["tests", "measurements", "formal proofs"],
     )
     print("[ASF-REFINEMENT] Unified Sovereign Matrix Initialized & Verified.")
     print(engine.export_state())

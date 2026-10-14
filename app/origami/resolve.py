@@ -7,15 +7,24 @@ For each function:
   - if exactly one undefined name and at least one parameter,
     rewrite the undefined name to the first parameter
 """
+
 from __future__ import annotations
 
 import ast
 import builtins
 
 _BUILTINS = set(dir(builtins)) | {
-    "True", "False", "None", "self", "cls",
-    "__name__", "__file__", "__doc__", "__builtins__",
-    "__package__", "annotations",
+    "True",
+    "False",
+    "None",
+    "self",
+    "cls",
+    "__name__",
+    "__file__",
+    "__doc__",
+    "__builtins__",
+    "__package__",
+    "annotations",
 }
 
 
@@ -51,7 +60,12 @@ def _defined_names(tree: ast.AST) -> set[str]:
             for t in n.targets:
                 if isinstance(t, ast.Name):
                     out.add(t.id)
-        elif isinstance(n, ast.AnnAssign) and isinstance(n.target, ast.Name) or isinstance(n, ast.For) and isinstance(n.target, ast.Name):
+        elif (
+            isinstance(n, ast.AnnAssign)
+            and isinstance(n.target, ast.Name)
+            or isinstance(n, ast.For)
+            and isinstance(n.target, ast.Name)
+        ):
             out.add(n.target.id)
         elif isinstance(n, ast.withitem) and isinstance(n.optional_vars, ast.Name):
             out.add(n.optional_vars.id)
@@ -68,14 +82,18 @@ def _undefined_in_function(fn: ast.AST, top_defined: set[str]) -> list[str]:
             for t in n.targets:
                 if isinstance(t, ast.Name):
                     local.add(t.id)
-        elif isinstance(n, ast.AnnAssign) and isinstance(n.target, ast.Name) or isinstance(n, ast.For) and isinstance(n.target, ast.Name):
+        elif (
+            isinstance(n, ast.AnnAssign)
+            and isinstance(n.target, ast.Name)
+            or isinstance(n, ast.For)
+            and isinstance(n.target, ast.Name)
+        ):
             local.add(n.target.id)
         elif isinstance(n, ast.withitem) and isinstance(n.optional_vars, ast.Name):
             local.add(n.optional_vars.id)
         elif isinstance(n, ast.comprehension) and isinstance(n.target, ast.Name):
             local.add(n.target.id)
-    used = {x.id for x in ast.walk(fn)
-            if isinstance(x, ast.Name) and isinstance(x.ctx, ast.Load)}
+    used = {x.id for x in ast.walk(fn) if isinstance(x, ast.Name) and isinstance(x.ctx, ast.Load)}
     return sorted(used - params - local - top_defined)
 
 
@@ -119,8 +137,9 @@ def resolve(source: str) -> str:
                 before = line[j - 1] if j > 0 else ""
                 after_pos = j + len(old)
                 after = line[after_pos] if after_pos < len(line) else ""
-                if not (before.isalnum() or before == "_") and \
-                   not (after.isalnum() or after == "_"):
+                if not (before.isalnum() or before == "_") and not (
+                    after.isalnum() or after == "_"
+                ):
                     out.append(new)
                     j += len(old)
                     continue
@@ -139,27 +158,34 @@ def resolve_tests(source: str) -> str:
     except SyntaxError:
         return source
 
-    funcs = [n.name for n in ast.walk(tree)
-             if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))
-             and not n.name.startswith("test_")]
+    funcs = [
+        n.name
+        for n in ast.walk(tree)
+        if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and not n.name.startswith("test_")
+    ]
     if not funcs:
         return source
 
-    tests = [n for n in ast.walk(tree)
-             if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))
-             and n.name.startswith("test_")]
+    tests = [
+        n
+        for n in ast.walk(tree)
+        if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and n.name.startswith("test_")
+    ]
     lines = source.splitlines()
     edits = []
     for t in tests:
         local_defs = _defined_names(t)
-        used = {x.id for x in ast.walk(t)
-                if isinstance(x, ast.Name) and isinstance(x.ctx, ast.Load)}
+        used = {
+            x.id for x in ast.walk(t) if isinstance(x, ast.Name) and isinstance(x.ctx, ast.Load)
+        }
         unknown = used - local_defs - set(_param_names(t))
         for name in unknown:
             # pick the function whose name contains the unknown token
-            cands = [f for f in funcs
-                     if name in f or f.startswith(name)
-                     or name.replace("_", "") in f.replace("_", "")]
+            cands = [
+                f
+                for f in funcs
+                if name in f or f.startswith(name) or name.replace("_", "") in f.replace("_", "")
+            ]
             if not cands:
                 # fall back to first function
                 cands = funcs
@@ -178,8 +204,9 @@ def resolve_tests(source: str) -> str:
                 before = line[j - 1] if j > 0 else ""
                 after_pos = j + len(old)
                 after = line[after_pos] if after_pos < len(line) else ""
-                if not (before.isalnum() or before == "_") and \
-                   not (after.isalnum() or after == "_"):
+                if not (before.isalnum() or before == "_") and not (
+                    after.isalnum() or after == "_"
+                ):
                     out.append(new)
                     j += len(old)
                     continue

@@ -8,6 +8,7 @@ Each level = one formal system. Each level has:
 
 The tower as a whole is the sequence.
 """
+
 from __future__ import annotations
 
 from collections.abc import Callable
@@ -31,46 +32,81 @@ class LevelSpec:
 
 
 LEVELS: tuple[LevelSpec, ...] = (
-    LevelSpec(0, "Boolean logic", 1,
-              ("nand",),
-              "order",   # already gone
-              "every Boolean is a NAND tree"),
-    LevelSpec(1, "Lambda calculus", 2,
-              ("lambda", "apply", "var"),
-              "commutativity",
-              "beta-reduction is confluent"),
-    LevelSpec(2, "Combinatory logic", 4,
-              ("S", "K"),
-              "associativity",
-              "S and K generate every closed term"),
-    LevelSpec(3, "Turing machine", 8,
-              ("read", "write", "move", "state"),
-              "alternativity",
-              "each transition is deterministic"),
-    LevelSpec(4, "Pi calculus", 16,
-              ("send", "recv", "par", "new"),
-              "no zero divisors",
-              "reduction is preserved under parallel composition"),
-    LevelSpec(5, "Interaction combinators", 32,
-              ("gamma", "delta", "epsilon"),
-              "no ordered field",
-              "each rule is local and pairs two nodes"),
-    LevelSpec(6, "Cellular automata", 64,
-              ("state", "neighbor", "update-rule"),
-              "no division algebra",
-              "each cell updates from its 1-neighborhood"),
-    LevelSpec(7, "Category theory", 128,
-              ("id", "compose"),
-              "no alternativity of any kind",
-              "composition is associative, identity is two-sided"),
-    LevelSpec(8, "Quantum mechanics", 256,
-              ("position", "momentum", "hamiltonian"),
-              "no commutativity of observables",
-              "the commutator is i*hbar on conjugate pairs"),
-    LevelSpec(9, "General computation", 512,
-              ("state", "input", "transition"),
-              "no algebraic identity left",
-              "state_{t+1} = F(state_t, input_t) for any F"),
+    LevelSpec(
+        0,
+        "Boolean logic",
+        1,
+        ("nand",),
+        "order",  # already gone
+        "every Boolean is a NAND tree",
+    ),
+    LevelSpec(
+        1,
+        "Lambda calculus",
+        2,
+        ("lambda", "apply", "var"),
+        "commutativity",
+        "beta-reduction is confluent",
+    ),
+    LevelSpec(
+        2, "Combinatory logic", 4, ("S", "K"), "associativity", "S and K generate every closed term"
+    ),
+    LevelSpec(
+        3,
+        "Turing machine",
+        8,
+        ("read", "write", "move", "state"),
+        "alternativity",
+        "each transition is deterministic",
+    ),
+    LevelSpec(
+        4,
+        "Pi calculus",
+        16,
+        ("send", "recv", "par", "new"),
+        "no zero divisors",
+        "reduction is preserved under parallel composition",
+    ),
+    LevelSpec(
+        5,
+        "Interaction combinators",
+        32,
+        ("gamma", "delta", "epsilon"),
+        "no ordered field",
+        "each rule is local and pairs two nodes",
+    ),
+    LevelSpec(
+        6,
+        "Cellular automata",
+        64,
+        ("state", "neighbor", "update-rule"),
+        "no division algebra",
+        "each cell updates from its 1-neighborhood",
+    ),
+    LevelSpec(
+        7,
+        "Category theory",
+        128,
+        ("id", "compose"),
+        "no alternativity of any kind",
+        "composition is associative, identity is two-sided",
+    ),
+    LevelSpec(
+        8,
+        "Quantum mechanics",
+        256,
+        ("position", "momentum", "hamiltonian"),
+        "no commutativity of observables",
+        "the commutator is i*hbar on conjugate pairs",
+    ),
+    LevelSpec(
+        9,
+        "General computation",
+        512,
+        ("state", "input", "transition"),
+        "no algebraic identity left",
+        "state_{t+1} = F(state_t, input_t) for any F",
+    ),
 )
 
 LEVEL_NAMES = tuple(l.name for l in LEVELS)
@@ -89,22 +125,33 @@ def _alg_at(level: int) -> Alg:
 
     def add(a: CD, b: CD) -> CD:
         return a + b
+
     def sub(a: CD, b: CD) -> CD:
         return a - b
+
     def mul(a: CD, b: CD) -> CD:
         return a * b
+
     def neg(a: CD) -> CD:
         return -a
+
     def conj(a: CD) -> CD:
         return a.conj()
+
     def is_zero(a: CD) -> bool:
         return a.is_zero()
 
-    return Alg(add=add, sub=sub, mul=mul, neg=neg, conj=conj,
-               is_zero=is_zero,
-               zero=cd_zero(inner, level - 1),
-               one=cd_one(inner, level - 1),
-               name=f"cd-L{level}")
+    return Alg(
+        add=add,
+        sub=sub,
+        mul=mul,
+        neg=neg,
+        conj=conj,
+        is_zero=is_zero,
+        zero=cd_zero(inner, level - 1),
+        one=cd_one(inner, level - 1),
+        name=f"cd-L{level}",
+    )
 
 
 # ────────────────────────────────────────────────────────────────
@@ -128,7 +175,7 @@ def lambda_level():
     return {
         "level": 1,
         "name": "Lambda calculus",
-        "basis": basis,           # [e0, e1]
+        "basis": basis,  # [e0, e1]
         "algebra": _alg_at(1),
         "spec": LEVELS[1],
         "note": "e0 = I = True; e1 = the first non-commutative generator",
@@ -250,6 +297,7 @@ def level_module(index: int) -> dict:
 @dataclass
 class Tower:
     """A materialized tower up to `depth`. Each level is a dict."""
+
     depth: int = 9
     levels: list = field(default_factory=list)
 
@@ -259,11 +307,14 @@ class Tower:
 
     def summary(self) -> list:
         return [
-            {"level": L["level"], "name": L["name"],
-             "dim": len(L["basis"]),
-             "loses": L["spec"].loses,
-             "invariant": L["spec"].invariant,
-             "primitives": list(L["spec"].primitives)}
+            {
+                "level": L["level"],
+                "name": L["name"],
+                "dim": len(L["basis"]),
+                "loses": L["spec"].loses,
+                "invariant": L["spec"].invariant,
+                "primitives": list(L["spec"].primitives),
+            }
             for L in self.levels
         ]
 

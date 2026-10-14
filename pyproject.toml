@@ -16,3 +16,21 @@ classifiers = [
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.ruff]
+line-length = 100
+exclude = [
+    ".venv", ".venv312", ".lanes",
+    "constructors", "sovereign-bounded-matrix",
+    ".spec-fix-backups", "docs/site_output", "logs",
+]
+
+[tool.ruff.lint]
+ignore = [
+    "E402",
+    "E731",
+    "E741",
+    "F403",
+    "F405",
+    "F841",
+]

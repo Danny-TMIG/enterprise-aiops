@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Generative + parallel type constructor writer."""
+
 from __future__ import annotations
+
 import itertools
 import re
 import sys
@@ -8,21 +10,65 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
 NOUNS = [
-    "State", "Event", "Record", "Claim", "Proof", "Witness", "Grant",
-    "Receipt", "Envelope", "Policy", "Capability", "Approval", "Outcome",
-    "Directive", "Ledger", "Digest", "Schema", "Bundle", "Manifest",
-    "Attestation", "Identity", "Authority", "Consent", "Revocation",
-    "Decision", "Evidence", "Signal", "Operation", "Outbox", "Registry",
+    "State",
+    "Event",
+    "Record",
+    "Claim",
+    "Proof",
+    "Witness",
+    "Grant",
+    "Receipt",
+    "Envelope",
+    "Policy",
+    "Capability",
+    "Approval",
+    "Outcome",
+    "Directive",
+    "Ledger",
+    "Digest",
+    "Schema",
+    "Bundle",
+    "Manifest",
+    "Attestation",
+    "Identity",
+    "Authority",
+    "Consent",
+    "Revocation",
+    "Decision",
+    "Evidence",
+    "Signal",
+    "Operation",
+    "Outbox",
+    "Registry",
 ]
 
 VERBS = [
-    "", "Create", "Update", "Verify", "Sign", "Seal", "Revoke",
-    "Approve", "Reject", "Publish", "Consume", "Emit",
+    "",
+    "Create",
+    "Update",
+    "Verify",
+    "Sign",
+    "Seal",
+    "Revoke",
+    "Approve",
+    "Reject",
+    "Publish",
+    "Consume",
+    "Emit",
 ]
 
 SUFFIXES = [
-    "", "Request", "Response", "Result", "Error", "Spec", "Ref",
-    "Record", "View", "Summary", "Detail",
+    "",
+    "Request",
+    "Response",
+    "Result",
+    "Error",
+    "Spec",
+    "Ref",
+    "Record",
+    "View",
+    "Summary",
+    "Detail",
 ]
 
 TEMPLATE = '''"""Auto-generated type constructor: {name}."""
@@ -97,8 +143,7 @@ def main():
     names = sorted(n for _, n in jobs)
     init = Path(out) / "__init__.py"
     init.write_text(
-        "".join(f"from .{n} import {n}\n" for n in names)
-        + "\n__all__ = " + repr(names) + "\n"
+        "".join(f"from .{n} import {n}\n" for n in names) + "\n__all__ = " + repr(names) + "\n"
     )
     print("wrote", init)
     print(f"summary: written={written} skipped={skipped} failed={failed}")

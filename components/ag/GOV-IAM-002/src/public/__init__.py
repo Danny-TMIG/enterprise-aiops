@@ -1,3 +1,3 @@
-from .002 import Iam002, Iam002Error
+from .mod002 import Iam002, Iam002Error
 
-__all__ = ['Iam002', Iam002Error.__name__!r]
+__all__ = ["Iam002", "Iam002Error"]

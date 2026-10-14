@@ -34,7 +34,9 @@ def allee(N0, r, K, A, steps=200, dt=0.05):  # pragma: no cover
     return out  # pragma: no cover
 
 
-def lotka_volterra(prey0, pred0, a=1.0, b=0.1, c=0.075, d=1.5, steps=4000, dt=0.001):  # pragma: no cover
+def lotka_volterra(
+    prey0, pred0, a=1.0, b=0.1, c=0.075, d=1.5, steps=4000, dt=0.001
+):  # pragma: no cover
     x, y = prey0, pred0
     out = []
     for _ in range(steps):

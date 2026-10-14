@@ -1,16 +1,17 @@
 """Source module for coherence."""
+
 from __future__ import annotations
 
 import hashlib
 import json
 import time
-from dataclasses import dataclass, field, asdict
-from typing import Any
+from dataclasses import asdict, dataclass, field
 
 
 @dataclass
 class Record:
     """One immutable unit of work emitted by coherence."""
+
     name: str
     payload: dict = field(default_factory=dict)
     ts: str = field(default_factory=lambda: time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
@@ -43,4 +44,4 @@ class Coherence:
         return h.hexdigest()
 
 
-__all__ = ["Record", "Coherence"]
+__all__ = ["Coherence", "Record"]

@@ -7,6 +7,7 @@ Per kind:
 The thresholds and step are configurable. The controller keeps
 a history so you can see the difficulty trajectory.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -58,6 +59,7 @@ class Controller:
         the difficulty that lands the rate inside [low, high].
         """
         from app.sacred.constants import PHI_INV
+
         for k, r in rate_by_kind.items():
             s = self.state.get(k)
             if s is None:

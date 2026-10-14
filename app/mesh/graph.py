@@ -1,4 +1,5 @@
 """MeshGraph — nodes is a dict keyed by id; edges is a list."""
+
 from __future__ import annotations
 
 from collections.abc import Iterable

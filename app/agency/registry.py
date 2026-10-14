@@ -3,6 +3,7 @@
 Records are never mutated in place. Revocation is a new record.
 The registry is a JSONL file so that history is the registry.
 """
+
 from __future__ import annotations
 
 import json
@@ -58,13 +59,18 @@ class Registry:
 
     def revoke(self, kind: str, id_: str, by: str, reason: str) -> None:
         with _LOCK, self.path.open("a") as f:
-            f.write(json.dumps({
-                "kind": "revocation",
-                "target_kind": kind,
-                "target_id": id_,
-                "by": by,
-                "reason": reason,
-            }) + "\n")
+            f.write(
+                json.dumps(
+                    {
+                        "kind": "revocation",
+                        "target_kind": kind,
+                        "target_id": id_,
+                        "by": by,
+                        "reason": reason,
+                    }
+                )
+                + "\n"
+            )
 
     # ── read ─────────────────────────────────────────────────────
     def _load(self) -> list[dict[str, Any]]:
@@ -84,7 +90,10 @@ class Registry:
                 revoked.setdefault(r["target_kind"], set()).add(r["target_id"])
 
         out: dict[str, list[Any]] = {
-            "agency": [], "license": [], "cert": [], "expertise": [],
+            "agency": [],
+            "license": [],
+            "cert": [],
+            "expertise": [],
         }
         # expertise accumulates across records for the same subject+domain
         exp_acc: dict[str, Expertise] = {}
@@ -112,8 +121,10 @@ class Registry:
 
     def for_subject(self, subject: str) -> dict[str, list[Any]]:
         everything = self.all()
-        return {k: [r for r in v if getattr(r, "subject", None) == subject]
-                for k, v in everything.items()}
+        return {
+            k: [r for r in v if getattr(r, "subject", None) == subject]
+            for k, v in everything.items()
+        }
 
 
 def get_registry(path: str | None = None) -> Registry:
@@ -124,13 +135,13 @@ def get_registry(path: str | None = None) -> Registry:
 
 
 class AgencyRegistry:
-
     """In-memory index of named primitives.
 
     Distinct from `Registry` in the same module: `Registry` is the
     append-only JSONL log; `AgencyRegistry` is a working-set cache
     keyed by name or id, suitable for lookups during gate evaluation.
     """
+
     def __init__(self, initial=None):
         self._items: dict = {}
         if initial:
@@ -159,4 +170,3 @@ class AgencyRegistry:
 
     def __len__(self) -> int:
         return len(self._items)
-

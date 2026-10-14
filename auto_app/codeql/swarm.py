@@ -23,5 +23,5 @@ class CodeQLSwarm:
             "database_created": created,
             "database_analyzed": analyzed,
             "policy": policy_res,
-            "summary": summary
+            "summary": summary,
         }

@@ -3,21 +3,21 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 from app.seed.intent import Intent
 
 
 def _now() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 @dataclass
 class Invariant:
     name: str
     statement: str
-    kind: str = "property"    # property | safety | liveness | type
+    kind: str = "property"  # property | safety | liveness | type
 
     def to_dict(self) -> dict[str, Any]:
         return {"name": self.name, "statement": self.statement, "kind": self.kind}
@@ -42,23 +42,30 @@ class Spec:
         return self
 
     def _hash(self) -> str:
-        blob = json.dumps({
-            "intent_id": self.intent_id,
-            "what": self.what, "where": self.where,
-            "invariants": [i.to_dict() for i in self.invariants],
-            "acceptance": self.acceptance,
-            "out_of_scope": self.out_of_scope,
-        }, sort_keys=True)
+        blob = json.dumps(
+            {
+                "intent_id": self.intent_id,
+                "what": self.what,
+                "where": self.where,
+                "invariants": [i.to_dict() for i in self.invariants],
+                "acceptance": self.acceptance,
+                "out_of_scope": self.out_of_scope,
+            },
+            sort_keys=True,
+        )
         return "spec-" + hashlib.sha256(blob.encode()).hexdigest()[:12]
 
     def to_dict(self) -> dict[str, Any]:
         return {
-            "id": self.id, "intent_id": self.intent_id,
-            "what": self.what, "where": self.where,
+            "id": self.id,
+            "intent_id": self.intent_id,
+            "what": self.what,
+            "where": self.where,
             "invariants": [i.to_dict() for i in self.invariants],
             "acceptance": self.acceptance,
             "out_of_scope": self.out_of_scope,
-            "frozen": self.frozen, "frozen_at": self.frozen_at,
+            "frozen": self.frozen,
+            "frozen_at": self.frozen_at,
         }
 
 
@@ -73,12 +80,16 @@ def draft(intent: Intent) -> Spec:
         what=what,
         where=where,
         invariants=[
-            Invariant(name="no_regression",
-                      statement="existing behaviour for the touched surface is preserved",
-                      kind="safety"),
-            Invariant(name="bounded_resource",
-                      statement="resource use stays within declared limits",
-                      kind="property"),
+            Invariant(
+                name="no_regression",
+                statement="existing behaviour for the touched surface is preserved",
+                kind="safety",
+            ),
+            Invariant(
+                name="bounded_resource",
+                statement="resource use stays within declared limits",
+                kind="property",
+            ),
         ],
         acceptance=[
             "unit tests for the new behaviour pass",

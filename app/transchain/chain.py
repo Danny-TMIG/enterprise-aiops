@@ -1,4 +1,5 @@
 """A chain is a finite sequence of distinct letters."""
+
 from __future__ import annotations
 
 from collections.abc import Iterable
@@ -40,8 +41,7 @@ class Chain:
         return Chain(self.seq + (x,))
 
     def is_prefix_of(self, other: Chain) -> bool:
-        return (len(self) <= len(other)
-                and other.seq[:len(self)] == self.seq)
+        return len(self) <= len(other) and other.seq[: len(self)] == self.seq
 
     def overlap(self, other: Chain) -> int:
         """Longest k such that self.seq[-k:] == other.seq[:k]."""

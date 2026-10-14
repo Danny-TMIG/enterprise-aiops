@@ -7,6 +7,7 @@ class Manifest:
         for k, v in kwargs.items():
             setattr(self, k, v)
 
+
 def load_manifest() -> Manifest:
     return Manifest(version="1.0")
 
@@ -14,6 +15,7 @@ def load_manifest() -> Manifest:
 @dataclass
 class CPVORates:
     """Cost per value unit. rate * value == cpvo_usd."""
+
     rate: float = 1.0
 
     def apply(self, value: float) -> float:

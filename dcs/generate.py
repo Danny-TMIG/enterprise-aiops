@@ -16,7 +16,9 @@ from typing import Any  # pragma: no cover
 MARKER = "_dcs_requirement"
 
 
-def requirement(*, id: str, title: str, section: str, hats: list[str], criticality: str = "MUST"):  # pragma: no cover
+def requirement(
+    *, id: str, title: str, section: str, hats: list[str], criticality: str = "MUST"
+):  # pragma: no cover
     """Decorator: mark a function as a standard requirement."""
 
     def deco(fn):  # pragma: no cover
@@ -48,7 +50,9 @@ def collect(module_paths: list[str]) -> list[dict[str, Any]]:  # pragma: no cove
     return sorted(out, key=lambda r: r["id"])  # pragma: no cover
 
 
-def emit(standard_meta: dict[str, Any], modules: list[str], out_path: Path) -> Path:  # pragma: no cover
+def emit(
+    standard_meta: dict[str, Any], modules: list[str], out_path: Path
+) -> Path:  # pragma: no cover
     doc = {"standard": standard_meta, "requirements": collect(modules)}
     out_path.write_text(json.dumps(doc, indent=2))
     return out_path  # pragma: no cover

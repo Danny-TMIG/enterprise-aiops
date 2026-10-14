@@ -2,6 +2,7 @@
 
 Reads DCS_EVAL_JSON (lm-eval-harness or generic shape). Missing -> U.
 """
+
 from __future__ import annotations  # pragma: no cover
 
 import json  # pragma: no cover
@@ -35,9 +36,14 @@ def accuracy_reported() -> Attestation:  # pragma: no cover
         return Attestation(REQ_ACC, B.U, "eval_report", "no eval JSON found")  # pragma: no cover
     results = d.get("results", d.get("benchmarks", {}))
     if not results:  # pragma: no cover
-        return Attestation(REQ_ACC, B.F, "eval_report", "no benchmarks in report")  # pragma: no cover
+        return Attestation(
+            REQ_ACC, B.F, "eval_report", "no benchmarks in report"
+        )  # pragma: no cover
     n = len(results) if isinstance(results, (list, dict)) else 0
     return Attestation(  # pragma: no cover
-        REQ_ACC, B.T, "eval_report", f"{n} benchmark(s)",
+        REQ_ACC,
+        B.T,
+        "eval_report",
+        f"{n} benchmark(s)",
         {"count": n, "keys": list(results)[:5] if isinstance(results, dict) else []},
     )

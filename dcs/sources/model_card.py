@@ -3,6 +3,7 @@
 Reads a local model card with YAML frontmatter. Missing file -> U.
 Present but empty -> F for the requirements it should satisfy.
 """
+
 from __future__ import annotations  # pragma: no cover
 
 import os  # pragma: no cover
@@ -46,7 +47,9 @@ def model_card_present() -> Attestation:  # pragma: no cover
         return Attestation(REQ_DOC, B.F, "model_card", "card too short")  # pragma: no cover
     sections = len(re.findall(r"^##?\s", body, re.MULTILINE))
     return Attestation(  # pragma: no cover
-        REQ_DOC, B.T if sections >= 3 else B.B, "model_card",
+        REQ_DOC,
+        B.T if sections >= 3 else B.B,
+        "model_card",
         f"{sections} sections, {len(body)} chars",
         {"sections": sections, "chars": len(body)},
     )
@@ -59,6 +62,8 @@ def limitations_documented() -> Attestation:  # pragma: no cover
         return Attestation(REQ_LIM, B.U, "model_card", "no model card found")  # pragma: no cover
     has_limits = bool(re.search(r"limitations?|limits|failure modes?", body, re.IGNORECASE))
     return Attestation(  # pragma: no cover
-        REQ_LIM, B.T if has_limits else B.F, "model_card",
+        REQ_LIM,
+        B.T if has_limits else B.F,
+        "model_card",
         "limitations section present" if has_limits else "no limitations section",
     )

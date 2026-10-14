@@ -1,4 +1,3 @@
-
 from app.dispatchpatch.models.base import BaseModel
 
 

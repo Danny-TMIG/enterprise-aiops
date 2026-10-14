@@ -10,6 +10,7 @@ Mastery = the defender held for N consecutive rounds against a growing
 attack distribution. Every attempt and every defense is written to the
 RAMSubstrate ledger. Nothing is claimed before it is exercised.
 """
+
 from __future__ import annotations
 
 import random
@@ -52,9 +53,13 @@ class Round:
         return self.broken == []
 
     def to_dict(self) -> dict[str, Any]:
-        return {"round": self.n, "attempts": self.attempts,
-                "held": self.held, "broken": self.broken[:8],
-                "evidence_seq": self.evidence_seq}
+        return {
+            "round": self.n,
+            "attempts": self.attempts,
+            "held": self.held,
+            "broken": self.broken[:8],
+            "evidence_seq": self.evidence_seq,
+        }
 
 
 # ── adversary definition ────────────────────────────────────────
@@ -68,8 +73,7 @@ class Adversary:
     seed: int = 0
 
     def to_dict(self) -> dict[str, Any]:
-        return {"code": self.code, "target_hat": self.target_hat,
-                "rounds": self.rounds}
+        return {"code": self.code, "target_hat": self.target_hat, "rounds": self.rounds}
 
 
 _ADVERSARIES: dict[str, Adversary] = {}
@@ -77,20 +81,26 @@ _ADVERSARIES: dict[str, Adversary] = {}
 
 def adversary(code: str, target_hat: str, rounds: int = 6, seed: int = 0):
     """Register a (attacker, defender) pair. Decorator-friendly:
-       @adversary("net_scan", "NET")
-       def pair():
-           def attack(round_no, rng): ...
-           def defend(attempt): ...
-           return attack, defend
+    @adversary("net_scan", "NET")
+    def pair():
+        def attack(round_no, rng): ...
+        def defend(attempt): ...
+        return attack, defend
     """
+
     def deco(fn):
         result = fn if isinstance(fn, tuple) else fn()
         attack, defend = result if isinstance(result, tuple) else (fn, None)
         _ADVERSARIES[code] = Adversary(
-            code=code, target_hat=target_hat, attack=attack,
+            code=code,
+            target_hat=target_hat,
+            attack=attack,
             defend=defend or (lambda a: False),
-            rounds=rounds, seed=seed)
+            rounds=rounds,
+            seed=seed,
+        )
         return fn
+
     return deco
 
 
@@ -113,9 +123,12 @@ class Verdict:
     mastered: bool = False
 
     def to_dict(self) -> dict[str, Any]:
-        return {"adversary": self.adversary, "hat": self.hat,
-                "rounds": [r.to_dict() for r in self.rounds],
-                "mastered": self.mastered}
+        return {
+            "adversary": self.adversary,
+            "hat": self.hat,
+            "rounds": [r.to_dict() for r in self.rounds],
+            "mastered": self.mastered,
+        }
 
 
 def train(adv: Adversary) -> Verdict:
@@ -125,8 +138,7 @@ def train(adv: Adversary) -> Verdict:
         try:
             attempts = adv.attack(i, rng) or []
         except Exception as e:
-            v.rounds.append(Round(n=i, attempts=0, held=0,
-                                  broken=[f"attack raised: {e}"]))
+            v.rounds.append(Round(n=i, attempts=0, held=0, broken=[f"attack raised: {e}"]))
             break
         held, broken = 0, []
         for a in attempts:
@@ -140,7 +152,8 @@ def train(adv: Adversary) -> Verdict:
                 ev = _sub().append(
                     "adversarial.defense",
                     f"{adv.code}/{a.id}",
-                    {"attempt": a.__dict__, "defense": d.__dict__})
+                    {"attempt": a.__dict__, "defense": d.__dict__},
+                )
                 d.evidence_seq = ev.seq
             except Exception:
                 pass
@@ -150,18 +163,16 @@ def train(adv: Adversary) -> Verdict:
                 broken.append(a.id)
         r = Round(n=i, attempts=len(attempts), held=held, broken=broken)
         try:
-            ev = _sub().append(
-                "adversarial.round",
-                f"{adv.code}/round-{i}",
-                r.to_dict())
+            ev = _sub().append("adversarial.round", f"{adv.code}/round-{i}", r.to_dict())
             r.evidence_seq = ev.seq
         except Exception:
             pass
         v.rounds.append(r)
         if broken:
             break
-    v.mastered = bool(v.rounds) and all(r.defender_ok for r in v.rounds) \
-                 and len(v.rounds) == adv.rounds
+    v.mastered = (
+        bool(v.rounds) and all(r.defender_ok for r in v.rounds) and len(v.rounds) == adv.rounds
+    )
     return v
 
 
@@ -175,8 +186,7 @@ def train_all(*, hat: str | None = None) -> dict[str, Verdict]:
 
 
 # ── built-in adversaries, one per high-signal hat ───────────────
-def _attempts_vs_skills(hat: str, round_no: int, rng: random.Random,
-                        k: int = 4) -> list[Attempt]:
+def _attempts_vs_skills(hat: str, round_no: int, rng: random.Random, k: int = 4) -> list[Attempt]:
     """Generic attacker: pick K random skills under the target hat and
     craft attempts that probe them."""
     skills_by_hat = discover_skills()
@@ -186,13 +196,15 @@ def _attempts_vs_skills(hat: str, round_no: int, rng: random.Random,
     picks = rng.sample(pool, min(k, len(pool)))
     out: list[Attempt] = []
     for i, s in enumerate(picks):
-        out.append(Attempt(
-            id=f"{hat}-r{round_no}-{i:02d}-{s.code}",
-            payload={"skill": s.code, "home": s.home,
-                     "variant": rng.randint(0, 2**31)},
-            target_skill=s.code,
-            attack_kind="dispatch-perturb",
-            meta={"round": round_no}))
+        out.append(
+            Attempt(
+                id=f"{hat}-r{round_no}-{i:02d}-{s.code}",
+                payload={"skill": s.code, "home": s.home, "variant": rng.randint(0, 2**31)},
+                target_skill=s.code,
+                attack_kind="dispatch-perturb",
+                meta={"round": round_no},
+            )
+        )
     return out
 
 
@@ -200,6 +212,7 @@ def _defend_generic(attempt: Attempt) -> bool:
     """Default defender: dispatch the target skill and hold if ok."""
     try:
         from app.core.capabilities import dispatch
+
         d = dispatch(attempt.target_skill)
         return bool(d.ok)
     except Exception:
@@ -208,20 +221,27 @@ def _defend_generic(attempt: Attempt) -> bool:
 
 # register one adversary per hat that has skills
 for _h in sorted(HATS.keys()):
+
     def _mk(hat=_h):
         def attack(round_no, rng):
             return _attempts_vs_skills(hat, round_no, rng)
+
         return attack, _defend_generic
-    adversary(f"adv_{_h}", _h, rounds=4, seed=hash(_h) & 0xffff)(_mk())
+
+    adversary(f"adv_{_h}", _h, rounds=4, seed=hash(_h) & 0xFFFF)(_mk())
 
 
 # ── capability ──────────────────────────────────────────────────
 def _self_register() -> None:
     try:
         from app.core.autoreg import cap as _acap
-        _acap("adversarial", category="sec-offensive",
-              equation="mastery = forall r<=N: defender holds",
-              home="app/core/adversarial.py")(None)
+
+        _acap(
+            "adversarial",
+            category="sec-offensive",
+            equation="mastery = forall r<=N: defender holds",
+            home="app/core/adversarial.py",
+        )(None)
     except Exception:
         pass
     try:

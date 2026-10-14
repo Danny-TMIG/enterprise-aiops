@@ -8,6 +8,7 @@ Operational definition. An artifact is useful if it passes six:
   5. no_undefined — no undefined names
   6. no_placeholders — no template markers
 """
+
 from __future__ import annotations
 
 import ast
@@ -16,13 +17,49 @@ import re
 import sys
 
 _B = set(dir(builtins)) | {
-    "__name__", "__file__", "__doc__", "__builtins__", "__package__",
+    "__name__",
+    "__file__",
+    "__doc__",
+    "__builtins__",
+    "__package__",
 }
-STOP = {"the", "a", "an", "to", "for", "of", "in", "on", "and", "or",
-        "is", "are", "be", "with", "this", "that", "add", "create",
-        "make", "implement", "return", "compute", "check", "if"}
-PLACEHOLDERS = ("<FUNC", "<TEST", "<DOC", "small_function",
-                "read_file", "value + 1", "TODO", "FIXME", "placeholder")
+STOP = {
+    "the",
+    "a",
+    "an",
+    "to",
+    "for",
+    "of",
+    "in",
+    "on",
+    "and",
+    "or",
+    "is",
+    "are",
+    "be",
+    "with",
+    "this",
+    "that",
+    "add",
+    "create",
+    "make",
+    "implement",
+    "return",
+    "compute",
+    "check",
+    "if",
+}
+PLACEHOLDERS = (
+    "<FUNC",
+    "<TEST",
+    "<DOC",
+    "small_function",
+    "read_file",
+    "value + 1",
+    "TODO",
+    "FIXME",
+    "placeholder",
+)
 
 
 def _kw(text: str) -> set:
@@ -39,8 +76,9 @@ def _func_names(source: str) -> list[str]:
         tree = ast.parse(source)
     except SyntaxError:
         return []
-    return [n.name for n in ast.walk(tree)
-            if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))]
+    return [
+        n.name for n in ast.walk(tree) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))
+    ]
 
 
 def _undefined(source: str) -> list[str]:
@@ -64,7 +102,12 @@ def _undefined(source: str) -> list[str]:
             for t in node.targets:
                 if isinstance(t, ast.Name):
                     defined.add(t.id)
-        elif isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name) or isinstance(node, ast.For) and isinstance(node.target, ast.Name):
+        elif (
+            isinstance(node, ast.AnnAssign)
+            and isinstance(node.target, ast.Name)
+            or isinstance(node, ast.For)
+            and isinstance(node.target, ast.Name)
+        ):
             defined.add(node.target.id)
         elif isinstance(node, ast.withitem) and isinstance(node.optional_vars, ast.Name):
             defined.add(node.optional_vars.id)
@@ -76,8 +119,7 @@ def _undefined(source: str) -> list[str]:
                 for elt in t.elts:
                     if isinstance(elt, ast.Name):
                         defined.add(elt.id)
-    used = {n.id for n in ast.walk(tree)
-            if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load)}
+    used = {n.id for n in ast.walk(tree) if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load)}
     return sorted(used - defined - _B)
 
 
@@ -115,11 +157,18 @@ def score(intent: str, source: str) -> dict[str, object]:
     except SyntaxError:
         parses = False
     if not parses:
-        return {"parses": False, "intent_match": False,
-                "body_nonstub": False, "test_present": False,
-                "no_undefined": False, "no_placeholders": False,
-                "undefined_list": ["<syntax>"], "funcs": [],
-                "useful": False, "score": 0.0}
+        return {
+            "parses": False,
+            "intent_match": False,
+            "body_nonstub": False,
+            "test_present": False,
+            "no_undefined": False,
+            "no_placeholders": False,
+            "undefined_list": ["<syntax>"],
+            "funcs": [],
+            "useful": False,
+            "score": 0.0,
+        }
     fn_tokens = set()
     for f in _func_names(source):
         fn_tokens |= _kw(f)
@@ -130,11 +179,16 @@ def score(intent: str, source: str) -> dict[str, object]:
     noph = _no_placeholders(source)
     checks = [parses, im, body, test, not und, noph]
     return {
-        "parses": parses, "intent_match": im,
-        "body_nonstub": body, "test_present": test,
-        "no_undefined": not und, "no_placeholders": noph,
-        "undefined_list": und, "funcs": _func_names(source),
-        "useful": all(checks), "score": sum(int(c) for c in checks) / len(checks),
+        "parses": parses,
+        "intent_match": im,
+        "body_nonstub": body,
+        "test_present": test,
+        "no_undefined": not und,
+        "no_placeholders": noph,
+        "undefined_list": und,
+        "funcs": _func_names(source),
+        "useful": all(checks),
+        "score": sum(int(c) for c in checks) / len(checks),
     }
 
 
@@ -157,22 +211,30 @@ def main() -> int:
     from app.origami.dispatch import dispatch
     from app.origami.library import get as get_grammar
     from app.origami.swarm import Swarm
+
     swarm = Swarm(n_workers=1)
     grammar = get_grammar("rich_module")
     tot = 0.0
     useful = 0
     for i, prompt in enumerate(PROMPTS):
-        r = dispatch(grammar, swarm, intent=prompt,
-                     seed=i, max_depth=6, max_tokens=128)
+        r = dispatch(grammar, swarm, intent=prompt, seed=i, max_depth=6, max_tokens=128)
         s = score(prompt, r.code)
         tot += float(s["score"])
         useful += int(bool(s["useful"]))
-        marks = "".join("1" if s[k] else "0" for k in
-                        ("parses", "intent_match", "body_nonstub",
-                         "test_present", "no_undefined", "no_placeholders"))
+        marks = "".join(
+            "1" if s[k] else "0"
+            for k in (
+                "parses",
+                "intent_match",
+                "body_nonstub",
+                "test_present",
+                "no_undefined",
+                "no_placeholders",
+            )
+        )
         print(f"  [{marks}] {prompt[:40]:40s} score={float(s['score']):.2f}")
     print(f"\n  useful: {useful}/{len(PROMPTS)}")
-    print(f"  mean score: {tot/len(PROMPTS):.3f}")
+    print(f"  mean score: {tot / len(PROMPTS):.3f}")
     return 0
 
 

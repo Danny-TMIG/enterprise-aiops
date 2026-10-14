@@ -1,4 +1,5 @@
 """CPVO meter + record. Works with the manifest CPVORates."""
+
 from __future__ import annotations
 
 from app.seed.manifest import CPVORates, Manifest  # noqa: F401

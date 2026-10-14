@@ -13,6 +13,7 @@ Per iteration:
 Every fixer is idempotent and reversible: it writes a .bak.<ts> before
 touching a file, and refuses to re-apply the same patch twice.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -31,17 +32,17 @@ ENV = {**__import__("os").environ, "PYTHONPATH": str(ROOT)}
 LINE_RE = re.compile(r"^(?P<file>[^:\n]+\.py):(?P<line>\d+): (?P<exc>\w+): (?P<msg>.*)$")
 IMPORT_RE = re.compile(r"cannot import name '(?P<name>\w+)' from '(?P<mod>[\w\.]+)'")
 
-APPLIED: set[tuple[str, str]] = set()   # (rel_path, patch_key) — refuse re-apply
+APPLIED: set[tuple[str, str]] = set()  # (rel_path, patch_key) — refuse re-apply
 
 
 def sh(cmd, **kw):
-    return subprocess.run(cmd, cwd=ROOT, env=ENV, text=True,
-                          capture_output=True, **kw)
+    return subprocess.run(cmd, cwd=ROOT, env=ENV, text=True, capture_output=True, **kw)
 
 
 def run_tests(tests: str) -> tuple[int, str]:
-    r = sh([PYTHON, "-m", "pytest", "-q", "--no-header",
-            "-p", "no:cacheprovider", "--tb=line", tests])
+    r = sh(
+        [PYTHON, "-m", "pytest", "-q", "--no-header", "-p", "no:cacheprovider", "--tb=line", tests]
+    )
     return r.returncode, r.stdout + r.stderr
 
 
@@ -67,12 +68,12 @@ def parse_failures(output: str) -> list[dict]:
         if key in seen:
             continue
         seen.add(key)
-        out.append({"file": m["file"], "line": int(m["line"]),
-                    "exc": m["exc"], "msg": m["msg"]})
+        out.append({"file": m["file"], "line": int(m["line"]), "exc": m["exc"], "msg": m["msg"]})
     return out
 
 
 # ── fixers, keyed by shape. each returns True if it wrote something.
+
 
 def fix_cannot_import(f):
     m = IMPORT_RE.search(f["msg"])
@@ -94,7 +95,7 @@ def fix_cannot_import(f):
         return False
     stub = {
         "OrigamiGrammar": '\n\nclass OrigamiGrammar:\n    def __init__(self, *a, **k):\n        self.start = k.get("start", "Start")\n        self.name = k.get("name", "origami")\n\n    def fold(self, shape: str) -> str:\n        return f"folded:{shape}"\n',
-        "CPVORates":      '\n\n@dataclass\nclass CPVORates:\n    rate: float = 1.0\n\n    def apply(self, v: float) -> float:\n        return v * self.rate\n',
+        "CPVORates": "\n\n@dataclass\nclass CPVORates:\n    rate: float = 1.0\n\n    def apply(self, v: float) -> float:\n        return v * self.rate\n",
     }.get(name)
     if stub is None:
         print(f"    · no stub for class {name}, skipping")
@@ -110,7 +111,11 @@ def fix_missing_attr_stats(f):
     if "has no attribute 'stats'" not in f["msg"]:
         return False
     # the class named in the failing test file's import
-    tf = ROOT / Path(f["file"]).resolve().relative_to(ROOT) if Path(f["file"]).is_absolute() else ROOT / f["file"]
+    tf = (
+        ROOT / Path(f["file"]).resolve().relative_to(ROOT)
+        if Path(f["file"]).is_absolute()
+        else ROOT / f["file"]
+    )
     if not tf.exists():
         return False
     src_t = tf.read_text()
@@ -127,7 +132,9 @@ def fix_missing_attr_stats(f):
     src = p.read_text()
     if re.search(r"^\s*def stats\b", src, re.MULTILINE):
         return False
-    src = src.rstrip() + '''
+    src = (
+        src.rstrip()
+        + """
 
     def stats(self):
         kinds = {}
@@ -135,10 +142,12 @@ def fix_missing_attr_stats(f):
             k = getattr(n, "kind", "unknown")
             kinds[k] = kinds.get(k, 0) + 1
         return {"nodes": len(self.nodes), "edges": len(self.edges), "kinds": kinds}
-'''
+"""
+    )
     # if `stats` was patched on via `MeshGraph.stats = _mg_stats`, strip that
-    src = re.sub(r"\n# ── MeshGraph\.stats.*?\nMeshGraph\.stats = _mg_stats\n",
-                 "\n", src, flags=re.DOTALL)
+    src = re.sub(
+        r"\n# ── MeshGraph\.stats.*?\nMeshGraph\.stats = _mg_stats\n", "\n", src, flags=re.DOTALL
+    )
     write(p, src)
     APPLIED.add(key)
     return True
@@ -166,8 +175,12 @@ def fix_missing_kwarg(f):
             continue
         if kw in mm.group(1):
             continue
-        new = f"def {fn}({mm.group(1)}, {kw}=None):" if mm.group(1).strip() else f"def {fn}({kw}=None):"
-        src = src[:mm.start()] + new + src[mm.end():]
+        new = (
+            f"def {fn}({mm.group(1)}, {kw}=None):"
+            if mm.group(1).strip()
+            else f"def {fn}({kw}=None):"
+        )
+        src = src[: mm.start()] + new + src[mm.end() :]
         write(p, src)
         APPLIED.add(key)
         return True
@@ -194,15 +207,14 @@ def fix_positional_arity(f):
             continue
         # switch to *args, **kwargs
         new = f"def {fn}(*args, **kwargs):"
-        src = src[:mm.start()] + new + src[mm.end():]
+        src = src[: mm.start()] + new + src[mm.end() :]
         write(p, src)
         APPLIED.add(key)
         return True
     return False
 
 
-FIXERS = [fix_cannot_import, fix_missing_attr_stats,
-          fix_missing_kwarg, fix_positional_arity]
+FIXERS = [fix_cannot_import, fix_missing_attr_stats, fix_missing_kwarg, fix_positional_arity]
 
 
 def apply_one(failures):

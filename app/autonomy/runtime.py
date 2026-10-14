@@ -1,4 +1,5 @@
 """Autonomous runtime — one process-wide instance."""
+
 from __future__ import annotations
 
 import os
@@ -14,6 +15,7 @@ _RUNTIME: Runtime | None = None
 
 def _probe_db() -> dict[str, Any]:
     from app.db.health import db_health
+
     return db_health()
 
 
@@ -21,6 +23,7 @@ def _probe_metrics() -> dict[str, Any]:
     # Lightweight self-observed metrics. No external I/O.
     import os
     import resource
+
     rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
     # macOS reports bytes, Linux reports KB
     rss_mb = rss / (1024 * 1024) if rss > 1024 * 1024 else rss / 1024
@@ -45,11 +48,14 @@ class Runtime:
         for rule, remedy in POLICIES:
             self.engine.add(rule)
             self.healer.register(remedy)
-        self.watchdog = Watchdog(self.engine, probes=[
-            Probe(name="db",         fn=_probe_db,         interval_s=5.0),
-            Probe(name="metrics",    fn=_probe_metrics,    interval_s=1.0),
-            Probe(name="kill_switch", fn=_probe_kill_switch, interval_s=2.0),
-        ])
+        self.watchdog = Watchdog(
+            self.engine,
+            probes=[
+                Probe(name="db", fn=_probe_db, interval_s=5.0),
+                Probe(name="metrics", fn=_probe_metrics, interval_s=1.0),
+                Probe(name="kill_switch", fn=_probe_kill_switch, interval_s=2.0),
+            ],
+        )
         self._autostart = os.environ.get("TMIG_AUTONOMY", "1") == "1"
 
     def start(self) -> None:
@@ -80,15 +86,16 @@ def get_runtime() -> Runtime:
 
 
 class AutonomyRuntime:
-
     """One process-wide tick: sample probes, evaluate, heal.
 
     Composes a Watchdog (samples probes, runs the DecisionEngine) and a
     SystemHealer (runs registered health checks and applies fixes).
     """
+
     def __init__(self, watchdog=None, healer=None):
         from app.autonomy.healer import SystemHealer
         from app.autonomy.watchdog import Watchdog
+
         self.watchdog = watchdog or Watchdog()
         self.healer = healer or SystemHealer()
         self.steps: int = 0
@@ -109,4 +116,3 @@ class AutonomyRuntime:
 
     def run(self, n: int = 1) -> list:
         return [self.step() for _ in range(n)]
-

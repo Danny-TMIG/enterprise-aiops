@@ -1,3 +1,3 @@
-from .001 import Cmp001, Cmp001Error
+from .mod001 import Cmp001, Cmp001Error
 
-__all__ = ['Cmp001', Cmp001Error.__name__!r]
+__all__ = ["Cmp001", "Cmp001Error"]

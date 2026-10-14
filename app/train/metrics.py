@@ -20,6 +20,7 @@ Metrics here:
 Every float is stored at DD precision when accumulated over many
 generations. Single-generation values are float64.
 """
+
 from __future__ import annotations
 
 import math
@@ -121,6 +122,7 @@ class StreamMetrics:
     stream progresses. No metric is the same as the previous
     generation unless the underlying rate is genuinely fixed.
     """
+
     kind: str
     solver: str
     ewma: EWMA = field(default_factory=EWMA)
@@ -194,11 +196,13 @@ class MetricsRegistry:
     A merged stream would average out the variation and look
     static even when the underlying rate moves.
     """
+
     def __init__(self):
         self.streams: dict[tuple[str, str, str], StreamMetrics] = {}
 
-    def push(self, kind: str, solver: str, difficulty: str,
-             passes: int, trials: int) -> dict[str, float]:
+    def push(
+        self, kind: str, solver: str, difficulty: str, passes: int, trials: int
+    ) -> dict[str, float]:
         key = (kind, solver, difficulty)
         s = self.streams.get(key)
         if s is None:
@@ -229,6 +233,6 @@ class MetricsRegistry:
 def series_with_derivatives(history: list) -> dict:
     """Compute d1 and d2 series from the history of `rate` values."""
     rates = [h["rate"] for h in history]
-    d1 = [0.0] + [rates[i] - rates[i-1] for i in range(1, len(rates))]
-    d2 = [0.0] + [d1[i] - d1[i-1] for i in range(1, len(d1))]
+    d1 = [0.0] + [rates[i] - rates[i - 1] for i in range(1, len(rates))]
+    d2 = [0.0] + [d1[i] - d1[i - 1] for i in range(1, len(d1))]
     return {"rate": rates, "d1": d1, "d2": d2}

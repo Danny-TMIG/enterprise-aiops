@@ -16,8 +16,7 @@ class ScanRegistry:
         }
 
     def list(self) -> dict[str, Any]:
-        return {n: {"available": s.available()}
-                for n, s in self.scanners.items()}
+        return {n: {"available": s.available()} for n, s in self.scanners.items()}
 
     def scan(self, name: str, root: str) -> ScanResult:
         s = self.scanners.get(name)

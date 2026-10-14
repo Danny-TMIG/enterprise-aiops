@@ -1,4 +1,3 @@
-
 from app.dispatchpatch.scan.base import BaseScan
 
 

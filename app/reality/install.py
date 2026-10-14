@@ -1,4 +1,5 @@
 """Install plan. Network operations require AIOPS_ALLOW_NETWORK=1."""
+
 from __future__ import annotations
 
 import os
@@ -7,9 +8,9 @@ from typing import Any
 
 INSTALLABLE = {
     "codeql": {
-        "check": lambda: bool(shutil.which("codeql")
-                              or os.path.exists(os.path.expanduser(
-                                  "~/.codeql/codeql"))),
+        "check": lambda: bool(
+            shutil.which("codeql") or os.path.exists(os.path.expanduser("~/.codeql/codeql"))
+        ),
         "how": "download CodeQL bundle from github.com/github/codeql-action/releases",
         "network": True,
     },
@@ -28,6 +29,7 @@ INSTALLABLE = {
 
 def _mod(name: str) -> bool:
     import importlib.util
+
     return importlib.util.find_spec(name) is not None
 
 
@@ -36,15 +38,17 @@ def install_local(allow_network: bool = False) -> list[dict[str, Any]]:
     for name, spec in INSTALLABLE.items():
         present = bool(spec["check"]())
         if present:
-            out.append({"name": name, "present": True,
-                        "action": "already installed"})
+            out.append({"name": name, "present": True, "action": "already installed"})
             continue
         if spec["network"] and not allow_network:
-            out.append({"name": name, "present": False,
-                        "action": "blocked (set AIOPS_ALLOW_NETWORK=1)",
-                        "how": spec["how"]})
+            out.append(
+                {
+                    "name": name,
+                    "present": False,
+                    "action": "blocked (set AIOPS_ALLOW_NETWORK=1)",
+                    "how": spec["how"],
+                }
+            )
             continue
-        out.append({"name": name, "present": False,
-                    "action": "run manually",
-                    "how": spec["how"]})
+        out.append({"name": name, "present": False, "action": "run manually", "how": spec["how"]})
     return out

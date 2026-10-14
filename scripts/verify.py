@@ -11,12 +11,14 @@ PYTEST = VENV_BIN / "pytest"
 RUFF = VENV_BIN / "ruff"
 MYPY = VENV_BIN / "mypy"
 
+
 def run_step(name: str, cmd: list[str]) -> None:
     print(f"==> Running step: {name}")
     result = subprocess.run(cmd, cwd=ROOT, check=False)
     if result.returncode != 0:
         print(f"Error: Step '{name}' failed with code {result.returncode}")
         sys.exit(result.returncode)
+
 
 def main() -> None:
     if not PYTHON.exists():
@@ -27,6 +29,7 @@ def main() -> None:
     run_step("mypy", [str(MYPY), "app", "tests"])
     run_step("pytest", [str(PYTEST), "-v"])
     print("==> All verification checks passed cleanly.")
+
 
 if __name__ == "__main__":
     main()

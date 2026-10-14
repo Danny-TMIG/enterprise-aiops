@@ -4,6 +4,7 @@ Wire format: Flow Designer REST action.
     request:  {"action": "verify", "inputs": {"claim": "..."}}
     response: {"result": {"state": "success|error", "output": {...}}}
 """
+
 from __future__ import annotations
 
 from typing import Any

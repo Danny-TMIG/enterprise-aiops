@@ -22,6 +22,7 @@ the ledger.
 
 Self-registers as capability `physarum`.
 """
+
 from __future__ import annotations
 
 import math
@@ -38,9 +39,9 @@ from typing import Any
 class Edge:
     src: str
     dst: str
-    L: float = 1.0            # length / cost
-    D: float = 1.0            # conductance (the mold's tube width)
-    Q: float = 0.0            # last flux
+    L: float = 1.0  # length / cost
+    D: float = 1.0  # conductance (the mold's tube width)
+    Q: float = 0.0  # last flux
     flow_total: float = 0.0
     flow_window: deque[float] = field(default_factory=lambda: deque(maxlen=64))
     pruned: bool = False
@@ -58,13 +59,16 @@ class Edge:
 class PhysarumRouter:
     """Edge-local update rule. No global pass over the graph."""
 
-    def __init__(self, *,
-                 delta: float = 0.05,       # decay
-                 mu: float = 4.0,           # nonlinearity
-                 prune_below: float = 0.05, # absolute D floor
-                 reinforce_above: float = 0.5,
-                 prune_window: int = 16,
-                 seed: int = 0):
+    def __init__(
+        self,
+        *,
+        delta: float = 0.05,  # decay
+        mu: float = 4.0,  # nonlinearity
+        prune_below: float = 0.05,  # absolute D floor
+        reinforce_above: float = 0.5,
+        prune_window: int = 16,
+        seed: int = 0,
+    ):
         self.delta = delta
         self.mu = mu
         self.prune_below = prune_below
@@ -75,9 +79,16 @@ class PhysarumRouter:
         self._tick = 0
 
     # ── topology ────────────────────────────────────────────────────
-    def add(self, src: str, dst: str, *, L: float = 1.0,
-            D: float | None = None, jitter: float = 0.35,
-            seed: int | None = None) -> Edge:
+    def add(
+        self,
+        src: str,
+        dst: str,
+        *,
+        L: float = 1.0,
+        D: float | None = None,
+        jitter: float = 0.35,
+        seed: int | None = None,
+    ) -> Edge:
         with self._lock:
             k = (src, dst)
             if k in self._edges:
@@ -85,23 +96,19 @@ class PhysarumRouter:
             if D is None:
                 # heterogeneous birth: each edge has its own thickness,
                 # so each crosses the prune floor at its own moment.
-                rng = random.Random(seed if seed is not None
-                                    else hash(k) & 0xffffffff)
+                rng = random.Random(seed if seed is not None else hash(k) & 0xFFFFFFFF)
                 D = max(0.05, 1.0 + rng.gauss(0, jitter))
             e = Edge(src=src, dst=dst, L=L, D=D)
             self._edges[k] = e
             return e
 
-    def add_path(self, chain: Iterable[str], *,
-                 L: float = 1.0) -> list[Edge]:
+    def add_path(self, chain: Iterable[str], *, L: float = 1.0) -> list[Edge]:
         chain = list(chain)
-        return [self.add(chain[i], chain[i+1], L=L)
-                for i in range(len(chain) - 1)]
+        return [self.add(chain[i], chain[i + 1], L=L) for i in range(len(chain) - 1)]
 
     def edges(self, *, include_pruned: bool = False) -> list[Edge]:
         with self._lock:
-            return [e for e in self._edges.values()
-                    if include_pruned or not e.pruned]
+            return [e for e in self._edges.values() if include_pruned or not e.pruned]
 
     # ── flow injection ──────────────────────────────────────────────
     def send(self, src: str, dst: str, *, amount: float = 1.0) -> float:
@@ -169,8 +176,12 @@ class PhysarumRouter:
                 "live_edges": len(live),
                 "pruned_edges": len(dead),
                 "live": [
-                    {"edge": f"{e.src}->{e.dst}", "D": round(e.D, 4),
-                     "L": e.L, "flow_total": round(e.flow_total, 2)}
+                    {
+                        "edge": f"{e.src}->{e.dst}",
+                        "D": round(e.D, 4),
+                        "L": e.L,
+                        "flow_total": round(e.flow_total, 2),
+                    }
                     for e in sorted(live, key=lambda x: -x.D)
                 ],
                 "pruned": [f"{e.src}->{e.dst}" for e in dead],
@@ -178,8 +189,9 @@ class PhysarumRouter:
 
     def routes_from(self, src: str, *, min_D: float = 0.1) -> list[Edge]:
         with self._lock:
-            out = [e for e in self._edges.values()
-                   if e.src == src and not e.pruned and e.D >= min_D]
+            out = [
+                e for e in self._edges.values() if e.src == src and not e.pruned and e.D >= min_D
+            ]
             out.sort(key=lambda x: -x.D)
             return out
 

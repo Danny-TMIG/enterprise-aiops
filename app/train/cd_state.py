@@ -4,6 +4,7 @@ Every solver at every (kind, difficulty) becomes a coordinate.
 The coordinate value is the success rate. The whole grid becomes
 one CD element whose level is ceil(log2(n_coords)).
 """
+
 from __future__ import annotations
 
 import math
@@ -43,7 +44,7 @@ def resolve_cd(run: Run) -> CDState:
     n = len(tiles)
     if n == 0:
         return CDState(run.index, [], [], 0, cd_zero(0))
-    level = max(0, int(math.ceil(math.log2(n))))
+    level = max(0, math.ceil(math.log2(n)))
 
     # pad to 2^level
     coords_padded = list(coords)

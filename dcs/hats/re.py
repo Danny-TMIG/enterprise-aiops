@@ -12,7 +12,9 @@ def encode(rows: list[tuple[int, int]]) -> bytes:  # pragma: no cover
 def decode(blob: bytes) -> list[tuple[int, int]]:  # pragma: no cover
     if len(blob) % 8:  # pragma: no cover
         raise ValueError("truncated")  # pragma: no cover
-    return [struct.unpack_from("<II", blob, i * 8) for i in range(len(blob) // 8)]  # pragma: no cover
+    return [
+        struct.unpack_from("<II", blob, i * 8) for i in range(len(blob) // 8)
+    ]  # pragma: no cover
 
 
 @requirement(

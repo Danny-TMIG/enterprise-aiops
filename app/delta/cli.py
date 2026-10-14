@@ -1,4 +1,5 @@
 """Demo the delta pipeline against the dominion workloads."""
+
 from __future__ import annotations
 
 import json
@@ -10,35 +11,45 @@ from app.delta.loop import run_loops
 from app.delta.model import FixtureModel
 
 A_FIXTURES = [
-    ("count",   "def count_words(s):\n    return len(s.split())\n"),
+    ("count", "def count_words(s):\n    return len(s.split())\n"),
     ("reverse", "def reverse_list(xs):\n    return list(reversed(xs))\n"),
-    ("sum",     "def sum_list(xs):\n    return sum(xs)\n"),
-    ("prime",   "def is_prime(n):\n    return n > 1\n"),
-    ("env",     "def parse_env_int(raw):\n    return int(raw)\n"),
-    ("zigzag",  "def zigzag(a, b):\n"
-                "    out = []\n"
-                "    i = j = 0\n"
-                "    while i < len(a) or j < len(b):\n"
-                "        if i < len(a): out.append(a[i]); i += 1\n"
-                "        if j < len(b): out.append(b[j]); j += 1\n"
-                "    return out\n"),
+    ("sum", "def sum_list(xs):\n    return sum(xs)\n"),
+    ("prime", "def is_prime(n):\n    return n > 1\n"),
+    ("env", "def parse_env_int(raw):\n    return int(raw)\n"),
+    (
+        "zigzag",
+        (
+            "def zigzag(a, b):\n"
+            "    out = []\n"
+            "    i = j = 0\n"
+            "    while i < len(a) or j < len(b):\n"
+            "        if i < len(a): out.append(a[i]); i += 1\n"
+            "        if j < len(b): out.append(b[j]); j += 1\n"
+            "    return out\n"
+        ),
+    ),
 ]
 
 B_FIXTURES = [
-    ("count",   "def count_words(s):\n    return len(s)\n"),
+    ("count", "def count_words(s):\n    return len(s)\n"),
     ("reverse", "def reverse_list(xs):\n    return list(reversed(xs))\n"),
-    ("sum",     "def sum_list(xs):\n    return len(xs)\n"),
-    ("prime",
-     "def is_prime(n):\n"
-     "    if n < 2:\n        return False\n"
-     "    i = 2\n"
-     "    while i * i <= n:\n"
-     "        if n % i == 0:\n            return False\n"
-     "        i += 1\n"
-     "    return True\n"),
-    ("env",
-     "def parse_env_int(raw):\n"
-     "    return int(str(raw).replace('_','').replace(',',''))\n"),
+    ("sum", "def sum_list(xs):\n    return len(xs)\n"),
+    (
+        "prime",
+        (
+            "def is_prime(n):\n"
+            "    if n < 2:\n        return False\n"
+            "    i = 2\n"
+            "    while i * i <= n:\n"
+            "        if n % i == 0:\n            return False\n"
+            "        i += 1\n"
+            "    return True\n"
+        ),
+    ),
+    (
+        "env",
+        "def parse_env_int(raw):\n    return int(str(raw).replace('_','').replace(',',''))\n",
+    ),
 ]
 
 
@@ -48,19 +59,24 @@ def main() -> int:
     print("=" * 68)
     print(f"  workloads: {wl.list_workloads()}")
 
-    model_a = FixtureModel(id="A", fixtures=A_FIXTURES,
-                           fallback="<A-no-op>")
-    model_b = FixtureModel(id="B", fixtures=B_FIXTURES,
-                           fallback="<B-no-op>")
+    model_a = FixtureModel(id="A", fixtures=A_FIXTURES, fallback="<A-no-op>")
+    model_b = FixtureModel(id="B", fixtures=B_FIXTURES, fallback="<B-no-op>")
 
-    workloads = [wl.get(w) for w in ("count_words", "reverse_list",
-                                     "is_prime", "sum_list",
-                                     "parse_env_int", "chain_zigzag")]
+    workloads = [
+        wl.get(w)
+        for w in (
+            "count_words",
+            "reverse_list",
+            "is_prime",
+            "sum_list",
+            "parse_env_int",
+            "chain_zigzag",
+        )
+    ]
     inputs = {w.id: w.id for w in workloads}
 
     writer = CurriculumWriter(root=".delta")
-    state = run_loops(2, {"A": model_a, "B": model_b},
-                      workloads, inputs, writer=writer)
+    state = run_loops(2, {"A": model_a, "B": model_b}, workloads, inputs, writer=writer)
 
     for c in state.cycles:
         print()
@@ -71,8 +87,7 @@ def main() -> int:
             t = d.teacher.model_id if d.teacher else "-"
             s = d.student.model_id if d.student else "-"
             mark = "->" if d.is_signal else " ."
-            print(f"   [{mark}] {d.workload_id:16s} "
-                  f"{d.quadrant.value:12s} teacher={t} student={s}")
+            print(f"   [{mark}] {d.workload_id:16s} {d.quadrant.value:12s} teacher={t} student={s}")
 
     print()
     print("-- curriculum written --")

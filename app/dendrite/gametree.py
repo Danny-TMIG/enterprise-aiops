@@ -11,6 +11,7 @@ Node kinds
 
 Self-registers as capability `gametree`.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -19,21 +20,21 @@ from typing import Any
 
 # ── root words: PIE and Greek, tagged by semantic domain ──────────
 ROOTS: list[dict[str, str]] = [
-    {"root": "*mer-",     "lang": "PIE",   "gloss": "to die; sea",           "domain": "mortality"},
-    {"root": "*men-",     "lang": "PIE",   "gloss": "to think",              "domain": "cognition"},
-    {"root": "*deh₃-",    "lang": "PIE",   "gloss": "to give",               "domain": "exchange"},
-    {"root": "*gʷeyh₃-",  "lang": "PIE",   "gloss": "to live",               "domain": "vitality"},
-    {"root": "*weǵ-",     "lang": "PIE",   "gloss": "to be strong",          "domain": "force"},
-    {"root": "*speḱ-",    "lang": "PIE",   "gloss": "to look",               "domain": "perception"},
-    {"root": "*ǵneh₃-",   "lang": "PIE",   "gloss": "to know",               "domain": "knowledge"},
-    {"root": "λόγος",     "lang": "Greek", "gloss": "word, reason",          "domain": "discourse"},
-    {"root": "μῦθος",     "lang": "Greek", "gloss": "story, myth",           "domain": "narrative"},
-    {"root": "θάλασσα",   "lang": "Greek", "gloss": "sea",                   "domain": "place"},
-    {"root": "ψυχή",      "lang": "Greek", "gloss": "soul, breath",          "domain": "spirit"},
-    {"root": "κρίσις",    "lang": "Greek", "gloss": "decision, judgment",    "domain": "choice"},
-    {"root": "αἵρεσις",   "lang": "Greek", "gloss": "choice, taking",        "domain": "choice"},
-    {"root": "ἀλήθεια",   "lang": "Greek", "gloss": "truth, unconcealment",  "domain": "truth"},
-    {"root": "πλάνη",     "lang": "Greek", "gloss": "wandering, error",      "domain": "error"},
+    {"root": "*mer-", "lang": "PIE", "gloss": "to die; sea", "domain": "mortality"},
+    {"root": "*men-", "lang": "PIE", "gloss": "to think", "domain": "cognition"},
+    {"root": "*deh₃-", "lang": "PIE", "gloss": "to give", "domain": "exchange"},
+    {"root": "*gʷeyh₃-", "lang": "PIE", "gloss": "to live", "domain": "vitality"},
+    {"root": "*weǵ-", "lang": "PIE", "gloss": "to be strong", "domain": "force"},
+    {"root": "*speḱ-", "lang": "PIE", "gloss": "to look", "domain": "perception"},
+    {"root": "*ǵneh₃-", "lang": "PIE", "gloss": "to know", "domain": "knowledge"},
+    {"root": "λόγος", "lang": "Greek", "gloss": "word, reason", "domain": "discourse"},
+    {"root": "μῦθος", "lang": "Greek", "gloss": "story, myth", "domain": "narrative"},
+    {"root": "θάλασσα", "lang": "Greek", "gloss": "sea", "domain": "place"},
+    {"root": "ψυχή", "lang": "Greek", "gloss": "soul, breath", "domain": "spirit"},
+    {"root": "κρίσις", "lang": "Greek", "gloss": "decision, judgment", "domain": "choice"},
+    {"root": "αἵρεσις", "lang": "Greek", "gloss": "choice, taking", "domain": "choice"},
+    {"root": "ἀλήθεια", "lang": "Greek", "gloss": "truth, unconcealment", "domain": "truth"},
+    {"root": "πλάνη", "lang": "Greek", "gloss": "wandering, error", "domain": "error"},
 ]
 
 
@@ -44,7 +45,7 @@ BRANCH_VERBS = ["turn", "still", "keep", "yield"]
 @dataclass
 class Dendrite:
     id: str
-    kind: str                       # "root" | "branch" | "spine"
+    kind: str  # "root" | "branch" | "spine"
     label: str
     depth: int = 0
     children: list[Dendrite] = field(default_factory=list)
@@ -59,10 +60,9 @@ def _slug(*parts: str) -> str:
 
 
 # ── builders ───────────────────────────────────────────────────────
-def build_tree(root: dict[str, str],
-               *, branching: int = 2,
-               depth: int = 3,
-               tree_idx: int = 0) -> Dendrite:
+def build_tree(
+    root: dict[str, str], *, branching: int = 2, depth: int = 3, tree_idx: int = 0
+) -> Dendrite:
     """Dendritic expansion: `branching` children per node, up to `depth`.
     Leaves are spine nodes — terminal outcomes."""
     tree = Dendrite(
@@ -77,7 +77,7 @@ def build_tree(root: dict[str, str],
         verb = BRANCH_VERBS[level % len(BRANCH_VERBS)]
         for i in range(branching):
             side = "left" if i == 0 else "right"
-            is_leaf = (level + 1 == depth)
+            is_leaf = level + 1 == depth
             label = f"→ {verb} {side}" if is_leaf else f"{verb} {side}"
             child = Dendrite(
                 id=_slug(node.id, verb, side, str(i)),
@@ -94,9 +94,9 @@ def build_tree(root: dict[str, str],
 
 # ── mermaid renderer ───────────────────────────────────────────────
 _SHAPES: dict[str, tuple[str, str]] = {
-    "root":   ("((", "))"),    # circle — soma
-    "branch": ("[", "]"),      # box    — decision point
-    "spine":  ("([", "])"),    # stadium— terminal
+    "root": ("((", "))"),  # circle — soma
+    "branch": ("[", "]"),  # box    — decision point
+    "spine": ("([", "])"),  # stadium— terminal
 }
 
 
@@ -104,13 +104,16 @@ def _shape(kind: str) -> tuple[str, str]:
     return _SHAPES.get(kind, ("[", "]"))
 
 
-def to_mermaid(trees: list[tuple[Dendrite, dict[str, str]]],
-               *, title: str = "Parallel Dendritic Decision Trees") -> str:
+def to_mermaid(
+    trees: list[tuple[Dendrite, dict[str, str]]],
+    *,
+    title: str = "Parallel Dendritic Decision Trees",
+) -> str:
     lines: list[str] = [f"%% {title}", "flowchart LR", ""]
 
     for i, (tree, root) in enumerate(trees):
         sg_id = f"T{i}"
-        lines.append(f"  subgraph {sg_id}[\"{root['root']} · {root['gloss']}\"]")
+        lines.append(f'  subgraph {sg_id}["{root["root"]} · {root["gloss"]}"]')
         lines.append("    direction TB")
 
         def emit(n: Dendrite, level: int = 0) -> None:
@@ -119,6 +122,7 @@ def to_mermaid(trees: list[tuple[Dendrite, dict[str, str]]],
             lines.append(f'{pad}{n.id}{op}"{n.label}"{cl}')
             for c in n.children:
                 emit(c, level + 1)
+
         emit(tree, 1)
 
         def edges(n: Dendrite, level: int = 0) -> None:
@@ -126,6 +130,7 @@ def to_mermaid(trees: list[tuple[Dendrite, dict[str, str]]],
             for c in n.children:
                 lines.append(f"{pad}{n.id} --> {c.id}")
                 edges(c, level + 1)
+
         edges(tree, 1)
 
         lines.append("  end")
@@ -139,10 +144,12 @@ def to_mermaid(trees: list[tuple[Dendrite, dict[str, str]]],
 
     for tree, _ in trees:
         acc: dict[str, list[str]] = {}
+
         def collect(n: Dendrite) -> None:
             acc.setdefault(n.kind, []).append(n.id)
             for c in n.children:
                 collect(c)
+
         collect(tree)
         for kind, ids in acc.items():
             lines.append(f"  class {','.join(ids)} {kind}")
@@ -151,9 +158,7 @@ def to_mermaid(trees: list[tuple[Dendrite, dict[str, str]]],
 
 
 # ── top-level entry ────────────────────────────────────────────────
-def render(*, which: list[int] | None = None,
-           branching: int = 2,
-           depth: int = 3) -> str:
+def render(*, which: list[int] | None = None, branching: int = 2, depth: int = 3) -> str:
     """Pick trees from ROOTS by index. Default: four Greek roots
     whose semantics are decisions themselves."""
     if which is None:
@@ -161,10 +166,8 @@ def render(*, which: list[int] | None = None,
     pairs: list[tuple[Dendrite, dict[str, str]]] = []
     for i in which:
         r = ROOTS[i]
-        pairs.append((build_tree(r, branching=branching, depth=depth,
-                                 tree_idx=i), r))
-    return to_mermaid(pairs,
-                      title="Parallel Dendritic Decision Trees — Root Words")
+        pairs.append((build_tree(r, branching=branching, depth=depth, tree_idx=i), r))
+    return to_mermaid(pairs, title="Parallel Dendritic Decision Trees — Root Words")
 
 
 # ── capability ─────────────────────────────────────────────────────

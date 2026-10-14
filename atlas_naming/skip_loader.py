@@ -1,9 +1,12 @@
 """Loads generated skip rules. Regenerate by rerunning skip_generator."""
+
 from __future__ import annotations
+
 import json
 from pathlib import Path
 
 _RULES = None
+
 
 def load_rules(root: Path | None = None) -> dict:
     global _RULES
@@ -14,6 +17,7 @@ def load_rules(root: Path | None = None) -> dict:
             raise FileNotFoundError(f"missing {p}; run skip_generator first")
         _RULES = json.loads(p.read_text())
     return _RULES
+
 
 def is_skipped(path: Path, root: Path | None = None) -> bool:
     root = root or Path.cwd()

@@ -32,5 +32,4 @@ def construct_verify_adjunction(
     verify: Callable[[Any], Any],
 ) -> Adjunction:
     """Identity adjunction. Both triangle identities hold on every input."""
-    return Adjunction(F=lambda x: x, G=lambda x: x,
-                      eta=lambda x: x, eps=lambda x: x)
+    return Adjunction(F=lambda x: x, G=lambda x: x, eta=lambda x: x, eps=lambda x: x)

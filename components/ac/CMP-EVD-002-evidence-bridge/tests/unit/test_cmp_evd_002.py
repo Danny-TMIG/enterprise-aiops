@@ -1,5 +1,5 @@
-import pytest
 from src.public.service import CmpEvd002Service
+
 
 def test_cmp_evd_002_service():
     svc = CmpEvd002Service()

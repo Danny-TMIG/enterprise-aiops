@@ -1,4 +1,5 @@
 """Demo: atlas, sudoku, crossword, rubik, tictactoe, gridworld."""
+
 from __future__ import annotations
 
 import sys
@@ -27,8 +28,7 @@ def demo_rubik():
         mark = "OK" if r["solved"] else "  "
         n = r.get("nodes", 0)
         ln = r.get("solution_len", "-")
-        print(f"  [{mark}] scramble depth {depth:2d}  "
-              f"solution len {ln}  nodes {n}")
+        print(f"  [{mark}] scramble depth {depth:2d}  solution len {ln}  nodes {n}")
     print()
 
 
@@ -36,11 +36,12 @@ def demo_tictactoe():
     _hdr("tic-tac-toe (perfect-info adversarial)")
     t = TicTacToe()
     r = alpha_beta(t, max_depth=9)
-    print(f"  alpha_beta: best first move = {r.best_action}, "
-          f"value = {r.reward}, nodes = {r.nodes}")
+    print(f"  alpha_beta: best first move = {r.best_action}, value = {r.reward}, nodes = {r.nodes}")
     r2 = mcts(t, iterations=2000, seed=1)
-    print(f"  mcts:      best first move = {r2.best_action}, "
-          f"value = {r2.reward:.3f}, nodes = {r2.nodes}")
+    print(
+        f"  mcts:      best first move = {r2.best_action}, "
+        f"value = {r2.reward:.3f}, nodes = {r2.nodes}"
+    )
     print()
 
 
@@ -84,20 +85,20 @@ def demo_crossword():
 def demo_configurator():
     _hdr("configurator — five kinds")
     c = Configurator()
-    print("  configure sudoku/easy   ->",
-          "givens =", c.configure(Config(kind="sudoku",
-                                          difficulty="easy"))["givens"])
-    print("  reconfig -> rubik/hard  ->",
-          "scramble depth =",
-          c.reconfig({"kind": "rubik", "difficulty": "hard"})["scramble_depth"])
-    print("  reconfig -> tictactoe   ->",
-          "kind =", c.reconfig({"kind": "tictactoe"})["kind"])
-    print("  reconfig -> gridworld   ->",
-          "kind =", c.reconfig({"kind": "gridworld"})["kind"])
-    print("  reconfig -> crossword   ->",
-          "pool =", c.reconfig({"kind": "crossword"})["pool"])
-    print("  undo                    -> kind =",
-          c.undo().kind)
+    print(
+        "  configure sudoku/easy   ->",
+        "givens =",
+        c.configure(Config(kind="sudoku", difficulty="easy"))["givens"],
+    )
+    print(
+        "  reconfig -> rubik/hard  ->",
+        "scramble depth =",
+        c.reconfig({"kind": "rubik", "difficulty": "hard"})["scramble_depth"],
+    )
+    print("  reconfig -> tictactoe   ->", "kind =", c.reconfig({"kind": "tictactoe"})["kind"])
+    print("  reconfig -> gridworld   ->", "kind =", c.reconfig({"kind": "gridworld"})["kind"])
+    print("  reconfig -> crossword   ->", "pool =", c.reconfig({"kind": "crossword"})["pool"])
+    print("  undo                    -> kind =", c.undo().kind)
     print("  history:")
     for h in c.to_dict()["history"]:
         print(f"    {h}")
