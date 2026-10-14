@@ -1,0 +1,28 @@
+{
+  "profile_id": "enterprise-multidepartment",
+  "description": "Operations, Finance and Logistics bindings under one enterprise authority; scoped data boundaries and failure modes.",
+  "authority_scope": "single-enterprise",
+  "federation": true,
+  "nodes": [
+    {"node_id": "dept-operations",  "domain": "operations", "role": "primary",   "data_boundary": "ops-only",             "failure_isolation": "hard", "cross_domain_flow": "deny-by-default", "units": ["compute-contract-kernel","execution-gateway","scheduler"]},
+    {"node_id": "dept-finance",     "domain": "finance",    "role": "primary",   "data_boundary": "finance-only",         "failure_isolation": "hard", "cross_domain_flow": "deny-by-default", "units": ["compute-contract-kernel","execution-gateway","admission-quota-and-lease-manager"]},
+    {"node_id": "dept-logistics",   "domain": "logistics",  "role": "primary",   "data_boundary": "logistics-only",       "failure_isolation": "hard", "cross_domain_flow": "deny-by-default", "units": ["compute-contract-kernel","execution-gateway","data-staging-and-result-collection"]},
+    {"node_id": "enterprise-govern","domain": "govern",     "role": "authority", "data_boundary": "cross-domain-audit-only","failure_isolation": "soft", "cross_domain_flow": "govern-mediated",  "units": ["governance-object-model-and-registry","governed-state-and-transition-engine","decision-and-outcome-correlation"]}
+  ],
+  "federation_rules": {
+    "max_domains": 3,
+    "cross_domain_default": "deny",
+    "govern_mediation_required": true,
+    "liquid_aperture_required": true,
+    "evidence_correlation_required": true,
+    "revocation_propagation": "all-nodes",
+    "quorum_for_amendment": "govern-only"
+  },
+  "runtime": {"mlx": true, "metal": true, "neural_engine": true, "cpu_only_fallback": true},
+  "hardware_envelope_per_node": {
+    "min_cpu_cores": 8,
+    "min_memory_gb": 32,
+    "architecture": ["arm64", "x86_64"],
+    "recommended": "Apple M4 Max 16c / 128 GB"
+  }
+}

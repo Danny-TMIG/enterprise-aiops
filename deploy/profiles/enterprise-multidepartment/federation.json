@@ -1,0 +1,11 @@
+{
+  "federation_id": "tmig-enterprise-multidept",
+  "profile": "enterprise-multidepartment",
+  "authority_root": "enterprise-govern",
+  "governance_model": "conjunctive-over-mandatory",
+  "domains": ["operations", "finance", "logistics"],
+  "cross_domain_flow_default": "deny",
+  "govern_mediation": true,
+  "federation_status": "declared-not-active",
+  "note": "Per ASF v1.2, production federation is deferred (GOV-FED-001). This manifest declares the topology for review; it does not assert runtime activation."
+}

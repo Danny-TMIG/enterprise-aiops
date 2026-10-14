@@ -1,0 +1,13 @@
+{
+  "profile_id": "m4-max-local",
+  "captured_at": "2026-10-13T20:21:31Z",
+  "hardware": {
+    "model_identifier": "Mac16,5",
+    "chip": "Apple M4 Max",
+    "cpu_cores": {"performance": 12, "efficiency": 4, "total": 16},
+    "memory_gb": 128,
+    "architecture": "arm64",
+    "firmware_version": "18000.161.10"
+  },
+  "runtime": {"mlx": true, "metal": true, "neural_engine": true, "cpu_only_fallback": true}
+}

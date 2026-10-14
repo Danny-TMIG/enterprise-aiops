@@ -1,0 +1,19 @@
+{
+  "domain_id": "logistics",
+  "parent_authority": "enterprise-govern",
+  "data_classification_ceiling": "confidential",
+  "liquid_aperture": {
+    "enabled": true,
+    "privacy_utility_bound": "per-class",
+    "release_requires": ["govern-approval", "flow-decision"]
+  },
+  "cross_domain_flows": [],
+  "evidence_sinks": [
+    "deploy/ledgers/ledger_master_pipeline_verification.json",
+    "dcs/evidence/"
+  ],
+  "revocation_hooks": [
+    "cancellation-revocation-directive",
+    "human-approval-and-escalation"
+  ]
+}
